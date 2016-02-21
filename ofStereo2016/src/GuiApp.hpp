@@ -45,6 +45,9 @@
     - group parameter presets - fade from preset to preset ?  / save / load
     - groups of ui params that can be viewed and hidden together
     - applying filters
+    - way for scenes/classes to register their parameters
+    
+ 
  
  **/
 
@@ -68,10 +71,25 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     
-    
     ofxOscReceiver oscReceiver;
     ofxOscSender oscSender;
     
+    ofParameterGroup testParamGroup;
+    
+    vector<ofParameterGroup &> paramGroups;
+    
+    void registerParams(ofParameterGroup & params) {
+        
+    }
+    
+    void processOscMessage(ofxOscMessage &m) {
+        
+        // loop through all paramgroups
+        // match on paramgroup name
+        // steal code matching specific parameter from oscParameterSync class
+        // add fade to tweens / triggers
+        
+    }
     
     
     
