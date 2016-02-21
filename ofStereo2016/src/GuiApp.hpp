@@ -74,13 +74,13 @@ public:
     ofxOscReceiver oscReceiver;
     ofxOscSender oscSender;
     
-    ofParameterGroup testParamGroup;
+    
+    ofxPanel panel;
     
     vector<ofParameterGroup &> paramGroups;
     
-    void registerParams(ofParameterGroup & params) {
-        
-    }
+    
+    void registerParams(ofParameterGroup & params);
     
     void processOscMessage(ofxOscMessage &m) {
         
@@ -90,6 +90,9 @@ public:
         // add fade to tweens / triggers
         
     }
+    
+    
+
     
     
     

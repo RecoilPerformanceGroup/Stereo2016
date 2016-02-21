@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "GuiApp.hpp"
 
 class ofApp : public ofBaseApp{
 
@@ -20,5 +21,18 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
+    
+    
+    
+    
+    shared_ptr<GuiApp> guiApp;
+    
+    // TEST - move to own class
+    
+    ofParameterGroup testParamGroup;
+    ofParameter<float> circleScale;
+    
+    
+    
 		
 };

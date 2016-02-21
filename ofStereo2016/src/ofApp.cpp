@@ -2,7 +2,13 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-
+    
+    testParamGroup.add(circleScale.set("Circle scale", 0.5, 0, 1));
+    
+    
+    //guiApp->registerParams(testParamGroup);
+    
+    
 }
 
 //--------------------------------------------------------------

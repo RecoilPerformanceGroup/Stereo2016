@@ -18,8 +18,12 @@ int main( ){
     auto mainApp = make_shared<ofApp>();
     auto guiApp = make_shared<GuiApp>();
     
+    //mainApp->guiApp = guiApp;
+    
     ofRunApp(guiWindow, guiApp);
     ofRunApp(mainWindow, mainApp);
+    
+
     
     ofRunMainLoop();
 

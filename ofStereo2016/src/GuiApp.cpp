@@ -21,7 +21,16 @@ void GuiApp::update(){
 //--------------------------------------------------------------
 void GuiApp::draw(){
     
+    panel.draw();
 }
+
+void GuiApp::registerParams(ofParameterGroup & params) {
+    
+    paramGroups.push_back(params);
+    panel.add(params);
+    
+}
+
 
 //--------------------------------------------------------------
 void GuiApp::keyPressed(int key){
