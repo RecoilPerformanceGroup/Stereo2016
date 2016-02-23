@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "2204A9F914F6C3C85F7A96073C7376834AF2FCA2",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "9233F0F4A2BE011BD468E5177A5AD6623263B23D" : 0,
+    "2204A9F914F6C3C85F7A96073C7376834AF2FCA2" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "D44B982D-3352-4AF5-9D69-7FE6DA77285F",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "9233F0F4A2BE011BD468E5177A5AD6623263B23D" : "..\/addons\/ofxDatGui",
+    "2204A9F914F6C3C85F7A96073C7376834AF2FCA2" : "Stereo2016\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "ofStereo2016",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "ofStereo2016\/ofStereo2016.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/RecoilPerformanceGroup\/Stereo2016.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2204A9F914F6C3C85F7A96073C7376834AF2FCA2"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/braitsch\/ofxDatGui.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "9233F0F4A2BE011BD468E5177A5AD6623263B23D"
+    }
+  ]
+}

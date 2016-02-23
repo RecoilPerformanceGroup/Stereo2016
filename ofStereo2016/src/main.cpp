@@ -4,27 +4,27 @@
 
 //========================================================================
 int main( ){
-    ofGLWindowSettings settings;
-    settings.width = 600;
+    
+    ofGLFWWindowSettings settings;
+    settings.width = 1000;
     settings.height = 600;
     settings.setPosition(ofVec2f(300,0));
-    auto mainWindow = ofCreateWindow(settings);
+    settings.resizable = true;
+    shared_ptr<ofAppBaseWindow> mainWindow = ofCreateWindow(settings);
     
-    settings.width = 300;
+    settings.width = 600;
     settings.height = 300;
     settings.setPosition(ofVec2f(0,0));
-    auto guiWindow = ofCreateWindow(settings);
+    settings.resizable = true;
+    shared_ptr<ofAppBaseWindow> guiWindow = ofCreateWindow(settings);
+    guiWindow->setVerticalSync(false);
     
-    auto mainApp = make_shared<ofApp>();
-    auto guiApp = make_shared<GuiApp>();
+    shared_ptr<ofApp> mainApp(new ofApp);
     
-    //mainApp->guiApp = guiApp;
+    mainApp->setupGui();
+    ofAddListener(guiWindow->events().draw,mainApp.get(),&ofApp::drawGui);
     
-    ofRunApp(guiWindow, guiApp);
     ofRunApp(mainWindow, mainApp);
-    
-
-    
     ofRunMainLoop();
 
 }
