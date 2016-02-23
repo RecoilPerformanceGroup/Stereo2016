@@ -3,29 +3,54 @@
 #include "ofMain.h"
 #include "ofxDatGui.h"
 #include "ofxOsc.h"
+#include "ofxEasing.h"
+
+
+// todo use templates or base class with subclasses for different types
+// for now I just make it work for floats
 
 
 class ParameterFade {
 public:
     
     
-    ParameterFade() {
-        // add update event listener
+    ParameterFade(ofAbstractParameter * _p, float _toValue, float _dur, float _startTime=NULL, float _fromValue=NULL) : p(_p), duration{_dur}, toValue{_toValue}, hasEnded{false}  {
+        
+        startTime = _startTime ? _startTime : ofGetElapsedTimef(); // pass in to enable a wait functionality
+        endTime = startTime + duration;
+        
+        fromValue =  _fromValue ? _fromValue : p->cast<float>().get();
+        //ofxeasing::map(value, minIn, maxIn, minOut, maxOut, ofxeasing::linear::easeIn);
     }
     
+    
+    
     ~ParameterFade() {
-        // remove listener
     }
+    
+    float toValue;
+    float fromValue;
+    
+    ofAbstractParameter * p;
+    
     
     float duration;
     float startTime;
+    float endTime;
+    
+
+    bool hasStarted, hasEnded;
     
     // ease function
     
-    void update();
+    void update(float timeBase);
     // optionally frame based in stead of time base ?
     
 };
+
+
+
+
 
 
 

@@ -59,7 +59,8 @@ void ofApp::setupGui() {
     //gui->addSlider("normalizedRange2", -1, 1);
     //gui->addSlider("arbitraryRange", 0, 1024);
     
-    gui->addSlider(float01);
+    
+    gui->addSlider(float01)->setPrecision(4);
     
     gui->addColorPicker("colorpicker");
     
@@ -86,9 +87,15 @@ void ofApp::drawGui(ofEventArgs &args) {
 }
 
 
-void ParameterFade::update() {
+void ParameterFade::update(float timeBase) {
     
+    hasStarted = (timeBase >= startTime);
+    hasEnded = (timeBase >= endTime);
     
+    if (hasStarted && !hasEnded) {
+        float val = ofxeasing::map_clamp(ofGetElapsedTimef(), startTime, endTime, fromValue, toValue, ofxeasing::linear::easeIn);
+        p->cast<float>() = val;
+    }
     
 }
 
@@ -98,7 +105,11 @@ void ofApp::update(){
     
     
     for(auto fade : parameterFades) {
-        fade->update();
+        
+        // todo pop from list and delete when done
+        //if(fade->hasEnded) delete fade;
+        
+        fade->update(ofGetElapsedTimef());
     }
     
     
@@ -119,7 +130,7 @@ void ofApp::update(){
         // 1 for sliders
         
         bool fadeValue = false;
-        float fadeTime = 1.0; // optional fade time
+        float fadeTime = 20.0; // optional fade time
         // add optional fade ease function - default linear
         // optional wait param
         
@@ -129,11 +140,15 @@ void ofApp::update(){
         // if string from - next argument is the value to start the fade from
         
         
+        if(msg.getNumArgs() > 1) {
+        
         if(msg.getArgType(1) == OFXOSC_TYPE_STRING) {
             if(msg.getArgAsString(1) == "fade") {
                 fadeValue = true;
             }
         }
+        }
+        
         
         
         for(unsigned int i=0;i<address.size();i++){
@@ -148,7 +163,17 @@ void ofApp::update(){
                     }else if(p->type()==typeid(ofParameter<int>).name() && msg.getArgType(0)==OFXOSC_TYPE_INT32){
                         p->cast<int>() = msg.getArgAsInt32(0);
                     }else if(p->type()==typeid(ofParameter<float>).name() && msg.getArgType(0)==OFXOSC_TYPE_FLOAT){
-                        p->cast<float>() = msg.getArgAsFloat(0);
+                        
+                        if(fadeValue) {
+                            
+                            parameterFades.push_back(new ParameterFade(p, msg.getArgAsFloat(0), fadeTime));
+                            
+                        } else {
+                            p->cast<float>() = msg.getArgAsFloat(0);
+                        }
+                        
+                        
+                        
                     }else if(p->type()==typeid(ofParameter<double>).name() && msg.getArgType(0)==OFXOSC_TYPE_DOUBLE){
                         p->cast<double>() = msg.getArgAsDouble(0);
                     }else if(p->type()==typeid(ofParameter<bool>).name() && (msg.getArgType(0)==OFXOSC_TYPE_TRUE
