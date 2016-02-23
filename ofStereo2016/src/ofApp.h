@@ -4,6 +4,31 @@
 #include "ofxDatGui.h"
 #include "ofxOsc.h"
 
+
+class ParameterFade {
+public:
+    
+    
+    ParameterFade() {
+        // add update event listener
+    }
+    
+    ~ParameterFade() {
+        // remove listener
+    }
+    
+    float duration;
+    float startTime;
+    
+    // ease function
+    
+    void update();
+    // optionally frame based in stead of time base ?
+    
+};
+
+
+
 class ofApp : public ofBaseApp{
 
 	public:
@@ -27,6 +52,10 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
+    
+    vector<ParameterFade *> parameterFades;
+    
+    void addFadeFloat(float from, float to, float duration);
     
     
     // dat gui
@@ -63,10 +92,11 @@ class ofApp : public ofBaseApp{
     ofxOscReceiver oscReceiver;
     ofxOscSender oscSender;
     
-    
     // program variables
     float circleRadius;
     ofColor col;
+    
+    
     
     
 };

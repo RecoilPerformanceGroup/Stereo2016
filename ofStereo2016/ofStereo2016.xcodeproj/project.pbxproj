@@ -99,6 +99,8 @@
 		04B9CF3B1C7B43880035D79B /* ofxDatGui.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxDatGui.h; sourceTree = "<group>"; };
 		04B9CF3D1C7B43880035D79B /* ofxDatGuiTheme.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxDatGuiTheme.h; sourceTree = "<group>"; };
 		04B9CF3E1C7B43880035D79B /* ofxDatGuiThemes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxDatGuiThemes.h; sourceTree = "<group>"; };
+		04F001121C7CA8710001F8C7 /* easing_terms_of_use.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = easing_terms_of_use.html; sourceTree = "<group>"; };
+		04F001131C7CA8710001F8C7 /* ofxEasing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxEasing.h; sourceTree = "<group>"; };
 		0A1DAC09F322AE313A40706D /* ofxToggle.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxToggle.h; path = ../../../addons/ofxGui/src/ofxToggle.h; sourceTree = SOURCE_ROOT; };
 		0AED834CE4DEC5260AF302A2 /* ofxOscParameterSync.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxOscParameterSync.cpp; path = ../../../addons/ofxOsc/src/ofxOscParameterSync.cpp; sourceTree = SOURCE_ROOT; };
 		15F2C6477A769C03A56D1401 /* ofxSlider.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxSlider.cpp; path = ../../../addons/ofxGui/src/ofxSlider.cpp; sourceTree = SOURCE_ROOT; };
@@ -253,6 +255,24 @@
 			path = themes;
 			sourceTree = "<group>";
 		};
+		04F001101C7CA8710001F8C7 /* ofxEasing */ = {
+			isa = PBXGroup;
+			children = (
+				04F001111C7CA8710001F8C7 /* src */,
+			);
+			name = ofxEasing;
+			sourceTree = "<group>";
+		};
+		04F001111C7CA8710001F8C7 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				04F001121C7CA8710001F8C7 /* easing_terms_of_use.html */,
+				04F001131C7CA8710001F8C7 /* ofxEasing.h */,
+			);
+			name = src;
+			path = ../../../addons/ofxEasing/src;
+			sourceTree = "<group>";
+		};
 		1F4FB5C423662B96ADFDCC0B /* ofxXmlSettings */ = {
 			isa = PBXGroup;
 			children = (
@@ -372,6 +392,7 @@
 				E6053AB7FEC63D5F83825B88 /* ofxOsc */,
 				1F4FB5C423662B96ADFDCC0B /* ofxXmlSettings */,
 				04B9CF201C7B43880035D79B /* ofxDatGui */,
+				04F001101C7CA8710001F8C7 /* ofxEasing */,
 			);
 			name = addons;
 			sourceTree = "<group>";

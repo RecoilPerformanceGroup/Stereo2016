@@ -25,6 +25,11 @@
  
  osc is case insensitive
  
+ 
+ // if a fade is running can a message override? YEs I think.
+ // New message cancel fade
+ 
+ 
  **/
 
 
@@ -80,8 +85,22 @@ void ofApp::drawGui(ofEventArgs &args) {
     gui->draw();
 }
 
+
+void ParameterFade::update() {
+    
+    
+    
+}
+
+
 //--------------------------------------------------------------
 void ofApp::update(){
+    
+    
+    for(auto fade : parameterFades) {
+        fade->update();
+    }
+    
     
     while(oscReceiver.hasWaitingMessages()) {
         
@@ -92,6 +111,31 @@ void ofApp::update(){
         cout<<"Received "<<msg.getAddress()<<endl;
         
         vector<string> address = ofSplitString(ofToLower(msg.getAddress()),"/",true);
+        
+        // fade
+        
+        
+        // get fade method that takes the number of expected arguments before the keyword
+        // 1 for sliders
+        
+        bool fadeValue = false;
+        float fadeTime = 1.0; // optional fade time
+        // add optional fade ease function - default linear
+        // optional wait param
+        
+        // loop through all arguments
+        // if string f - next argument is time if its a float
+        // if string e - next argument matches a lookup for easing functions if its an int
+        // if string from - next argument is the value to start the fade from
+        
+        
+        if(msg.getArgType(1) == OFXOSC_TYPE_STRING) {
+            if(msg.getArgAsString(1) == "fade") {
+                fadeValue = true;
+            }
+        }
+        
+        
         for(unsigned int i=0;i<address.size();i++){
             if(p) {
                 
@@ -117,7 +161,11 @@ void ofApp::update(){
                                                                              || msg.getArgType(0)==OFXOSC_TYPE_SYMBOL)){
                         p->cast<bool>() = msg.getArgAsBool(0);
                     }else if(msg.getArgType(0)==OFXOSC_TYPE_STRING){
+                        
                         p->fromString(msg.getArgAsString(0));
+                        
+                        
+                        
                     }
                 }
             }
