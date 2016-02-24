@@ -97,9 +97,49 @@ void AbstractParameterFade::update(float timeBase) {
     hasEnded = (timeBase >= endTime);
     
     if (hasStarted && !hasEnded && isAlive) {
-        updateValue();
+        updateValue(timeBase);
     }
 }
+
+template<>
+void ParameterFade<ofColor>::updateValue(float timeBase) {
+    
+        //} else if(p->type()==typeid(ofParameter<ofColor>).name()) {
+    value.r = ofxeasing::map_clamp(timeBase, startTime, endTime, fromValue.r, toValue.r, ofxeasing::linear::easeIn);
+    value.g = ofxeasing::map_clamp(timeBase, startTime, endTime, fromValue.g, toValue.g, ofxeasing::linear::easeIn);
+    value.b = ofxeasing::map_clamp(timeBase, startTime, endTime, fromValue.b, toValue.b, ofxeasing::linear::easeIn);
+    value.a = ofxeasing::map_clamp(timeBase, startTime, endTime, fromValue.a, toValue.a, ofxeasing::linear::easeIn);
+        
+    lastValue = value;
+    p->cast<ofColor>() = value;
+}
+
+
+template<>
+void ParameterFade<int>::updateValue(float timeBase) {
+    //if(p->type() == typeid(ofParameter<float>).name() || p->type() == typeid(ofParameter<int>).name())
+    value = ofxeasing::map_clamp(timeBase, startTime, endTime, fromValue, toValue, ofxeasing::linear::easeIn);
+    lastValue = value;
+    p->cast<int>() = value;
+}
+
+template<>
+void ParameterFade<float>::updateValue(float timeBase) {
+    //if(p->type() == typeid(ofParameter<float>).name() || p->type() == typeid(ofParameter<int>).name()) {
+    value = ofxeasing::map_clamp(timeBase, startTime, endTime, fromValue, toValue, ofxeasing::linear::easeIn);
+    lastValue = value;
+    p->cast<float>() = value;
+}
+
+template<>
+void ParameterFade<double>::updateValue(float timeBase) {
+    //if(p->type() == typeid(ofParameter<float>).name() || p->type() == typeid(ofParameter<int>).name()) {
+    value = ofxeasing::map_clamp(timeBase, startTime, endTime, fromValue, toValue, ofxeasing::linear::easeIn);
+    lastValue = value;
+    p->cast<double>() = value;
+}
+
+
 
 
 //--------------------------------------------------------------
@@ -132,7 +172,7 @@ void ofApp::update(){
         // 1 for sliders
         
         bool fadeValue = false;
-        float fadeTime = 20.0; // optional fade time
+        float fadeTime = 2.0; // optional fade time
         // add optional fade ease function - default linear
         // optional wait param
         
@@ -142,16 +182,23 @@ void ofApp::update(){
         // if string from - next argument is the value to start the fade from
         
         
-        if(msg.getNumArgs() > 1) {
-        
-        if(msg.getArgType(1) == OFXOSC_TYPE_STRING) {
-            if(msg.getArgAsString(1) == "fade") {
-                fadeValue = true;
+        for(int i=0; i<msg.getNumArgs(); i++) {
+            
+            if(msg.getArgType(i) == OFXOSC_TYPE_STRING) {
+                if(msg.getArgAsString(i) == "fade") {
+                    fadeValue = true;
+                    
+                    if(msg.getNumArgs() > i+1) {
+                        if(msg.getArgType(i+1) == OFXOSC_TYPE_FLOAT) {
+                            fadeTime = msg.getArgAsFloat(i+1);
+                        } else if( msg.getArgType(i+1) == OFXOSC_TYPE_INT32) {
+                            fadeTime = msg.getArgAsInt(i+1);
+                        }
+                    }
+                }
             }
+            
         }
-        }
-        
-        
         
         for(unsigned int i=0;i<address.size();i++){
             if(p) {
@@ -163,21 +210,29 @@ void ofApp::update(){
                             p = &static_cast<ofParameterGroup*>(p)->get(address[i+1]);
                         }
                     }else if(p->type()==typeid(ofParameter<int>).name() && msg.getArgType(0)==OFXOSC_TYPE_INT32){
-                        p->cast<int>() = msg.getArgAsInt32(0);
+                        
+                        if(fadeValue) {
+                            parameterFades.push_back(new ParameterFade<int>(p, msg.getArgAsInt32(0), fadeTime));
+                        } else {
+                            p->cast<int>() = msg.getArgAsInt32(0);
+                        }
+                        
                     }else if(p->type()==typeid(ofParameter<float>).name() && msg.getArgType(0)==OFXOSC_TYPE_FLOAT){
                         
                         if(fadeValue) {
-                            
                             parameterFades.push_back(new ParameterFade<float>(p, msg.getArgAsFloat(0), fadeTime));
-                            
                         } else {
                             p->cast<float>() = msg.getArgAsFloat(0);
                         }
                         
-                        
-                        
                     }else if(p->type()==typeid(ofParameter<double>).name() && msg.getArgType(0)==OFXOSC_TYPE_DOUBLE){
-                        p->cast<double>() = msg.getArgAsDouble(0);
+                        
+                        if(fadeValue) {
+                            parameterFades.push_back(new ParameterFade<double>(p, msg.getArgAsDouble(0), fadeTime));
+                        } else {
+                            p->cast<double>() = msg.getArgAsDouble(0);
+                        }
+                        
                     }else if(p->type()==typeid(ofParameter<bool>).name() && (msg.getArgType(0)==OFXOSC_TYPE_TRUE
                                                                              || msg.getArgType(0)==OFXOSC_TYPE_FALSE
                                                                              || msg.getArgType(0)==OFXOSC_TYPE_INT32
@@ -186,10 +241,34 @@ void ofApp::update(){
                                                                              || msg.getArgType(0)==OFXOSC_TYPE_DOUBLE
                                                                              || msg.getArgType(0)==OFXOSC_TYPE_STRING
                                                                              || msg.getArgType(0)==OFXOSC_TYPE_SYMBOL)){
+                        
+                        // Bool doesn't fade
                         p->cast<bool>() = msg.getArgAsBool(0);
+                        
                     }else if(msg.getArgType(0)==OFXOSC_TYPE_STRING){
                         
-                        p->fromString(msg.getArgAsString(0));
+                       
+                        
+                        
+                        if(fadeValue) {
+                            
+                            if(p->type()==typeid(ofParameter<ofColor>).name()) {
+                                
+                                ofParameter<ofColor> target;
+                                target.fromString(msg.getArgAsString(0));
+                                parameterFades.push_back(new ParameterFade<ofColor>(p, target.get(), fadeTime));
+                            }
+                            
+                            
+                            
+                        } else {
+                            p->fromString(msg.getArgAsString(0));
+                        }
+                        
+                        // todo: osc on individual components of complex params
+                        // eg. x, y,z r, g, b, a, ...
+                        
+                        
                         
                     }
                 }

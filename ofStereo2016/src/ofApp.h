@@ -117,7 +117,7 @@ public:
     
     void update(float timeBase);
     
-    virtual void updateValue() {};
+    virtual void updateValue(float timeBase) {};
     
 };
 
@@ -129,22 +129,19 @@ public:
     ParameterFade(ofAbstractParameter * _p,
                       ParameterType _toValue,
                       float _dur,
-                      float _startTime=NULL,
-                      ParameterType _fromValue=NULL) :
+                      float _startTime=NULL) :
     AbstractParameterFade(_p, _dur, _startTime),
     toValue{_toValue} {
         
         
-        fromValue =  _fromValue ? _fromValue : p->cast<ParameterType>().get();
+        //fromValue =  (_fromValue != NULL) ? _fromValue : p->cast<ParameterType>().get();
+        fromValue = p->cast<ParameterType>().get();
         p->cast<ParameterType>().addListener(this, &ParameterFade::paramChanged);
-        
-        
     }
     
     ParameterType toValue;
     ParameterType fromValue;
     ParameterType lastValue;
-    
     ParameterType value;
     
     void paramChanged(ParameterType & _val){
@@ -153,17 +150,10 @@ public:
         }
     }
     
-    void updateValue() {
-        
-        if(p->type() == typeid(ofParameter<float>).name() || p->type() == typeid(ofParameter<int>).name()) {
-            value = ofxeasing::map_clamp(ofGetElapsedTimef(), startTime, endTime, fromValue, toValue, ofxeasing::linear::easeIn);
-        }
-        // Todo add easing for vec2f, 3f, color 
-        
-        lastValue = value;
-        p->cast<ParameterType>() = value;
-    }
+    void updateValue(float timeBase);
     
+    //template <>
+    //void updateValue<>(float timeBase);
     
 };
 
