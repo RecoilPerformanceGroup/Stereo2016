@@ -9,49 +9,163 @@
 // todo use templates or base class with subclasses for different types
 // for now I just make it work for floats
 
-
-class ParameterFade {
+class ColorPickerFromParameter {
 public:
     
-    
-    ParameterFade(ofAbstractParameter * _p, float _toValue, float _dur, float _startTime=NULL, float _fromValue=NULL) : p(_p), duration{_dur}, toValue{_toValue}, hasEnded{false}  {
+    ColorPickerFromParameter(ofParameter<ofColor> & _p, ofxDatGui * gui, bool alphaSlider=false) : p(_p) {
         
-        startTime = _startTime ? _startTime : ofGetElapsedTimef(); // pass in to enable a wait functionality
+        g = gui->addColorPicker(p.getName(), p.get());
+        
+        p.addListener(this, &ColorPickerFromParameter::paramChangedEvent);
+        g->onColorPickerEvent(this, &ColorPickerFromParameter::onColorPickerEvent);
+        
+        if(alphaSlider) {
+            
+            string name = p.getName() + " alpha";
+            s = gui->addSlider(name, 0, p.get().limit(), p.get().a);
+            s->setPrecision(0);
+            s->onSliderEvent(this, &ColorPickerFromParameter::onSliderEvent);
+        }
+    }
+    
+    ~ColorPickerFromParameter() {
+        delete g;
+        if(s) delete s;
+    }
+    
+private:
+    
+    ofxDatGuiColorPicker * g;
+    ofxDatGuiSlider * s;
+    ofParameter<ofColor> & p;
+    
+    void paramChangedEvent(ofColor & color) {
+        g->setColor(color);
+        if(s) s->setValue(p.get().a);
+    }
+    
+    void onColorPickerEvent(ofxDatGuiColorPickerEvent e) {
+        // color picker doesn't have alpha, preserve its value
+        ofColor col(e.color);
+        col.a = p.get().a;
+        p.set(col);
+    }
+    
+    void onSliderEvent(ofxDatGuiSliderEvent e) {
+        // color picker doesn't have alpha, preserve its value
+        ofColor col(p.get());
+        col.a = e.value;
+        p.set(col);
+    }
+};
+
+
+class AbstractParameterFade {
+public:
+    
+    AbstractParameterFade(ofAbstractParameter * _p,
+                  float _dur,
+                  float _startTime=NULL
+                  ) :
+                    p(_p),
+                    duration{_dur},
+                    hasEnded{false},
+                    isAlive(true)  {
+        
+        startTime = _startTime ? _startTime : ofGetElapsedTimef(); // pass in to enable wait functionality
         endTime = startTime + duration;
         
-        fromValue =  _fromValue ? _fromValue : p->cast<float>().get();
+        //fromValue =  _fromValue ? _fromValue : p->cast<float>().get();
         //ofxeasing::map(value, minIn, maxIn, minOut, maxOut, ofxeasing::linear::easeIn);
+        
+        /*if( p->type() == typeid(ofParameter<float>).name()) {
+            p->cast<float>().addListener(this, &AbstractParameterFade::paramChanged);
+            
+        } else if( p->type() == typeid(ofParameter<int>).name()) {
+            p->cast<int>().addListener(this, &AbstractParameterFade::intParamChanged);
+        }*/
     }
     
-    
-    
-    ~ParameterFade() {
+    ~AbstractParameterFade() {
     }
     
-    float toValue;
-    float fromValue;
+    /*void intParamChanged(int & _val){
+        if(_val != lastVal) {
+            isAlive = false;
+        }
+    }
+    
+    void paramChanged(float & _val){
+        if(_val != lastVal) {
+            isAlive = false;
+        }
+    }*/
+    
+    //float toValue;
+    //float fromValue;
     
     ofAbstractParameter * p;
-    
     
     float duration;
     float startTime;
     float endTime;
-    
 
-    bool hasStarted, hasEnded;
+    bool hasStarted, hasEnded, isAlive;
     
+    //float lastVal;
     // ease function
     
     void update(float timeBase);
-    // optionally frame based in stead of time base ?
+    
+    virtual void updateValue() {};
     
 };
 
-
-
-
-
+template<typename ParameterType>
+class ParameterFade : public AbstractParameterFade {
+public:
+    
+    
+    ParameterFade(ofAbstractParameter * _p,
+                      ParameterType _toValue,
+                      float _dur,
+                      float _startTime=NULL,
+                      ParameterType _fromValue=NULL) :
+    AbstractParameterFade(_p, _dur, _startTime),
+    toValue{_toValue} {
+        
+        
+        fromValue =  _fromValue ? _fromValue : p->cast<ParameterType>().get();
+        p->cast<ParameterType>().addListener(this, &ParameterFade::paramChanged);
+        
+        
+    }
+    
+    ParameterType toValue;
+    ParameterType fromValue;
+    ParameterType lastValue;
+    
+    ParameterType value;
+    
+    void paramChanged(ParameterType & _val){
+        if(_val != lastValue) {
+            isAlive = false;
+        }
+    }
+    
+    void updateValue() {
+        
+        if(p->type() == typeid(ofParameter<float>).name() || p->type() == typeid(ofParameter<int>).name()) {
+            value = ofxeasing::map_clamp(ofGetElapsedTimef(), startTime, endTime, fromValue, toValue, ofxeasing::linear::easeIn);
+        }
+        // Todo add easing for vec2f, 3f, color 
+        
+        lastValue = value;
+        p->cast<ParameterType>() = value;
+    }
+    
+    
+};
 
 
 class ofApp : public ofBaseApp{
@@ -78,13 +192,12 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
     
     
-    vector<ParameterFade *> parameterFades;
+    vector<AbstractParameterFade *> parameterFades;
     
     void addFadeFloat(float from, float to, float duration);
     
     
     // dat gui
-    
     ofxDatGuiValuePlotter* plotter;
     vector<ofxDatGuiComponent*> components;
     
@@ -99,19 +212,30 @@ class ofApp : public ofBaseApp{
     void onTextInputEvent(ofxDatGuiTextInputEvent e);
     
     
-    ofParameterGroup mainParams;
-    
-    ofParameterGroup subParams;
     ofParameter<float> float01{"float01", 1, 0, 1};
-    
-    ofParameter<ofColor> color01;
-    
+    ofParameter<ofColor> color01{"color01", ofColor::white,ofColor::black,ofColor::white};
     ofParameter<ofVec2f> vec201;
     ofParameter<ofVec3f> vec301;
-    
-    ofParameterGroup subSubParams;
-    
     ofParameter<float> float02;
+    
+    ofParameterGroup subSubParams{
+        "subSubParams",
+        vec301
+    };
+    
+    ofParameterGroup subParams{
+        "subParams",
+        subSubParams,
+        float01,
+        float02,
+        color01};
+    
+    ofParameterGroup mainParams{
+        "mainParams",
+        subParams,
+        vec201
+    };
+
     
     // osc
     ofxOscReceiver oscReceiver;

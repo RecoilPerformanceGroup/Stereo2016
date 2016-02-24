@@ -35,7 +35,6 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-        
 }
 
 
@@ -44,25 +43,16 @@ void ofApp::setupGui() {
     ofxDatGuiComponent* component;
     
     
-    mainParams.setName("mainParams");
-    subParams.setName("subParams");
-    
-    mainParams.add(subParams);
-    subParams.add(subSubParams);
-    
-    subParams.add(float01);
-    
-    subSubParams.add(float02);
-    
     gui->addFRM(1.0f);
     //gui->addSlider("normalizedRange", 0, 1);
     //gui->addSlider("normalizedRange2", -1, 1);
     //gui->addSlider("arbitraryRange", 0, 1024);
     
     
-    gui->addSlider(float01)->setPrecision(4);
+    /*color01.addListener{[](float & amp){
+        // do something with the amplitude
+    })*/
     
-    gui->addColorPicker("colorpicker");
     
     //vector<string> options = {"ONE", "TWO", "THREE", "FOUR"};
     //gui->addDropdown("dropdown", options);
@@ -70,9 +60,25 @@ void ofApp::setupGui() {
     //binding
     
     //gui->getSlider("normalizedRange")->bind(circleRadius);
+    gui->addSlider(float01);
+
+    new ColorPickerFromParameter(color01, gui, true);
+    
+    /*[](float & amp){
+        // do something with the amplitude
+    })*/
+    
+    /*color01.addListener(this, [colorPicker](ofColor & col){
+        cout<<"color ofparam change"<<endl;
+        colorPicker->setColor(col);
+    });*/
     
     
-    //paramcol.addListener(this, []{} );
+    //colorPicker->onColorPickerEvent(<#T *owner#>, <#void (ListenerClass::*listenerMethod)(args)#>)
+    /*colorPicker->addListener(this, [this]{
+        cout<<"colorpicker change"<<endl;
+    });*/
+
     
     //gui->getColorPicker("colorpicker")->
     
@@ -81,22 +87,18 @@ void ofApp::setupGui() {
 }
 
 void ofApp::drawGui(ofEventArgs &args) {
-    
-    
     gui->draw();
 }
 
 
-void ParameterFade::update(float timeBase) {
+void AbstractParameterFade::update(float timeBase) {
     
     hasStarted = (timeBase >= startTime);
     hasEnded = (timeBase >= endTime);
     
-    if (hasStarted && !hasEnded) {
-        float val = ofxeasing::map_clamp(ofGetElapsedTimef(), startTime, endTime, fromValue, toValue, ofxeasing::linear::easeIn);
-        p->cast<float>() = val;
+    if (hasStarted && !hasEnded && isAlive) {
+        updateValue();
     }
-    
 }
 
 
@@ -166,7 +168,7 @@ void ofApp::update(){
                         
                         if(fadeValue) {
                             
-                            parameterFades.push_back(new ParameterFade(p, msg.getArgAsFloat(0), fadeTime));
+                            parameterFades.push_back(new ParameterFade<float>(p, msg.getArgAsFloat(0), fadeTime));
                             
                         } else {
                             p->cast<float>() = msg.getArgAsFloat(0);
@@ -189,16 +191,11 @@ void ofApp::update(){
                         
                         p->fromString(msg.getArgAsString(0));
                         
-                        
-                        
                     }
                 }
             }
         }
-        
-        
     }
-    
 }
 
 //--------------------------------------------------------------
@@ -207,7 +204,7 @@ void ofApp::draw(){
     
     //ofBackground(gui->getColorPicker("colorpicker")->getColor());
     
-   // ofSetColor(gui->getColorPicker("colorpicker")->getColor().getInverted());
+    ofSetColor(color01);
     ofDrawCircle(100,100, float01.get()*800);
     
     
