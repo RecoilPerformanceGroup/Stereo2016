@@ -74,35 +74,10 @@ public:
         
         startTime = _startTime ? _startTime : ofGetElapsedTimef(); // pass in to enable wait functionality
         endTime = startTime + duration;
-        
-        //fromValue =  _fromValue ? _fromValue : p->cast<float>().get();
-        //ofxeasing::map(value, minIn, maxIn, minOut, maxOut, ofxeasing::linear::easeIn);
-        
-        /*if( p->type() == typeid(ofParameter<float>).name()) {
-            p->cast<float>().addListener(this, &AbstractParameterFade::paramChanged);
-            
-        } else if( p->type() == typeid(ofParameter<int>).name()) {
-            p->cast<int>().addListener(this, &AbstractParameterFade::intParamChanged);
-        }*/
     }
     
     ~AbstractParameterFade() {
     }
-    
-    /*void intParamChanged(int & _val){
-        if(_val != lastVal) {
-            isAlive = false;
-        }
-    }
-    
-    void paramChanged(float & _val){
-        if(_val != lastVal) {
-            isAlive = false;
-        }
-    }*/
-    
-    //float toValue;
-    //float fromValue;
     
     ofAbstractParameter * p;
     
@@ -111,9 +86,6 @@ public:
     float endTime;
 
     bool hasStarted, hasEnded, isAlive;
-    
-    //float lastVal;
-    // ease function
     
     void update(float timeBase);
     
@@ -125,14 +97,12 @@ template<typename ParameterType>
 class ParameterFade : public AbstractParameterFade {
 public:
     
-    
     ParameterFade(ofAbstractParameter * _p,
                       ParameterType _toValue,
                       float _dur,
                       float _startTime=NULL) :
     AbstractParameterFade(_p, _dur, _startTime),
     toValue{_toValue} {
-        
         
         //fromValue =  (_fromValue != NULL) ? _fromValue : p->cast<ParameterType>().get();
         fromValue = p->cast<ParameterType>().get();
@@ -151,9 +121,6 @@ public:
     }
     
     void updateValue(float timeBase);
-    
-    //template <>
-    //void updateValue<>(float timeBase);
     
 };
 
@@ -234,8 +201,5 @@ class ofApp : public ofBaseApp{
     // program variables
     float circleRadius;
     ofColor col;
-    
-    
-    
     
 };

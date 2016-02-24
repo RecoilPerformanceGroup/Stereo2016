@@ -114,7 +114,6 @@ void ParameterFade<ofColor>::updateValue(float timeBase) {
     p->cast<ofColor>() = value;
 }
 
-
 template<>
 void ParameterFade<int>::updateValue(float timeBase) {
     //if(p->type() == typeid(ofParameter<float>).name() || p->type() == typeid(ofParameter<int>).name())
@@ -138,9 +137,6 @@ void ParameterFade<double>::updateValue(float timeBase) {
     lastValue = value;
     p->cast<double>() = value;
 }
-
-
-
 
 //--------------------------------------------------------------
 void ofApp::update(){
