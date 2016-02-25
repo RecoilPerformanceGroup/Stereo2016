@@ -44,7 +44,7 @@ void ofApp::setup(){
     
     ofLoadImage(tex, "grain-texture.png");
     
-    grab.setup(1080, 720, true);
+    //grab.setup(1080, 720, true);
     
     
     randFbo.allocate(1024, 1024);
@@ -138,11 +138,9 @@ void ofApp::draw(){
                     
                     ofTranslate(cube->cellMeshes[i].getCentroid().x, cube->cellMeshes[i].getCentroid().y, cube->cellMeshes[i].getCentroid().z);
                     
-                    ofScale(scaleCells *explode,scaleCells*explode,scaleCells*explode);
+                    ofScale(scaleCells,scaleCells,scaleCells);
                     
                     ofTranslate(-cube->cellMeshes[i].getCentroid().x, -cube->cellMeshes[i].getCentroid().y, -cube->cellMeshes[i].getCentroid().z);
-                    
-                    
                     
                      mat.begin();
                     

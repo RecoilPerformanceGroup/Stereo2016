@@ -52,8 +52,8 @@ public:
                             false,false,false, // set true to flow beyond box
                             8);
         
-        voro::wall_sphere sph(0, 0, 0, min(width, height) );
-        con.add_wall(sph);
+        //voro::wall_sphere sph(0, 0, 0, min(width, height) );
+        //con.add_wall(sph);
         
         /*voro::wall_sphere sph2(0.5, 0.5, 0, min(width, height) );
         con.add_wall(sph2);
