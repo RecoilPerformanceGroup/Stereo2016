@@ -4,58 +4,7 @@
 #include "ofxDatGui.h"
 #include "ofxOsc.h"
 #include "ParameterFade.hpp"
-
-// todo use templates or base class with subclasses for different types
-// for now I just make it work for floats
-
-class ColorPickerFromParameter {
-public:
-    
-    ColorPickerFromParameter(ofParameter<ofColor> & _p, ofxDatGui * gui, bool alphaSlider=false) : p(_p) {
-        
-        g = gui->addColorPicker(p.getName(), p.get());
-        
-        p.addListener(this, &ColorPickerFromParameter::paramChangedEvent);
-        g->onColorPickerEvent(this, &ColorPickerFromParameter::onColorPickerEvent);
-        
-        if(alphaSlider) {
-            string name = p.getName() + " alpha";
-            s = gui->addSlider(name, 0, p.get().limit(), p.get().a);
-            s->setPrecision(0);
-            s->onSliderEvent(this, &ColorPickerFromParameter::onSliderEvent);
-        }
-    }
-    
-    ~ColorPickerFromParameter() {
-        delete g;
-        if(s) delete s;
-    }
-    
-private:
-    
-    ofxDatGuiColorPicker * g;
-    ofxDatGuiSlider * s;
-    ofParameter<ofColor> & p;
-    
-    void paramChangedEvent(ofColor & color) {
-        g->setColor(color);
-        if(s) s->setValue(p.get().a);
-    }
-    
-    void onColorPickerEvent(ofxDatGuiColorPickerEvent e) {
-        // color picker doesn't have alpha, preserve its value
-        ofColor col(e.color);
-        col.a = p.get().a;
-        p.set(col);
-    }
-    
-    void onSliderEvent(ofxDatGuiSliderEvent e) {
-        // color picker doesn't have alpha, preserve its value
-        ofColor col(p.get());
-        col.a = e.value;
-        p.set(col);
-    }
-};
+#include "ofxDatGuiParameterBindings.hpp"
 
 class ofApp : public ofBaseApp{
 

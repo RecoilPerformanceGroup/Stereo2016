@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0459E6C81C7F51B3000AB4C8 /* ofxDatGuiParameterBindings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0459E6C61C7F51B3000AB4C8 /* ofxDatGuiParameterBindings.cpp */; };
 		04B9CF3F1C7B43880035D79B /* ofxDatGuiComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04B9CF311C7B43880035D79B /* ofxDatGuiComponent.cpp */; };
 		04B9CF401C7B43880035D79B /* ofxSmartFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04B9CF381C7B43880035D79B /* ofxSmartFont.cpp */; };
 		04B9CF411C7B43880035D79B /* ofxDatGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04B9CF3A1C7B43880035D79B /* ofxDatGui.cpp */; };
@@ -73,6 +74,8 @@
 		00D6D32B84B099226431108C /* ofxOsc.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOsc.h; path = ../../../addons/ofxOsc/src/ofxOsc.h; sourceTree = SOURCE_ROOT; };
 		01DCC0911400F9ACF5B65578 /* ofxXmlSettings.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxXmlSettings.h; path = ../../../addons/ofxXmlSettings/src/ofxXmlSettings.h; sourceTree = SOURCE_ROOT; };
 		029684CF678F70F6D3537A29 /* OscOutboundPacketStream.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscOutboundPacketStream.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscOutboundPacketStream.h; sourceTree = SOURCE_ROOT; };
+		0459E6C61C7F51B3000AB4C8 /* ofxDatGuiParameterBindings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxDatGuiParameterBindings.cpp; sourceTree = "<group>"; };
+		0459E6C71C7F51B3000AB4C8 /* ofxDatGuiParameterBindings.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ofxDatGuiParameterBindings.hpp; sourceTree = "<group>"; };
 		04B9CF231C7B43880035D79B /* ofxDatGui2dPad.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxDatGui2dPad.h; sourceTree = "<group>"; };
 		04B9CF241C7B43880035D79B /* ofxDatGuiButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxDatGuiButton.h; sourceTree = "<group>"; };
 		04B9CF251C7B43880035D79B /* ofxDatGuiColorPicker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxDatGuiColorPicker.h; sourceTree = "<group>"; };
@@ -454,6 +457,8 @@
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
 				04F001141C7EEE8B0001F8C7 /* ParameterFade.cpp */,
 				04F001151C7EEE8B0001F8C7 /* ParameterFade.hpp */,
+				0459E6C61C7F51B3000AB4C8 /* ofxDatGuiParameterBindings.cpp */,
+				0459E6C71C7F51B3000AB4C8 /* ofxDatGuiParameterBindings.hpp */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -593,6 +598,7 @@
 				5864AD82E20F15536D054EA3 /* ofxOscMessage.cpp in Sources */,
 				4ADB88E2FB52E76A471065DE /* ofxOscParameterSync.cpp in Sources */,
 				640279EE111671BD026CB013 /* ofxOscReceiver.cpp in Sources */,
+				0459E6C81C7F51B3000AB4C8 /* ofxDatGuiParameterBindings.cpp in Sources */,
 				8F5205AEF8861EF234F0651A /* ofxOscSender.cpp in Sources */,
 				ADE367465D2A8EBAD4C7A8D9 /* IpEndpointName.cpp in Sources */,
 				04F001161C7EEE8B0001F8C7 /* ParameterFade.cpp in Sources */,
