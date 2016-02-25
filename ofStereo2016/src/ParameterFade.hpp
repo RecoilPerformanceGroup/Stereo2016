@@ -14,8 +14,6 @@
 
 class AbstractParameterFade {
 public:
-
-    // easing lookup from http://easings.net/
     
     AbstractParameterFade(ofAbstractParameter * _p,
                           float _dur,
@@ -28,9 +26,9 @@ public:
     hasEnded{false},
     isAlive(true) {
         
-        startTime = _startTime ? _startTime : ofGetElapsedTimef(); // pass in to enable wait functionality
+        // pass in startTime to enable wait functionality
+        startTime = _startTime ? _startTime : ofGetElapsedTimef();
         endTime = startTime + duration;
-        
     }
     
     ~AbstractParameterFade() {
@@ -94,9 +92,7 @@ class ParameterFadeManager {
 public:
     
     static const std::map<string, ofxeasing::function> EaseFunctions;
-    
     bool hasEaseFunction(string easeFunctionName);
-    
     ofxeasing::function getEaseFunction(string easeFunctionName);
 
     ParameterFadeManager() {
@@ -106,10 +102,10 @@ public:
     }
     
     void update();
-    
     void add(AbstractParameterFade * fade);
+    bool isFadingParameter(const ofAbstractParameter & parameter);
     
-    //private:
+private:
     vector<AbstractParameterFade *> parameterFades;
     
 };

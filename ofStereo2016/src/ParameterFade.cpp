@@ -81,6 +81,7 @@ void ParameterFade<double>::updateValue(float t) {
 
 using namespace ofxeasing;
 
+// easing lookup from http://easings.net/
 const std::map<string, ofxeasing::function> ParameterFadeManager::EaseFunctions {
     {"linear",           linear::easeIn},
     
