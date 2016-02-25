@@ -19,7 +19,6 @@ public:
         g->onColorPickerEvent(this, &ColorPickerFromParameter::onColorPickerEvent);
         
         if(alphaSlider) {
-            
             string name = p.getName() + " alpha";
             s = gui->addSlider(name, 0, p.get().limit(), p.get().a);
             s->setPrecision(0);

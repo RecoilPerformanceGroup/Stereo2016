@@ -1,43 +1,8 @@
 #include "ofApp.h"
 
-
-/**
-
- Structure
- 
- A parameter is an ofParameter
- 
- All ofParameters can be controlled by OSC usign their name 
- 
- Optionally an ofParameter may also have a gui element
- The gui element is instatiated seperately 
- 
- Add shorthand methods to bind gui elements to other things than sliders
- 
- Use addSlider ofParameter constructor for sliders
- 
- ofParameter can fit to different gui elelemts
- 
- maybe a slider is saturation of color but ofParamter might still be an ofColor ... how to do this ?
- 
- PArams are saved using ofxXmlSettings ? json ?
- 
- 
- osc is case insensitive
- 
- 
- // if a fade is running can a message override? YEs I think.
- // New message cancel fade
- 
- 
- **/
-
-
 //--------------------------------------------------------------
 void ofApp::setup(){
-    
     fadeManager = new ParameterFadeManager();
-    
 }
 
 
@@ -77,6 +42,7 @@ void ofApp::update(){
         
         bool fadeValue = false;
         float fadeTime = 2.0; // optional fade time
+        ofxeasing::function easeFn = ofxeasing::linear::easeIn;
         // add optional fade ease function - default linear
         // optional wait param
         
@@ -97,6 +63,9 @@ void ofApp::update(){
                             fadeTime = msg.getArgAsInt(i+1);
                         }
                     }
+                } else if (fadeManager->hasEaseFunction(msg.getArgAsString(i))){
+                    cout<<msg.getArgAsString(i)<<endl;
+                    easeFn = fadeManager->getEaseFunction(msg.getArgAsString(i));
                 }
             }
         }
@@ -113,7 +82,7 @@ void ofApp::update(){
                     }else if(p->type()==typeid(ofParameter<int>).name() && msg.getArgType(0)==OFXOSC_TYPE_INT32){
                         
                         if(fadeValue) {
-                            fadeManager->add(new ParameterFade<int>(p, msg.getArgAsInt32(0), fadeTime));
+                            fadeManager->add(new ParameterFade<int>(p, msg.getArgAsInt32(0), fadeTime, easeFn));
                         } else {
                             p->cast<int>() = msg.getArgAsInt32(0);
                         }
@@ -121,7 +90,7 @@ void ofApp::update(){
                     }else if(p->type()==typeid(ofParameter<float>).name() && msg.getArgType(0)==OFXOSC_TYPE_FLOAT){
                         
                         if(fadeValue) {
-                            fadeManager->add(new ParameterFade<float>(p, msg.getArgAsFloat(0), fadeTime));
+                            fadeManager->add(new ParameterFade<float>(p, msg.getArgAsFloat(0), fadeTime, easeFn));
                         } else {
                             p->cast<float>() = msg.getArgAsFloat(0);
                         }
@@ -129,7 +98,7 @@ void ofApp::update(){
                     }else if(p->type()==typeid(ofParameter<double>).name() && msg.getArgType(0)==OFXOSC_TYPE_DOUBLE){
                         
                         if(fadeValue) {
-                            fadeManager->add(new ParameterFade<double>(p, msg.getArgAsDouble(0), fadeTime));
+                            fadeManager->add(new ParameterFade<double>(p, msg.getArgAsDouble(0), fadeTime, easeFn));
                         } else {
                             p->cast<double>() = msg.getArgAsDouble(0);
                         }
@@ -148,16 +117,13 @@ void ofApp::update(){
                         
                     }else if(msg.getArgType(0)==OFXOSC_TYPE_STRING){
                         
-                       
-                        
-                        
                         if(fadeValue) {
                             
                             if(p->type()==typeid(ofParameter<ofColor>).name()) {
                                 
                                 ofParameter<ofColor> target;
                                 target.fromString(msg.getArgAsString(0));
-                                fadeManager->add(new ParameterFade<ofColor>(p, target.get(), fadeTime));
+                                fadeManager->add(new ParameterFade<ofColor>(p, target.get(), fadeTime, easeFn));
                             }
                             
                             
