@@ -40,47 +40,10 @@ void ofApp::setup(){
 
 void ofApp::setupGui() {
     
-    ofxDatGuiComponent* component;
-    
-    
     gui->addFRM(1.0f);
-    //gui->addSlider("normalizedRange", 0, 1);
-    //gui->addSlider("normalizedRange2", -1, 1);
-    //gui->addSlider("arbitraryRange", 0, 1024);
     
-    
-    /*color01.addListener{[](float & amp){
-        // do something with the amplitude
-    })*/
-    
-    
-    //vector<string> options = {"ONE", "TWO", "THREE", "FOUR"};
-    //gui->addDropdown("dropdown", options);
-    
-    //binding
-    
-    //gui->getSlider("normalizedRange")->bind(circleRadius);
     gui->addSlider(float01);
-
     new ColorPickerFromParameter(color01, gui, true);
-    
-    /*[](float & amp){
-        // do something with the amplitude
-    })*/
-    
-    /*color01.addListener(this, [colorPicker](ofColor & col){
-        cout<<"color ofparam change"<<endl;
-        colorPicker->setColor(col);
-    });*/
-    
-    
-    //colorPicker->onColorPickerEvent(<#T *owner#>, <#void (ListenerClass::*listenerMethod)(args)#>)
-    /*colorPicker->addListener(this, [this]{
-        cout<<"colorpicker change"<<endl;
-    });*/
-
-    
-    //gui->getColorPicker("colorpicker")->
     
     oscReceiver.setup(9999);
     
@@ -88,54 +51,6 @@ void ofApp::setupGui() {
 
 void ofApp::drawGui(ofEventArgs &args) {
     gui->draw();
-}
-
-
-void AbstractParameterFade::update(float timeBase) {
-    
-    hasStarted = (timeBase >= startTime);
-    hasEnded = (timeBase >= endTime);
-    
-    if (hasStarted && !hasEnded && isAlive) {
-        updateValue(timeBase);
-    }
-}
-
-template<>
-void ParameterFade<ofColor>::updateValue(float timeBase) {
-    
-        //} else if(p->type()==typeid(ofParameter<ofColor>).name()) {
-    value.r = ofxeasing::map_clamp(timeBase, startTime, endTime, fromValue.r, toValue.r, ofxeasing::linear::easeIn);
-    value.g = ofxeasing::map_clamp(timeBase, startTime, endTime, fromValue.g, toValue.g, ofxeasing::linear::easeIn);
-    value.b = ofxeasing::map_clamp(timeBase, startTime, endTime, fromValue.b, toValue.b, ofxeasing::linear::easeIn);
-    value.a = ofxeasing::map_clamp(timeBase, startTime, endTime, fromValue.a, toValue.a, ofxeasing::linear::easeIn);
-        
-    lastValue = value;
-    p->cast<ofColor>() = value;
-}
-
-template<>
-void ParameterFade<int>::updateValue(float timeBase) {
-    //if(p->type() == typeid(ofParameter<float>).name() || p->type() == typeid(ofParameter<int>).name())
-    value = ofxeasing::map_clamp(timeBase, startTime, endTime, fromValue, toValue, ofxeasing::linear::easeIn);
-    lastValue = value;
-    p->cast<int>() = value;
-}
-
-template<>
-void ParameterFade<float>::updateValue(float timeBase) {
-    //if(p->type() == typeid(ofParameter<float>).name() || p->type() == typeid(ofParameter<int>).name()) {
-    value = ofxeasing::map_clamp(timeBase, startTime, endTime, fromValue, toValue, ofxeasing::linear::easeIn);
-    lastValue = value;
-    p->cast<float>() = value;
-}
-
-template<>
-void ParameterFade<double>::updateValue(float timeBase) {
-    //if(p->type() == typeid(ofParameter<float>).name() || p->type() == typeid(ofParameter<int>).name()) {
-    value = ofxeasing::map_clamp(timeBase, startTime, endTime, fromValue, toValue, ofxeasing::linear::easeIn);
-    lastValue = value;
-    p->cast<double>() = value;
 }
 
 //--------------------------------------------------------------
@@ -149,7 +64,6 @@ void ofApp::update(){
         
         fade->update(ofGetElapsedTimef());
     }
-    
     
     while(oscReceiver.hasWaitingMessages()) {
         
@@ -177,7 +91,6 @@ void ofApp::update(){
         // if string e - next argument matches a lookup for easing functions if its an int
         // if string from - next argument is the value to start the fade from
         
-        
         for(int i=0; i<msg.getNumArgs(); i++) {
             
             if(msg.getArgType(i) == OFXOSC_TYPE_STRING) {
@@ -193,7 +106,6 @@ void ofApp::update(){
                     }
                 }
             }
-            
         }
         
         for(unsigned int i=0;i<address.size();i++){
@@ -264,8 +176,6 @@ void ofApp::update(){
                         // todo: osc on individual components of complex params
                         // eg. x, y,z r, g, b, a, ...
                         
-                        
-                        
                     }
                 }
             }
@@ -276,12 +186,8 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 
-    
-    //ofBackground(gui->getColorPicker("colorpicker")->getColor());
-    
     ofSetColor(color01);
     ofDrawCircle(100,100, float01.get()*800);
-    
     
 }
 
