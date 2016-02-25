@@ -9,6 +9,22 @@
 #include "ParameterFade.hpp"
 #include "ofxEasing.h"
 
+void ParameterFadeManager::update() {
+    
+    for(auto fade : parameterFades) {
+        
+        // todo pop from list and delete when done
+        //if(fade->hasEnded) delete fade;
+        
+        fade->update(ofGetElapsedTimef());
+    }
+}
+
+void ParameterFadeManager::add(AbstractParameterFade * fade) {
+    parameterFades.push_back(fade);
+}
+
+
 void AbstractParameterFade::update(float t) {
     
     hasStarted = (t >= startTime);

@@ -69,5 +69,23 @@ public:
     }
     
     void updateValue(float timeBase);
+};
+
+class ParameterFadeManager {
+public:
+    
+    ParameterFadeManager() {
+    }
+    
+    ~ParameterFadeManager() {
+    }
+    
+    void update();
+    
+    void add(AbstractParameterFade * fade);
+    
+    //private:
+    vector<AbstractParameterFade *> parameterFades;
     
 };
+

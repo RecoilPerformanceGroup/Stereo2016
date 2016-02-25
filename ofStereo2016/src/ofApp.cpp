@@ -35,6 +35,9 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    
+    fadeManager = new ParameterFadeManager();
+    
 }
 
 
@@ -46,7 +49,6 @@ void ofApp::setupGui() {
     new ColorPickerFromParameter(color01, gui, true);
     
     oscReceiver.setup(9999);
-    
 }
 
 void ofApp::drawGui(ofEventArgs &args) {
@@ -56,15 +58,8 @@ void ofApp::drawGui(ofEventArgs &args) {
 //--------------------------------------------------------------
 void ofApp::update(){
     
-    
-    for(auto fade : parameterFades) {
+    fadeManager->update();
         
-        // todo pop from list and delete when done
-        //if(fade->hasEnded) delete fade;
-        
-        fade->update(ofGetElapsedTimef());
-    }
-    
     while(oscReceiver.hasWaitingMessages()) {
         
         ofxOscMessage msg;
@@ -76,7 +71,6 @@ void ofApp::update(){
         vector<string> address = ofSplitString(ofToLower(msg.getAddress()),"/",true);
         
         // fade
-        
         
         // get fade method that takes the number of expected arguments before the keyword
         // 1 for sliders
@@ -92,7 +86,6 @@ void ofApp::update(){
         // if string from - next argument is the value to start the fade from
         
         for(int i=0; i<msg.getNumArgs(); i++) {
-            
             if(msg.getArgType(i) == OFXOSC_TYPE_STRING) {
                 if(msg.getArgAsString(i) == "fade") {
                     fadeValue = true;
@@ -120,7 +113,7 @@ void ofApp::update(){
                     }else if(p->type()==typeid(ofParameter<int>).name() && msg.getArgType(0)==OFXOSC_TYPE_INT32){
                         
                         if(fadeValue) {
-                            parameterFades.push_back(new ParameterFade<int>(p, msg.getArgAsInt32(0), fadeTime));
+                            fadeManager->add(new ParameterFade<int>(p, msg.getArgAsInt32(0), fadeTime));
                         } else {
                             p->cast<int>() = msg.getArgAsInt32(0);
                         }
@@ -128,7 +121,7 @@ void ofApp::update(){
                     }else if(p->type()==typeid(ofParameter<float>).name() && msg.getArgType(0)==OFXOSC_TYPE_FLOAT){
                         
                         if(fadeValue) {
-                            parameterFades.push_back(new ParameterFade<float>(p, msg.getArgAsFloat(0), fadeTime));
+                            fadeManager->add(new ParameterFade<float>(p, msg.getArgAsFloat(0), fadeTime));
                         } else {
                             p->cast<float>() = msg.getArgAsFloat(0);
                         }
@@ -136,7 +129,7 @@ void ofApp::update(){
                     }else if(p->type()==typeid(ofParameter<double>).name() && msg.getArgType(0)==OFXOSC_TYPE_DOUBLE){
                         
                         if(fadeValue) {
-                            parameterFades.push_back(new ParameterFade<double>(p, msg.getArgAsDouble(0), fadeTime));
+                            fadeManager->add(new ParameterFade<double>(p, msg.getArgAsDouble(0), fadeTime));
                         } else {
                             p->cast<double>() = msg.getArgAsDouble(0);
                         }
@@ -164,7 +157,7 @@ void ofApp::update(){
                                 
                                 ofParameter<ofColor> target;
                                 target.fromString(msg.getArgAsString(0));
-                                parameterFades.push_back(new ParameterFade<ofColor>(p, target.get(), fadeTime));
+                                fadeManager->add(new ParameterFade<ofColor>(p, target.get(), fadeTime));
                             }
                             
                             

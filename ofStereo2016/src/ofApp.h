@@ -86,7 +86,6 @@ public:
         vec201
     };
     
-    
 		void setup();
         void setupGui();
     
@@ -107,10 +106,7 @@ public:
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
-    vector<AbstractParameterFade *> parameterFades;
-    
-    void addFadeFloat(float from, float to, float duration);
-    
+    ParameterFadeManager * fadeManager;
     
     // dat gui
     ofxDatGuiValuePlotter* plotter;
