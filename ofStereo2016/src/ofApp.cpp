@@ -213,8 +213,8 @@ void ofApp::drawScenes(int _surfaceId) {
 void ofApp::draw(){
 
     ofBackground(0);
-    ofSetColor(255,255,255);
-    
+    ofSetColor(color01);
+    ofDrawCircle(100,100, float01.get()*800);
     
 //    ofDisableDepthTest();
     
