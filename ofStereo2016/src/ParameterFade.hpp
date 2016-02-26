@@ -38,7 +38,7 @@ public:
     
     void update(float timeBase);
     
-    virtual void updateValue(float timeBase) {};    
+    virtual void updateValue(float timeBase) {};
 };
 
 template<typename ParameterType>

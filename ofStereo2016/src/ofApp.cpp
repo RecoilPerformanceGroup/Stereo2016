@@ -1,4 +1,5 @@
 #include "ofApp.h"
+#include "SceneTest.hpp"
 
 
 /**
@@ -38,6 +39,31 @@ void ofApp::setup(){
     
     fadeManager = new ParameterFadeManager();
     
+/*  
+    int resolutionX = 1920;
+    int resolutionY = 1080;
+*/
+    int resolutionX = ofGetWidth()/2;
+    int resolutionY = (resolutionX * 9) / 16;
+    
+    planeFloor.reset(new ofxStereoscopy::Plane("floor"));
+    planeFloor->setup(resolutionX, resolutionY);
+    planeFloor->setViewPort(ofRectangle(-1, -1, 2, 2));
+    planeFloor->pos = ofVec2f(0,0);
+    planes.push_back(planeFloor);
+
+    planeWall.reset(new ofxStereoscopy::Plane("wall"));
+    planeWall->setup(resolutionX, resolutionY);
+    planeWall->setViewPort(ofRectangle(-1, -1, 2, 2));
+    planeWall->pos = ofVec2f(resolutionX,0);
+    planes.push_back(planeWall);
+    
+    activePlaneIndex = 0;
+    
+    activePlane = planes[activePlaneIndex];
+    
+    scenes.push_back(make_shared<SceneTest>());
+
 }
 
 
@@ -174,14 +200,86 @@ void ofApp::update(){
             }
         }
     }
+    
+    for(auto p : planes) {
+//      p->cam.setPhysicalEyeSeparation(6.5);
+        p->update();
+    }
+    
+    for(auto s : scenes) {
+        s->updateScene();
+    }
+
 }
+
+
+void ofApp::drawScenes(int _surfaceId) {
+    
+    ofClear(ofColor::black);
+
+    glPushMatrix();
+    
+    for(auto s : scenes) {
+        s->beginSceneWorld(_surfaceId);
+    }
+    
+    for(auto s : scenes) {
+        s->drawScene(_surfaceId);
+    }
+    
+    for(auto s : scenes) {
+        s->endSceneWorld(_surfaceId);
+    }
+    
+    glPopMatrix();
+
+}
+
 
 //--------------------------------------------------------------
 void ofApp::draw(){
 
+    ofBackground(0);
     ofSetColor(color01);
     ofDrawCircle(100,100, float01.get()*800);
     
+    ofSetColor(255);
+    ofEnableDepthTest();
+    ofEnableAlphaBlending();
+    glEnable(GL_DEPTH_TEST);
+    // draw scenes to surfaces, they are kept in the cameras fbo
+    
+    for(int i=0;i < planes.size(); i++) {
+        planes[i]->beginLeft();
+        drawScenes(i);
+        planes[i]->endLeft();
+        
+        planes[i]->beginRight();
+        drawScenes(i);
+        planes[i]->endRight();
+    }
+    
+    ofDisableDepthTest();
+    
+    /* 
+     if(drawChessboards) {
+        for(int i=0; i<planes.size(); i++) {
+            planes[i]->drawChessboards();
+        }
+    }
+    */
+    
+//    if(drawGrids) {
+        for(int i=0; i<planes.size(); i++) {
+            planes[i]->drawGrids();
+        }
+//    }
+    
+        ofSetColor(255);
+        ofFill();
+        for(int i=0; i<planes.size(); i++) {
+            planes[i]->draw();
+        }
 }
 
 //--------------------------------------------------------------

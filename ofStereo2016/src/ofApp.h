@@ -1,9 +1,13 @@
 #pragma once
 
+#include <iostream>
+#include <memory>
+#include <vector>
 #include "ofMain.h"
 #include "ofxDatGui.h"
 #include "ofxOsc.h"
 #include "ParameterFade.hpp"
+#include "ofxStereoscopy.hpp"
 
 // todo use templates or base class with subclasses for different types
 // for now I just make it work for floats
@@ -59,7 +63,7 @@ private:
 };
 
 class ofApp : public ofBaseApp{
-
+    
 public:
     
     ofParameter<float> float01{"float01", 1, 0, 1};
@@ -86,25 +90,25 @@ public:
         vec201
     };
     
-		void setup();
-        void setupGui();
+    void setup();
+    void setupGui();
     
-		void update();
-		
-        void draw();
-        void drawGui(ofEventArgs & args);
-
-		void keyPressed(int key);
-		void keyReleased(int key);
-		void mouseMoved(int x, int y );
-		void mouseDragged(int x, int y, int button);
-		void mousePressed(int x, int y, int button);
-		void mouseReleased(int x, int y, int button);
-		void mouseEntered(int x, int y);
-		void mouseExited(int x, int y);
-		void windowResized(int w, int h);
-		void dragEvent(ofDragInfo dragInfo);
-		void gotMessage(ofMessage msg);
+    void update();
+    
+    void draw();
+    void drawGui(ofEventArgs & args);
+    
+    void keyPressed(int key);
+    void keyReleased(int key);
+    void mouseMoved(int x, int y );
+    void mouseDragged(int x, int y, int button);
+    void mousePressed(int x, int y, int button);
+    void mouseReleased(int x, int y, int button);
+    void mouseEntered(int x, int y);
+    void mouseExited(int x, int y);
+    void windowResized(int w, int h);
+    void dragEvent(ofDragInfo dragInfo);
+    void gotMessage(ofMessage msg);
     
     ParameterFadeManager * fadeManager;
     
@@ -113,7 +117,7 @@ public:
     vector<ofxDatGuiComponent*> components;
     
     ofxDatGui* gui = new ofxDatGui( 100, 100 );
-
+    
     void onButtonEvent(ofxDatGuiButtonEvent e);
     void onSliderEvent(ofxDatGuiSliderEvent e);
     void onDropdownEvent(ofxDatGuiDropdownEvent e);
@@ -121,7 +125,6 @@ public:
     void onColorPickerEvent(ofxDatGuiColorPickerEvent e);
     void on2dPadEvent(ofxDatGui2dPadEvent e);
     void onTextInputEvent(ofxDatGuiTextInputEvent e);
-
     
     // osc
     ofxOscReceiver oscReceiver;
@@ -131,4 +134,17 @@ public:
     float circleRadius;
     ofColor col;
     
+    // stereoscopy
+    
+    std::shared_ptr<ofxStereoscopy::Plane> planeFloor;
+    std::shared_ptr<ofxStereoscopy::Plane> planeWall;
+    
+    vector<shared_ptr<ofxStereoscopy::Plane>> planes;
+    std::shared_ptr<ofxStereoscopy::Plane> activePlane;
+    int activePlaneIndex = 0;
+    
+    vector<shared_ptr<ofxStereoscopy::Scene>> scenes;
+    
+    void drawScenes(int _surfaceId);
+
 };
