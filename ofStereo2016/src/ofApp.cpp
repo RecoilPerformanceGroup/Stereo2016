@@ -11,7 +11,14 @@ void ofApp::setupGui() {
     gui->addFRM(1.0f);
     
     gui->addSlider(float01);
-    new ColorPickerFromParameter(color01, gui, true);
+    
+    new ColorPickerWithAlpha(color01, gui);
+    
+    new SlidersVec3f(vec301, gui);
+    new SlidersVec2f(vec201, gui);
+    
+    new PadAndZ(vec301, gui);
+    new Pad2D(vec201, gui);
     
     oscReceiver.setup(9999);
 }
@@ -134,7 +141,6 @@ void ofApp::update(){
                         
                         // todo: osc on individual components of complex params
                         // eg. x, y,z r, g, b, a, ...
-                        
                     }
                 }
             }
@@ -146,7 +152,7 @@ void ofApp::update(){
 void ofApp::draw(){
 
     ofSetColor(color01);
-    ofDrawCircle(100,100, float01.get()*800);
+    ofDrawCircle(vec301.get().x,vec301.get().y, float01.get()*800);
     
 }
 

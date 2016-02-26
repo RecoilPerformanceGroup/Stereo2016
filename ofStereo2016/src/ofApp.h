@@ -12,8 +12,8 @@ public:
     
     ofParameter<float> float01{"float01", 1, 0, 1};
     ofParameter<ofColor> color01{"color01", ofColor::white,ofColor::black,ofColor::white};
-    ofParameter<ofVec2f> vec201;
-    ofParameter<ofVec3f> vec301;
+    ofParameter<ofVec2f> vec201{"position1", ofVec3f{50,50,50}, ofVec3f{0,0,0}, ofVec3f{100,100,100}};
+    ofParameter<ofVec3f> vec301{"position", ofVec3f{50,50,50}, ofVec3f{0,0,0}, ofVec3f{100,100,100}};
     ofParameter<float> float02;
     
     ofParameterGroup subSubParams{
@@ -36,7 +36,6 @@ public:
     
 		void setup();
         void setupGui();
-    
 		void update();
 		
         void draw();
@@ -61,14 +60,6 @@ public:
     vector<ofxDatGuiComponent*> components;
     
     ofxDatGui* gui = new ofxDatGui( 100, 100 );
-
-    void onButtonEvent(ofxDatGuiButtonEvent e);
-    void onSliderEvent(ofxDatGuiSliderEvent e);
-    void onDropdownEvent(ofxDatGuiDropdownEvent e);
-    void onMatrixEvent(ofxDatGuiMatrixEvent e);
-    void onColorPickerEvent(ofxDatGuiColorPickerEvent e);
-    void on2dPadEvent(ofxDatGui2dPadEvent e);
-    void onTextInputEvent(ofxDatGuiTextInputEvent e);
 
     
     // osc

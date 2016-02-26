@@ -84,9 +84,7 @@ private:
             isAlive = false;
         }
     }
-    
 };
-
 
 class ParameterFadeManager {
 public:
