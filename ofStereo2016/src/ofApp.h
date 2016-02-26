@@ -64,7 +64,7 @@ public:
     ofxDatGuiValuePlotter* plotter;
     vector<ofxDatGuiComponent*> components;
     
-    ofxDatGui* gui = new ofxDatGui( 100, 100 );
+    ofxDatGui* gui = new ofxDatGui( 0, 0 );
     
     void onButtonEvent(ofxDatGuiButtonEvent e);
     void onSliderEvent(ofxDatGuiSliderEvent e);
@@ -84,15 +84,10 @@ public:
     
     // stereoscopy
     
-    std::shared_ptr<ofxStereoscopy::Plane> planeFloor;
-    std::shared_ptr<ofxStereoscopy::Plane> planeWall;
-    
-    vector<shared_ptr<ofxStereoscopy::Plane>> planes;
-    std::shared_ptr<ofxStereoscopy::Plane> activePlane;
-    int activePlaneIndex = 0;
+    ofxStereoscopy::World world;
+    ofEasyCam worldModelCam;
     
     vector<shared_ptr<ofxStereoscopy::Scene>> scenes;
-    
     void drawScenes(int _surfaceId);
 
 };
