@@ -12,6 +12,157 @@
 #include "ofMain.h"
 
 namespace ofxStereoscopy {
+    
+    class Plane;
+    
+    class World {
+        
+    public:
+        
+        static constexpr const float dimensionMax = 10000.0;
+        
+        ofParameter<float> physical_eye_seperation_cm {"eye separation", 6.5, 0, 10};
+        ofParameter<ofVec3f> physical_camera_pos_cm {"camera position", ofVec3f(0,250,-1000), ofVec3f(-dimensionMax,-dimensionMax,-dimensionMax), ofVec3f(dimensionMax,dimensionMax,dimensionMax)};
+        ofParameter<float> physical_focus_distance_cm {"focus distance", 200, 0, dimensionMax};
+        ofParameter<float> physical_camera_near_clip {"camera near clip", 20, 0, dimensionMax};
+        ofParameter<float> pixels_cm {"pixels pr. cm", 100, 0, 1000};
+        
+        ofParameterGroup params{
+            "world",
+            physical_camera_pos_cm,
+            physical_eye_seperation_cm,
+            physical_focus_distance_cm,
+            physical_camera_near_clip,
+            pixels_cm,
+        };
+        
+        //TODO: Make parameter changes update all planes...
+        
+        void addPlane(std::string name, float width_cm, float height_cm, const ofVec3f& pos_cm, const ofQuaternion& orientation_q){
+            // TODO: Make planes and put them in map
+        }
+        
+        ;
+        
+        std::map<std::string, shared_ptr<ofxStereoscopy::Plane>> planes;
+        
+        //TODO: Make drawWorldModel
+        //TODO: Make drawPlane
+        
+    };
+    
+    class Plane : ofPlanePrimitive{
+        
+    public:
+        
+        Plane(std::string name, float width, float height, const ofVec3f& pos_cm, const ofQuaternion& orientation_q){
+            
+            setName(name);
+            ofPlanePrimitive::setWidth(width);
+            ofPlanePrimitive::setHeight(height);
+            ofPlanePrimitive::setOrientation(orientation_q);
+            
+            // TODO: bind size parameter to ofPlanePrimitive::width and ofPlanePrimitive::height
+            // TODO: bind position parameter to ofPlanePrimitive::position
+            // TODO: make a bound orientation parameter to ofPlanePrimitive::orientation quarternion
+
+            dimensionsChanged();
+            
+        };
+        
+        ~Plane() {};
+        
+        void setName(std::string name){
+            params.setName(name);
+        }
+        
+        void setWidth(float w) {
+            ofPlanePrimitive::setWidth(w);
+            dimensionsChanged();
+        }
+        
+        void setHeight(float h) {
+            ofPlanePrimitive::setHeight(h);
+            dimensionsChanged();
+        }
+        
+        void setOrientation(const ofQuaternion& q) {
+            ofPlanePrimitive::setOrientation(q);
+        }
+        
+        void dimensionsChanged(ofRectangle viewport = ofGetCurrentViewport()){
+            
+            physical_size_cm.set(ofVec2f(width, height));
+            
+            ofFbo::Settings fboSettings;
+            
+            fboSettings.numSamples = 8;
+            fboSettings.useDepth = true;
+            fboSettings.width = floor(pixels_cm * width);
+            fboSettings.height = floor(pixels_cm * height);
+            
+            fboLeft.allocate(fboSettings);
+            fboRight.allocate(fboSettings);
+            
+            camLeft.setScale(width, height, width);
+            camLeft.setNearClip(nearClip);
+            
+            camRight.setScale(width, height, width);
+            camRight.setNearClip(nearClip);
+            
+            lookAt(ofVec3f(0,0,0));
+
+        }
+        
+        void setupPerspective(){
+            camLeft.setupPerspective();
+            camRight.setupPerspective();
+        }
+        
+        void lookAt(ofVec3f v){
+            camLeft.lookAt(v);
+            camRight.lookAt(v);
+        }
+        
+        //TODO: Setup view portals and eye seperation
+        /*
+        void setupViewPortals(ofRectangle viewport = ofGetCurrentViewport())
+        {
+            
+            float eye = physical_eye_seperation_cm / physical_focus_distance_cm;
+            
+            right.setPosition(left.getPosition().x + eye, left.getPosition().y, left.getPosition().z);
+            
+            right.setupOffAxisViewPortal(viewport.getTopLeft(), viewport.getBottomLeft(), viewport.getBottomRight());
+            left.setupOffAxisViewPortal(viewport.getTopLeft(), viewport.getBottomLeft(), viewport.getBottomRight());
+            
+        }
+        */
+        
+        //TODO: Add begin and end calls to enter and exit cameras and FBOs
+        
+        ofParameter<bool> enabled {true};
+        ofParameter<ofVec3f> physical_pos_cm {"camera position", ofVec3f(0,0,0), ofVec3f(-World::dimensionMax,-World::dimensionMax,-World::dimensionMax), ofVec3f(World::dimensionMax,World::dimensionMax,World::dimensionMax)};
+        ofParameter<ofVec2f> physical_size_cm {"size", ofVec2f(100,100), ofVec2f(0,0), ofVec2f(World::dimensionMax*2,World::dimensionMax*2)};
+        ofParameter<float> pixels_cm {"pixels pr. cm", 100, 0, 1000};
+
+        ofParameterGroup params{
+            "plane",
+            enabled,
+            physical_pos_cm,
+            physical_size_cm,
+            pixels_cm,
+        };
+        
+        ofCamera camLeft, camRight;
+        ofFbo fboLeft, fboRight;
+        
+        float focusDistance;
+        float nearClip;
+        float eyeSeperation;
+
+    };
+    
     class Eyes {
     public:
         
@@ -137,8 +288,7 @@ namespace ofxStereoscopy {
         
     };
     
-    
-    class Plane {
+    class oldPlane {
         
     public:
         // TODO frustrum - dynamicly calculate
@@ -146,11 +296,11 @@ namespace ofxStereoscopy {
         
         //ofxStereoCamera<ofCamera> cam;
         
-        Plane(string n) {
+        oldPlane(string n) {
             name = n;
         };
         
-        ~Plane() {
+        ~oldPlane() {
         };
 
         ofxStereoscopy::Eyes cam;
@@ -548,22 +698,6 @@ namespace ofxStereoscopy {
             }
         };
         
-        /*    void parseSceneOsc(ofxOscMessage * m){
-         
-         vector<string> adrSplit = ofSplitString(m->getAddress(), "/");
-         string rest = ofSplitString(m->getAddress(), "/"+adrSplit[1])[1];
-         //cout<<adrSplit[1]<<"   "<<rest<<endl;
-         //cout << adrSplit[0] << " " << adrSplit[1] << " " <<adrSplit[2] << endl;
-         
-         if(adrSplit[1] == "scene"+ofToString(index) || "/"+adrSplit[1] == oscAddress) {
-         if(rest == "/enable/x" ) {
-         enabled = m->getArgAsInt32(0);
-         }
-         receiveOsc(m, rest);
-         }
-         }
-         
-         */
         void setSurface(int _surfaceId) {
             primarySurface = _surfaceId;
         }

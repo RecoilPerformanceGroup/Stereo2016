@@ -12,6 +12,7 @@ void ofApp::setup(){
     int resolutionX = ofGetWidth()/2;
     int resolutionY = (resolutionX * 9) / 16;
     
+    /*
     planeFloor.reset(new ofxStereoscopy::Plane("floor"));
     planeFloor->setup(resolutionX, resolutionY);
     planeFloor->setViewPort(ofRectangle(-1, -1, 2, 2));
@@ -27,7 +28,7 @@ void ofApp::setup(){
     activePlaneIndex = 0;
     
     activePlane = planes[activePlaneIndex];
-    
+    */
     scenes.push_back(make_shared<SceneTest>());
 
 }
@@ -168,15 +169,17 @@ void ofApp::update(){
         }
     }
     
+/* 
     for(auto p : planes) {
-//      p->cam.setPhysicalEyeSeparation(6.5);
+        p->cam.setPhysicalEyeSeparation(6.5);
         p->update();
     }
     
     for(auto s : scenes) {
         s->updateScene();
     }
-
+*/
+    
 }
 
 
@@ -214,41 +217,14 @@ void ofApp::draw(){
     ofEnableDepthTest();
     ofEnableAlphaBlending();
     glEnable(GL_DEPTH_TEST);
-    // draw scenes to surfaces, they are kept in the cameras fbo
     
-    for(int i=0;i < planes.size(); i++) {
-        planes[i]->beginLeft();
-        drawScenes(i);
-        planes[i]->endLeft();
-        
-        planes[i]->beginRight();
-        drawScenes(i);
-        planes[i]->endRight();
-    }
+    // we draw stereography world here
+    
     
     ofDisableDepthTest();
     
-    /* 
-     if(drawChessboards) {
-        for(int i=0; i<planes.size(); i++) {
-            planes[i]->drawChessboards();
-        }
-    }
-    */
-    
-//    if(drawGrids) {
-        for(int i=0; i<planes.size(); i++) {
-            planes[i]->drawGrids();
-        }
-//    }
-    
-        ofSetColor(255);
-        ofFill();
-        for(int i=0; i<planes.size(); i++) {
-            planes[i]->draw();
-        }
 }
-
+ 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
 
