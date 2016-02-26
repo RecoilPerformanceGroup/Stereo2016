@@ -48,11 +48,6 @@ public:
     float startTime;
     float endTime;
     
-private:
-    
-    void update(float timeBase);
-    
-    virtual void updateValue(float timeBase) {};
 };
 
 
