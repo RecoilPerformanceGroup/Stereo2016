@@ -119,6 +119,8 @@ void DatGuiParameterBinding<ofVec2f>::onSliderEvent(ofxDatGuiSliderEvent e) {
 //// __________________________________
 template<>
 void DatGuiParameterBinding<ofColor>::setup() {
+    
+    //todo:  rgb type  + rgba type
     //guiCompononents.push_back(gui->addSlider(p.getName() + "x", min.x, max.x));
     //guiCompononents.push_back(gui->addSlider(p.getName() + "y", min.y, max.y));
     //guiCompononents.push_back(gui->addSlider(p.getName() + "z", min.z, max.z));

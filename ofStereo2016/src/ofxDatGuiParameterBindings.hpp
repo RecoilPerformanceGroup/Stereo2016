@@ -11,18 +11,20 @@
 #include "ofMain.h"
 #include "ofxDatGui.h"
 
+// constructors should be bale to make the follow ing types:
 
-// todo use templates or base class with subclasses for different types
-// for now I just make it work for floats
+// colorpicker with alpha
+// colopicker without alpha
 
-//class DatGuiFromParameter
+// nice to have: HSV color picker
 
-//class PadAndSliderFromVec3fParameter
+// vec2 slider with two sliders
+// vec2 slider with 2dpad
+// vec3slider with 3 sliders
+// vec3slider with 3 2dpad and 1 slider
 
-// templatetype vec2f vec3f
-// class SlidersFromVector
-// creates 2 or 3 synced sliders
-
+// bool - toggle
+// bool - pad
 
 class AbstractDatGuiParameterBinding {
 public:
@@ -38,20 +40,7 @@ private:
 };
 
 
-// constructors should be bale to make the follow ing types:
 
-// colorpicker with alpha
-// colopicker without alpha
-
-// nice to have: HSV color picker
-
-// vec2 slider with two sliders
-// vec2 slider with 2dpad
-// vec3slider with 3 sliders
-// vec3slider with 3 2dpad and 1 slider
-
-// bool - toggle
-// bool - pad
 
 enum WidgetType {
     Color,
@@ -151,7 +140,6 @@ public:
     
 };
 
-
 class ColorPickerWithAlpha : public DatGuiParameterBinding<ofColor> {
 public:
     ColorPickerWithAlpha(ofParameter<ofColor> & p, ofxDatGui * gui) :
@@ -193,85 +181,6 @@ public:
     Pad2D(ofParameter<ofVec2f> & p, ofxDatGui * gui) :
     DatGuiParameterBinding(p, gui, Pad){
     };
-};
-
-
-
-/*class Vec2Sliders : public DatGuiParameterBinding<ofColor> {
-public:
-    ColorPicker(ofParameter<ofColor> & p, ofxDatGui * gui) :
-    DatGuiParameterBinding(p, gui, Color) {
-    }
-};*/
-
-
-/*
-class ColorPickerFromParameter {
-public:
-    
-    ColorPickerFromParameter(ofParameter<ofColor> & _p, ofxDatGui * gui, bool alphaSlider=false) : p(_p) {
-        
-        g = gui->addColorPicker(p.getName(), p.get());
-        
-        p.addListener(this, &ColorPickerFromParameter::paramChangedEvent);
-        g->onColorPickerEvent(this, &ColorPickerFromParameter::onColorPickerEvent);
-        
-        if(alphaSlider) {
-            string name = p.getName() + " alpha";
-            s = gui->addSlider(name, 0, p.get().limit(), p.get().a);
-            s->setPrecision(0);
-            s->onSliderEvent(this, &ColorPickerFromParameter::onSliderEvent);
-        }
-    }
-    
-    ~ColorPickerFromParameter() {
-        delete g;
-        if(s) delete s;
-    }
-    
-private:
-    
-    ofxDatGuiColorPicker * g;
-    ofxDatGuiSlider * s;
-    ofParameter<ofColor> & p;
-    
-    void paramChangedEvent(ofColor & color) {
-        g->setColor(color);
-        if(s) s->setValue(p.get().a);
-    }
-    
-    void onColorPickerEvent(ofxDatGuiColorPickerEvent e) {
-        // color picker doesn't have alpha, preserve its value
-        ofColor col(e.color);
-        col.a = p.get().a;
-        p.set(col);
-    }
-    
-    void onSliderEvent(ofxDatGuiSliderEvent e) {
-        // color picker doesn't have alpha, preserve its value
-        ofColor col(p.get());
-        col.a = e.value;
-        p.set(col);
-    }
-};*/
-
-
-class GuiManager {
-    
-public:
-    
-    void addPad2d(ofParameter<ofVec2f> & p, ofxDatGui * gui) {
-        //guiBindings.push_back(make_shared<Pad2D>(p,gui));
-        
-        new Pad2D(p,gui);
-    }
-    
-    shared_ptr<AbstractDatGuiParameterBinding> getDatGuiBinding(string name) {
-        
-    }
-    
-    vector<shared_ptr<AbstractDatGuiParameterBinding>> guiBindings;
-    
 };
 
 

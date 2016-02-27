@@ -59,8 +59,6 @@ public:
     void gotMessage(ofMessage msg);
     
     shared_ptr<ParameterFadeManager> fadeManager;
-    //shared_ptr<GuiManager> guiManager;
-    GuiManager * guiManager;
     
     vector<shared_ptr<AbstractDatGuiParameterBinding>> guiBindings;
     ofxDatGui* gui = new ofxDatGui( 0, 0 );

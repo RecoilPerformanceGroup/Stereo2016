@@ -5,8 +5,7 @@
 void ofApp::setup(){
     fadeManager = make_shared<ParameterFadeManager>();
     //guiManager = make_shared<GuiManager>();
-    guiManager = new GuiManager();
-/*  
+/*
     int resolutionX = 1920;
     int resolutionY = 1080;
 */
@@ -53,7 +52,6 @@ void ofApp::setupGui() {
     guiBindings.push_back(make_shared<SlidersVec3f>(vec301, gui));
     guiBindings.push_back(make_shared<SlidersVec2f>(vec201, gui));
     guiBindings.push_back(make_shared<PadAndZ>(vec301, gui));
-    guiManager->addPad2d(vec201, gui);
     
     oscReceiver.setup(9999);
 }
