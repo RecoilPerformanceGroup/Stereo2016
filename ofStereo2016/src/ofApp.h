@@ -62,9 +62,8 @@ public:
     //shared_ptr<GuiManager> guiManager;
     GuiManager * guiManager;
     
-    
     vector<shared_ptr<AbstractDatGuiParameterBinding>> guiBindings;
-    ofxDatGui * gui = new ofxDatGui( 100, 100 );
+    ofxDatGui* gui = new ofxDatGui( 0, 0 );
     
     void onButtonEvent(ofxDatGuiButtonEvent e);
     void onSliderEvent(ofxDatGuiSliderEvent e);
@@ -89,6 +88,9 @@ public:
     vector<shared_ptr<ofxStereoscopy::Plane>> planes;
     std::shared_ptr<ofxStereoscopy::Plane> activePlane;
     int activePlaneIndex = 0;
+    
+    ofxStereoscopy::World world;
+    ofEasyCam worldModelCam;
     
     vector<shared_ptr<ofxStereoscopy::Scene>> scenes;
     void drawScenes(int _surfaceId);

@@ -13,24 +13,31 @@ void ofApp::setup(){
     int resolutionX = ofGetWidth()/2;
     int resolutionY = (resolutionX * 9) / 16;
     
-    /*
-    planeFloor.reset(new ofxStereoscopy::Plane("floor"));
-    planeFloor->setup(resolutionX, resolutionY);
-    planeFloor->setViewPort(ofRectangle(-1, -1, 2, 2));
-    planeFloor->pos = ofVec2f(0,0);
-    planes.push_back(planeFloor);
-
-    planeWall.reset(new ofxStereoscopy::Plane("wall"));
-    planeWall->setup(resolutionX, resolutionY);
-    planeWall->setViewPort(ofRectangle(-1, -1, 2, 2));
-    planeWall->pos = ofVec2f(resolutionX,0);
-    planes.push_back(planeWall);
+    world.addPlane(make_shared<ofxStereoscopy::Plane>(
+                                                      "floor",
+                                                      800.0,
+                                                      800.0,
+                                                      ofVec3f(0,0,400),
+                                                      ofQuaternion(-90, ofVec3f(1,0,0))
+                                                      ));
     
-    activePlaneIndex = 0;
-    
-    activePlane = planes[activePlaneIndex];
-    */
+    world.addPlane(make_shared<ofxStereoscopy::Plane>(
+                                                      "wall",
+                                                      800.0,
+                                                      500.0,
+                                                      ofVec3f(0,250,0),
+                                                      ofQuaternion(0, ofVec3f(1,0,0))
+                                                      ));
+    world.addPlane(make_shared<ofxStereoscopy::Plane>(
+                                                      "thing",
+                                                      200.0,
+                                                      120.0,
+                                                      ofVec3f(0,60,700),
+                                                      ofQuaternion(0, ofVec3f(1,0,0))
+                                                      ));
+ 
     scenes.push_back(make_shared<SceneTest>());
+
 }
 
 void ofApp::setupGui() {
@@ -52,6 +59,19 @@ void ofApp::setupGui() {
 }
 
 void ofApp::drawGui(ofEventArgs &args) {
+    if(ofGetFrameNum() == 3){
+        worldModelCam.setPosition(ofVec3f(700, 600, 1500));
+        worldModelCam.lookAt(ofVec3f(-600,50,0));
+    }
+    
+    ofBackgroundGradient(ofColor(20), ofColor(40));
+    
+    // we draw stereography world here
+    
+    worldModelCam.begin();
+    world.draw();
+    worldModelCam.end();
+
     gui->draw();
 }
 
@@ -175,16 +195,7 @@ void ofApp::update(){
         }
     }
     
-/* 
-    for(auto p : planes) {
-        p->cam.setPhysicalEyeSeparation(6.5);
-        p->update();
-    }
-    
-    for(auto s : scenes) {
-        s->updateScene();
-    }
-*/
+    world.getPlane("thing")->rotate(1, ofVec3f(0,1,0));
     
 }
 
@@ -219,15 +230,7 @@ void ofApp::draw(){
     ofSetColor(color01);
     ofDrawCircle(vec301.get().x,vec301.get().y, float01.get()*800);
     
-    ofSetColor(255);
-    ofEnableDepthTest();
-    ofEnableAlphaBlending();
-    glEnable(GL_DEPTH_TEST);
-    
-    // we draw stereography world here
-    
-    
-    ofDisableDepthTest();
+//    ofDisableDepthTest();
     
 }
  

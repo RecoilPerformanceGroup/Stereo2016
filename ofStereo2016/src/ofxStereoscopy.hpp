@@ -19,58 +19,66 @@ namespace ofxStereoscopy {
         
     public:
         
-        static constexpr const float dimensionMax = 10000.0;
+        const static float dimensionMax;
         
         ofParameter<float> physical_eye_seperation_cm {"eye separation", 6.5, 0, 10};
         ofParameter<ofVec3f> physical_camera_pos_cm {"camera position", ofVec3f(0,250,-1000), ofVec3f(-dimensionMax,-dimensionMax,-dimensionMax), ofVec3f(dimensionMax,dimensionMax,dimensionMax)};
         ofParameter<float> physical_focus_distance_cm {"focus distance", 200, 0, dimensionMax};
         ofParameter<float> physical_camera_near_clip {"camera near clip", 20, 0, dimensionMax};
-        ofParameter<float> pixels_cm {"pixels pr. cm", 100, 0, 1000};
+        ofParameter<float> pixels_cm {"pixels pr. cm", 10, 0, 100};
         
-        ofParameterGroup params{
-            "world",
+        ofParameterGroup paramsCamera{
+            "camera",
             physical_camera_pos_cm,
             physical_eye_seperation_cm,
             physical_focus_distance_cm,
             physical_camera_near_clip,
+        };
+
+        ofParameterGroup paramsPlanes;
+        
+        ofParameterGroup params{
+            "world",
+            paramsCamera,
             pixels_cm,
         };
         
         //TODO: Make parameter changes update all planes...
         
-        void addPlane(std::string name, float width_cm, float height_cm, const ofVec3f& pos_cm, const ofQuaternion& orientation_q){
-            // TODO: Make planes and put them in map
-        }
+        void addPlane(shared_ptr<Plane> p);
+        shared_ptr<Plane> getPlane(std::string name);
         
-        ;
-        
-        std::map<std::string, shared_ptr<ofxStereoscopy::Plane>> planes;
+        std::map<std::string, shared_ptr<Plane>> planes;
         
         //TODO: Make drawWorldModel
         //TODO: Make drawPlane
         
+        void draw();        
+        
     };
     
-    class Plane : ofPlanePrimitive{
+    class Plane : public ofPlanePrimitive{
         
     public:
         
-        Plane(std::string name, float width, float height, const ofVec3f& pos_cm, const ofQuaternion& orientation_q){
+        Plane(const string & name, float width, float height, const ofVec3f& pos_cm, const ofQuaternion& orientation_q){
             
-            setName(name);
+            font.load("ofxbraitsch/fonts/Verdana.ttf", 32, true, true, true);
+            
             ofPlanePrimitive::setWidth(width);
             ofPlanePrimitive::setHeight(height);
+            ofPlanePrimitive::setGlobalPosition(pos_cm);
             ofPlanePrimitive::setOrientation(orientation_q);
+            setName(name);
             
             // TODO: bind size parameter to ofPlanePrimitive::width and ofPlanePrimitive::height
             // TODO: bind position parameter to ofPlanePrimitive::position
             // TODO: make a bound orientation parameter to ofPlanePrimitive::orientation quarternion
 
             dimensionsChanged();
-            
-        };
+        }
         
-        ~Plane() {};
+        ~Plane() {}
         
         void setName(std::string name){
             params.setName(name);
@@ -124,6 +132,99 @@ namespace ofxStereoscopy {
             camRight.lookAt(v);
         }
         
+        void drawPlaneModel(){
+            ofPushStyle();
+            ofPlanePrimitive::transformGL();
+            ofSetColor(255);
+            //drawChessboards();
+            //fboLeft.draw(-width/2, -height/2, width, height);
+            ofSetColor(127, 255, 255);
+            ofNoFill();
+            ofDrawRectangle(-width/2, -height/2, width, height);
+            ofFill();
+            font.drawStringAsShapes(params.getName(), (-width/2)+15, (height/2)-font.getLineHeight());
+            ofPlanePrimitive::restoreTransformGL();
+            ofPopStyle();
+        }
+
+        void drawCameraModel(){
+            ofPushStyle();
+            ofSetColor(0, 255, 255);
+            //camLeft.drawWireframe();
+            ofSetColor(255, 255, 0);
+            //camRight.drawWireframe();
+            ofPopStyle();
+        }
+        
+        void drawChessboard() {
+
+            ofPushStyle();
+            ofFill();
+            ofDisableDepthTest();
+            
+            float chessSize = 100;
+            
+            ofPushMatrix(); {
+
+                ofTranslate(-width/2, -height/2);
+                for(int x = 0; x < width/chessSize; x++){
+                    for(int y = 0; y < height/chessSize; y++){
+                        if(((y+x)%2)==1)
+                            ofSetColor(255,255,255,127);
+                        else
+                            ofSetColor(0,0,0,127);
+                        ofDrawRectangle(x*chessSize, y*chessSize, chessSize, chessSize);
+                    }
+                }
+            } ofPopMatrix();
+            
+            ofPopStyle();
+            
+        }
+        
+        void drawChessboards() {
+            
+            beginLeft();
+            drawChessboard();
+            endLeft();
+            
+            beginRight();
+            drawChessboard();
+            endRight();
+        }
+
+        
+        void beginLeft()
+        {
+            fboLeft.begin();
+            ofFloatColor c = ofGetCurrentRenderer()->getBackgroundColor();
+            ofClear(c);
+            camLeft.begin();
+        }
+        
+        void endLeft()
+        {
+            camLeft.end();
+            fboLeft.end();
+        }
+        
+        void beginRight()
+        {
+            fboRight.begin();
+            ofFloatColor c = ofGetCurrentRenderer()->getBackgroundColor();
+            ofClear(c);
+            camRight.begin();
+        }
+        
+        void endRight()
+        {
+            camRight.end();
+            fboRight.end();
+        }
+        
+
+
+        
         //TODO: Setup view portals and eye seperation
         /*
         void setupViewPortals(ofRectangle viewport = ofGetCurrentViewport())
@@ -144,22 +245,24 @@ namespace ofxStereoscopy {
         ofParameter<bool> enabled {true};
         ofParameter<ofVec3f> physical_pos_cm {"camera position", ofVec3f(0,0,0), ofVec3f(-World::dimensionMax,-World::dimensionMax,-World::dimensionMax), ofVec3f(World::dimensionMax,World::dimensionMax,World::dimensionMax)};
         ofParameter<ofVec2f> physical_size_cm {"size", ofVec2f(100,100), ofVec2f(0,0), ofVec2f(World::dimensionMax*2,World::dimensionMax*2)};
-        ofParameter<float> pixels_cm {"pixels pr. cm", 100, 0, 1000};
+        ofParameter<float> pixels_cm {"pixels pr. cm", 10, 0, 100};
+        ofParameter<float> physical_eye_seperation_cm {"eye separation", 6.5, 0, 10};
 
         ofParameterGroup params{
             "plane",
             enabled,
             physical_pos_cm,
             physical_size_cm,
+            physical_eye_seperation_cm,
             pixels_cm,
         };
         
         ofCamera camLeft, camRight;
         ofFbo fboLeft, fboRight;
+        ofTrueTypeFont font;
         
         float focusDistance;
         float nearClip;
-        float eyeSeperation;
 
     };
     
