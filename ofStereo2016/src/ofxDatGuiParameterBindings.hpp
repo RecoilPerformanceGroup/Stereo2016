@@ -7,9 +7,9 @@
 //
 
 #pragma once
+#include <memory>
 #include "ofMain.h"
 #include "ofxDatGui.h"
-
 
 
 // todo use templates or base class with subclasses for different types
@@ -23,11 +23,11 @@
 // class SlidersFromVector
 // creates 2 or 3 synced sliders
 
+
 class AbstractDatGuiParameterBinding {
 public:
     
     AbstractDatGuiParameterBinding(ofAbstractParameter & p, ofxDatGui * gui) : abstractParameter(p), gui(gui) {
-        
     }
     
     ofAbstractParameter & abstractParameter;
@@ -35,13 +35,10 @@ public:
     vector<ofxDatGuiComponent *> guiCompononents;
     
 private:
-    
 };
 
 
-
 // constructors should be bale to make the follow ing types:
-
 
 // colorpicker with alpha
 // colopicker without alpha
@@ -52,7 +49,6 @@ private:
 // vec2 slider with 2dpad
 // vec3slider with 3 sliders
 // vec3slider with 3 2dpad and 1 slider
-
 
 // bool - toggle
 // bool - pad
@@ -258,4 +254,24 @@ private:
         p.set(col);
     }
 };*/
+
+
+class GuiManager {
+    
+public:
+    
+    void addPad2d(ofParameter<ofVec2f> & p, ofxDatGui * gui) {
+        //guiBindings.push_back(make_shared<Pad2D>(p,gui));
+        
+        new Pad2D(p,gui);
+    }
+    
+    shared_ptr<AbstractDatGuiParameterBinding> getDatGuiBinding(string name) {
+        
+    }
+    
+    vector<shared_ptr<AbstractDatGuiParameterBinding>> guiBindings;
+    
+};
+
 

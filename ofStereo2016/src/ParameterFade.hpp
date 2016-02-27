@@ -48,8 +48,6 @@ public:
     float startTime;
     float endTime;
     
-private:
-    
 };
 
 

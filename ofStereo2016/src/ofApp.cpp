@@ -1,8 +1,36 @@
 #include "ofApp.h"
+#include "SceneTest.hpp"
 
 //--------------------------------------------------------------
 void ofApp::setup(){
     fadeManager = new ParameterFadeManager();
+    
+/*  
+    int resolutionX = 1920;
+    int resolutionY = 1080;
+*/
+    int resolutionX = ofGetWidth()/2;
+    int resolutionY = (resolutionX * 9) / 16;
+    
+    /*
+    planeFloor.reset(new ofxStereoscopy::Plane("floor"));
+    planeFloor->setup(resolutionX, resolutionY);
+    planeFloor->setViewPort(ofRectangle(-1, -1, 2, 2));
+    planeFloor->pos = ofVec2f(0,0);
+    planes.push_back(planeFloor);
+
+    planeWall.reset(new ofxStereoscopy::Plane("wall"));
+    planeWall->setup(resolutionX, resolutionY);
+    planeWall->setViewPort(ofRectangle(-1, -1, 2, 2));
+    planeWall->pos = ofVec2f(resolutionX,0);
+    planes.push_back(planeWall);
+    
+    activePlaneIndex = 0;
+    
+    activePlane = planes[activePlaneIndex];
+    */
+    scenes.push_back(make_shared<SceneTest>());
+
 }
 
 
@@ -146,16 +174,63 @@ void ofApp::update(){
             }
         }
     }
+    
+/* 
+    for(auto p : planes) {
+        p->cam.setPhysicalEyeSeparation(6.5);
+        p->update();
+    }
+    
+    for(auto s : scenes) {
+        s->updateScene();
+    }
+*/
+    
 }
+
+
+void ofApp::drawScenes(int _surfaceId) {
+    
+    ofClear(ofColor::black);
+
+    glPushMatrix();
+    
+    for(auto s : scenes) {
+        s->beginSceneWorld(_surfaceId);
+    }
+    
+    for(auto s : scenes) {
+        s->drawScene(_surfaceId);
+    }
+    
+    for(auto s : scenes) {
+        s->endSceneWorld(_surfaceId);
+    }
+    
+    glPopMatrix();
+
+}
+
 
 //--------------------------------------------------------------
 void ofApp::draw(){
 
+    ofBackground(0);
     ofSetColor(color01);
     ofDrawCircle(vec301.get().x,vec301.get().y, float01.get()*800);
     
+    ofSetColor(255);
+    ofEnableDepthTest();
+    ofEnableAlphaBlending();
+    glEnable(GL_DEPTH_TEST);
+    
+    // we draw stereography world here
+    
+    
+    ofDisableDepthTest();
+    
 }
-
+ 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
 

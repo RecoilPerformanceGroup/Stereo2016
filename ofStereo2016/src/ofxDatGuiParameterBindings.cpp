@@ -37,7 +37,6 @@ void DatGuiParameterBinding<ofVec3f>::paramChangedEvent(ofVec3f & vec) {
         getZSlider()->setValue(vec.z);
     }
     
-    
 }
 
 template<>
@@ -102,8 +101,6 @@ void DatGuiParameterBinding<ofVec2f>::on2dPadEvent(ofxDatGui2dPadEvent e) {
 }
 
 
-
-
 template<>
 void DatGuiParameterBinding<ofVec2f>::onSliderEvent(ofxDatGuiSliderEvent e) {
     
@@ -131,7 +128,6 @@ void DatGuiParameterBinding<ofColor>::setup() {
         guiCompononents.push_back(gui->addColorPicker(p.getName(), p.get()));
         
         string name = p.getName() + " alpha";
-        
         ofxDatGuiSlider * s = gui->addSlider(name, 0, p.get().limit(), p.get().a);
         
         s->setPrecision(0);
