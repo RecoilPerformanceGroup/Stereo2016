@@ -3,8 +3,9 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    fadeManager = new ParameterFadeManager();
-    
+    fadeManager = make_shared<ParameterFadeManager>();
+    //guiManager = make_shared<GuiManager>();
+    guiManager = new GuiManager();
 /*  
     int resolutionX = 1920;
     int resolutionY = 1080;
@@ -30,9 +31,7 @@ void ofApp::setup(){
     activePlane = planes[activePlaneIndex];
     */
     scenes.push_back(make_shared<SceneTest>());
-
 }
-
 
 void ofApp::setupGui() {
     
@@ -40,13 +39,14 @@ void ofApp::setupGui() {
     
     gui->addSlider(float01);
     
+    
     new ColorPickerWithAlpha(color01, gui);
     
-    new SlidersVec3f(vec301, gui);
-    new SlidersVec2f(vec201, gui);
-    
-    new PadAndZ(vec301, gui);
-    new Pad2D(vec201, gui);
+    //guiBindings.push_back(make_shared<ColorPickerWithAlpha>(color01, gui));
+    guiBindings.push_back(make_shared<SlidersVec3f>(vec301, gui));
+    guiBindings.push_back(make_shared<SlidersVec2f>(vec201, gui));
+    guiBindings.push_back(make_shared<PadAndZ>(vec301, gui));
+    guiManager->addPad2d(vec201, gui);
     
     oscReceiver.setup(9999);
 }
