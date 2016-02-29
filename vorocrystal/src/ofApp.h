@@ -6,8 +6,6 @@
 #include "ofxVoro.h"
 #include "ofxGui.h"
 
-//#include "ofxOlaShaderLight.h"
-
 struct Cell {
     ofMesh mesh;
     ofVec3f offset;
@@ -114,6 +112,9 @@ class ofApp : public ofBaseApp{
     
     VoroCube * cube;
     
+    ofShader shader;
+    ofPlanePrimitive plane;
+
     ofEasyCam cam;
     
     ofParameterGroup params;

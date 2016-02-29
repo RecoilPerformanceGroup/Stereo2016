@@ -3,6 +3,7 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     
+    shader.load("shadersGL3/shader");
     
     params.add(
     numCells.set("Cells", 40, 0, 1000),
@@ -14,7 +15,6 @@ void ofApp::setup(){
     params.add(autoRotationSpeed.set("rot speed", 0, -1, 1));
     
     params.add(crystalColor.set("Crystal color", ofColor_<float>(1,1,1,1), ofColor_<float>(0,0,0,0), ofColor_<float>(1,1,1,1)));
-    
     
     params.add(spotlightPosition.set("spotlightPosition", ofVec3f(0,0,0), ofVec3f(-4,-4,-4), ofVec3f(4,4,4)));
     
@@ -45,18 +45,13 @@ void ofApp::setup(){
     ofLoadImage(tex, "grain-texture.png");
     
     //grab.setup(1080, 720, true);
-    
-    
     randFbo.allocate(1024, 1024);
-    
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
     
-    
     /*ofFbo newFbo = ofFbo();
-    
     
     float ss = ofRandom(128,512);
     newFbo.allocate(ss,ss);
@@ -87,6 +82,12 @@ void ofApp::update(){
     //mat.setEmissiveColor(ofFloatColor(1,1,0.5));
     // diffuse ambient specular emissive
     //mat.setColors(crystalColor.get().getLerped(ofColor(0), 0.4), crystalColor.get().getLerped(ofColor(0), 0.2), crystalColor.get().getLerped(ofColor(255), 0.2), ofColor(0));
+    
+    
+    
+    plane.set(0.2, 0.2, 20, 20, OF_PRIMITIVE_TRIANGLES);
+
+    
 }
 
 //--------------------------------------------------------------
@@ -96,9 +97,14 @@ void ofApp::draw(){
     ofEnableLighting();
     ofEnableNormalizedTexCoords();
     
-    ofBackground(0);
-    ofSetColor(255*ofGetMouseY()/ofGetHeight());
 
+
+    ofBackground(0);
+    ofSetColor(255);
+    
+    
+    
+    
     cam.begin();
     
     ofBackground(0);
@@ -129,6 +135,15 @@ void ofApp::draw(){
             ofRotateY(rotation.y);
             ofRotateZ(rotation.z);
             
+            //mat.begin();
+            shader.begin();
+            
+            // a lot of the time you have to pass in variables into the shader.
+            // in this case we need to pass it the elapsed time for the sine wave animation.
+            shader.setUniform1f("time", ofGetElapsedTimef()*1.0);
+            
+            //plane.drawWireframe();
+            
             for(int i = 0; i < cube->cellMeshes.size(); i++){
                 ofPushMatrix(); {
                     
@@ -142,22 +157,27 @@ void ofApp::draw(){
                     
                     ofTranslate(-cube->cellMeshes[i].getCentroid().x, -cube->cellMeshes[i].getCentroid().y, -cube->cellMeshes[i].getCentroid().z);
                     
-                     mat.begin();
                     
                     tex.bind();
-                    //cube->cellMeshes[i].drawWireframe();
+
+                    ofSetColor(0);
+                    cube->cellMeshes[i].drawWireframe();
                     
+                    ofSetColor(255);
                     cube->cellMeshes[i].drawFaces();
-                   
                     
                     //ofDrawSphere(cube->cellMeshes[i].getCentroid(), 0.005);
                     
                     tex.unbind();
-                    mat.end();
+                    
                     
                 } ofPopMatrix();
                 
             }
+            
+            shader.end();
+            //mat.end();
+            
         } ofPopMatrix();
         
     
@@ -168,6 +188,9 @@ void ofApp::draw(){
     pointlight.disable();
     
     
+
+    
+    
     cam.draw();
     
     if(debugDraw) {
@@ -176,6 +199,8 @@ void ofApp::draw(){
     }
     
     cam.end();
+    
+
     
     ofDisableNormalizedTexCoords();
     ofDisableDepthTest();
