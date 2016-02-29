@@ -61,7 +61,7 @@ public:
     shared_ptr<ParameterFadeManager> fadeManager;
     
     vector<shared_ptr<AbstractDatGuiParameterBinding>> guiBindings;
-    ofxDatGui* gui = new ofxDatGui( 0, 0 );
+    ofxDatGui* gui;
     
     void onButtonEvent(ofxDatGuiButtonEvent e);
     void onSliderEvent(ofxDatGuiSliderEvent e);
@@ -80,13 +80,6 @@ public:
     ofColor col;
     
     // stereoscopy
-    std::shared_ptr<ofxStereoscopy::Plane> planeFloor;
-    std::shared_ptr<ofxStereoscopy::Plane> planeWall;
-    
-    vector<shared_ptr<ofxStereoscopy::Plane>> planes;
-    std::shared_ptr<ofxStereoscopy::Plane> activePlane;
-    int activePlaneIndex = 0;
-    
     ofxStereoscopy::World world;
     ofEasyCam worldModelCam;
     

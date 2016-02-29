@@ -41,7 +41,9 @@ void ofApp::setup(){
 
 void ofApp::setupGui() {
     
-    gui->addFRM(1.0f);
+    gui = new ofxDatGui( 0, 0 );
+    
+    //gui->addFRM(1.0f);
     
     gui->addSlider(float01);
     
@@ -52,6 +54,8 @@ void ofApp::setupGui() {
     guiBindings.push_back(make_shared<SlidersVec3f>(vec301, gui));
     guiBindings.push_back(make_shared<SlidersVec2f>(vec201, gui));
     guiBindings.push_back(make_shared<PadAndZ>(vec301, gui));
+    
+    ofSetFrameRate(60);
     
     oscReceiver.setup(9999);
 }
@@ -67,7 +71,7 @@ void ofApp::drawGui(ofEventArgs &args) {
     // we draw stereography world here
     
     worldModelCam.begin();
-    world.draw();
+    world.drawModel();
     worldModelCam.end();
 
     gui->draw();
@@ -225,9 +229,15 @@ void ofApp::drawScenes(int _surfaceId) {
 void ofApp::draw(){
 
     ofBackground(0);
-    ofSetColor(color01);
-    ofDrawCircle(vec301.get().x,vec301.get().y, float01.get()*800);
+//    ofSetColor(color01);
+//    ofDrawCircle(vec301.get().x,vec301.get().y, float01.get()*800);
     
+    world.fboDrawProjectorCalibrations();
+
+    worldModelCam.begin();
+    world.drawModel();
+    worldModelCam.end();
+
 //    ofDisableDepthTest();
     
 }

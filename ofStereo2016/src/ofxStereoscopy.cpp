@@ -14,15 +14,19 @@ namespace ofxStereoscopy {
     
     void World::addPlane( shared_ptr<Plane> p){
         planes.insert(std::pair<string, shared_ptr<Plane>>(p->params.getName(),p));
-    
     }
     
     shared_ptr<Plane> World::getPlane(std::string name){
         return planes[name];
     }
     
+    void World::fboDrawProjectorCalibrations(){
+        for(std::pair<string, shared_ptr<Plane>> p : planes){
+            p.second->fboDrawChessboards();
+        }
+    }
     
-    void World::draw() {
+    void World::drawModel() {
         
         for(std::pair<string, shared_ptr<Plane>> p : planes){
             p.second->drawPlaneModel();
