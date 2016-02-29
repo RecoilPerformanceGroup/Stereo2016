@@ -28,7 +28,7 @@ template<>
 void DatGuiParameterBinding<ofVec3f>::paramChangedEvent(ofVec3f & vec) {
 
     if(widgetType == PadZ) {
-        getPad()->setValue(vec.x, vec.y);
+        getPad()->setPoint(vec);
         getZSlider()->setValue(vec.z);
         
     } else {
@@ -84,7 +84,7 @@ void DatGuiParameterBinding<ofVec2f>::paramChangedEvent(ofVec2f & vec) {
     
     
     if(widgetType == Pad) {
-        getPad()->setValue(vec.x, vec.y);
+        getPad()->setPoint(vec);
         
     } else {
         getXSlider()->setValue(vec.x);
