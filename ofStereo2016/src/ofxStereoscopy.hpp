@@ -22,7 +22,7 @@ namespace ofxStereoscopy {
         const static float dimensionMax;
         
         ofParameter<float> physical_eye_seperation_cm {"eye separation", 6.5, 0, 10};
-        ofParameter<ofVec3f> physical_camera_pos_cm {"camera position", ofVec3f(0,250,-1000), ofVec3f(-dimensionMax,-dimensionMax,-dimensionMax), ofVec3f(dimensionMax,dimensionMax,dimensionMax)};
+        ofParameter<ofVec3f> physical_camera_pos_cm {"camera position", ofVec3f(0,250,1200), ofVec3f(-dimensionMax,-dimensionMax,-dimensionMax), ofVec3f(dimensionMax,dimensionMax,dimensionMax)};
         ofParameter<float> physical_focus_distance_cm {"focus distance", 200, 0, dimensionMax};
         ofParameter<float> physical_camera_near_clip {"camera near clip", 20, 0, dimensionMax};
         ofParameter<float> pixels_cm {"pixels pr. cm", 2, 0, 100};
@@ -293,7 +293,7 @@ namespace ofxStereoscopy {
         //TODO: Add begin and end calls to enter and exit cameras and FBOs
         
         ofParameter<bool> enabled {true};
-        ofParameter<ofVec3f> physical_pos_cm {"camera position", ofVec3f(0,250,-1000), ofVec3f(-World::dimensionMax,-World::dimensionMax,-World::dimensionMax), ofVec3f(World::dimensionMax,World::dimensionMax,World::dimensionMax)};
+        ofParameter<ofVec3f> physical_pos_cm {"camera position", ofVec3f(0,250,1200), ofVec3f(-World::dimensionMax,-World::dimensionMax,-World::dimensionMax), ofVec3f(World::dimensionMax,World::dimensionMax,World::dimensionMax)};
         ofParameter<ofVec2f> physical_size_cm {"size", ofVec2f(100,100), ofVec2f(0,0), ofVec2f(World::dimensionMax*2,World::dimensionMax*2)};
         ofParameter<float> pixels_cm {"pixels pr. cm", 2, 0, 100};
         ofParameter<float> physical_eye_seperation_cm {"eye separation", 6.5, 0, 10};

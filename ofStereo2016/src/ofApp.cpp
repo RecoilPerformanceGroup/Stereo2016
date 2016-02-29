@@ -50,7 +50,7 @@ void ofApp::setupGui() {
     guiBindings.push_back(make_shared<ColorPickerWithAlpha>(color01, gui));
     guiBindings.push_back(make_shared<SlidersVec3f>(vec301, gui));
     guiBindings.push_back(make_shared<SlidersVec2f>(vec201, gui));
-    guiBindings.push_back(make_shared<PadAndZ>(vec301, gui));
+    guiBindings.push_back(make_shared<PadAndZ>(world.physical_camera_pos_cm, gui));
     
     ofSetFrameRate(60);
     
