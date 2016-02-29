@@ -9,6 +9,7 @@
 #include "ParameterFade.hpp"
 #include "ofxStereoscopy.hpp"
 #include "ofxDatGuiParameterBindings.hpp"
+#include "ofxGui.h"
 
 class ofApp : public ofBaseApp{
     
@@ -85,4 +86,8 @@ public:
     
     vector<shared_ptr<ofxStereoscopy::Scene>> scenes;
     void drawScenes(int _surfaceId);
+    
+    void saveParameters(ofParameterGroup & params);
+    void loadParameters(ofParameterGroup & params);
+    
 };

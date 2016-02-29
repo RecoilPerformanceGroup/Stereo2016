@@ -47,10 +47,7 @@ void ofApp::setupGui() {
     
     gui->addSlider(float01);
     
-    
-    new ColorPickerWithAlpha(color01, gui);
-    
-    //guiBindings.push_back(make_shared<ColorPickerWithAlpha>(color01, gui));
+    guiBindings.push_back(make_shared<ColorPickerWithAlpha>(color01, gui));
     guiBindings.push_back(make_shared<SlidersVec3f>(vec301, gui));
     guiBindings.push_back(make_shared<SlidersVec2f>(vec201, gui));
     guiBindings.push_back(make_shared<PadAndZ>(vec301, gui));
@@ -244,6 +241,10 @@ void ofApp::draw(){
  
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+    
+    if(key=='s') saveParameters(mainParams);
+    
+    if(key=='l') loadParameters(mainParams);
 
 }
 
@@ -295,4 +296,52 @@ void ofApp::gotMessage(ofMessage msg){
 //--------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo){ 
 
+}
+
+
+// Recursively save parameters in parameter group
+void ofApp::saveParameters(ofParameterGroup & params) {
+    
+    
+   // cout<<params.toString()<<endl;
+    
+    // like this maybe: https://github.com/elliotwoods/ofxRulr/blob/master/Core/src/ofxRulr/Utils/Serializable.h
+    
+    
+    
+    //string json = params.toString();
+    
+    //string filename = "settings.txt";
+   // ofFile output;
+    
+    ofxPanel panel(params);
+    panel.saveToFile("settings.xml");
+    
+    
+    //output.open(filename, ofFile::WriteOnly, false);
+    //output << json;
+    
+    // todo json format
+    
+    //ofxPanel p;
+    //p.saveToFile(<#const std::string &filename#>)
+    
+}
+
+// Recursively load parameters in parameter group
+void ofApp::loadParameters(ofParameterGroup & params) {
+    
+    
+    //string filename = "settings.txt";
+    //ofFile input;
+    //input.open(filename, ofFile::ReadOnly, false);
+    
+    //ofBuffer buf = input.readToBuffer();
+    
+    //params.fromString(buf); // not implemented
+    
+    ofxPanel panel(params);
+    panel.loadFromFile("settings.xml");
+    
+    
 }
