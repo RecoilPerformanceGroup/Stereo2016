@@ -8,6 +8,6 @@ Addons:
 - ofxSmlSettings (core)
 - [ofxDatGui](https://github.com/mrbichel/ofxDatGui)
 - [ofxEasing](https://github.com/arturoc/ofxEasing)
-
+- [ofxVoro](https://github.com/mrbichel/ofxVoro)
 
 
