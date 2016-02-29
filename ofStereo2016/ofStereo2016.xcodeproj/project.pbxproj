@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0459E6C81C7F51B3000AB4C8 /* ofxDatGuiParameterBindings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0459E6C61C7F51B3000AB4C8 /* ofxDatGuiParameterBindings.cpp */; };
-		0459E6DA1C839ABF000AB4C8 /* ofxJSONElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0459E6D01C839ABF000AB4C8 /* ofxJSONElement.cpp */; };
-		0459E6DB1C839ABF000AB4C8 /* jsoncpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0459E6D91C839ABF000AB4C8 /* jsoncpp.cpp */; };
 		04B9CF3F1C7B43880035D79B /* ofxDatGuiComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04B9CF311C7B43880035D79B /* ofxDatGuiComponent.cpp */; };
 		04B9CF401C7B43880035D79B /* ofxSmartFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04B9CF381C7B43880035D79B /* ofxSmartFont.cpp */; };
 		04B9CF411C7B43880035D79B /* ofxDatGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04B9CF3A1C7B43880035D79B /* ofxDatGui.cpp */; };
@@ -75,12 +73,6 @@
 		029684CF678F70F6D3537A29 /* OscOutboundPacketStream.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscOutboundPacketStream.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscOutboundPacketStream.h; sourceTree = SOURCE_ROOT; };
 		0459E6C61C7F51B3000AB4C8 /* ofxDatGuiParameterBindings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxDatGuiParameterBindings.cpp; sourceTree = "<group>"; };
 		0459E6C71C7F51B3000AB4C8 /* ofxDatGuiParameterBindings.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ofxDatGuiParameterBindings.hpp; sourceTree = "<group>"; };
-		0459E6CF1C839ABF000AB4C8 /* ofxJSON.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxJSON.h; sourceTree = "<group>"; };
-		0459E6D01C839ABF000AB4C8 /* ofxJSONElement.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxJSONElement.cpp; sourceTree = "<group>"; };
-		0459E6D11C839ABF000AB4C8 /* ofxJSONElement.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxJSONElement.h; sourceTree = "<group>"; };
-		0459E6D61C839ABF000AB4C8 /* json-forwards.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "json-forwards.h"; sourceTree = "<group>"; };
-		0459E6D71C839ABF000AB4C8 /* json.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = json.h; sourceTree = "<group>"; };
-		0459E6D91C839ABF000AB4C8 /* jsoncpp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = jsoncpp.cpp; sourceTree = "<group>"; };
 		04B9CF231C7B43880035D79B /* ofxDatGui2dPad.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxDatGui2dPad.h; sourceTree = "<group>"; };
 		04B9CF241C7B43880035D79B /* ofxDatGuiButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxDatGuiButton.h; sourceTree = "<group>"; };
 		04B9CF251C7B43880035D79B /* ofxDatGuiColorPicker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxDatGuiColorPicker.h; sourceTree = "<group>"; };
@@ -182,69 +174,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0459E6CD1C839ABF000AB4C8 /* ofxJSON */ = {
-			isa = PBXGroup;
-			children = (
-				0459E6CE1C839ABF000AB4C8 /* src */,
-				0459E6D21C839ABF000AB4C8 /* libs */,
-			);
-			name = ofxJSON;
-			sourceTree = "<group>";
-		};
-		0459E6CE1C839ABF000AB4C8 /* src */ = {
-			isa = PBXGroup;
-			children = (
-				0459E6CF1C839ABF000AB4C8 /* ofxJSON.h */,
-				0459E6D01C839ABF000AB4C8 /* ofxJSONElement.cpp */,
-				0459E6D11C839ABF000AB4C8 /* ofxJSONElement.h */,
-			);
-			name = src;
-			path = ../../../addons/ofxJSON/src;
-			sourceTree = "<group>";
-		};
-		0459E6D21C839ABF000AB4C8 /* libs */ = {
-			isa = PBXGroup;
-			children = (
-				0459E6D31C839ABF000AB4C8 /* jsoncpp */,
-			);
-			name = libs;
-			path = ../../../addons/ofxJSON/libs;
-			sourceTree = "<group>";
-		};
-		0459E6D31C839ABF000AB4C8 /* jsoncpp */ = {
-			isa = PBXGroup;
-			children = (
-				0459E6D41C839ABF000AB4C8 /* include */,
-				0459E6D81C839ABF000AB4C8 /* src */,
-			);
-			path = jsoncpp;
-			sourceTree = "<group>";
-		};
-		0459E6D41C839ABF000AB4C8 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				0459E6D51C839ABF000AB4C8 /* json */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		0459E6D51C839ABF000AB4C8 /* json */ = {
-			isa = PBXGroup;
-			children = (
-				0459E6D61C839ABF000AB4C8 /* json-forwards.h */,
-				0459E6D71C839ABF000AB4C8 /* json.h */,
-			);
-			path = json;
-			sourceTree = "<group>";
-		};
-		0459E6D81C839ABF000AB4C8 /* src */ = {
-			isa = PBXGroup;
-			children = (
-				0459E6D91C839ABF000AB4C8 /* jsoncpp.cpp */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
 		04B9CF201C7B43880035D79B /* ofxDatGui */ = {
 			isa = PBXGroup;
 			children = (
@@ -433,7 +362,6 @@
 				E6053AB7FEC63D5F83825B88 /* ofxOsc */,
 				04B9CF201C7B43880035D79B /* ofxDatGui */,
 				04F001101C7CA8710001F8C7 /* ofxEasing */,
-				0459E6CD1C839ABF000AB4C8 /* ofxJSON */,
 			);
 			name = addons;
 			sourceTree = "<group>";
@@ -638,8 +566,6 @@
 				B56FE57CC35806596D38118C /* ofxSliderGroup.cpp in Sources */,
 				1CD33E884D9E3358252E82A1 /* ofxToggle.cpp in Sources */,
 				72A929D3561B8232A182ABFC /* ofxOscBundle.cpp in Sources */,
-				0459E6DB1C839ABF000AB4C8 /* jsoncpp.cpp in Sources */,
-				0459E6DA1C839ABF000AB4C8 /* ofxJSONElement.cpp in Sources */,
 				5864AD82E20F15536D054EA3 /* ofxOscMessage.cpp in Sources */,
 				4ADB88E2FB52E76A471065DE /* ofxOscParameterSync.cpp in Sources */,
 				640279EE111671BD026CB013 /* ofxOscReceiver.cpp in Sources */,

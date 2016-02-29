@@ -10,7 +10,6 @@
 #include "ofxStereoscopy.hpp"
 #include "ofxDatGuiParameterBindings.hpp"
 #include "ofxGui.h"
-#include "ofxJson.h"
 
 class ofApp : public ofBaseApp{
     
@@ -97,6 +96,5 @@ public:
     
     void saveParameters(ofParameterGroup & params);
     void loadParameters(ofParameterGroup & params);
-    ofxJSONElement result;
     
 };
