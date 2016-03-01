@@ -16,23 +16,14 @@ class ofApp : public ofBaseApp{
 public:
     
     ofParameter<ofVec3f> stage_size_cm{"Stage Size", ofVec3f{800,500,800}, ofVec3f{600,300,600}, ofVec3f{1000,800,1000}};
-    
-    ofParameter<float> float01{"float01", 1, 0, 1};
-    ofParameter<ofColor> color01{"color01", ofColor::white,ofColor::black,ofColor::white};
-    ofParameter<ofVec2f> vec201{"position1", ofVec3f{50,50,50}, ofVec3f{0,0,0}, ofVec3f{100,100,100}};
-    ofParameter<float> float02;
-    
-    ofParameterGroup subParams{
-        "subParams",
-        float01,
-        float02,
-        color01};
-    
+    ofParameter<bool> calibrate_planes{"Calibrate Planes", false, false, true};
+    ofParameter<ofColor> background_color{"Background Color", ofColor::white,ofColor::black,ofColor::white};
+
     ofParameterGroup mainParams{
         "mainParams",
         stage_size_cm,
-        subParams,
-        vec201
+        calibrate_planes,
+        background_color
     };
     
     void setup();
@@ -84,7 +75,7 @@ public:
     void drawScenes(int _surfaceId);
     
     void stageResized(ofVec3f& v);
-    void resizeStage();
+    void updateStage();
     bool flagStageResized = false;
     
     void saveParameters(ofParameterGroup & params);

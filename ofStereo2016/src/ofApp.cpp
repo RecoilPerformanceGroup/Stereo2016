@@ -28,7 +28,7 @@ void ofApp::setup(){
                                                       ofQuaternion(-90, ofVec3f(1,0,0)),
                                                       &world
                                                       ));
-    world.addPlane(make_shared<ofxStereoscopy::Plane>(
+/*    world.addPlane(make_shared<ofxStereoscopy::Plane>(
                                                       "thing",
                                                       200.0,
                                                       120.0,
@@ -36,7 +36,7 @@ void ofApp::setup(){
                                                       ofQuaternion(0, ofVec3f(1,0,0)),
                                                       &world
                                                       ));
-    
+*/    
     scenes.push_back(make_shared<SceneTest>());
     
     stage_size_cm.addListener(this, &ofApp::stageResized);
@@ -58,21 +58,24 @@ void ofApp::setupGui() {
     views.push_back("Free Model View");
     
     ofxDatGuiDropdown * viewDropdown = gui->addDropdown("Model View", views);
-    
-    guiBindings.push_back(make_shared<SlidersVec3f>(world.physical_camera_pos_cm, gui));
-
-    gui->addBreak();
-    
-    guiBindings.push_back(make_shared<SlidersVec3f>(stage_size_cm, gui));
-    
     viewDropdown->select(0);
     viewDropdown->onDropdownEvent(this, &ofApp::onDropdownEvent);
     
-    gui->addSlider(float01);
+    guiBindings.push_back(make_shared<SlidersVec3f>(world.physical_camera_pos_cm, gui));
     
-    guiBindings.push_back(make_shared<ColorPickerWithAlpha>(color01, gui));
-    guiBindings.push_back(make_shared<SlidersVec2f>(vec201, gui));
+    gui->addBreak();
+
+    ofxDatGuiToggle * calibrateToggle = gui->addToggle("Calibrate Planes",  false);
+    calibrateToggle->onButtonEvent(this, &ofApp::onButtonEvent);
+
+    guiBindings.push_back(make_shared<SlidersVec3f>(stage_size_cm, gui));
     
+    ofxDatGuiSlider * resolutionSlider = gui->addSlider(world.pixels_cm);
+    resolutionSlider->onSliderEvent(this,&ofApp::onSliderEvent);
+    
+    gui->addBreak();
+    guiBindings.push_back(make_shared<ColorPickerWithAlpha>(background_color, gui));
+
     ofSetFrameRate(60);
     
     oscReceiver.setup(9999);
@@ -91,10 +94,14 @@ void ofApp::drawGui(ofEventArgs &args) {
     
     // we draw stereography world here
     
+    ofEnableDepthTest();
+
     worldModelCam.begin();
     world.drawModel(!(gui->getDropdown("Model View")->getSelected()->getLabel() == "CAMERA MODEL VIEW"));
     worldModelCam.end();
     
+    ofDisableDepthTest();
+
     gui->draw();
 }
 
@@ -224,9 +231,7 @@ void ofApp::update(){
         worldModelCam.setNearClip(20);
     }
     
-    world.getPlane("thing")->setGlobalOrientation(ofQuaternion(sin(ofGetElapsedTimef()*2.0)*45, ofVec3f(0,1,0)));
-
-    resizeStage();
+    updateStage();
 
 }
 
@@ -261,7 +266,18 @@ void ofApp::draw(){
     //    ofSetColor(color01);
     //    ofDrawCircle(vec301.get().x,vec301.get().y, float01.get()*800);
     
-    world.fboDrawProjectorCalibrations();
+    if(calibrate_planes){
+        world.fboDrawProjectorCalibrations();
+    } else {
+        for(std::pair<string, shared_ptr<ofxStereoscopy::Plane>> p : world.planes){
+            p.second->beginLeft();
+            ofClear(background_color);
+            p.second->endLeft();
+            p.second->beginRight();
+            ofClear(background_color);
+            p.second->endRight();
+        }
+    }
     
     ofPushMatrix();
     
@@ -278,6 +294,12 @@ void ofApp::draw(){
     
     //    ofDisableDepthTest();
     
+}
+
+void ofApp::onButtonEvent(ofxDatGuiButtonEvent e){
+    if(e.target->getLabel() == "CALIBRATE PLANES"){
+        calibrate_planes.set(e.target->getEnabled());
+    }
 }
 
 void ofApp::onDropdownEvent(ofxDatGuiDropdownEvent e){
@@ -302,11 +324,17 @@ void ofApp::onDropdownEvent(ofxDatGuiDropdownEvent e){
     e.target->collapse();
 }
 
+void ofApp::onSliderEvent(ofxDatGuiSliderEvent e){
+    if(e.target->getLabel() == "PIXELS PR. CM"){
+        flagStageResized = true;
+    }
+}
+
 void ofApp::stageResized(ofVec3f& v){
     flagStageResized = true;
 }
 
-void ofApp::resizeStage(){
+void ofApp::updateStage(){
     if(flagStageResized){
     world.getPlane("wall")->ofPlanePrimitive::setHeight(stage_size_cm->y);
     world.getPlane("wall")->ofPlanePrimitive::setWidth(stage_size_cm->x);

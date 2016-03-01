@@ -25,7 +25,7 @@ namespace ofxStereoscopy {
         ofParameter<ofVec3f> physical_camera_pos_cm {"camera position", ofVec3f(0,250,1200), ofVec3f(-WORLD_DIMENSION_MAX/5,0,0), ofVec3f(WORLD_DIMENSION_MAX/5,WORLD_DIMENSION_MAX/5,WORLD_DIMENSION_MAX/5)};
         ofParameter<float> physical_focus_distance_cm {"focus distance", 200, 0, WORLD_DIMENSION_MAX};
         ofParameter<float> physical_camera_near_clip {"camera near clip", 20, 0, WORLD_DIMENSION_MAX};
-        ofParameter<float> pixels_cm {"pixels pr. cm", 2, 0, 100};
+        ofParameter<float> pixels_cm {"pixels pr. cm", 2, 0, 3};
         
         ofParameterGroup paramsCamera{
             "camera",
@@ -170,6 +170,7 @@ namespace ofxStereoscopy {
         
         void drawPlaneModel(){
             ofPushStyle();
+            ofEnableDepthTest();
             ofPlanePrimitive::transformGL();
             ofSetColor(255,255);
             textureLeft.draw(-width/2, -height/2, width, height);
@@ -177,6 +178,7 @@ namespace ofxStereoscopy {
             ofNoFill();
             ofDrawRectangle(-width/2, -height/2, width, height);
             ofFill();
+            ofDisableDepthTest();
             font.drawStringAsShapes(params.getName(), (-width/2)+15, (height/2)-font.getLineHeight());
             ofPlanePrimitive::restoreTransformGL();
             ofPopStyle();
@@ -189,6 +191,8 @@ namespace ofxStereoscopy {
         
         void drawCameraModel(ofCamera cam, ofColor c){
             ofPushStyle();
+            ofEnableDepthTest();
+
             ofPushMatrix();
             
             cam.transformGL();

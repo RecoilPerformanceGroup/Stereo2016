@@ -32,10 +32,10 @@ namespace ofxStereoscopy {
         
         if(showCameraFrustrums){
             for(std::pair<string, shared_ptr<Plane>> p : planes){
-                
                 p.second->drawCamerasModel();
             }
         }
+        ofDisableDepthTest();
         ofDrawAxis(100);
         ofDrawBitmapString("+X", 100, 0, 0);
         ofDrawBitmapString("+Y", 0, 100, 0);
