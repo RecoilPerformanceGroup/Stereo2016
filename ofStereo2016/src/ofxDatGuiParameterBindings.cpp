@@ -15,7 +15,7 @@ template<>
 void DatGuiParameterBinding<ofVec3f>::setup() {
     
     if(widgetType == PadZ) {
-        addC(gui->add2dPad(p.getName()));
+        addC(gui->add2dPad(p.getName(), ofRectangle(min.x,min.y,max.x,max.y)));
     } else {
         addC(gui->addSlider(p.getName() + "x", min.x, max.x));
         addC(gui->addSlider(p.getName() + "y", min.y, max.y));
@@ -70,7 +70,7 @@ void DatGuiParameterBinding<ofVec2f>::setup() {
     
     if(widgetType == Pad) {
         
-        addC(gui->add2dPad(p.getName()));
+        addC(gui->add2dPad(p.getName(), ofRectangle(min.x,min.y,max.x,max.y)));
         
     } else {
         
