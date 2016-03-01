@@ -47,15 +47,14 @@ void ofApp::setupGui() {
     
     worldModelCam.setFov(75);
     
-    gui = new ofxDatGui( 0, 0 );
+    gui = new ofxDatGui( ofxDatGuiAnchor::TOP_RIGHT );
+    
+    gui->setTheme(new ofxDatGuiThemeWireframe());
     
     gui->addFRM(1.0f);
     gui->addBreak();
     
-    vector<string> views;
-    views.push_back("Perspective Model View");
-    views.push_back("Camera Model View");
-    views.push_back("Free Model View");
+    vector<string> views = {"Perspective Model View", "Camera Model View", "Free Model View"};
     
     ofxDatGuiDropdown * viewDropdown = gui->addDropdown("Model View", views);
     viewDropdown->select(0);
@@ -75,6 +74,12 @@ void ofApp::setupGui() {
     
     gui->addBreak();
     guiBindings.push_back(make_shared<ColorPickerWithAlpha>(background_color, gui));
+
+    // adding the optional header allows you to drag the gui around //
+    gui->addHeader(":: STEREO 2016 ::");
+    
+    // adding the optional footer allows you to collapse/expand the gui //
+    gui->addFooter();
 
     ofSetFrameRate(60);
     
