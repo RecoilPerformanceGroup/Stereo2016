@@ -10,7 +10,7 @@ int main( ){
     settings.height = 600;
     settings.setPosition(ofVec2f(300,0));
     settings.resizable = true;
-    settings.setGLVersion(4, 1);
+    settings.setGLVersion(3, 2);
     shared_ptr<ofAppBaseWindow> mainWindow = ofCreateWindow(settings);
     
     settings.width = 640;
@@ -18,7 +18,7 @@ int main( ){
     settings.setPosition(ofVec2f(0,0));
     settings.resizable = true;
     settings.shareContextWith = mainWindow;
-    settings.setGLVersion(4, 1);
+    settings.setGLVersion(3, 2);
     shared_ptr<ofAppBaseWindow> guiWindow = ofCreateWindow(settings);
     //guiWindow->setVerticalSync(false);
     

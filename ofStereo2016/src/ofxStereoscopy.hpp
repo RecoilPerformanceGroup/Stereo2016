@@ -47,6 +47,8 @@ namespace ofxStereoscopy {
         
         std::map<std::string, shared_ptr<Plane>> planes;
 
+        ofNode origin;
+        
         void addPlane(shared_ptr<Plane> p);
         shared_ptr<Plane> getPlane(std::string name);
         
@@ -66,14 +68,17 @@ namespace ofxStereoscopy {
         
     public:
         
-        Plane(const string & name, float width, float height, const ofVec3f& pos_cm, const ofQuaternion& orientation_q){
+        Plane(const string & name, float width, float height, const ofVec3f& pos_cm, const ofQuaternion& orientation_q, World * w){
             
             font.load("ofxbraitsch/fonts/Verdana.ttf", 32, true, true, true);
             
             ofPlanePrimitive::setWidth(width);
             ofPlanePrimitive::setHeight(height);
             ofPlanePrimitive::setGlobalPosition(pos_cm);
-            ofPlanePrimitive::setOrientation(orientation_q);
+            ofPlanePrimitive::setGlobalOrientation(orientation_q);
+            world = w;
+            ofPlanePrimitive::setParent(world->origin);
+            
             setName(name);
             
             // TODO: bind size parameter to ofPlanePrimitive::width and ofPlanePrimitive::height
@@ -112,10 +117,10 @@ namespace ofxStereoscopy {
             
             //TODO: Fix MSAA for FBOs
             
-            fboSettings.numSamples = 0;
+            //fboSettings.numSamples = 0;
             fboSettings.useDepth = true;
-            fboSettings.width = floor(pixels_cm * width);
-            fboSettings.height = floor(pixels_cm * height);
+            fboSettings.width = floor(world->pixels_cm * width);
+            fboSettings.height = floor(world->pixels_cm * height);
             //fboSettings.internalformat = GL_RGBA32F_ARB;
             fboSettings.internalformat = GL_RGBA;
                         
@@ -136,15 +141,20 @@ namespace ofxStereoscopy {
                 ofClear(0,255,255,255);
             fboRight.end();
             
+            camLeft.setParent(world->origin);
+            camRight.setParent(world->origin);
+            
             //camLeft.setScale(width, height, width);
-            camLeft.setScale(pixels_cm,pixels_cm,pixels_cm);
+            camLeft.setScale(1,1,1);
             camLeft.setNearClip(nearClip);
+            camLeft.setFarClip(farClip);
             
             //camRight.setScale(width, height, width);
-            camRight.setScale(pixels_cm,pixels_cm,pixels_cm);
+            camRight.setScale(1,1,1);
             camRight.setNearClip(nearClip);
+            camRight.setFarClip(farClip);
             
-            camsLookAt(ofVec3f(0,0,0));
+            camsLookAt(getGlobalPosition()*getGlobalTransformMatrix());
 
         }
         
@@ -176,18 +186,62 @@ namespace ofxStereoscopy {
             ofPushStyle();
             ofSetColor(0, 255, 255);
             ofPushMatrix();
-            ofPlanePrimitive::transformGL();
-                ofTranslate(camLeft.getGlobalPosition());
-                ofDrawSphere(10);
-            ofPlanePrimitive::restoreTransformGL();
-            ofPopMatrix();
-            ofSetColor(255, 255, 0);
+
+/*            ofDrawLine(ofVec3f(-width/2.0,-height/2.0,0.0), camLeft.getGlobalPosition());
+            ofDrawLine(getLocalTransformMatrix() * ofVec3f(width/2.0,-height/2.0,0.0), camLeft.getGlobalPosition());
+*/
+            
+            
+            camLeft.transformGL();
+
+            ofMultMatrix(getGlobalTransformMatrix().getInverse());
+
+            ofFill();
+            ofSetColor(255);
             ofPushMatrix();
-            ofPlanePrimitive::transformGL();
-            ofTranslate(camRight.getGlobalPosition());
-            ofDrawSphere(10);
-            ofPlanePrimitive::restoreTransformGL();
+            ofScale(1.0f, 1.0f, 1.0f);
+            ofNode::draw();
             ofPopMatrix();
+
+            ofPushMatrix();
+            ofMultMatrix(getGlobalTransformMatrix());
+            ofMultMatrix(camLeft.getProjectionMatrix().getInverse());
+            ofNoFill();
+            ofDrawBox(2.0);
+            ofPopMatrix();
+
+            camLeft.restoreTransformGL();
+            
+            ofPopMatrix();
+
+            /*
+            //ofMultMatrix(camLeft.getLocalTransformMatrix());
+            
+                //--
+                //draw camera preview
+                //
+                ofMultMatrix(camLeft.getGlobalProjectionMatrix().getInverse());
+                
+                ofNoFill();
+                ofDrawBox(width);
+                
+                ofTranslate(camLeft.getPosition());
+                ofDrawSphere(10);
+            
+             */
+            /*
+             ofSetColor(255, 255, 0);
+            ofPushMatrix();
+            ofPlanePrimitive::transformGL();{
+                ofDrawLine(ofVec3f(-width/2,-height/2,0), camRight.getPosition());
+                ofDrawLine(ofVec3f(width/2,-height/2,0), camRight.getPosition());
+                ofDrawLine(ofVec3f(width/2,height/2,0), camRight.getPosition());
+                ofDrawLine(ofVec3f(-width/2,height/2,0), camRight.getPosition());
+                //ofTranslate(camRight.getPosition());
+                //ofDrawSphere(10);
+            } ofPlanePrimitive::restoreTransformGL();
+            ofPopMatrix();
+            */
             ofPopStyle();
         }
         
@@ -195,25 +249,61 @@ namespace ofxStereoscopy {
 
             ofPushStyle();
             ofFill();
-            ofDisableDepthTest();
+            ofEnableDepthTest();
+            
+            ofLight areaLight;
+            ofMaterial materialSphere;
+            
+            areaLight.setParent(*this);
+            areaLight.setup();
+            areaLight.enable();
+            areaLight.setAreaLight(400,400);
+            areaLight.setAmbientColor(ofFloatColor(0.1,0.1,0.1));
+            areaLight.setAttenuation(0.5,0.000001,0.000001);
+            areaLight.setDiffuseColor(ofFloatColor(1,1,1));
+            areaLight.setSpecularColor(ofFloatColor(1,1,1));
+            areaLight.setGlobalPosition(-400,500,500);
+            areaLight.setGlobalOrientation(ofQuaternion(-90, ofVec3f(1,0,0)));
+
+            materialSphere.setAmbientColor(ofFloatColor(1.0,0.0,1.0,1.0));
+            materialSphere.setDiffuseColor(ofFloatColor(0.8,0.8,0.4,1.0));
+            materialSphere.setSpecularColor(ofFloatColor(0.8,0.8,0.8,1.0));
+            materialSphere.setShininess(10);
             
             float chessSize = 100;
             
             ofPushMatrix(); {
+                ofMultMatrix(getLocalTransformMatrix());
+                
+                ofPushMatrix(); {
 
-                ofTranslate(-width/2, -height/2);
+                    ofTranslate(-width/2, -height/2);
                 for(int x = 0; x < width/chessSize; x++){
                     for(int y = 0; y < height/chessSize; y++){
                         if(((y+x)%2)==1)
-                            ofSetColor(255,255,255,127);
+                            ofSetColor(245,255,200,255);
                         else
-                            ofSetColor(0,0,0,127);
+                            ofSetColor(245,255,200,64);
                         ofDrawRectangle(x*chessSize, y*chessSize, chessSize, chessSize);
                     }
                 }
+                
+                } ofPopMatrix();
 
-                ofSetColor(0, 100, 255, 127);
-                ofDrawSphere(width/2, height/2, height/4);
+
+                ofSetColor(ofFloatColor(0.7,0.8,0.8,1.0));
+
+                ofDisableDepthTest();
+                font.drawString(params.getName(), (-width/2)+15, (height/2)-font.getLineHeight());
+                ofEnableDepthTest();
+                
+                ofSetColor(255, 255);
+
+                ofEnableLighting();
+                materialSphere.begin();
+                ofDrawSphere(0.0, 0.0, sin(ofGetElapsedTimef())*100, width/6.0);
+                materialSphere.end();
+
 
             } ofPopMatrix();
             
@@ -248,14 +338,27 @@ namespace ofxStereoscopy {
         {
             ofPushView();
             ofPushMatrix();
+            camLeft.setGlobalPosition(world->physical_camera_pos_cm);
+            
+            ofVec3f windowTopLeft(-width / 2.0f,
+                                    +height / 2.0f,
+                                    0.0f);
+            windowTopLeft = windowTopLeft * getLocalTransformMatrix();
+            ofVec3f windowBottomLeft(-width / 2.0f,
+                                       -height / 2.0f,
+                                       0.0f);
+            windowBottomLeft = windowBottomLeft * getLocalTransformMatrix();
+            ofVec3f  windowBottomRight(+width / 2.0f,
+                                        -height / 2.0f,
+                                        0.0f);
+            windowBottomRight = windowBottomRight * getLocalTransformMatrix();
+            // To setup off axis view portal we need to be in the plane's matrix. All window coordinates of the camera are relative to the plane.
+            ofPlanePrimitive::transformGL();
+            camLeft.setupOffAxisViewPortal(windowTopLeft , windowBottomLeft, windowBottomRight );
+            ofPlanePrimitive::restoreTransformGL();
             fboLeft.begin();
-            //ofFloatColor c = ofGetCurrentRenderer()->getBackgroundColor();
-            //ofClear(c);
-            camLeft.setPosition(physical_pos_cm*getGlobalTransformMatrix());
-            camLeft.setupOffAxisViewPortal(ofVec2f(0,0), ofVec2f(0,fboLeft.getHeight()), ofVec2f(fboLeft.getWidth(),fboLeft.getHeight()));
+            ofClear(255,0);
             camLeft.begin();
-            ofTranslate(fboLeft.getWidth()/2,fboLeft.getHeight()/2);
-            ofScale(pixels_cm,pixels_cm,pixels_cm);
         }
         
         void endLeft()
@@ -268,18 +371,33 @@ namespace ofxStereoscopy {
         
         void beginRight()
         {
+            
+            camLeft.setGlobalPosition(world->physical_camera_pos_cm);
+            
             ofPushView();
             ofPushMatrix();
-            fboRight.begin();
-//            ofFloatColor c = ofGetCurrentRenderer()->getBackgroundColor();
-//            ofClear(c);
-            float eye = physical_eye_seperation_cm / physical_focus_distance_cm;
-            camLeft.setPosition((physical_pos_cm->operator+(ofVec3f(eye,0,0)))*getGlobalTransformMatrix());
-            camRight.setupOffAxisViewPortal(ofVec2f(0,0), ofVec2f(0,fboRight.getHeight()), ofVec2f(fboRight.getWidth(),fboRight.getHeight()));
-            camRight.begin();
-            ofTranslate(fboRight.getWidth()/2,fboRight.getHeight()/2);
-            ofScale(pixels_cm,pixels_cm,pixels_cm);
+            float eye = world->physical_eye_seperation_cm;
+            camRight.setGlobalPosition(ofVec3f(world->physical_camera_pos_cm->x+eye,world->physical_camera_pos_cm->y,world->physical_camera_pos_cm->z));
 
+            ofVec3f windowTopLeft(-width / 2.0f,
+                                  +height / 2.0f,
+                                  0.0f);
+            windowTopLeft = windowTopLeft * getLocalTransformMatrix();
+            ofVec3f windowBottomLeft(-width / 2.0f,
+                                     -height / 2.0f,
+                                     0.0f);
+            windowBottomLeft = windowBottomLeft * getLocalTransformMatrix();
+            ofVec3f  windowBottomRight(+width / 2.0f,
+                                       -height / 2.0f,
+                                       0.0f);
+            windowBottomRight = windowBottomRight * getLocalTransformMatrix();
+            // To setup off axis view portal we need to be in the plane's matrix. All local transforms of the camera are relative to it's parent node, the plane.
+            ofPlanePrimitive::transformGL();
+            camRight.setupOffAxisViewPortal(windowTopLeft , windowBottomLeft, windowBottomRight );
+            ofPlanePrimitive::restoreTransformGL();
+            fboRight.begin();
+            ofClear(255,0);
+            camRight.begin();
         }
         
         void endRight()
@@ -293,459 +411,26 @@ namespace ofxStereoscopy {
         //TODO: Add begin and end calls to enter and exit cameras and FBOs
         
         ofParameter<bool> enabled {true};
-        ofParameter<ofVec3f> physical_pos_cm {"camera position", ofVec3f(0,250,1200), ofVec3f(-World::dimensionMax,-World::dimensionMax,-World::dimensionMax), ofVec3f(World::dimensionMax,World::dimensionMax,World::dimensionMax)};
+        ofParameter<ofVec3f> physical_pos_cm {"position", ofVec3f(0,0,0), ofVec3f(-World::dimensionMax,-World::dimensionMax,-World::dimensionMax), ofVec3f(World::dimensionMax,World::dimensionMax,World::dimensionMax)};
         ofParameter<ofVec2f> physical_size_cm {"size", ofVec2f(100,100), ofVec2f(0,0), ofVec2f(World::dimensionMax*2,World::dimensionMax*2)};
-        ofParameter<float> pixels_cm {"pixels pr. cm", 2, 0, 100};
-        ofParameter<float> physical_eye_seperation_cm {"eye separation", 6.5, 0, 10};
-        ofParameter<float> physical_focus_distance_cm {"focus distance", 200, 0, World::dimensionMax};
 
         ofParameterGroup params{
             "plane",
             enabled,
             physical_pos_cm,
             physical_size_cm,
-            physical_eye_seperation_cm,
-            physical_focus_distance_cm,
-            pixels_cm,
         };
         
         ofCamera camLeft, camRight;
         ofFbo fboLeft, fboRight;
         ofTexture textureLeft, textureRight;
         ofTrueTypeFont font;
+        World * world;
         
-        float nearClip;
+        float nearClip = 10;
+        float farClip = 10000.0;
 
     };
-    
-    class Eyes {
-    public:
-        
-        ofCamera left;
-        ofCamera right;
-        
-        Eyes(): physical_eye_seperation_cm(6.5), physical_focus_distance_cm(200), focus_distance(200) {};
-        ~Eyes(){};
-        
-        void setup(int w, int h)
-        {
-            height = 2.;
-            width = height *(w/h);
-            
-            ofFbo::Settings settings;
-            
-            settings.height = h;
-            settings.width = w;
-            settings.numSamples = 8;
-            settings.useDepth = true;
-            //settings.colorFormats = GL_RGBA;
-            
-            leftFbo.allocate(settings);
-            rightFbo.allocate(settings);
-            
-            left.setScale(1, 1, 1);
-            left.setNearClip(0.1);
-            
-            right.setScale(1, 1, 1);
-            right.setNearClip(0.1);
-        }
-        
-        void setPosition(float x, float y, float z) {
-            setPosition(ofVec3f(x,y,z));
-        }
-        
-        void setPosition(ofVec3f pos) {
-            left.setPosition(pos);
-            right.setPosition(pos);
-        }
-        
-        void setupPerspective(){
-            left.setupPerspective();
-            right.setupPerspective();
-        }
-        
-        void lookAt(ofVec3f v){
-            left.lookAt(v);
-            right.lookAt(v);
-        }
-        
-        void update(ofRectangle viewport = ofGetCurrentViewport())
-        {
-            
-            eye = physical_eye_seperation_cm / physical_focus_distance_cm;
-            
-            //FIXME: WHAT IS THIS?
-            
-            /*aspect = viewport.width / viewport.height;
-             fovy_tan = tanf(PI * left.getFov() / 360.);
-             fovx_tan = fovy_tan * aspect;
-             */
-            //zNear = left.getNearClip();
-            //zFar  = left.getFarClip();
-            
-            right.setPosition(left.getPosition().x + eye, left.getPosition().y, left.getPosition().z);
-            
-            right.setupOffAxisViewPortal(viewport.getTopLeft(), viewport.getBottomLeft(), viewport.getBottomRight());
-            left.setupOffAxisViewPortal(viewport.getTopLeft(), viewport.getBottomLeft(), viewport.getBottomRight());
-            
-        }
-        
-        void setPhysicalEyeSeparation(float cm) { physical_eye_seperation_cm = cm; }
-        void setPhysicalFocusDistance(float cm) { physical_focus_distance_cm = cm; }
-        void setFocusDistance(float v) { focus_distance = v; }
-        
-        void beginLeft()
-        {
-            leftFbo.begin();
-            ofFloatColor c = ofGetCurrentRenderer()->getBackgroundColor();
-            ofClear(c);
-            left.begin();
-        }
-        
-        void endLeft()
-        {
-            left.end();
-            leftFbo.end();
-        }
-        
-        void beginRight()
-        {
-            rightFbo.begin();
-            ofFloatColor c = ofGetCurrentRenderer()->getBackgroundColor();
-            ofClear(c);
-            right.begin();
-        }
-        
-        void endRight()
-        {
-            right.end();
-            rightFbo.end();
-        }
-        
-        ofFbo leftFbo, rightFbo;
-        
-    protected:
-        
-        int width, height;
-        
-        float eye, focus_distance;
-        
-        float physical_eye_seperation_cm;
-        float physical_focus_distance_cm;
-        
-        //FIXME: WHAT IS THIS?
-        // parallel
-        float zNear, zFar;
-        float fovx_tan, fovy_tan;
-        float aspect;
-        
-    private:
-        
-    };
-    
-    /*
-    class oldPlane {
-        
-    public:
-        // TODO frustrum - dynamicly calculate
-        // TODO viewer world location - inherit from world
-        
-        //ofxStereoCamera<ofCamera> cam;
-        
-        oldPlane(string n) {
-            name = n;
-        };
-        
-        ~oldPlane() {
-        };
-
-        ofxStereoscopy::Eyes cam;
-        
-        ofRectangle viewport;
-        
-        int width;
-        int height;
-        
-        int camWidth; // resolution
-        int camHeight;
-        
-        float aspect = 1.0;
-        
-        ofVec3f camPos;
-        
-        string name;
-        
-        ofVec2f pos;
-        
-        
-        //    ofxXmlSettings * settings;
-        
-        void setup(int w, int h) {
-            
-            viewport = ofRectangle(-1, -1, 2, 2);
-            
-            camHeight = 2.;
-            camWidth = height *(w/h);
-            
-            width = w;
-            height = h;
-            
-            cam.setup(w, h);
-            
-            cam.setPhysicalFocusDistance(120);
-            cam.setFocusDistance(50);
-            
-            
-        };
-        
-        void setViewPort(ofRectangle _viewport) {
-            viewport = _viewport;
-        };
-        
-        void drawGrid() {
-            
-            
-            ofFill();
-            
-            ofDrawGrid(1., 4, true);
-            ofDrawGrid(1., 4, true,false,true,false);
-            
-            ofLight l;
-            
-            l.setDirectional();
-            l.setPosition(ofVec3f(-1,1,-1));
-            l.lookAt(ofVec3f(0,0,0));
-            
-            l.enable();
-            
-            ofPushMatrix();
-            ofTranslate(0,0,1);
-            ofEnableLighting();
-            ofDrawSphere(0.1);
-            ofDisableLighting();
-            ofPopMatrix();
-            
-            ofEnableLighting();
-            ofDrawSphere(0.1);
-            ofDisableLighting();
-            
-            ofPushMatrix();
-            ofTranslate(0,0,-1);
-            ofEnableLighting();
-            ofDrawSphere(0.1);
-            ofDisableLighting();
-            ofPopMatrix();
-            
-            l.disable();
-            
-            ofPushMatrix();
-            ofTranslate(0,1,0);
-            ofDrawGrid(1., 4, true,false,true,false);
-            ofPopMatrix();
-            
-            ofPushMatrix();
-            ofTranslate(0,-1,0);
-            ofDrawGrid(1., 4, true,false,true,false);
-            ofPopMatrix();
-            
-        }
-        
-        void drawChessboard() {
-            
-            
-            
-            ofPushStyle();
-            ofFill();
-            ofDisableDepthTest();
-            
-            float chessSize = 0.05;
-            
-            ofPushMatrix(); {
-                ofScale(1./(aspect*height*1.0/width),1, 1);
-                
-                bool white = true;
-                bool red = true;
-                int row = 0;
-                
-                ofColor col;
-                
-                ofTranslate(-1, -1);
-                for(float x = 0; x < 2; x+=chessSize){
-                    
-                    row += 1;
-                    
-                    for(float y = 0; y < 2; y+=chessSize){
-                        
-                        col.set(200,200,200);
-                        
-                        if(!white) col.a = 0;
-                        
-                        ofSetColor(col.r, col.g, col.b, col.a);
-                        white = !white;
-                        
-                        ofDrawRectangle(x, y, chessSize, chessSize);
-                    }
-                }
-            } ofPopMatrix();
-            
-            
-            ofPushMatrix();
-            
-            ofSetColor(255,255,255);
-            ofDrawCircle(0, 0, 0.5, 0.5);
-            
-            
-            ofSetColor(255,255,0);
-            
-            ofDrawCircle(-0.9, -0.9, 0.04);
-            ofDrawCircle(0.9, 0.9, 0.04);
-            ofDrawCircle(-0.9, 0.9, 0.04);
-            ofDrawCircle(0.9, -0.9, 0.04);
-            
-            ofDrawCircle(0, 0.9, 0.04);
-            ofDrawCircle(0, -0.9, 0.04);
-            
-            
-            //ofDrawAxis(1);
-            ofPopMatrix();
-            ofPopStyle();
-            
-        }
-        
-        
-        void drawMappingGrid() {
-         
-         
-         ofPushStyle();
-         ofFill();
-         ofDisableDepthTest();
-         
-         float chessSize = 0.05;
-         
-         ofPushMatrix(); {
-         ofScale(1./(aspect*height*1.0/width),1, 1);
-         
-         
-         ofRect(-1,-1, 0.2, 2);
-         
-         
-         
-         
-         } ofPopMatrix();
-         
-         
-         ofPushMatrix();
-         
-         ofSetColor(255,0,0);
-         ofEllipse(0, 0, 1, 1);
-         //ofDrawAxis(1);
-         ofPopMatrix();
-         ofPopStyle();
-         
-         }
-         
-         void drawMappingGrids() {
-         
-         beginLeft();
-         drawChessboard();
-         endLeft();
-         
-         beginRight();
-         drawChessboard();
-         endRight();
-         }
-        
-        
-        void drawChessboards() {
-            
-            beginLeft();
-            drawChessboard();
-            endLeft();
-            
-            beginRight();
-            drawChessboard();
-            endRight();
-        }
-        
-        void drawGrids() {
-            cam.beginLeft();
-            drawGrid();
-            cam.endLeft();
-            
-            cam.beginRight();
-            drawGrid();
-            cam.endRight();
-        }
-        
-        
-        int controlSide = 0; // 0: left, 1: right
-        
-        void beginLeft(){
-            ofPushView();
-            glPushMatrix();
-            cam.beginLeft();
-            ofScale(aspect*height*1.0/width, 1.0, 1.0);
-        }
-        
-        void endLeft(){
-            cam.endLeft();
-            glPopMatrix();
-            ofPopView();
-        }
-        
-        void beginRight(){
-            ofPushView();
-            glPushMatrix();
-            cam.beginRight();
-            ofScale(aspect*height*1.0/width, 1.0, 1.0);
-        }
-        
-        void endRight(){
-            cam.endRight();
-            glPopMatrix();
-            ofPopView();
-        }
-        
-        void drawLeft() {
-            ofPushMatrix();
-            ofTranslate(pos.x, pos.y);
-            cam.leftFbo.draw(0,0,width,height);
-            ofPopMatrix();
-        }
-        
-        void drawRight() {
-            ofPushMatrix();
-            ofTranslate(pos.x + width, pos.y);
-            cam.rightFbo.draw(0,0,width,height);
-            ofPopMatrix();
-        }
-        
-        void draw(){
-            ofSetColor(255);
-            if(controlSide == 1) {
-                drawRight();
-                drawLeft();
-            } else {
-                drawLeft();
-                drawRight();
-            }
-        }
-        
-        void update() {
-            // observerPosition.set(sin(ofGetElapsedTimef()), cos(ofGetElapsedTimef()), -1);
-            cam.setPosition(camPos);
-            // cam.setFocusDistance( cam.left.getGlobalPosition().length() );
-            cam.update(viewport);
-        }
-        
-        void drawInfo() {
-            ofDrawBitmapString(name, 10, 10);
-        }
-        
-    private:
-        
-    };
-     */
     
     class Scene {
         

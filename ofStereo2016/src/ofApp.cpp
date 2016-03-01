@@ -13,26 +13,28 @@ void ofApp::setup(){
     int resolutionY = (resolutionX * 9) / 16;
     
     world.addPlane(make_shared<ofxStereoscopy::Plane>(
-                                                      "floor",
-                                                      800.0,
-                                                      800.0,
-                                                      ofVec3f(0,0,400),
-                                                      ofQuaternion(-90, ofVec3f(1,0,0))
-                                                      ));
-    
-    world.addPlane(make_shared<ofxStereoscopy::Plane>(
                                                       "wall",
                                                       800.0,
                                                       500.0,
                                                       ofVec3f(0,250,0),
-                                                      ofQuaternion(0, ofVec3f(1,0,0))
+                                                      ofQuaternion(0, ofVec3f(1,0,0)),
+                                                      &world
+                                                      ));
+    world.addPlane(make_shared<ofxStereoscopy::Plane>(
+                                                      "floor",
+                                                      800.0,
+                                                      800.0,
+                                                      ofVec3f(0,0,400),
+                                                      ofQuaternion(-90, ofVec3f(1,0,0)),
+                                                      &world
                                                       ));
     world.addPlane(make_shared<ofxStereoscopy::Plane>(
                                                       "thing",
                                                       200.0,
                                                       120.0,
                                                       ofVec3f(0,60,700),
-                                                      ofQuaternion(0, ofVec3f(1,0,0))
+                                                      ofQuaternion(0, ofVec3f(1,0,0)),
+                                                      &world
                                                       ));
  
     scenes.push_back(make_shared<SceneTest>());
@@ -43,14 +45,14 @@ void ofApp::setupGui() {
     
     gui = new ofxDatGui( 0, 0 );
     
-    //gui->addFRM(1.0f);
+    gui->addFRM(1.0f);
     
     gui->addSlider(float01);
     
     guiBindings.push_back(make_shared<ColorPickerWithAlpha>(color01, gui));
     guiBindings.push_back(make_shared<SlidersVec3f>(vec301, gui));
     guiBindings.push_back(make_shared<SlidersVec2f>(vec201, gui));
-    guiBindings.push_back(make_shared<PadAndZ>(world.physical_camera_pos_cm, gui));
+    guiBindings.push_back(make_shared<SlidersVec3f>(world.physical_camera_pos_cm, gui));
     
     ofSetFrameRate(60);
     
@@ -61,6 +63,7 @@ void ofApp::drawGui(ofEventArgs &args) {
     if(ofGetFrameNum() == 3){
         worldModelCam.setPosition(ofVec3f(700, 600, 1500));
         worldModelCam.lookAt(ofVec3f(-600,50,0));
+        worldModelCam.setNearClip(20);
     }
     
     ofBackgroundGradient(ofColor(20), ofColor(40));
@@ -194,7 +197,7 @@ void ofApp::update(){
         }
     }
     
-    world.getPlane("thing")->rotate(1, ofVec3f(0,1,0));
+    world.getPlane("thing")->setGlobalOrientation(ofQuaternion(sin(ofGetElapsedTimef()*2.0)*45, ofVec3f(0,1,0)));
     
 }
 
@@ -231,10 +234,19 @@ void ofApp::draw(){
     
     world.fboDrawProjectorCalibrations();
 
-    worldModelCam.begin();
-    world.drawModel();
-    worldModelCam.end();
+    ofPushMatrix();
 
+    float fboHeight = ofGetHeight()/world.planes.size();
+    
+    for(std::pair<string, shared_ptr<ofxStereoscopy::Plane>> p : world.planes){
+        float fboWidth = p.second->fboLeft.getWidth()/p.second->fboLeft.getHeight()*fboHeight;
+        p.second->fboLeft.draw(0, 0, fboWidth, fboHeight);
+        p.second->fboRight.draw(fboWidth, 0, fboWidth, fboHeight);
+        ofTranslate(0, fboHeight);
+    }
+    
+    ofPopMatrix();
+    
 //    ofDisableDepthTest();
     
 }
@@ -245,6 +257,12 @@ void ofApp::keyPressed(int key){
     if(key=='s') saveParameters(mainParams);
     
     if(key=='l') loadParameters(mainParams);
+    
+    if(key=='c') {
+        worldModelCam.setGlobalPosition(world.physical_camera_pos_cm);
+        worldModelCam.lookAt(ofVec3f(0,0,0));
+    }
+    
 
 }
 

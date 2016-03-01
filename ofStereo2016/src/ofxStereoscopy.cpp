@@ -28,16 +28,19 @@ namespace ofxStereoscopy {
     
     void World::drawModel() {
         
+        for(std::pair<string, shared_ptr<Plane>> p : planes){
+            p.second->drawPlaneModel();
+        }
+
         ofPushMatrix();
         ofPushStyle();
         ofTranslate(physical_camera_pos_cm);
-            ofSetColor(255, 0, 0);
-            ofDrawSphere(10);
+        ofSetColor(255, 0, 0);
+        ofDrawSphere(1);
         ofPopStyle();
         ofPopMatrix();
         
         for(std::pair<string, shared_ptr<Plane>> p : planes){
-            p.second->drawPlaneModel();
             p.second->drawCameraModel();
         }
         ofDrawAxis(100);
