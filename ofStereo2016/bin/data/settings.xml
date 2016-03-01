@@ -1,0 +1,12 @@
+<mainParams>
+	<Stage_Size>800, 500, 800</Stage_Size>
+	<subParams>
+		<float01>1</float01>
+		<UnknownName>4.74227e+30</UnknownName>
+		<color01>255, 255, 255, 255</color01>
+	</subParams>
+	<position1>50, 50</position1>
+<mainParams/>
+	<Calibrate_Planes>0</Calibrate_Planes>
+	<Background_Color>68, 68, 68, 255</Background_Color>
+</mainParams>
