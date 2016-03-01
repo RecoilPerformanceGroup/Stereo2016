@@ -15,26 +15,22 @@ class ofApp : public ofBaseApp{
     
 public:
     
+    ofParameter<ofVec3f> stage_size_cm{"Stage Size", ofVec3f{800,500,800}, ofVec3f{600,300,600}, ofVec3f{1000,800,1000}};
+    
     ofParameter<float> float01{"float01", 1, 0, 1};
     ofParameter<ofColor> color01{"color01", ofColor::white,ofColor::black,ofColor::white};
     ofParameter<ofVec2f> vec201{"position1", ofVec3f{50,50,50}, ofVec3f{0,0,0}, ofVec3f{100,100,100}};
-    ofParameter<ofVec3f> vec301{"position", ofVec3f{50,50,50}, ofVec3f{0,0,0}, ofVec3f{100,100,100}};
     ofParameter<float> float02;
-    
-    ofParameterGroup subSubParams{
-        "subSubParams",
-        vec301
-    };
     
     ofParameterGroup subParams{
         "subParams",
-        subSubParams,
         float01,
         float02,
         color01};
     
     ofParameterGroup mainParams{
         "mainParams",
+        stage_size_cm,
         subParams,
         vec201
     };
@@ -86,6 +82,10 @@ public:
     
     vector<shared_ptr<ofxStereoscopy::Scene>> scenes;
     void drawScenes(int _surfaceId);
+    
+    void stageResized(ofVec3f& v);
+    void resizeStage();
+    bool flagStageResized = false;
     
     void saveParameters(ofParameterGroup & params);
     void loadParameters(ofParameterGroup & params);

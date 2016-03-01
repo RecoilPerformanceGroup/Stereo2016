@@ -11,6 +11,8 @@
 
 #include "ofMain.h"
 
+#define WORLD_DIMENSION_MAX 10000.0
+
 namespace ofxStereoscopy {
     
     class Plane;
@@ -19,12 +21,10 @@ namespace ofxStereoscopy {
         
     public:
         
-        const static float dimensionMax;
-        
         ofParameter<float> physical_eye_seperation_cm {"eye separation", 6.5, 0, 10};
-        ofParameter<ofVec3f> physical_camera_pos_cm {"camera position", ofVec3f(0,250,1200), ofVec3f(-dimensionMax,-dimensionMax,-dimensionMax), ofVec3f(dimensionMax,dimensionMax,dimensionMax)};
-        ofParameter<float> physical_focus_distance_cm {"focus distance", 200, 0, dimensionMax};
-        ofParameter<float> physical_camera_near_clip {"camera near clip", 20, 0, dimensionMax};
+        ofParameter<ofVec3f> physical_camera_pos_cm {"camera position", ofVec3f(0,250,1200), ofVec3f(-WORLD_DIMENSION_MAX/5,0,0), ofVec3f(WORLD_DIMENSION_MAX/5,WORLD_DIMENSION_MAX/5,WORLD_DIMENSION_MAX/5)};
+        ofParameter<float> physical_focus_distance_cm {"focus distance", 200, 0, WORLD_DIMENSION_MAX};
+        ofParameter<float> physical_camera_near_clip {"camera near clip", 20, 0, WORLD_DIMENSION_MAX};
         ofParameter<float> pixels_cm {"pixels pr. cm", 2, 0, 100};
         
         ofParameterGroup paramsCamera{
@@ -34,7 +34,7 @@ namespace ofxStereoscopy {
             physical_focus_distance_cm,
             physical_camera_near_clip,
         };
-
+        
         ofParameterGroup paramsPlanes;
         
         ofParameterGroup params{
@@ -46,7 +46,7 @@ namespace ofxStereoscopy {
         //TODO: Make parameter changes update all planes...
         
         std::map<std::string, shared_ptr<Plane>> planes;
-
+        
         ofNode origin;
         
         void addPlane(shared_ptr<Plane> p);
@@ -55,7 +55,7 @@ namespace ofxStereoscopy {
         //TODO: Make drawWorldModel
         //TODO: Make drawPlane
         
-        void drawModel();
+        void drawModel(bool showCameraFrustrums = true);
         void drawPlaneFBO(shared_ptr<Plane> p);
         
         void fboDrawProjectorCalibrations();
@@ -84,7 +84,7 @@ namespace ofxStereoscopy {
             // TODO: bind size parameter to ofPlanePrimitive::width and ofPlanePrimitive::height
             // TODO: bind position parameter to ofPlanePrimitive::position
             // TODO: make a bound orientation parameter to ofPlanePrimitive::orientation quarternion
-
+            
             dimensionsChanged();
             
         }
@@ -123,7 +123,7 @@ namespace ofxStereoscopy {
             fboSettings.height = floor(world->pixels_cm * height);
             //fboSettings.internalformat = GL_RGBA32F_ARB;
             fboSettings.internalformat = GL_RGBA;
-                        
+            
             fboLeft.allocate(fboSettings);
             fboRight.allocate(fboSettings);
             
@@ -134,11 +134,11 @@ namespace ofxStereoscopy {
             textureRight.setUseExternalTextureID(fboRight.getTexture().texData.textureID);
             
             fboLeft.begin();
-                ofClear(255,255,0,255);
+            ofClear(255,255,0,255);
             fboLeft.end();
-
+            
             fboRight.begin();
-                ofClear(0,255,255,255);
+            ofClear(0,255,255,255);
             fboRight.end();
             
             camLeft.setParent(world->origin);
@@ -155,7 +155,7 @@ namespace ofxStereoscopy {
             camRight.setFarClip(farClip);
             
             camsLookAt(getGlobalPosition()*getGlobalTransformMatrix());
-
+            
         }
         
         void camsSetupPerspective(){
@@ -181,72 +181,40 @@ namespace ofxStereoscopy {
             ofPlanePrimitive::restoreTransformGL();
             ofPopStyle();
         }
-
-        void drawCameraModel(){
+        
+        void drawCamerasModel(){
+            drawCameraModel(camLeft, ofColor::cyan);
+            drawCameraModel(camRight, ofColor::red);
+        }
+        
+        void drawCameraModel(ofCamera cam, ofColor c){
             ofPushStyle();
-            ofSetColor(0, 255, 255);
             ofPushMatrix();
-
-/*            ofDrawLine(ofVec3f(-width/2.0,-height/2.0,0.0), camLeft.getGlobalPosition());
-            ofDrawLine(getLocalTransformMatrix() * ofVec3f(width/2.0,-height/2.0,0.0), camLeft.getGlobalPosition());
-*/
             
+            cam.transformGL();
             
-            camLeft.transformGL();
-
-            ofMultMatrix(getGlobalTransformMatrix().getInverse());
-
+            ofSetColor(c);
+            
             ofFill();
-            ofSetColor(255);
             ofPushMatrix();
-            ofScale(1.0f, 1.0f, 1.0f);
-            ofNode::draw();
+            ofRotateX(-90);
+            ofDrawCone(0,-1,0, 1, 2);
             ofPopMatrix();
-
+            
             ofPushMatrix();
-            ofMultMatrix(getGlobalTransformMatrix());
-            ofMultMatrix(camLeft.getProjectionMatrix().getInverse());
+            ofMultMatrix(cam.getProjectionMatrix().getInverse());
             ofNoFill();
-            ofDrawBox(2.0);
+            ofDrawBox(2.0, 2.0, 2.0);
             ofPopMatrix();
-
-            camLeft.restoreTransformGL();
+            
+            cam.restoreTransformGL();
             
             ofPopMatrix();
-
-            /*
-            //ofMultMatrix(camLeft.getLocalTransformMatrix());
-            
-                //--
-                //draw camera preview
-                //
-                ofMultMatrix(camLeft.getGlobalProjectionMatrix().getInverse());
-                
-                ofNoFill();
-                ofDrawBox(width);
-                
-                ofTranslate(camLeft.getPosition());
-                ofDrawSphere(10);
-            
-             */
-            /*
-             ofSetColor(255, 255, 0);
-            ofPushMatrix();
-            ofPlanePrimitive::transformGL();{
-                ofDrawLine(ofVec3f(-width/2,-height/2,0), camRight.getPosition());
-                ofDrawLine(ofVec3f(width/2,-height/2,0), camRight.getPosition());
-                ofDrawLine(ofVec3f(width/2,height/2,0), camRight.getPosition());
-                ofDrawLine(ofVec3f(-width/2,height/2,0), camRight.getPosition());
-                //ofTranslate(camRight.getPosition());
-                //ofDrawSphere(10);
-            } ofPlanePrimitive::restoreTransformGL();
-            ofPopMatrix();
-            */
             ofPopStyle();
         }
         
         void drawChessboard() {
-
+            
             ofPushStyle();
             ofFill();
             ofEnableDepthTest();
@@ -264,7 +232,7 @@ namespace ofxStereoscopy {
             areaLight.setSpecularColor(ofFloatColor(1,1,1));
             areaLight.setGlobalPosition(-400,500,500);
             areaLight.setGlobalOrientation(ofQuaternion(-90, ofVec3f(1,0,0)));
-
+            
             materialSphere.setAmbientColor(ofFloatColor(1.0,0.0,1.0,1.0));
             materialSphere.setDiffuseColor(ofFloatColor(0.8,0.8,0.4,1.0));
             materialSphere.setSpecularColor(ofFloatColor(0.8,0.8,0.8,1.0));
@@ -276,35 +244,35 @@ namespace ofxStereoscopy {
                 ofMultMatrix(getLocalTransformMatrix());
                 
                 ofPushMatrix(); {
-
+                    
                     ofTranslate(-width/2, -height/2);
-                for(int x = 0; x < width/chessSize; x++){
-                    for(int y = 0; y < height/chessSize; y++){
-                        if(((y+x)%2)==1)
-                            ofSetColor(245,255,200,255);
-                        else
-                            ofSetColor(245,255,200,64);
-                        ofDrawRectangle(x*chessSize, y*chessSize, chessSize, chessSize);
+                    for(int x = 0; x < width/chessSize; x++){
+                        for(int y = 0; y < height/chessSize; y++){
+                            if(((y+x)%2)==1)
+                                ofSetColor(245,255,200,255);
+                            else
+                                ofSetColor(245,255,200,64);
+                            ofDrawRectangle(x*chessSize, y*chessSize, chessSize, chessSize);
+                        }
                     }
-                }
-                
+                    
                 } ofPopMatrix();
-
-
+                
+                
                 ofSetColor(ofFloatColor(0.7,0.8,0.8,1.0));
-
+                
                 ofDisableDepthTest();
                 font.drawString(params.getName(), (-width/2)+15, (height/2)-font.getLineHeight());
                 ofEnableDepthTest();
                 
                 ofSetColor(255, 255);
-
+                
                 ofEnableLighting();
                 materialSphere.begin();
                 ofDrawSphere(0.0, 0.0, sin(ofGetElapsedTimef())*100, width/6.0);
                 materialSphere.end();
-
-
+                
+                
             } ofPopMatrix();
             
             ofPopStyle();
@@ -321,7 +289,7 @@ namespace ofxStereoscopy {
             drawChessboard();
             endRight();
         }
-
+        
         void drawTest() {
             
             beginLeft();
@@ -341,16 +309,16 @@ namespace ofxStereoscopy {
             camLeft.setGlobalPosition(world->physical_camera_pos_cm);
             
             ofVec3f windowTopLeft(-width / 2.0f,
-                                    +height / 2.0f,
-                                    0.0f);
+                                  +height / 2.0f,
+                                  0.0f);
             windowTopLeft = windowTopLeft * getLocalTransformMatrix();
             ofVec3f windowBottomLeft(-width / 2.0f,
-                                       -height / 2.0f,
-                                       0.0f);
+                                     -height / 2.0f,
+                                     0.0f);
             windowBottomLeft = windowBottomLeft * getLocalTransformMatrix();
             ofVec3f  windowBottomRight(+width / 2.0f,
-                                        -height / 2.0f,
-                                        0.0f);
+                                       -height / 2.0f,
+                                       0.0f);
             windowBottomRight = windowBottomRight * getLocalTransformMatrix();
             // To setup off axis view portal we need to be in the plane's matrix. All window coordinates of the camera are relative to the plane.
             ofPlanePrimitive::transformGL();
@@ -378,7 +346,7 @@ namespace ofxStereoscopy {
             ofPushMatrix();
             float eye = world->physical_eye_seperation_cm;
             camRight.setGlobalPosition(ofVec3f(world->physical_camera_pos_cm->x+eye,world->physical_camera_pos_cm->y,world->physical_camera_pos_cm->z));
-
+            
             ofVec3f windowTopLeft(-width / 2.0f,
                                   +height / 2.0f,
                                   0.0f);
@@ -407,13 +375,13 @@ namespace ofxStereoscopy {
             ofPopMatrix();
             ofPopView();
         }
-                
+        
         //TODO: Add begin and end calls to enter and exit cameras and FBOs
         
         ofParameter<bool> enabled {true};
-        ofParameter<ofVec3f> physical_pos_cm {"position", ofVec3f(0,0,0), ofVec3f(-World::dimensionMax,-World::dimensionMax,-World::dimensionMax), ofVec3f(World::dimensionMax,World::dimensionMax,World::dimensionMax)};
-        ofParameter<ofVec2f> physical_size_cm {"size", ofVec2f(100,100), ofVec2f(0,0), ofVec2f(World::dimensionMax*2,World::dimensionMax*2)};
-
+        ofParameter<ofVec3f> physical_pos_cm {"position", ofVec3f(0,0,0), ofVec3f(-WORLD_DIMENSION_MAX,-WORLD_DIMENSION_MAX,-WORLD_DIMENSION_MAX), ofVec3f(WORLD_DIMENSION_MAX,WORLD_DIMENSION_MAX,WORLD_DIMENSION_MAX)};
+        ofParameter<ofVec2f> physical_size_cm {"size", ofVec2f(100,100), ofVec2f(0,0), ofVec2f(WORLD_DIMENSION_MAX*2,WORLD_DIMENSION_MAX*2)};
+        
         ofParameterGroup params{
             "plane",
             enabled,
@@ -429,7 +397,7 @@ namespace ofxStereoscopy {
         
         float nearClip = 10;
         float farClip = 10000.0;
-
+        
     };
     
     class Scene {

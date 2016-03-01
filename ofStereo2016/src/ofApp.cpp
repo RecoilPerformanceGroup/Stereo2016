@@ -5,10 +5,10 @@
 void ofApp::setup(){
     fadeManager = make_shared<ParameterFadeManager>();
     //guiManager = make_shared<GuiManager>();
-/*
-    int resolutionX = 1920;
-    int resolutionY = 1080;
-*/
+    /*
+     int resolutionX = 1920;
+     int resolutionY = 1080;
+     */
     int resolutionX = ofGetWidth()/2;
     int resolutionY = (resolutionX * 9) / 16;
     
@@ -36,23 +36,42 @@ void ofApp::setup(){
                                                       ofQuaternion(0, ofVec3f(1,0,0)),
                                                       &world
                                                       ));
- 
+    
     scenes.push_back(make_shared<SceneTest>());
-
+    
+    stage_size_cm.addListener(this, &ofApp::stageResized);
+    
 }
 
 void ofApp::setupGui() {
     
+    worldModelCam.setFov(75);
+    
     gui = new ofxDatGui( 0, 0 );
     
     gui->addFRM(1.0f);
+    gui->addBreak();
+    
+    vector<string> views;
+    views.push_back("Perspective Model View");
+    views.push_back("Camera Model View");
+    views.push_back("Free Model View");
+    
+    ofxDatGuiDropdown * viewDropdown = gui->addDropdown("Model View", views);
+    
+    guiBindings.push_back(make_shared<SlidersVec3f>(world.physical_camera_pos_cm, gui));
+
+    gui->addBreak();
+    
+    guiBindings.push_back(make_shared<SlidersVec3f>(stage_size_cm, gui));
+    
+    viewDropdown->select(0);
+    viewDropdown->onDropdownEvent(this, &ofApp::onDropdownEvent);
     
     gui->addSlider(float01);
     
     guiBindings.push_back(make_shared<ColorPickerWithAlpha>(color01, gui));
-    guiBindings.push_back(make_shared<SlidersVec3f>(vec301, gui));
     guiBindings.push_back(make_shared<SlidersVec2f>(vec201, gui));
-    guiBindings.push_back(make_shared<SlidersVec3f>(world.physical_camera_pos_cm, gui));
     
     ofSetFrameRate(60);
     
@@ -60,10 +79,12 @@ void ofApp::setupGui() {
 }
 
 void ofApp::drawGui(ofEventArgs &args) {
-    if(ofGetFrameNum() == 3){
+    
+    if(ofGetFrameNum() == 2){
         worldModelCam.setPosition(ofVec3f(700, 600, 1500));
         worldModelCam.lookAt(ofVec3f(-600,50,0));
         worldModelCam.setNearClip(20);
+        worldModelCam.disableMouseInput();
     }
     
     ofBackgroundGradient(ofColor(20), ofColor(40));
@@ -71,9 +92,9 @@ void ofApp::drawGui(ofEventArgs &args) {
     // we draw stereography world here
     
     worldModelCam.begin();
-    world.drawModel();
+    world.drawModel(!(gui->getDropdown("Model View")->getSelected()->getLabel() == "CAMERA MODEL VIEW"));
     worldModelCam.end();
-
+    
     gui->draw();
 }
 
@@ -81,7 +102,7 @@ void ofApp::drawGui(ofEventArgs &args) {
 void ofApp::update(){
     
     fadeManager->update();
-        
+    
     while(oscReceiver.hasWaitingMessages()) {
         
         ofxOscMessage msg;
@@ -197,15 +218,23 @@ void ofApp::update(){
         }
     }
     
-    world.getPlane("thing")->setGlobalOrientation(ofQuaternion(sin(ofGetElapsedTimef()*2.0)*45, ofVec3f(0,1,0)));
+    if(gui->getDropdown("Model View")->getSelected()->getLabel() == "CAMERA MODEL VIEW"){
+        worldModelCam.setPosition(world.physical_camera_pos_cm);
+        worldModelCam.lookAt(ofVec3f(0,0,0));
+        worldModelCam.setNearClip(20);
+    }
     
+    world.getPlane("thing")->setGlobalOrientation(ofQuaternion(sin(ofGetElapsedTimef()*2.0)*45, ofVec3f(0,1,0)));
+
+    resizeStage();
+
 }
 
 
 void ofApp::drawScenes(int _surfaceId) {
     
     ofClear(ofColor::black);
-
+    
     glPushMatrix();
     
     for(auto s : scenes) {
@@ -221,21 +250,21 @@ void ofApp::drawScenes(int _surfaceId) {
     }
     
     glPopMatrix();
-
+    
 }
 
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-
+    
     ofBackground(0);
-//    ofSetColor(color01);
-//    ofDrawCircle(vec301.get().x,vec301.get().y, float01.get()*800);
+    //    ofSetColor(color01);
+    //    ofDrawCircle(vec301.get().x,vec301.get().y, float01.get()*800);
     
     world.fboDrawProjectorCalibrations();
-
+    
     ofPushMatrix();
-
+    
     float fboHeight = ofGetHeight()/world.planes.size();
     
     for(std::pair<string, shared_ptr<ofxStereoscopy::Plane>> p : world.planes){
@@ -247,10 +276,50 @@ void ofApp::draw(){
     
     ofPopMatrix();
     
-//    ofDisableDepthTest();
+    //    ofDisableDepthTest();
     
 }
- 
+
+void ofApp::onDropdownEvent(ofxDatGuiDropdownEvent e){
+    if(e.target->getLabel() == "PERSPECTIVE MODEL VIEW"){
+        worldModelCam.setPosition(ofVec3f(700, 600, 1500));
+        worldModelCam.lookAt(ofVec3f(-600,50,0));
+        worldModelCam.setNearClip(20);
+        worldModelCam.disableMouseInput();
+    }
+    if(e.target->getLabel() == "CAMERA MODEL VIEW"){
+        worldModelCam.setPosition(world.physical_camera_pos_cm);
+        worldModelCam.lookAt(ofVec3f(0,0,0));
+        worldModelCam.setNearClip(20);
+        worldModelCam.disableMouseInput();
+    }
+    if(e.target->getLabel() == "FREE MODEL VIEW"){
+        worldModelCam.setPosition(ofVec3f(700, 600, 1500));
+        worldModelCam.lookAt(ofVec3f(-600,50,0));
+        worldModelCam.setNearClip(20);
+        worldModelCam.enableMouseInput();
+    }
+    e.target->collapse();
+}
+
+void ofApp::stageResized(ofVec3f& v){
+    flagStageResized = true;
+}
+
+void ofApp::resizeStage(){
+    if(flagStageResized){
+    world.getPlane("wall")->ofPlanePrimitive::setHeight(stage_size_cm->y);
+    world.getPlane("wall")->ofPlanePrimitive::setWidth(stage_size_cm->x);
+    world.getPlane("wall")->ofPlanePrimitive::setGlobalPosition(0, stage_size_cm->y/2.0, 0);
+    world.getPlane("wall")->dimensionsChanged();
+        world.getPlane("floor")->ofPlanePrimitive::setHeight(stage_size_cm->z);
+        world.getPlane("floor")->ofPlanePrimitive::setWidth(stage_size_cm->x);
+        world.getPlane("floor")->ofPlanePrimitive::setGlobalPosition(0, 0, stage_size_cm->z/2.0);
+        world.getPlane("floor")->dimensionsChanged();
+    flagStageResized = false;
+    }
+}
+
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     
@@ -263,57 +332,57 @@ void ofApp::keyPressed(int key){
         worldModelCam.lookAt(ofVec3f(0,0,0));
     }
     
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseEntered(int x, int y){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseExited(int x, int y){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::gotMessage(ofMessage msg){
-
+    
 }
 
 //--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
-
+void ofApp::dragEvent(ofDragInfo dragInfo){
+    
 }
 
 
@@ -321,7 +390,7 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 void ofApp::saveParameters(ofParameterGroup & params) {
     
     
-   // cout<<params.toString()<<endl;
+    // cout<<params.toString()<<endl;
     
     // like this maybe: https://github.com/elliotwoods/ofxRulr/blob/master/Core/src/ofxRulr/Utils/Serializable.h
     
@@ -330,7 +399,7 @@ void ofApp::saveParameters(ofParameterGroup & params) {
     //string json = params.toString();
     
     //string filename = "settings.txt";
-   // ofFile output;
+    // ofFile output;
     
     ofxPanel panel(params);
     panel.saveToFile("settings.xml");
