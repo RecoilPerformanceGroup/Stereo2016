@@ -39,9 +39,6 @@ public:
 private:
 };
 
-
-
-
 enum WidgetType {
     Color,
     ColorWithAlpha,
@@ -63,9 +60,9 @@ public:
         min = p.getMin();
         max = p.getMax();
         
-        p.addListener(this, &DatGuiParameterBinding::paramChangedEvent);
-        
         setup();
+        
+        p.addListener(this, &DatGuiParameterBinding::paramChangedEvent);
         
         for(auto g : guiCompononents) {
             if(g->getType() == ofxDatGuiType::SLIDER) {
@@ -181,6 +178,13 @@ public:
     Pad2D(ofParameter<ofVec2f> & p, ofxDatGui * gui) :
     DatGuiParameterBinding(p, gui, Pad){
     };
+};
+
+class GuiBindingManager {
+public:
+    
+    
+    
 };
 
 

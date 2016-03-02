@@ -16,12 +16,13 @@ void DatGuiParameterBinding<ofVec3f>::setup() {
     
     if(widgetType == PadZ) {
         addC(gui->add2dPad(p.getName(), ofRectangle(min.x,min.y,max.x,max.y)));
+        getPad()->setPoint(p.get());
     } else {
-        addC(gui->addSlider(p.getName() + "x", min.x, max.x));
-        addC(gui->addSlider(p.getName() + "y", min.y, max.y));
+        addC(gui->addSlider(p.getName() + " x", min.x, max.x, p.get().x));
+        addC(gui->addSlider(p.getName() + " y", min.y, max.y, p.get().y));
     }
     
-    addC(gui->addSlider(p.getName() + "z", min.z, max.z));
+    addC(gui->addSlider(p.getName() + " z", min.z, max.z, p.get().z));
 }
 
 template<>
@@ -71,11 +72,12 @@ void DatGuiParameterBinding<ofVec2f>::setup() {
     if(widgetType == Pad) {
         
         addC(gui->add2dPad(p.getName(), ofRectangle(min.x,min.y,max.x,max.y)));
+        getPad()->setPoint(p.get());
         
     } else {
         
-        addC(gui->addSlider(p.getName() + "x", min.x, max.x));
-        addC(gui->addSlider(p.getName() + "y", min.y, max.y));
+        addC(gui->addSlider(p.getName() + "x", min.x, max.x, p.get().x));
+        addC(gui->addSlider(p.getName() + "y", min.y, max.y, p.get().y));
     }
 }
 
@@ -127,16 +129,15 @@ void DatGuiParameterBinding<ofColor>::setup() {
     
     if(widgetType == ColorWithAlpha) {
         
-        guiCompononents.push_back(gui->addColorPicker(p.getName(), p.get()));
+        addC(gui->addColorPicker(p.getName(), p.get()));
         
         string name = p.getName() + " alpha";
         ofxDatGuiSlider * s = gui->addSlider(name, 0, p.get().limit(), p.get().a);
-        
         s->setPrecision(0);
-        guiCompononents.push_back(s);
+        addC(s);
         
     } else if (widgetType == Color) {
-        guiCompononents.push_back(gui->addColorPicker(p.getName(), p.get()));
+        addC(gui->addColorPicker(p.getName(), p.get()));
     }
 }
 
