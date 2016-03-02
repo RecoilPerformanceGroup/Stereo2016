@@ -12,6 +12,10 @@ void ofApp::setup(){
     int resolutionX = ofGetWidth()/2;
     int resolutionY = (resolutionX * 9) / 16;
     
+    ofEnableAlphaBlending();
+    
+    ofxDatGuiFolder * projectorCalibrationFolder = gui->getFolder("Projector Calibration");
+
     world.addPlane(make_shared<ofxStereoscopy::Plane>(
                                                       "wall",
                                                       800.0,
@@ -20,6 +24,9 @@ void ofApp::setup(){
                                                       ofQuaternion(0, ofVec3f(1,0,0)),
                                                       &world
                                                       ));
+    
+    projectorCalibrationFolder->addToggle("wall");
+
     world.addPlane(make_shared<ofxStereoscopy::Plane>(
                                                       "floor",
                                                       800.0,
@@ -28,7 +35,10 @@ void ofApp::setup(){
                                                       ofQuaternion(-90, ofVec3f(1,0,0)),
                                                       &world
                                                       ));
-/*    world.addPlane(make_shared<ofxStereoscopy::Plane>(
+
+    projectorCalibrationFolder->addToggle("floor");
+
+    /*    world.addPlane(make_shared<ofxStereoscopy::Plane>(
                                                       "thing",
                                                       200.0,
                                                       120.0,
@@ -36,7 +46,8 @@ void ofApp::setup(){
                                                       ofQuaternion(0, ofVec3f(1,0,0)),
                                                       &world
                                                       ));
-*/    
+*/
+    
     scenes.push_back(make_shared<SceneTest>());
     
     stage_size_cm.addListener(this, &ofApp::stageResized);
@@ -46,33 +57,45 @@ void ofApp::setup(){
 void ofApp::setupGui() {
     
     worldModelCam.setFov(75);
+
+    // Dat Gui
     
     gui = new ofxDatGui( ofxDatGuiAnchor::TOP_RIGHT );
-    
     gui->setTheme(new ofxDatGuiThemeWireframe());
     
     gui->addFRM(1.0f);
     gui->addBreak();
     
-    vector<string> views = {"Perspective Model View", "Camera Model View", "Free Model View"};
+    // Model View
     
+    vector<string> views = {"Perspective Model View", "Camera Model View", "Free Model View"};
     ofxDatGuiDropdown * viewDropdown = gui->addDropdown("Model View", views);
     viewDropdown->select(0);
     viewDropdown->onDropdownEvent(this, &ofApp::onDropdownEvent);
     
     guiBindings.push_back(make_shared<SlidersVec3f>(world.physical_camera_pos_cm, gui));
+
+    gui->addSlider(world.physical_eye_seperation_cm);
     
     gui->addBreak();
 
-    ofxDatGuiToggle * calibrateToggle = gui->addToggle("Calibrate Planes",  false);
-    calibrateToggle->onButtonEvent(this, &ofApp::onButtonEvent);
-
+    // Projector Calibration
+    
+    ofxDatGuiFolder * projectorCalibrationFolder = gui->addFolder("Projector Calibration");
+    
+    projectorCalibrationFolder->onFolderEvent(this, &ofApp::onFolderEvent);
+    
+    // Stage size
+    
     guiBindings.push_back(make_shared<SlidersVec3f>(stage_size_cm, gui));
     
     ofxDatGuiSlider * resolutionSlider = gui->addSlider(world.pixels_cm);
     resolutionSlider->onSliderEvent(this,&ofApp::onSliderEvent);
     
     gui->addBreak();
+    
+    // General
+
     guiBindings.push_back(make_shared<ColorPickerWithAlpha>(background_color, gui));
 
     // adding the optional header allows you to drag the gui around //
@@ -272,7 +295,7 @@ void ofApp::draw(){
     //    ofDrawCircle(vec301.get().x,vec301.get().y, float01.get()*800);
     
     if(calibrate_planes){
-        world.fboDrawProjectorCalibrations();
+        world.renderProjectorCalibrations();
     } else {
         for(std::pair<string, shared_ptr<ofxStereoscopy::Plane>> p : world.planes){
             p.second->beginLeft();
@@ -302,8 +325,12 @@ void ofApp::draw(){
 }
 
 void ofApp::onButtonEvent(ofxDatGuiButtonEvent e){
-    if(e.target->getLabel() == "CALIBRATE PLANES"){
-        calibrate_planes.set(e.target->getEnabled());
+    ;
+}
+
+void ofApp::onFolderEvent(ofxDatGuiFolderEvent e){
+    if(e.target->getLabel() == "PROJECTOR CALIBRATION"){
+        calibrate_planes.set(e.expanded);
     }
 }
 

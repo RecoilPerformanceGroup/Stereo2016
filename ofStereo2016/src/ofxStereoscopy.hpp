@@ -15,6 +15,226 @@
 
 namespace ofxStereoscopy {
     
+    namespace Homography {
+        
+        void gaussian_elimination(float *input, int n){
+            // ported to c from pseudocode in
+            // http://en.wikipedia.org/wiki/Gaussian_elimination
+            
+            float * A = input;
+            int i = 0;
+            int j = 0;
+            int m = n-1;
+            while (i < m && j < n){
+                // Find pivot in column j, starting in row i:
+                int maxi = i;
+                for(int k = i+1; k<m; k++){
+                    if(fabs(A[k*n+j]) > fabs(A[maxi*n+j])){
+                        maxi = k;
+                    }
+                }
+                if (A[maxi*n+j] != 0){
+                    //swap rows i and maxi, but do not change the value of i
+                    if(i!=maxi)
+                        for(int k=0;k<n;k++){
+                            float aux = A[i*n+k];
+                            A[i*n+k]=A[maxi*n+k];
+                            A[maxi*n+k]=aux;
+                        }
+                    //Now A[i,j] will contain the old value of A[maxi,j].
+                    //divide each entry in row i by A[i,j]
+                    float A_ij=A[i*n+j];
+                    for(int k=0;k<n;k++){
+                        A[i*n+k]/=A_ij;
+                    }
+                    //Now A[i,j] will have the value 1.
+                    for(int u = i+1; u< m; u++){
+                        //subtract A[u,j] * row i from row u
+                        float A_uj = A[u*n+j];
+                        for(int k=0;k<n;k++){
+                            A[u*n+k]-=A_uj*A[i*n+k];
+                        }
+                        //Now A[u,j] will be 0, since A[u,j] - A[i,j] * A[u,j] = A[u,j] - 1 * A[u,j] = 0.
+                    }
+                    
+                    i++;
+                }
+                j++;
+            }
+            
+            //back substitution
+            for(int i=m-2;i>=0;i--){
+                for(int j=i+1;j<n-1;j++){
+                    A[i*n+m]-=A[i*n+j]*A[j*n+m];
+                    //A[i*n+j]=0;
+                }
+            }
+        }
+        
+        void findHomography(ofPoint src[4], ofPoint dst[4], float homography[16]){
+            
+            // create the equation system to be solved
+            //
+            // from: Multiple View Geometry in Computer Vision 2ed
+            //       Hartley R. and Zisserman A.
+            //
+            // x' = xH
+            // where H is the homography: a 3 by 3 matrix
+            // that transformed to inhomogeneous coordinates for each point
+            // gives the following equations for each point:
+            //
+            // x' * (h31*x + h32*y + h33) = h11*x + h12*y + h13
+            // y' * (h31*x + h32*y + h33) = h21*x + h22*y + h23
+            //
+            // as the homography is scale independent we can let h33 be 1 (indeed any of the terms)
+            // so for 4 points we have 8 equations for 8 terms to solve: h11 - h32
+            // after ordering the terms it gives the following matrix
+            // that can be solved with gaussian elimination:
+            
+            float P[8][9]={
+                {-src[0].x, -src[0].y, -1,   0,   0,  0, src[0].x*dst[0].x, src[0].y*dst[0].x, -dst[0].x }, // h11
+                {  0,   0,  0, -src[0].x, -src[0].y, -1, src[0].x*dst[0].y, src[0].y*dst[0].y, -dst[0].y }, // h12
+                
+                {-src[1].x, -src[1].y, -1,   0,   0,  0, src[1].x*dst[1].x, src[1].y*dst[1].x, -dst[1].x }, // h13
+                {  0,   0,  0, -src[1].x, -src[1].y, -1, src[1].x*dst[1].y, src[1].y*dst[1].y, -dst[1].y }, // h21
+                
+                {-src[2].x, -src[2].y, -1,   0,   0,  0, src[2].x*dst[2].x, src[2].y*dst[2].x, -dst[2].x }, // h22
+                {  0,   0,  0, -src[2].x, -src[2].y, -1, src[2].x*dst[2].y, src[2].y*dst[2].y, -dst[2].y }, // h23
+                
+                {-src[3].x, -src[3].y, -1,   0,   0,  0, src[3].x*dst[3].x, src[3].y*dst[3].x, -dst[3].x }, // h31
+                {  0,   0,  0, -src[3].x, -src[3].y, -1, src[3].x*dst[3].y, src[3].y*dst[3].y, -dst[3].y }, // h32
+            };
+            
+            gaussian_elimination(&P[0][0],9);
+            
+            // gaussian elimination gives the results of the equation system
+            // in the last column of the original matrix.
+            // opengl needs the transposed 4x4 matrix:
+            float aux_H[]={ P[0][8],P[3][8],0,P[6][8], // h11  h21 0 h31
+                P[1][8],P[4][8],0,P[7][8], // h12  h22 0 h32
+                0      ,      0,0,0,       // 0    0   0 0
+                P[2][8],P[5][8],0,1};      // h13  h23 0 h33
+            
+            for(int i=0;i<16;i++) homography[i] = aux_H[i];
+        }
+        
+        ofMatrix4x4 findHomography(ofPoint src[4], ofPoint dst[4]){
+            ofMatrix4x4 matrix;
+            
+            // create the equation system to be solved
+            //
+            // from: Multiple View Geometry in Computer Vision 2ed
+            //       Hartley R. and Zisserman A.
+            //
+            // x' = xH
+            // where H is the homography: a 3 by 3 matrix
+            // that transformed to inhomogeneous coordinates for each point
+            // gives the following equations for each point:
+            //
+            // x' * (h31*x + h32*y + h33) = h11*x + h12*y + h13
+            // y' * (h31*x + h32*y + h33) = h21*x + h22*y + h23
+            //
+            // as the homography is scale independent we can let h33 be 1 (indeed any of the terms)
+            // so for 4 points we have 8 equations for 8 terms to solve: h11 - h32
+            // after ordering the terms it gives the following matrix
+            // that can be solved with gaussian elimination:
+            
+            float P[8][9]={
+                {-src[0].x, -src[0].y, -1,   0,   0,  0, src[0].x*dst[0].x, src[0].y*dst[0].x, -dst[0].x }, // h11
+                {  0,   0,  0, -src[0].x, -src[0].y, -1, src[0].x*dst[0].y, src[0].y*dst[0].y, -dst[0].y }, // h12
+                
+                {-src[1].x, -src[1].y, -1,   0,   0,  0, src[1].x*dst[1].x, src[1].y*dst[1].x, -dst[1].x }, // h13
+                {  0,   0,  0, -src[1].x, -src[1].y, -1, src[1].x*dst[1].y, src[1].y*dst[1].y, -dst[1].y }, // h21
+                
+                {-src[2].x, -src[2].y, -1,   0,   0,  0, src[2].x*dst[2].x, src[2].y*dst[2].x, -dst[2].x }, // h22
+                {  0,   0,  0, -src[2].x, -src[2].y, -1, src[2].x*dst[2].y, src[2].y*dst[2].y, -dst[2].y }, // h23
+                
+                {-src[3].x, -src[3].y, -1,   0,   0,  0, src[3].x*dst[3].x, src[3].y*dst[3].x, -dst[3].x }, // h31
+                {  0,   0,  0, -src[3].x, -src[3].y, -1, src[3].x*dst[3].y, src[3].y*dst[3].y, -dst[3].y }, // h32
+            };
+            
+            gaussian_elimination(&P[0][0],9);
+            
+            matrix(0,0)=P[0][8];
+            matrix(0,1)=P[1][8];
+            matrix(0,2)=0;
+            matrix(0,3)=P[2][8];
+            
+            matrix(1,0)=P[3][8];
+            matrix(1,1)=P[4][8];
+            matrix(1,2)=0;
+            matrix(1,3)=P[5][8];
+            
+            matrix(2,0)=0;
+            matrix(2,1)=0;
+            matrix(2,2)=0;
+            matrix(2,3)=0;
+            
+            matrix(3,0)=P[6][8];
+            matrix(3,1)=P[7][8];
+            matrix(3,2)=0;
+            matrix(3,3)=1;
+            
+            return matrix;
+        }
+        
+        class Quad
+        {
+        public:
+            /** Default constructor */
+            Quad();
+            Quad(ofPoint outputPoint1, ofPoint outputPoint2, ofPoint outputPoint3, ofPoint outputPoint4);
+            void beginDraw();
+            void endDraw();
+            void update();
+            void draw();
+            void drawInputConfig();
+            void drawOutputConfig();
+            
+            void setLineColor(ofColor value) { lineColor.set(value); }
+            void setHexLineColor(int value) { lineColor.setHex(value); }
+            
+            
+            ofParameter<ofVec3f> outputPointTopLeft { "Top Left",
+                ofVec3f(0.0,0.0,0.0), ofVec3f(0,0,0), ofVec3f(1,1,1)
+            };
+            
+            ofParameter<ofVec3f> outputPointTopRight { "Top Right",
+                ofVec3f(1,0,0), ofVec3f(0,0,0), ofVec3f(1,1,1)
+            };
+            
+            ofParameter<ofVec3f> outputPointBottomLeft { "Bottom Left",
+                ofVec3f(0,1,0), ofVec3f(0,0,0), ofVec3f(1,1,1)
+            };
+            
+            ofParameter<ofVec3f> outputPointBottomRight { "Bottom Right",
+                ofVec3f(1,1,0), ofVec3f(0,0,0), ofVec3f(1,1,1)
+            };
+            
+            ofParameterGroup outputPoints {
+                "Output Points",
+                outputPointTopLeft,
+                outputPointTopRight,
+                outputPointBottomLeft,
+                outputPointBottomRight
+            };
+            
+            ofParameterGroup params {
+                "Quad Warper",
+                outputPoints
+            };
+            
+        protected:
+        private:
+            void drawConfig(ofPoint* points);
+            
+            GLfloat transformMatrix[16];
+            
+            ofColor lineColor;
+        };
+        
+    }
+    
     class Plane;
     
     class World {
@@ -58,7 +278,7 @@ namespace ofxStereoscopy {
         void drawModel(bool showCameraFrustrums = true);
         void drawPlaneFBO(shared_ptr<Plane> p);
         
-        void fboDrawProjectorCalibrations();
+        void renderProjectorCalibrations();
         
         
         
@@ -78,6 +298,11 @@ namespace ofxStereoscopy {
             ofPlanePrimitive::setGlobalOrientation(orientation_q);
             world = w;
             ofPlanePrimitive::setParent(world->origin);
+            
+            params.add(quadLeft.params);
+            params.add(quadRight.params);
+            
+            world->params.add(params);
             
             setName(name);
             
@@ -192,7 +417,7 @@ namespace ofxStereoscopy {
         void drawCameraModel(ofCamera cam, ofColor c){
             ofPushStyle();
             ofEnableDepthTest();
-
+            
             ofPushMatrix();
             
             cam.transformGL();
@@ -224,43 +449,79 @@ namespace ofxStereoscopy {
             ofEnableDepthTest();
             
             ofLight areaLight;
-            ofMaterial materialSphere;
-            
             areaLight.setParent(*this);
             areaLight.setup();
             areaLight.enable();
             areaLight.setAreaLight(400,400);
             areaLight.setAmbientColor(ofFloatColor(0.1,0.1,0.1));
             areaLight.setAttenuation(0.5,0.000001,0.000001);
-            areaLight.setDiffuseColor(ofFloatColor(1,1,1));
+            areaLight.setDiffuseColor(ofFloatColor(0.5,0.5,0.5));
             areaLight.setSpecularColor(ofFloatColor(1,1,1));
             areaLight.setGlobalPosition(-400,500,500);
             areaLight.setGlobalOrientation(ofQuaternion(-90, ofVec3f(1,0,0)));
             
-            materialSphere.setAmbientColor(ofFloatColor(1.0,0.0,1.0,1.0));
+            ofLight areaLight2;
+            areaLight2.setParent(*this);
+            areaLight2.setup();
+            areaLight2.enable();
+            areaLight2.setAreaLight(800,800);
+            areaLight2.setAmbientColor(ofFloatColor(0.1,0.1,0.1));
+            areaLight2.setAttenuation(0.5,0.000001,0.000001);
+            areaLight2.setDiffuseColor(ofFloatColor(0.5,0.5,0.5));
+            areaLight2.setSpecularColor(ofFloatColor(1,1,1));
+            areaLight2.setGlobalPosition(400,600,100);
+            areaLight2.setGlobalOrientation(ofQuaternion(-90, ofVec3f(1,0,0)));
+            
+            ofMaterial materialSphere;
+            materialSphere.setAmbientColor(ofFloatColor(0.0,0.8,1.0,1.0));
             materialSphere.setDiffuseColor(ofFloatColor(0.8,0.8,0.4,1.0));
             materialSphere.setSpecularColor(ofFloatColor(0.8,0.8,0.8,1.0));
             materialSphere.setShininess(10);
+            
+            ofMaterial materialFloorWhite;
+            materialFloorWhite.setAmbientColor(ofFloatColor(1.0,1.0,1.0,1.0));
+            materialFloorWhite.setDiffuseColor(ofFloatColor(0.8,0.8,0.4,1.0));
+            materialFloorWhite.setSpecularColor(ofFloatColor(0.8,0.8,0.8,1.0));
+            materialFloorWhite.setShininess(10);
+            
+            ofMaterial materialFloorBlack;
+            materialFloorBlack.setAmbientColor(ofFloatColor(0.1,0.1,0.1,1.0));
+            materialFloorBlack.setDiffuseColor(ofFloatColor(0.8,0.8,0.4,1.0));
+            materialFloorBlack.setSpecularColor(ofFloatColor(0.8,0.8,0.8,1.0));
+            materialFloorBlack.setShininess(10);
             
             float chessSize = 100;
             
             ofPushMatrix(); {
                 ofMultMatrix(getLocalTransformMatrix());
                 
-                ofPushMatrix(); {
-                    
-                    ofTranslate(-width/2, -height/2);
-                    for(int x = 0; x < width/chessSize; x++){
-                        for(int y = 0; y < height/chessSize; y++){
-                            if(((y+x)%2)==1)
-                                ofSetColor(245,255,200,255);
-                            else
-                                ofSetColor(245,255,200,64);
-                            ofDrawRectangle(x*chessSize, y*chessSize, chessSize, chessSize);
+                ofEnableLighting();
+                
+                for(int x = 0; x < width/chessSize; x++){
+                    for(int y = 0; y < height/chessSize; y++){
+                        bool isWhite = (((y+x)%2)==1);
+                        if(isWhite) {
+                            materialFloorWhite.begin();
+                        }else{
+                            materialFloorBlack.begin();
                         }
+                        ofPushMatrix(); {
+                            
+                            ofTranslate(-width/2, -height/2);
+                            ofDrawRectangle(x*chessSize, y*chessSize, chessSize, chessSize);
+                            
+                        } ofPopMatrix();
+                        
+                        if(isWhite) {
+                            materialFloorWhite.end();
+                        }else{
+                            materialFloorBlack.end();
+                        }
+                        
                     }
-                    
-                } ofPopMatrix();
+                }
+                ofDisableLighting();
+                
                 
                 
                 ofSetColor(ofFloatColor(0.7,0.8,0.8,1.0));
@@ -273,7 +534,7 @@ namespace ofxStereoscopy {
                 
                 ofEnableLighting();
                 materialSphere.begin();
-                ofDrawSphere(0.0, 0.0, sin(ofGetElapsedTimef())*100, width/6.0);
+                ofDrawSphere(0.0, 0.0, 150, width/6.0);
                 materialSphere.end();
                 
                 
@@ -283,7 +544,7 @@ namespace ofxStereoscopy {
             
         }
         
-        void fboDrawChessboards() {
+        void renderChessboards() {
             
             beginLeft();
             drawChessboard();
@@ -293,24 +554,13 @@ namespace ofxStereoscopy {
             drawChessboard();
             endRight();
         }
-        
-        void drawTest() {
-            
-            beginLeft();
-            drawChessboard();
-            endLeft();
-            
-            beginRight();
-            drawChessboard();
-            endRight();
-        }
-        
         
         void beginLeft()
         {
             ofPushView();
             ofPushMatrix();
-            camLeft.setGlobalPosition(world->physical_camera_pos_cm);
+            float eye = world->physical_eye_seperation_cm;
+            camLeft.setGlobalPosition(ofVec3f(world->physical_camera_pos_cm->x-(eye/2.0),world->physical_camera_pos_cm->y,world->physical_camera_pos_cm->z));
             
             ofVec3f windowTopLeft(-width / 2.0f,
                                   +height / 2.0f,
@@ -343,13 +593,10 @@ namespace ofxStereoscopy {
         
         void beginRight()
         {
-            
-            camLeft.setGlobalPosition(world->physical_camera_pos_cm);
-            
             ofPushView();
             ofPushMatrix();
             float eye = world->physical_eye_seperation_cm;
-            camRight.setGlobalPosition(ofVec3f(world->physical_camera_pos_cm->x+eye,world->physical_camera_pos_cm->y,world->physical_camera_pos_cm->z));
+            camRight.setGlobalPosition(ofVec3f(world->physical_camera_pos_cm->x+(eye/2.0),world->physical_camera_pos_cm->y,world->physical_camera_pos_cm->z));
             
             ofVec3f windowTopLeft(-width / 2.0f,
                                   +height / 2.0f,
@@ -380,6 +627,20 @@ namespace ofxStereoscopy {
             ofPopView();
         }
         
+        void drawLeft(){
+            quadLeft.beginDraw();
+            ofScale(ofGetWidth(),ofGetHeight(),ofGetWidth());
+            fboLeft.draw(0,0,1,1);
+            quadLeft.endDraw();
+        }
+        
+        void drawRight(){
+            quadRight.beginDraw();
+            ofScale(ofGetWidth(),ofGetHeight(),ofGetWidth());
+            fboRight.draw(0,0,1,1);
+            quadRight.endDraw();
+        }
+        
         //TODO: Add begin and end calls to enter and exit cameras and FBOs
         
         ofParameter<bool> enabled {true};
@@ -398,6 +659,7 @@ namespace ofxStereoscopy {
         ofTexture textureLeft, textureRight;
         ofTrueTypeFont font;
         World * world;
+        Homography::Quad quadLeft, quadRight;
         
         float nearClip = 10;
         float farClip = 10000.0;

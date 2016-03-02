@@ -51,6 +51,7 @@ public:
     vector<shared_ptr<AbstractDatGuiParameterBinding>> guiBindings;
     ofxDatGui* gui;
     
+    void onFolderEvent(ofxDatGuiFolderEvent e);
     void onButtonEvent(ofxDatGuiButtonEvent e);
     void onSliderEvent(ofxDatGuiSliderEvent e);
     void onDropdownEvent(ofxDatGuiDropdownEvent e);
