@@ -39,9 +39,6 @@ public:
 private:
 };
 
-
-
-
 enum WidgetType {
     Color,
     ColorWithAlpha,
@@ -63,9 +60,9 @@ public:
         min = p.getMin();
         max = p.getMax();
         
-        p.addListener(this, &DatGuiParameterBinding::paramChangedEvent);
-        
         setup();
+        
+        p.addListener(this, &DatGuiParameterBinding::paramChangedEvent);
         
         for(auto g : guiCompononents) {
             if(g->getType() == ofxDatGuiType::SLIDER) {
@@ -91,9 +88,7 @@ public:
     void paramChangedEvent(ParameterType & _p) {};
     
     void onButtonEvent(ofxDatGuiButtonEvent e){};
-    void onSliderEvent(ofxDatGuiSliderEvent e){
-        
-    };
+    void onSliderEvent(ofxDatGuiSliderEvent e){};
     void onDropdownEvent(ofxDatGuiDropdownEvent e){};
     void onMatrixEvent(ofxDatGuiMatrixEvent e){};
     void onColorPickerEvent(ofxDatGuiColorPickerEvent e){};
@@ -107,37 +102,12 @@ public:
     };
     
 // color specific
-    ofxDatGuiColorPicker * getColorPicker() {
-        return gui->getColorPicker(guiCompononents[0]->getName());
-    };
-    
-    ofxDatGui2dPad * getPad() {
-        return gui->get2dPad(guiCompononents[0]->getName());
-    };
-    
-    ofxDatGuiSlider * getSliderByIndex(int i) {
-        if(i>guiCompononents.size()) return nullptr;
-        
-        return gui->getSlider(guiCompononents[i]->getName());
-    }
-    
-    ofxDatGuiSlider * getAlphaSlider() {
-        return getSliderByIndex(1);
-    };
-    
-    ofxDatGuiSlider * getXSlider() {
-        return getSliderByIndex(0);
-    }
-    
-    ofxDatGuiSlider * getYSlider() {
-        return getSliderByIndex(1);
-    }
-    
-    ofxDatGuiSlider * getZSlider() {
-        if(widgetType == PadZ) return getSliderByIndex(1);
-        return getSliderByIndex(2);
-    }
-    
+    ofxDatGuiColorPicker * colorPicker;
+    ofxDatGui2dPad * pad;
+    ofxDatGuiSlider * alphaSlider;
+    ofxDatGuiSlider * xSlider;
+    ofxDatGuiSlider * ySlider;
+    ofxDatGuiSlider * zSlider;
 };
 
 class ColorPickerWithAlpha : public DatGuiParameterBinding<ofColor> {
@@ -181,6 +151,13 @@ public:
     Pad2D(ofParameter<ofVec2f> & p, ofxDatGui * gui) :
     DatGuiParameterBinding(p, gui, Pad){
     };
+};
+
+class GuiBindingManager {
+public:
+    
+    
+    
 };
 
 
