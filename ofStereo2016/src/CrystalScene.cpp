@@ -10,8 +10,7 @@
 
 
 void CrystalScene::setup() {
-    name = "Crystal Test";
-    oscAddress = "/crystaltest";
+
     light.setPointLight();
     light.setPosition(-2, -2, -2);
     
@@ -38,9 +37,7 @@ void CrystalScene::setup() {
     
     //grab.setup(1080, 720, true);
     
-    ofxStereoscopy::Scene::params = params;
     
-    panel.setup(params);
     
 }
 
@@ -130,7 +127,6 @@ void CrystalScene::draw() {
     spotlight.disable();
     pointlight.disable();
     
-    
     ofDisableNormalizedTexCoords();
     ofDisableDepthTest();
     ofDisableLighting();
@@ -156,8 +152,6 @@ void CrystalScene::update() {
 
 void CrystalScene::drawGui() {
     ofSetColor(255);
-    
-    panel.draw();
     
 }
 

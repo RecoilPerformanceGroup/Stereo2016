@@ -97,6 +97,7 @@ class CrystalScene : public ofxStereoscopy::Scene {
     
 public:
     
+    
     ofParameter<int> numCells {"Cells", 40, 0, 1000};
     ofParameter<ofVec3f> autoRotation {"Automatic rotation", ofVec3f(0,0,0),
         ofVec3f(-1,-1,-1),
@@ -109,7 +110,8 @@ public:
     ofParameter<float> scaleCells {"scaleCells", 0,0,0.999};
     ofParameter<bool> debugDraw {"Debug draw", false};
     
-    ofParameterGroup params {"CrystalParams",
+    ofParameterGroup params {"",
+        enabled,
         numCells,
         autoRotation,
         autoRotationSpeed,
@@ -118,6 +120,19 @@ public:
         scale,
         scaleCells,
         debugDraw};
+    
+    
+    CrystalScene() {
+        
+        name = "Crystal Test";
+        oscAddress = "crystaltest";
+        
+        ofxStereoscopy::Scene::params = params;
+        params.setName(oscAddress);
+        
+    }
+    
+
     
     void draw();
     void drawGui();

@@ -742,7 +742,12 @@ namespace ofxStereoscopy {
         string name = "";
         string oscAddress = "/default";
         
-        bool enabled;
+        
+        ofParameter<bool> enabled {"enabled", true};
+        ofParameterGroup params {"sceneParameters", enabled};
+        
+        // add dynamic draw order
+        
         float time;
         
         //    ofxTimeline * mainTimeline;
@@ -798,7 +803,7 @@ namespace ofxStereoscopy {
             }
         };
         
-        ofParameterGroup params;
+        
         
         ofParameterGroup & getParameters() {
             return params;
