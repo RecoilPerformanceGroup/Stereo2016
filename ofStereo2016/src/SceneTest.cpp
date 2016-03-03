@@ -16,16 +16,20 @@ void SceneTest::setup() {
     light.setPosition(-2, -2, -2);
 }
 
-void SceneTest::draw(int _surfaceId) {
+void SceneTest::draw() {
     
-    ofBackground (0);
+    
     // A scene can draw to multiple surfaces
     light.enable();
     
     ofSetColor(255,255,255);
     ofPushMatrix();
+    
+    //ofTranslate(ofGetWidth()/2, ofGetHeight()/2);
     ofRotateX(ofGetElapsedTimef()*10);
-    ofDrawBox(0.5);
+    ofDrawSphere(200);
+    
+    
     ofPopMatrix();
     light.disable();
     

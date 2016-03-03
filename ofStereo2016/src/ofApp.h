@@ -11,13 +11,32 @@
 #include "ofxDatGuiParameterBindings.hpp"
 #include "ofxGui.h"
 
+#include "SceneTest.hpp"
+#include "CrystalScene.hpp"
+
 class ofApp : public ofBaseApp{
     
 public:
     
+    ofApp() {
+        
+        scenes.push_back(make_shared<SceneTest>());
+        scenes.push_back(make_shared<CrystalScene>());
+        
+        for( auto s : scenes) {
+            s->setupScene();
+            mainParams.add(s->getParameters());
+        }
+        
+        //scenes[0]->enabled = true;
+        scenes[1]->enabled = true;
+        
+        
+    }
+    
     ofParameter<ofVec3f> stage_size_cm{"Stage Size", ofVec3f{800,500,800}, ofVec3f{600,300,600}, ofVec3f{1000,800,1000}};
     ofParameter<bool> calibrate_planes{"Calibrate Planes", false, false, true};
-    ofParameter<ofColor> background_color{"Background Color", ofColor::white,ofColor::black,ofColor::white};
+    ofParameter<ofColor> background_color{"Background Color", ofColor(255,255,255,255),ofColor(0,0,0,0),ofColor(255,255,255,255)};
 
     ofParameterGroup mainParams{
         "mainParams",
@@ -25,6 +44,8 @@ public:
         calibrate_planes,
         background_color
     };
+    
+    ofxPanel panel;
     
     void setup();
     void setupGui(shared_ptr<ofAppBaseWindow> gW, shared_ptr<ofAppBaseWindow> mW);
@@ -73,7 +94,7 @@ public:
     ofEasyCam worldModelCam;
         
     vector<shared_ptr<ofxStereoscopy::Scene>> scenes;
-    void drawScenes(int _surfaceId);
+    void drawScenes();
     
     void stageResized(ofVec3f& v);
     void updateStage();
