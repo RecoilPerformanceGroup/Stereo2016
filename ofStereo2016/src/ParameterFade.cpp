@@ -10,7 +10,6 @@
 void ParameterFadeManager::update() {
     
     for(auto fade : parameterFades) {
-        
         //todo pop from list and delete when done
         //if(fade->hasEnded) delete fade;
         

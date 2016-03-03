@@ -743,7 +743,12 @@ namespace ofxStereoscopy {
         string name = "";
         string oscAddress = "/default";
         
-        bool enabled;
+        
+        ofParameter<bool> enabled {"enabled", true};
+        ofParameterGroup params {"sceneParameters", enabled};
+        
+        // add dynamic draw order
+        
         float time;
         
         //    ofxTimeline * mainTimeline;
@@ -776,62 +781,43 @@ namespace ofxStereoscopy {
             oscAddress = _osc;
         }
         
-        void setupScene(int _index) {
-            if(name == "") setName("scene-" + ofToString(_index));
-            
-            index = _index;
-            indexStr = "["+ ofToString(_index) + "] ";
-            
+        void setupScene() {
             setup();
-            
-            //        mainTimeline->setCurrentPage("Page One");
-            //        tlenabled = mainTimeline->addCurves("Enable " + name);
-            
         };
         
         void updateScene() {
-            
-            //        enabled = (tlenabled->getValue() == 1);
-            
+                        
             if(enabled) {
                 update();
             }
         };
         
-        void drawScene(int _surfaceId=0) {
+        void drawScene() {
             if(enabled) {
                 glPushMatrix();ofPushMatrix();ofPushStyle();
-                draw(_surfaceId);
+                draw();
                 ofPopStyle();ofPopMatrix();glPopMatrix();
                 
                 glPushMatrix();ofPushMatrix();ofPushStyle();
-                debugDraw(_surfaceId);
+                debugDraw();
                 ofPopStyle();ofPopMatrix();glPopMatrix();
             }
         };
-        void beginSceneWorld(int _surfaceId=0){
-            if(enabled) {
-                beginWorld(_surfaceId);
-            }
-        };
-        void endSceneWorld(int _surfaceId=0){
-            if(enabled) {
-                endWorld(_surfaceId);
-            }
-        };
         
-        void setSurface(int _surfaceId) {
-            primarySurface = _surfaceId;
+        
+        
+        ofParameterGroup & getParameters() {
+            return params;
         }
         
-        int primarySurface = 0;
+        
+        virtual void drawGui() {};
+        virtual void setupGui() {};
         
     private:
         virtual void setup(){};
         virtual void update(){};
-        virtual void beginWorld(int _surfaceId=0){};
-        virtual void endWorld(int _surfaceId=0){};
-        virtual void draw(int _surfaceId=0){};
+        virtual void draw(){};
         
     };
     

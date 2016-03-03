@@ -1,5 +1,5 @@
 #include "ofApp.h"
-#include "SceneTest.hpp"
+
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -11,6 +11,7 @@ void ofApp::setup(){
      int resolutionX = 1920;
      int resolutionY = 1080;
      */
+    
     int resolutionX = ofGetWidth()/2;
     int resolutionY = (resolutionX * 9) / 16;
     
@@ -43,8 +44,6 @@ void ofApp::setup(){
     projectorCalibrationFolder->addToggle("FLOOR LEFT", false);
     projectorCalibrationFolder->addToggle("FLOOR RIGHT", false);
 
-    scenes.push_back(make_shared<SceneTest>());
-    
     stage_size_cm.addListener(this, &ofApp::stageResized);
     
 }
@@ -105,6 +104,11 @@ void ofApp::setupGui(shared_ptr<ofAppBaseWindow> gW,shared_ptr<ofAppBaseWindow> 
     ofSetFrameRate(60);
     
     oscReceiver.setup(9999);
+    
+ 
+    panel.setup(mainParams);
+
+    
 }
 
 void ofApp::drawGui(ofEventArgs &args) {
@@ -223,6 +227,13 @@ void ofApp::drawGui(ofEventArgs &args) {
     ofDisableDepthTest();
 
     gui->draw();
+    
+    for( auto s : scenes) {
+        //s->drawGui();
+        
+    }
+    
+    panel.draw();
 }
 
 ofVec3f ofApp::calibrationCameraToScreen(ofVec3f v){
@@ -239,6 +250,11 @@ ofVec3f ofApp::screenToCalibrationCamera(ofVec3f v){
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    
+    
+    for( auto s : scenes) {
+        s->updateScene();
+    }
     
     fadeManager->update();
     
@@ -368,28 +384,6 @@ void ofApp::update(){
 }
 
 
-void ofApp::drawScenes(int _surfaceId) {
-    
-    ofClear(ofColor::black);
-    
-    glPushMatrix();
-    
-    for(auto s : scenes) {
-        s->beginSceneWorld(_surfaceId);
-    }
-    
-    for(auto s : scenes) {
-        s->drawScene(_surfaceId);
-    }
-    
-    for(auto s : scenes) {
-        s->endSceneWorld(_surfaceId);
-    }
-    
-    glPopMatrix();
-    
-}
-
 
 //--------------------------------------------------------------
 void ofApp::draw(){
@@ -404,9 +398,21 @@ void ofApp::draw(){
         for(std::pair<string, shared_ptr<ofxStereoscopy::Plane>> p : world.planes){
             p.second->beginLeft();
             ofClear(background_color);
+            
+            for(auto s : scenes) {
+                s->drawScene();
+            }
+            
             p.second->endLeft();
+            
             p.second->beginRight();
             ofClear(background_color);
+            
+            for(auto s : scenes) {
+                s->drawScene();
+            }
+            
+            
             p.second->endRight();
         }
     }
@@ -429,10 +435,10 @@ void ofApp::draw(){
         ofSetColor(255,255);
         p.second->drawRight();
     }
-
-    ofPopMatrix();
     
+    ofPopMatrix();
 }
+
 
 void ofApp::onButtonEvent(ofxDatGuiButtonEvent e){
     ;

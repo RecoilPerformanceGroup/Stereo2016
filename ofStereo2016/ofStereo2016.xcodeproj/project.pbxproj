@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		041E59641C886A2700FC2FE0 /* CrystalScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041E59621C886A2700FC2FE0 /* CrystalScene.cpp */; };
+		041E59831C88759800FC2FE0 /* ofxVoro.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041E59671C88759800FC2FE0 /* ofxVoro.cpp */; };
+		041E59841C88759800FC2FE0 /* c_loops.cc in Sources */ = {isa = PBXBuildFile; fileRef = 041E596B1C88759800FC2FE0 /* c_loops.cc */; };
+		041E59851C88759800FC2FE0 /* cell.cc in Sources */ = {isa = PBXBuildFile; fileRef = 041E596D1C88759800FC2FE0 /* cell.cc */; };
+		041E59861C88759800FC2FE0 /* common.cc in Sources */ = {isa = PBXBuildFile; fileRef = 041E596F1C88759800FC2FE0 /* common.cc */; };
+		041E59871C88759800FC2FE0 /* container.cc in Sources */ = {isa = PBXBuildFile; fileRef = 041E59721C88759800FC2FE0 /* container.cc */; };
+		041E59881C88759800FC2FE0 /* container_prd.cc in Sources */ = {isa = PBXBuildFile; fileRef = 041E59741C88759800FC2FE0 /* container_prd.cc */; };
+		041E59891C88759800FC2FE0 /* pre_container.cc in Sources */ = {isa = PBXBuildFile; fileRef = 041E59761C88759800FC2FE0 /* pre_container.cc */; };
+		041E598A1C88759800FC2FE0 /* unitcell.cc in Sources */ = {isa = PBXBuildFile; fileRef = 041E59791C88759800FC2FE0 /* unitcell.cc */; };
+		041E598B1C88759800FC2FE0 /* v_base.cc in Sources */ = {isa = PBXBuildFile; fileRef = 041E597B1C88759800FC2FE0 /* v_base.cc */; };
+		041E598C1C88759800FC2FE0 /* v_compute.cc in Sources */ = {isa = PBXBuildFile; fileRef = 041E597D1C88759800FC2FE0 /* v_compute.cc */; };
+		041E598D1C88759800FC2FE0 /* wall.cc in Sources */ = {isa = PBXBuildFile; fileRef = 041E59801C88759800FC2FE0 /* wall.cc */; };
 		0459E6C81C7F51B3000AB4C8 /* ofxDatGuiParameterBindings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0459E6C61C7F51B3000AB4C8 /* ofxDatGuiParameterBindings.cpp */; };
 		04B9CF3F1C7B43880035D79B /* ofxDatGuiComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04B9CF311C7B43880035D79B /* ofxDatGuiComponent.cpp */; };
 		04B9CF401C7B43880035D79B /* ofxSmartFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04B9CF381C7B43880035D79B /* ofxSmartFont.cpp */; };
@@ -71,6 +83,34 @@
 /* Begin PBXFileReference section */
 		00D6D32B84B099226431108C /* ofxOsc.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOsc.h; path = ../../../addons/ofxOsc/src/ofxOsc.h; sourceTree = SOURCE_ROOT; };
 		029684CF678F70F6D3537A29 /* OscOutboundPacketStream.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscOutboundPacketStream.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscOutboundPacketStream.h; sourceTree = SOURCE_ROOT; };
+		041E59621C886A2700FC2FE0 /* CrystalScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CrystalScene.cpp; sourceTree = "<group>"; };
+		041E59631C886A2700FC2FE0 /* CrystalScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CrystalScene.hpp; sourceTree = "<group>"; };
+		041E59671C88759800FC2FE0 /* ofxVoro.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxVoro.cpp; sourceTree = "<group>"; };
+		041E59681C88759800FC2FE0 /* ofxVoro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxVoro.h; sourceTree = "<group>"; };
+		041E596B1C88759800FC2FE0 /* c_loops.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = c_loops.cc; sourceTree = "<group>"; };
+		041E596C1C88759800FC2FE0 /* c_loops.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = c_loops.hh; sourceTree = "<group>"; };
+		041E596D1C88759800FC2FE0 /* cell.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cell.cc; sourceTree = "<group>"; };
+		041E596E1C88759800FC2FE0 /* cell.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = cell.hh; sourceTree = "<group>"; };
+		041E596F1C88759800FC2FE0 /* common.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = common.cc; sourceTree = "<group>"; };
+		041E59701C88759800FC2FE0 /* common.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = common.hh; sourceTree = "<group>"; };
+		041E59711C88759800FC2FE0 /* config.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = config.hh; sourceTree = "<group>"; };
+		041E59721C88759800FC2FE0 /* container.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = container.cc; sourceTree = "<group>"; };
+		041E59731C88759800FC2FE0 /* container.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = container.hh; sourceTree = "<group>"; };
+		041E59741C88759800FC2FE0 /* container_prd.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = container_prd.cc; sourceTree = "<group>"; };
+		041E59751C88759800FC2FE0 /* container_prd.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = container_prd.hh; sourceTree = "<group>"; };
+		041E59761C88759800FC2FE0 /* pre_container.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = pre_container.cc; sourceTree = "<group>"; };
+		041E59771C88759800FC2FE0 /* pre_container.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = pre_container.hh; sourceTree = "<group>"; };
+		041E59781C88759800FC2FE0 /* rad_option.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = rad_option.hh; sourceTree = "<group>"; };
+		041E59791C88759800FC2FE0 /* unitcell.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = unitcell.cc; sourceTree = "<group>"; };
+		041E597A1C88759800FC2FE0 /* unitcell.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = unitcell.hh; sourceTree = "<group>"; };
+		041E597B1C88759800FC2FE0 /* v_base.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = v_base.cc; sourceTree = "<group>"; };
+		041E597C1C88759800FC2FE0 /* v_base.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = v_base.hh; sourceTree = "<group>"; };
+		041E597D1C88759800FC2FE0 /* v_compute.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = v_compute.cc; sourceTree = "<group>"; };
+		041E597E1C88759800FC2FE0 /* v_compute.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = v_compute.hh; sourceTree = "<group>"; };
+		041E597F1C88759800FC2FE0 /* voro++.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "voro++.hh"; sourceTree = "<group>"; };
+		041E59801C88759800FC2FE0 /* wall.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = wall.cc; sourceTree = "<group>"; };
+		041E59811C88759800FC2FE0 /* wall.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = wall.hh; sourceTree = "<group>"; };
+		041E59821C88759800FC2FE0 /* worklist.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = worklist.hh; sourceTree = "<group>"; };
 		0459E6C61C7F51B3000AB4C8 /* ofxDatGuiParameterBindings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxDatGuiParameterBindings.cpp; sourceTree = "<group>"; };
 		0459E6C71C7F51B3000AB4C8 /* ofxDatGuiParameterBindings.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ofxDatGuiParameterBindings.hpp; sourceTree = "<group>"; };
 		04B9CF231C7B43880035D79B /* ofxDatGui2dPad.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxDatGui2dPad.h; sourceTree = "<group>"; };
@@ -174,6 +214,65 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		041E59651C88759800FC2FE0 /* ofxVoro */ = {
+			isa = PBXGroup;
+			children = (
+				041E59661C88759800FC2FE0 /* src */,
+				041E59691C88759800FC2FE0 /* libs */,
+			);
+			name = ofxVoro;
+			sourceTree = "<group>";
+		};
+		041E59661C88759800FC2FE0 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				041E59671C88759800FC2FE0 /* ofxVoro.cpp */,
+				041E59681C88759800FC2FE0 /* ofxVoro.h */,
+			);
+			name = src;
+			path = ../../../addons/ofxVoro/src;
+			sourceTree = "<group>";
+		};
+		041E59691C88759800FC2FE0 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				041E596A1C88759800FC2FE0 /* voro++ */,
+			);
+			name = libs;
+			path = ../../../addons/ofxVoro/libs;
+			sourceTree = "<group>";
+		};
+		041E596A1C88759800FC2FE0 /* voro++ */ = {
+			isa = PBXGroup;
+			children = (
+				041E596B1C88759800FC2FE0 /* c_loops.cc */,
+				041E596C1C88759800FC2FE0 /* c_loops.hh */,
+				041E596D1C88759800FC2FE0 /* cell.cc */,
+				041E596E1C88759800FC2FE0 /* cell.hh */,
+				041E596F1C88759800FC2FE0 /* common.cc */,
+				041E59701C88759800FC2FE0 /* common.hh */,
+				041E59711C88759800FC2FE0 /* config.hh */,
+				041E59721C88759800FC2FE0 /* container.cc */,
+				041E59731C88759800FC2FE0 /* container.hh */,
+				041E59741C88759800FC2FE0 /* container_prd.cc */,
+				041E59751C88759800FC2FE0 /* container_prd.hh */,
+				041E59761C88759800FC2FE0 /* pre_container.cc */,
+				041E59771C88759800FC2FE0 /* pre_container.hh */,
+				041E59781C88759800FC2FE0 /* rad_option.hh */,
+				041E59791C88759800FC2FE0 /* unitcell.cc */,
+				041E597A1C88759800FC2FE0 /* unitcell.hh */,
+				041E597B1C88759800FC2FE0 /* v_base.cc */,
+				041E597C1C88759800FC2FE0 /* v_base.hh */,
+				041E597D1C88759800FC2FE0 /* v_compute.cc */,
+				041E597E1C88759800FC2FE0 /* v_compute.hh */,
+				041E597F1C88759800FC2FE0 /* voro++.hh */,
+				041E59801C88759800FC2FE0 /* wall.cc */,
+				041E59811C88759800FC2FE0 /* wall.hh */,
+				041E59821C88759800FC2FE0 /* worklist.hh */,
+			);
+			path = "voro++";
+			sourceTree = "<group>";
+		};
 		04B9CF201C7B43880035D79B /* ofxDatGui */ = {
 			isa = PBXGroup;
 			children = (
@@ -362,6 +461,7 @@
 				E6053AB7FEC63D5F83825B88 /* ofxOsc */,
 				04B9CF201C7B43880035D79B /* ofxDatGui */,
 				04F001101C7CA8710001F8C7 /* ofxEasing */,
+				041E59651C88759800FC2FE0 /* ofxVoro */,
 			);
 			name = addons;
 			sourceTree = "<group>";
@@ -429,6 +529,8 @@
 				7A0D4D031C7F39A100CF4DD7 /* SceneTest.hpp */,
 				0459E6C61C7F51B3000AB4C8 /* ofxDatGuiParameterBindings.cpp */,
 				0459E6C71C7F51B3000AB4C8 /* ofxDatGuiParameterBindings.hpp */,
+				041E59621C886A2700FC2FE0 /* CrystalScene.cpp */,
+				041E59631C886A2700FC2FE0 /* CrystalScene.hpp */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -564,22 +666,34 @@
 				F285EB3169F1566CA3D93C20 /* ofxPanel.cpp in Sources */,
 				837220E80EB56CD44AD27F2A /* ofxSlider.cpp in Sources */,
 				B56FE57CC35806596D38118C /* ofxSliderGroup.cpp in Sources */,
+				041E59871C88759800FC2FE0 /* container.cc in Sources */,
 				1CD33E884D9E3358252E82A1 /* ofxToggle.cpp in Sources */,
+				041E59841C88759800FC2FE0 /* c_loops.cc in Sources */,
 				72A929D3561B8232A182ABFC /* ofxOscBundle.cpp in Sources */,
 				5864AD82E20F15536D054EA3 /* ofxOscMessage.cpp in Sources */,
+				041E59891C88759800FC2FE0 /* pre_container.cc in Sources */,
+				041E59641C886A2700FC2FE0 /* CrystalScene.cpp in Sources */,
 				4ADB88E2FB52E76A471065DE /* ofxOscParameterSync.cpp in Sources */,
 				640279EE111671BD026CB013 /* ofxOscReceiver.cpp in Sources */,
 				0459E6C81C7F51B3000AB4C8 /* ofxDatGuiParameterBindings.cpp in Sources */,
 				8F5205AEF8861EF234F0651A /* ofxOscSender.cpp in Sources */,
 				ADE367465D2A8EBAD4C7A8D9 /* IpEndpointName.cpp in Sources */,
 				04F001161C7EEE8B0001F8C7 /* ParameterFade.cpp in Sources */,
+				041E59881C88759800FC2FE0 /* container_prd.cc in Sources */,
 				67FE4C7B15C2F0478C8126C2 /* NetworkingUtils.cpp in Sources */,
 				7A1285361C80D879007B8689 /* ofxStereoscopy.cpp in Sources */,
 				510CAFE035E576A4E1502D52 /* UdpSocket.cpp in Sources */,
+				041E598A1C88759800FC2FE0 /* unitcell.cc in Sources */,
 				04B9CF401C7B43880035D79B /* ofxSmartFont.cpp in Sources */,
+				041E59851C88759800FC2FE0 /* cell.cc in Sources */,
 				62545D179C94265CA1389D4A /* OscOutboundPacketStream.cpp in Sources */,
+				041E59831C88759800FC2FE0 /* ofxVoro.cpp in Sources */,
+				041E598C1C88759800FC2FE0 /* v_compute.cc in Sources */,
+				041E598B1C88759800FC2FE0 /* v_base.cc in Sources */,
+				041E598D1C88759800FC2FE0 /* wall.cc in Sources */,
 				C4782ECC372420ACE0615B74 /* OscPrintReceivedElements.cpp in Sources */,
 				0546D1A38E13BD319CC9755B /* OscReceivedElements.cpp in Sources */,
+				041E59861C88759800FC2FE0 /* common.cc in Sources */,
 				879A251454401BC0B6E4F238 /* OscTypes.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

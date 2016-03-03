@@ -15,7 +15,7 @@
 class SceneTest : public ofxStereoscopy::Scene {
     
 public:
-    void draw(int _surfaceId);
+    void draw();
     void update();
     void setup();
     
