@@ -24,7 +24,7 @@ int main( ){
     
     shared_ptr<ofApp> mainApp(new ofApp);
     
-    mainApp->setupGui();
+    mainApp->setupGui(guiWindow, mainWindow);
     
     ofAddListener(guiWindow->events().draw,mainApp.get(),&ofApp::drawGui);
 

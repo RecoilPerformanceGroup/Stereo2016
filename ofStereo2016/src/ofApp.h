@@ -27,7 +27,7 @@ public:
     };
     
     void setup();
-    void setupGui();
+    void setupGui(shared_ptr<ofAppBaseWindow> gW, shared_ptr<ofAppBaseWindow> mW);
     
     void update();
     
@@ -71,7 +71,7 @@ public:
     // stereoscopy
     ofxStereoscopy::World world;
     ofEasyCam worldModelCam;
-    
+        
     vector<shared_ptr<ofxStereoscopy::Scene>> scenes;
     void drawScenes(int _surfaceId);
     
@@ -81,5 +81,9 @@ public:
     
     void saveParameters(ofParameterGroup & params);
     void loadParameters(ofParameterGroup & params);
+    
+    shared_ptr<ofAppBaseWindow> guiWindow;
+    shared_ptr<ofAppBaseWindow> mainWindow;
+    
     
 };

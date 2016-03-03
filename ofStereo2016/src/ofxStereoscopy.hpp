@@ -263,6 +263,11 @@ namespace ofxStereoscopy {
             pixels_cm,
         };
         
+        World(){
+            font.load("ofxbraitsch/fonts/Verdana.ttf", 32, true, true, true);
+            logo.load("recoil_logo.png");
+        };
+        
         //TODO: Make parameter changes update all planes...
         
         std::map<std::string, shared_ptr<Plane>> planes;
@@ -272,14 +277,13 @@ namespace ofxStereoscopy {
         void addPlane(shared_ptr<Plane> p);
         shared_ptr<Plane> getPlane(std::string name);
         
-        //TODO: Make drawWorldModel
-        //TODO: Make drawPlane
-        
         void drawModel(bool showCameraFrustrums = true);
         void drawPlaneFBO(shared_ptr<Plane> p);
         
         void renderProjectorCalibrations();
         
+        ofTrueTypeFont font;
+        ofImage logo;
         
         
     };
@@ -289,8 +293,6 @@ namespace ofxStereoscopy {
     public:
         
         Plane(const string & name, float width, float height, const ofVec3f& pos_cm, const ofQuaternion& orientation_q, World * w){
-            
-            font.load("ofxbraitsch/fonts/Verdana.ttf", 32, true, true, true);
             
             ofPlanePrimitive::setWidth(width);
             ofPlanePrimitive::setHeight(height);
@@ -306,9 +308,9 @@ namespace ofxStereoscopy {
             
             setName(name);
             
-            // TODO: bind size parameter to ofPlanePrimitive::width and ofPlanePrimitive::height
-            // TODO: bind position parameter to ofPlanePrimitive::position
-            // TODO: make a bound orientation parameter to ofPlanePrimitive::orientation quarternion
+            // TODO: check on load  bind size parameter to ofPlanePrimitive::width and ofPlanePrimitive::height
+            // TODO: check on load bind position parameter to ofPlanePrimitive::position
+            // TODO: check on load make a bound orientation parameter to ofPlanePrimitive::orientation quarternion
             
             dimensionsChanged();
             
@@ -404,14 +406,14 @@ namespace ofxStereoscopy {
             ofDrawRectangle(-width/2, -height/2, width, height);
             ofFill();
             ofDisableDepthTest();
-            font.drawStringAsShapes(params.getName(), (-width/2)+15, (height/2)-font.getLineHeight());
+            world->font.drawStringAsShapes(params.getName(), (-width/2)+15, (height/2)-world->font.getLineHeight());
             ofPlanePrimitive::restoreTransformGL();
             ofPopStyle();
         }
         
         void drawCamerasModel(){
-            drawCameraModel(camLeft, ofColor::cyan);
-            drawCameraModel(camRight, ofColor::red);
+            drawCameraModel(camLeft, ofColor(127, 255, 255, 64));
+            drawCameraModel(camRight, ofColor(255, 255, 127, 64));
         }
         
         void drawCameraModel(ofCamera cam, ofColor c){
@@ -442,7 +444,7 @@ namespace ofxStereoscopy {
             ofPopStyle();
         }
         
-        void drawChessboard() {
+        void drawChessboard(ofColor camColor = ofColor::white) {
             
             ofPushStyle();
             ofFill();
@@ -453,28 +455,28 @@ namespace ofxStereoscopy {
             areaLight.setup();
             areaLight.enable();
             areaLight.setAreaLight(400,400);
-            areaLight.setAmbientColor(ofFloatColor(0.1,0.1,0.1));
-            areaLight.setAttenuation(0.5,0.000001,0.000001);
-            areaLight.setDiffuseColor(ofFloatColor(0.5,0.5,0.5));
+            areaLight.setAmbientColor(ofFloatColor(0.3,0.3,0.3));
+            areaLight.setAttenuation(0.75,0.000001,0.000001);
+            areaLight.setDiffuseColor(ofFloatColor(0.75,0.75,0.75));
             areaLight.setSpecularColor(ofFloatColor(1,1,1));
-            areaLight.setGlobalPosition(-400,500,500);
+            areaLight.setGlobalPosition(0,400,400);
             areaLight.setGlobalOrientation(ofQuaternion(-90, ofVec3f(1,0,0)));
             
-            ofLight areaLight2;
+/*            ofLight areaLight2;
             areaLight2.setParent(*this);
             areaLight2.setup();
             areaLight2.enable();
             areaLight2.setAreaLight(800,800);
             areaLight2.setAmbientColor(ofFloatColor(0.1,0.1,0.1));
-            areaLight2.setAttenuation(0.5,0.000001,0.000001);
-            areaLight2.setDiffuseColor(ofFloatColor(0.5,0.5,0.5));
-            areaLight2.setSpecularColor(ofFloatColor(1,1,1));
-            areaLight2.setGlobalPosition(400,600,100);
-            areaLight2.setGlobalOrientation(ofQuaternion(-90, ofVec3f(1,0,0)));
-            
+            areaLight2.setAttenuation(0.25,0.0000001,0.000001);
+            areaLight2.setDiffuseColor(ofFloatColor(0.175,0.10,0.075));
+            areaLight2.setSpecularColor(ofFloatColor(0.175,0.10,0.075));
+            areaLight2.setGlobalPosition((sin(ofGetElapsedTimef()*0.5)*200)+200,500,50+(100*cos(ofGetElapsedTimef()*0.5)));
+            areaLight2.setGlobalOrientation(ofQuaternion(-135, ofVec3f(1,-0.5,0)));
+*/
             ofMaterial materialSphere;
-            materialSphere.setAmbientColor(ofFloatColor(0.0,0.8,1.0,1.0));
-            materialSphere.setDiffuseColor(ofFloatColor(0.8,0.8,0.4,1.0));
+            materialSphere.setAmbientColor(ofFloatColor(0.0,0.8,1.0,0.5));
+            materialSphere.setDiffuseColor(ofFloatColor(0.8,0.8,0.4,0.5));
             materialSphere.setSpecularColor(ofFloatColor(0.8,0.8,0.8,1.0));
             materialSphere.setShininess(10);
             
@@ -497,9 +499,9 @@ namespace ofxStereoscopy {
                 
                 ofEnableLighting();
                 
-                for(int x = 0; x < width/chessSize; x++){
-                    for(int y = 0; y < height/chessSize; y++){
-                        bool isWhite = (((y+x)%2)==1);
+                for(int x = -2; x <= width/chessSize; x++){
+                    for(int y = -2; y <= height/chessSize; y++){
+                        bool isWhite = (abs((y+x)%2)==1);
                         if(isWhite) {
                             materialFloorWhite.begin();
                         }else{
@@ -507,7 +509,7 @@ namespace ofxStereoscopy {
                         }
                         ofPushMatrix(); {
                             
-                            ofTranslate(-width/2, -height/2);
+                            ofTranslate(-(width-fmodf(width, chessSize*4))/2, -(height-fmodf(height, chessSize*4))/2);
                             ofDrawRectangle(x*chessSize, y*chessSize, chessSize, chessSize);
                             
                         } ofPopMatrix();
@@ -522,24 +524,88 @@ namespace ofxStereoscopy {
                 }
                 ofDisableLighting();
                 
-                
-                
-                ofSetColor(ofFloatColor(0.7,0.8,0.8,1.0));
-                
                 ofDisableDepthTest();
-                font.drawString(params.getName(), (-width/2)+15, (height/2)-font.getLineHeight());
+
+                float r = 200;
+
+                ofSetColor(255,255,255,96);
+                ofDrawCircle(0,0,r);
+
+                ofSetColor(camColor,127);
+                
+                ofNoFill();
+                float px = 1.0/world->pixels_cm;
+                
+                for(int i=0; i < 5; i++){
+                    ofDrawCircle(0,0,r-(px*i));
+                    ofDrawCircle(0,0,(r*2)-(px*i));
+                }
+
+                ofSetColor(camColor,255);
+
+                ofFill();
+
+                ofDrawRectangle(-width/2, (-height/2)-2, width, 4);
+                ofDrawRectangle((-width/2)+10, -3, width-20, 6);
+                ofDrawRectangle(-width/2, (height/2)-2, width, 4);
+                int widthRound = roundf(width);
+                ofPushMatrix();
+                ofTranslate((width/2)-40, 15, 0);
+                ofScale(0.75,0.75,0.75);
+                world->font.drawString(ofToString(widthRound) + " cm", -world->font.getStringBoundingBox(ofToString(widthRound) + " cm", 0, 0).width, 0);
+                ofPopMatrix();
+                ofDrawTriangle(ofPoint(width/2-20, -20), ofPoint(width/2-20, 20), ofPoint(width/2, 0));
+                ofDrawTriangle(ofPoint(-width/2+20, -20), ofPoint(-width/2+20, 20), ofPoint(-width/2, 0));
+                
+                ofDrawRectangle((-width/2)-2, -height/2, 4, height);
+                ofDrawRectangle(-3, (-height/2)+10, 6, height-20);
+                ofDrawRectangle((width/2)-2, -height/2, 4, height);
+                
+                ofPushMatrix();
+                ofRotateZ(90);
+                ofTranslate((height/2)-40, 15, 0);
+                ofScale(0.75,0.75,0.75);
+                int heightRound = roundf(height);
+                world->font.drawString(ofToString(heightRound) + " cm", -world->font.getStringBoundingBox(ofToString(heightRound) + " cm", 0, 0).width, 0);
+                ofPopMatrix();
+                ofDrawTriangle(ofPoint(-20,height/2-20), ofPoint(20, height/2-20), ofPoint(0, height/2));
+                ofDrawTriangle(ofPoint(-20,-height/2+20), ofPoint(20, -height/2+20), ofPoint(0, -height/2));
+
+                
+                ofRectangle nameRect(world->font.getStringBoundingBox(params.getName(), 0, 0));
+                ofRectangle nameFrameRect(nameRect);
+                nameFrameRect.setFromCenter(ofPoint(0,0), nameRect.width+30.0, nameRect.height+30.0);
+                nameRect.setFromCenter(ofPoint(0,0), nameRect.width, nameRect.height);
+                
+                ofSetColor(camColor,255);
+                ofDrawRectRounded(nameFrameRect, 10);
+                
+                ofSetColor(0,255);
+                world->font.drawString(params.getName(), nameRect.x, nameRect.y);
+                
+                ofRectangle logoRect;
+                float yLocation = fminf(-100.0,(roundf(-height/200.0)*100)+150);
+                logoRect.setFromCenter(ofPoint(0,yLocation), 200,100);
+                ofSetColor(0,(yLocation<-200)?255:127);
+                ofDrawRectangle(logoRect);
+                ofSetColor(255,255);
+                logoRect.setFromCenter(ofPoint(0,yLocation), world->logo.getWidth(), world->logo.getHeight());
+                logoRect.scaleFromCenter(150.0/world->logo.getWidth());
+                world->logo.draw(logoRect);
+                
                 ofEnableDepthTest();
-                
-                ofSetColor(255, 255);
-                
-                ofEnableLighting();
-                materialSphere.begin();
-                ofDrawSphere(0.0, 0.0, 150, width/6.0);
-                materialSphere.end();
                 
                 
             } ofPopMatrix();
-            
+
+            /*
+            ofEnableLighting();
+            ofEnableAlphaBlending();
+            materialSphere.begin();
+            ofDrawSphere(0.0, 0.0, 0, width/4.0);
+            materialSphere.end();
+            */
+
             ofPopStyle();
             
         }
@@ -547,11 +613,11 @@ namespace ofxStereoscopy {
         void renderChessboards() {
             
             beginLeft();
-            drawChessboard();
+            drawChessboard(leftColor);
             endLeft();
             
             beginRight();
-            drawChessboard();
+            drawChessboard(rightColor);
             endRight();
         }
         
@@ -656,8 +722,9 @@ namespace ofxStereoscopy {
         
         ofCamera camLeft, camRight;
         ofFbo fboLeft, fboRight;
+        ofColor leftColor {127, 255, 255};
+        ofColor rightColor {255, 255, 127};
         ofTexture textureLeft, textureRight;
-        ofTrueTypeFont font;
         World * world;
         Homography::Quad quadLeft, quadRight;
         

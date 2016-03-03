@@ -13,11 +13,12 @@ void ofApp::setup(){
     int resolutionY = (resolutionX * 9) / 16;
     
     ofEnableAlphaBlending();
+    ofSetCircleResolution(66);
     
     ofxDatGuiFolder * projectorCalibrationFolder = gui->getFolder("Projector Calibration");
 
     world.addPlane(make_shared<ofxStereoscopy::Plane>(
-                                                      "wall",
+                                                      "WALL",
                                                       800.0,
                                                       500.0,
                                                       ofVec3f(0,250,0),
@@ -25,10 +26,10 @@ void ofApp::setup(){
                                                       &world
                                                       ));
     
-    projectorCalibrationFolder->addToggle("wall");
+    projectorCalibrationFolder->addToggle("WALL");
 
     world.addPlane(make_shared<ofxStereoscopy::Plane>(
-                                                      "floor",
+                                                      "FLOOR",
                                                       800.0,
                                                       800.0,
                                                       ofVec3f(0,0,400),
@@ -36,7 +37,7 @@ void ofApp::setup(){
                                                       &world
                                                       ));
 
-    projectorCalibrationFolder->addToggle("floor");
+    projectorCalibrationFolder->addToggle("FLOOR");
 
     /*    world.addPlane(make_shared<ofxStereoscopy::Plane>(
                                                       "thing",
@@ -54,7 +55,10 @@ void ofApp::setup(){
     
 }
 
-void ofApp::setupGui() {
+void ofApp::setupGui(shared_ptr<ofAppBaseWindow> gW,shared_ptr<ofAppBaseWindow> mW) {
+    
+    guiWindow = gW;
+    guiWindow = mW;
     
     worldModelCam.setFov(75);
 
@@ -124,10 +128,16 @@ void ofApp::drawGui(ofEventArgs &args) {
     
     ofEnableDepthTest();
 
-    worldModelCam.begin();
-    world.drawModel(!(gui->getDropdown("Model View")->getSelected()->getLabel() == "CAMERA MODEL VIEW"));
-    worldModelCam.end();
-    
+    if(calibrate_planes){
+        ofPushMatrix();
+//        ofScale(1.0/guiWindow->getWidth(), 1.0/width);
+        
+        ofPopMatrix();
+    } else {
+        worldModelCam.begin();
+        world.drawModel(!(gui->getDropdown("Model View")->getSelected()->getLabel() == "CAMERA MODEL VIEW"));
+        worldModelCam.end();
+    }
     ofDisableDepthTest();
 
     gui->draw();
@@ -368,14 +378,14 @@ void ofApp::stageResized(ofVec3f& v){
 
 void ofApp::updateStage(){
     if(flagStageResized){
-    world.getPlane("wall")->ofPlanePrimitive::setHeight(stage_size_cm->y);
-    world.getPlane("wall")->ofPlanePrimitive::setWidth(stage_size_cm->x);
-    world.getPlane("wall")->ofPlanePrimitive::setGlobalPosition(0, stage_size_cm->y/2.0, 0);
-    world.getPlane("wall")->dimensionsChanged();
-        world.getPlane("floor")->ofPlanePrimitive::setHeight(stage_size_cm->z);
-        world.getPlane("floor")->ofPlanePrimitive::setWidth(stage_size_cm->x);
-        world.getPlane("floor")->ofPlanePrimitive::setGlobalPosition(0, 0, stage_size_cm->z/2.0);
-        world.getPlane("floor")->dimensionsChanged();
+    world.getPlane("WALL")->ofPlanePrimitive::setHeight(stage_size_cm->y);
+    world.getPlane("WALL")->ofPlanePrimitive::setWidth(stage_size_cm->x);
+    world.getPlane("WALL")->ofPlanePrimitive::setGlobalPosition(0, stage_size_cm->y/2.0, 0);
+    world.getPlane("WALL")->dimensionsChanged();
+        world.getPlane("FLOOR")->ofPlanePrimitive::setHeight(stage_size_cm->z);
+        world.getPlane("FLOOR")->ofPlanePrimitive::setWidth(stage_size_cm->x);
+        world.getPlane("FLOOR")->ofPlanePrimitive::setGlobalPosition(0, 0, stage_size_cm->z/2.0);
+        world.getPlane("FLOOR")->dimensionsChanged();
     flagStageResized = false;
     }
 }
