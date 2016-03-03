@@ -8,5 +8,56 @@
 	<position1>50, 50</position1>
 <mainParams/>
 	<Calibrate_Planes>0</Calibrate_Planes>
-	<Background_Color>68, 68, 68, 255</Background_Color>
+	<Background_Color>255, 255, 255, 119</Background_Color>
+<world>
+		<camera>
+			<camera_position>0, 250, 1200</camera_position>
+			<eye_separation>6.5</eye_separation>
+			<focus_distance>200</focus_distance>
+			<camera_near_clip>20</camera_near_clip>
+		</camera>
+		<pixels_pr__cm>2</pixels_pr__cm>
+		<WALL>
+			<UnknownName>1</UnknownName>
+			<position>0, 0, 0</position>
+			<size>800, 500</size>
+			<Left_Quad>
+				<Output_Points>
+					<Top_Left>0.716506, 0.655885, 0</Top_Left>
+					<Top_Right>0.335455, 0.650111, 0</Top_Right>
+					<Bottom_Left>0.222872, 0.184382, 0</Bottom_Left>
+					<Bottom_Right>0.758364, 0.284456, 0</Bottom_Right>
+				</Output_Points>
+			</Left_Quad>
+			<Right_Quad>
+				<Output_Points>
+					<Top_Left>0.324194, 0.623446, 0</Top_Left>
+					<Top_Right>0.670604, 0.623446, 0</Top_Right>
+					<Bottom_Left>0.315248, 0.998446, 0</Bottom_Left>
+					<Bottom_Right>0.697742, 0.998446, 0</Bottom_Right>
+				</Output_Points>
+			</Right_Quad>
+		</WALL>
+		<FLOOR>
+			<UnknownName>1</UnknownName>
+			<position>0, 0, 0</position>
+			<size>800, 800</size>
+			<Left_Quad>
+				<Output_Points>
+					<Top_Left>0, 0, 0</Top_Left>
+					<Top_Right>1, 0, 0</Top_Right>
+					<Bottom_Left>0.342919, 0.567964, 0</Bottom_Left>
+					<Bottom_Right>0.632114, 0.573513, 0</Bottom_Right>
+				</Output_Points>
+			</Left_Quad>
+			<Right_Quad>
+				<Output_Points>
+					<Top_Left>0, 0, 0</Top_Left>
+					<Top_Right>1, 0, 0</Top_Right>
+					<Bottom_Left>0.326275, 0.62622, 0</Bottom_Left>
+					<Bottom_Right>0.665403, 0.62622, 0</Bottom_Right>
+				</Output_Points>
+			</Right_Quad>
+		</FLOOR>
+	</world>
 </mainParams>

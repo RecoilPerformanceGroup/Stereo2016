@@ -3,6 +3,8 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    
+    mainParams.add(world.params);
     fadeManager = make_shared<ParameterFadeManager>();
     //guiManager = make_shared<GuiManager>();
     /*
@@ -26,7 +28,8 @@ void ofApp::setup(){
                                                       &world
                                                       ));
     
-    projectorCalibrationFolder->addToggle("WALL");
+    projectorCalibrationFolder->addToggle("WALL LEFT", false);
+    projectorCalibrationFolder->addToggle("WALL RIGHT", false);
 
     world.addPlane(make_shared<ofxStereoscopy::Plane>(
                                                       "FLOOR",
@@ -37,18 +40,9 @@ void ofApp::setup(){
                                                       &world
                                                       ));
 
-    projectorCalibrationFolder->addToggle("FLOOR");
+    projectorCalibrationFolder->addToggle("FLOOR LEFT", false);
+    projectorCalibrationFolder->addToggle("FLOOR RIGHT", false);
 
-    /*    world.addPlane(make_shared<ofxStereoscopy::Plane>(
-                                                      "thing",
-                                                      200.0,
-                                                      120.0,
-                                                      ofVec3f(0,60,700),
-                                                      ofQuaternion(0, ofVec3f(1,0,0)),
-                                                      &world
-                                                      ));
-*/
-    
     scenes.push_back(make_shared<SceneTest>());
     
     stage_size_cm.addListener(this, &ofApp::stageResized);
@@ -58,13 +52,13 @@ void ofApp::setup(){
 void ofApp::setupGui(shared_ptr<ofAppBaseWindow> gW,shared_ptr<ofAppBaseWindow> mW) {
     
     guiWindow = gW;
-    guiWindow = mW;
+    mainWindow = mW;
     
     worldModelCam.setFov(75);
 
     // Dat Gui
     
-    gui = new ofxDatGui( ofxDatGuiAnchor::TOP_RIGHT );
+    gui = new ofxDatGui( ofxDatGuiAnchor::TOP_LEFT );
     gui->setTheme(new ofxDatGuiThemeWireframe());
     
     gui->addFRM(1.0f);
@@ -129,10 +123,98 @@ void ofApp::drawGui(ofEventArgs &args) {
     ofEnableDepthTest();
 
     if(calibrate_planes){
-        ofPushMatrix();
-//        ofScale(1.0/guiWindow->getWidth(), 1.0/width);
+
+        //TODO: Move gui into world or plane object
+        //TODO: Use callbacks for mouseinteraction to catch dragging properly
+        //TODO: Use keyboard for nudging.
+        //FIXME: Upside down matrix in camera or draw...
         
-        ofPopMatrix();
+        outputScreensRectangle.set(0, 0, 1.0, mainWindow->getHeight()*1.0/(mainWindow->getWidth()/2));
+        
+        ofxDatGuiFolder * projectorCalibrationFolder = gui->getFolder("Projector Calibration");
+        
+        calibrationCamera.setPosition(0.5, 0.5/outputScreensRectangle.getAspectRatio(), 1);
+        calibrationCamera.setNearClip(0.1);
+        
+        calibrationCamera.begin();
+        ofScale(1.0, 1.0/outputScreensRectangle.getAspectRatio());
+        
+        ofFill();
+        
+        ofSetColor(255, 255, 255, 200);
+        ofDrawRectangle(0,0,1.0,1.0);
+
+        ofDisableDepthTest();
+
+        for(std::pair<string, shared_ptr<ofxStereoscopy::Plane>> p : world.planes){
+            
+            shared_ptr<ofxStereoscopy::Plane> plane = p.second;
+
+            if (((ofxDatGuiToggle *)projectorCalibrationFolder->getComponent(ofxDatGuiType::TOGGLE, p.first + " LEFT"))->ofxDatGuiToggle::getEnabled()) {
+                
+                ofSetColor(255,127);
+                plane->drawLeft();
+                ofSetColor(plane->leftColor);
+                plane->quadLeft.drawOutputConfig();
+                ofSetColor(ofColor::orangeRed);
+                ofFill();
+
+                for (shared_ptr<ofAbstractParameter> cornerPoint : plane->quadLeft.outputPoints) {
+                    shared_ptr<ofParameter<ofVec3f>> cp = std::dynamic_pointer_cast<ofParameter<ofVec3f>>(cornerPoint);
+                    ofVec3f pVec = cp->get();
+                    ofVec3f pVecOnScreen = calibrationCameraToScreen(pVec);
+                    ofVec3f mouseInCam = screenToCalibrationCamera(ofVec3f(ofGetMouseX(), ofGetMouseY(), pVecOnScreen.z));
+                    ofSetColor(ofColor::greenYellow);
+                    ofDrawEllipse(screenToCalibrationCamera(pVecOnScreen),0.03, 0.03*outputScreensRectangle.getAspectRatio());
+                    if (pVec.distance(mouseInCam) < 0.06) {
+                            if(ofGetMousePressed()){
+                                plane->quadLeft.selectedPoint = cp;
+                                plane->quadLeft.selectedPoint.lock()->set(mouseInCam);
+                            }
+                        break;
+                    }
+                }
+                if (!plane->quadLeft.selectedPoint.expired()) {
+                    ofSetColor(ofColor::yellow);
+                    ofDrawEllipse(plane->quadLeft.selectedPoint.lock()->get(), 0.05, 0.05*outputScreensRectangle.getAspectRatio());
+                }
+            } else if (((ofxDatGuiToggle *)projectorCalibrationFolder->getComponent(ofxDatGuiType::TOGGLE, p.first + " RIGHT"))->ofxDatGuiToggle::getEnabled()) {
+                
+                    ofSetColor(255,127);
+                    plane->drawRight();
+                    ofSetColor(plane->rightColor);
+                    plane->quadRight.drawOutputConfig();
+                    ofSetColor(ofColor::orangeRed);
+                    ofFill();
+                    
+                    for (shared_ptr<ofAbstractParameter> cornerPoint : plane->quadRight.outputPoints) {
+                        shared_ptr<ofParameter<ofVec3f>> cp = std::dynamic_pointer_cast<ofParameter<ofVec3f>>(cornerPoint);
+                        ofVec3f pVec = cp->get();
+                        ofVec3f pVecOnScreen = calibrationCameraToScreen(pVec);
+                        ofVec3f mouseInCam = screenToCalibrationCamera(ofVec3f(ofGetMouseX(), ofGetMouseY(), pVecOnScreen.z));
+                        ofSetColor(ofColor::greenYellow);
+                        ofDrawEllipse(screenToCalibrationCamera(pVecOnScreen),0.03, 0.03*outputScreensRectangle.getAspectRatio());
+                        if (pVec.distance(mouseInCam) < 0.06) {
+                            if(ofGetMousePressed()){
+                                plane->quadRight.selectedPoint = cp;
+                                plane->quadRight.selectedPoint.lock()->set(mouseInCam);
+                            }
+                            break;
+                        }
+                    }
+                    if (!plane->quadRight.selectedPoint.expired()) {
+                        ofSetColor(ofColor::yellow);
+                        ofDrawEllipse(plane->quadRight.selectedPoint.lock()->get(), 0.05, 0.05*outputScreensRectangle.getAspectRatio());
+                    }
+            } else {
+                plane->quadLeft.selectedPoint.reset();
+                plane->quadRight.selectedPoint.reset();
+            }
+            
+        }
+        
+        ofFill();
+        calibrationCamera.end();
     } else {
         worldModelCam.begin();
         world.drawModel(!(gui->getDropdown("Model View")->getSelected()->getLabel() == "CAMERA MODEL VIEW"));
@@ -142,6 +224,18 @@ void ofApp::drawGui(ofEventArgs &args) {
 
     gui->draw();
 }
+
+ofVec3f ofApp::calibrationCameraToScreen(ofVec3f v){
+    v.y/=outputScreensRectangle.getAspectRatio();
+    return calibrationCamera.worldToScreen(v);
+}
+
+ofVec3f ofApp::screenToCalibrationCamera(ofVec3f v){
+    v = calibrationCamera.screenToWorld(v);
+    v.y*=outputScreensRectangle.getAspectRatio();
+    return v;
+}
+
 
 //--------------------------------------------------------------
 void ofApp::update(){
@@ -301,9 +395,9 @@ void ofApp::drawScenes(int _surfaceId) {
 void ofApp::draw(){
     
     ofBackground(0);
-    //    ofSetColor(color01);
-    //    ofDrawCircle(vec301.get().x,vec301.get().y, float01.get()*800);
-    
+
+    ofEnableDepthTest();
+
     if(calibrate_planes){
         world.renderProjectorCalibrations();
     } else {
@@ -317,20 +411,26 @@ void ofApp::draw(){
         }
     }
     
+    
+    ofDisableDepthTest();
+
     ofPushMatrix();
     
-    float fboHeight = ofGetHeight()/world.planes.size();
+    ofScale(ofGetWidth()*0.5, ofGetHeight(), ofGetHeight());
     
     for(std::pair<string, shared_ptr<ofxStereoscopy::Plane>> p : world.planes){
-        float fboWidth = p.second->fboLeft.getWidth()/p.second->fboLeft.getHeight()*fboHeight;
-        p.second->fboLeft.draw(0, 0, fboWidth, fboHeight);
-        p.second->fboRight.draw(fboWidth, 0, fboWidth, fboHeight);
-        ofTranslate(0, fboHeight);
+        ofSetColor(255,255);
+        p.second->drawLeft();
     }
     
-    ofPopMatrix();
+    ofTranslate(1.0, 0);
     
-    //    ofDisableDepthTest();
+    for(std::pair<string, shared_ptr<ofxStereoscopy::Plane>> p : world.planes){
+        ofSetColor(255,255);
+        p.second->drawRight();
+    }
+
+    ofPopMatrix();
     
 }
 

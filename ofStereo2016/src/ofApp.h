@@ -75,6 +75,11 @@ public:
     vector<shared_ptr<ofxStereoscopy::Scene>> scenes;
     void drawScenes(int _surfaceId);
     
+    ofCamera calibrationCamera;
+    ofVec3f calibrationCameraToScreen(ofVec3f v);
+    ofVec3f screenToCalibrationCamera(ofVec3f v);
+    ofRectangle outputScreensRectangle;
+    
     void stageResized(ofVec3f& v);
     void updateStage();
     bool flagStageResized = false;

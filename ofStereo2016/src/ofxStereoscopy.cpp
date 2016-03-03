@@ -26,40 +26,6 @@ namespace ofxStereoscopy {
         }
         
         void Quad::beginDraw() {
-            /*
-             // Start quad mask
-             ofPushStyle();
-             
-             glClear(GL_STENCIL_BUFFER_BIT);
-             //glClearColor (0, 0, 0, 0);
-             glEnable(GL_STENCIL_TEST);
-             glColorMask(0, 0, 0, 0);
-             glStencilFunc(GL_ALWAYS, 1, 1);
-             glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
-             ofSetHexColor(0xffffff);
-             ofBeginShape();
-             for (int i = 0; i < 5; i++) {
-             ofVertex(output[i%4].x, output[i%4].y);
-             }
-             ofEndShape();
-             
-             
-             glColorMask(1, 1, 1, 1);
-             glStencilFunc(GL_EQUAL, 1, 1);
-             glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-             ofPopStyle();
-             */
-            
-            ofPushStyle();
-            ofSetHexColor(0x000000);
-            ofBeginShape();
-            ofVertex(0, 0);
-            ofVertex(ofGetWidth(), 0);
-            ofVertex(ofGetWidth(), ofGetHeight());
-            ofVertex(0, ofGetHeight());
-            ofEndShape();
-            ofPopStyle();
-            
             // Start quad transform
             
             ofPoint inputPoints[4] = {ofPoint(0,0), ofPoint(1,0), ofPoint(0,1), ofPoint(1,1)};
@@ -73,9 +39,6 @@ namespace ofxStereoscopy {
         void Quad::endDraw() {
             // End quad transform
             ofPopMatrix();
-            
-            // End quad mask
-            glDisable(GL_STENCIL_TEST);
         }
         
         void Quad::drawInputConfig() {
