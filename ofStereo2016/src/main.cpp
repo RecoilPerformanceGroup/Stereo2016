@@ -27,7 +27,21 @@ int main( ){
     mainApp->setupGui(guiWindow, mainWindow);
     
     ofAddListener(guiWindow->events().draw,mainApp.get(),&ofApp::drawGui);
+    
+    // gui events to main app special functions
+    
+#define guiEventMacro(NAME)  ofAddListener(guiWindow->events() . NAME , mainApp.get(), &ofApp::NAME ## Gui);
 
+    guiEventMacro(keyPressed);
+    guiEventMacro(keyReleased);
+    guiEventMacro(mouseMoved);
+    guiEventMacro(mouseDragged);
+    guiEventMacro(mousePressed);
+    guiEventMacro(mouseReleased);
+    guiEventMacro(mouseEntered);
+    guiEventMacro(mouseExited);
+    guiEventMacro(windowResized);
+    
     ofRunApp(mainWindow, mainApp);
 
     ofRunMainLoop();

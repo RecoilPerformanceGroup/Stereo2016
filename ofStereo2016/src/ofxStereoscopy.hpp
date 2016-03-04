@@ -63,8 +63,6 @@ namespace ofxStereoscopy {
                 outputPoints
             };
             
-            weak_ptr<ofParameter<ofVec3f>> selectedPoint;
-            
         protected:
             
             void gaussian_elimination(float *input, int n){
@@ -239,6 +237,7 @@ namespace ofxStereoscopy {
     }
     
     class Plane;
+    class Calibrator;
     
     class World {
         
@@ -274,6 +273,8 @@ namespace ofxStereoscopy {
         //TODO: Make parameter changes update all planes...
         
         std::map<std::string, shared_ptr<Plane>> planes;
+        
+        Calibrator calibrator;
         
         ofNode origin;
         
@@ -732,6 +733,197 @@ namespace ofxStereoscopy {
         float nearClip = 10;
         float farClip = 10000.0;
         
+    };
+    
+    class Calibrator {
+    
+        void updateOutputAspect(float a){
+            outputAspect = a;
+            outputRectangle.set(0, 0, 1.0, outputAspect);
+        }
+        
+        void setPlane(shared_ptr<Plane> p, bool rightEye){
+            plane = p;
+            this->rightEye = rightEye;
+        }
+
+        void clearPlane(){
+            plane.reset();
+        }
+        
+        void draw(){
+        
+            
+            ofScale(1.0, 1.0/outputRectangle.getAspectRatio());
+            
+            ofFill();
+            
+            ofSetColor(255, 255, 255, 200);
+            ofDrawRectangle(0,0,1.0,1.0);
+            
+            ofDisableDepthTest();
+            
+            if(!plane.expired()){
+
+                shared_ptr<ofxStereoscopy::Plane> p = plane.lock();
+
+                share_ptr<Quad> quad;
+                
+                    ofSetColor(255,127);
+                if(rightEye){
+                        plane->drawRight();
+                    ofSetColor(plane->rightColor);
+                    quad = plane->quadRight;
+                }else{
+                        plane->drawLeft();
+                    ofSetColor(plane->leftColor);
+                    quad = plane->quadLeft;
+                }
+                quad->drawOutputConfig();
+                    ofSetColor(ofColor::orangeRed);
+                    ofFill();
+                    
+                    for (shared_ptr<ofAbstractParameter> cornerPoint : quad->outputPoints) {
+
+                        ofSetColor(ofColor::greenYellow);
+                        ofDrawEllipse(screenToCalibrationCamera(pVecOnScreen),0.03, 0.03*outputScreensRectangle.getAspectRatio());
+                        if (pVec.distance(mouseInCam) < 0.06) {
+                            if(ofGetMousePressed()){
+                                plane->quadLeft.selectedPoint = cp;
+                                plane->quadLeft.selectedPoint.lock()->set(mouseInCam);
+                            }
+                            break;
+                        }
+                    }
+                    if (!plane->quadLeft.selectedPoint.expired()) {
+                        ofSetColor(ofColor::yellow);
+                        ofDrawEllipse(plane->quadLeft.selectedPoint.lock()->get(), 0.05, 0.05*outputScreensRectangle.getAspectRatio());
+                    }
+                } else {
+                
+                }
+            
+            }
+            
+            for(std::pair<string, shared_ptr<ofxStereoscopy::Plane>> p : world.planes){
+                
+                shared_ptr<ofxStereoscopy::Plane> plane = p.second;
+                
+                if (((ofxDatGuiToggle *)projectorCalibrationFolder->getComponent(ofxDatGuiType::TOGGLE, p.first + " LEFT"))->ofxDatGuiToggle::getEnabled()) {
+                    
+                    ofSetColor(255,127);
+                    plane->drawLeft();
+                    ofSetColor(plane->leftColor);
+                    plane->quadLeft.drawOutputConfig();
+                    ofSetColor(ofColor::orangeRed);
+                    ofFill();
+                    
+                    for (shared_ptr<ofAbstractParameter> cornerPoint : plane->quadLeft.outputPoints) {
+                        shared_ptr<ofParameter<ofVec3f>> cp = std::dynamic_pointer_cast<ofParameter<ofVec3f>>(cornerPoint);
+                        ofVec3f pVec = cp->get();
+                        ofVec3f pVecOnScreen = calibrationCameraToScreen(pVec);
+                        ofVec3f mouseInCam = screenToCalibrationCamera(ofVec3f(ofGetMouseX(), ofGetMouseY(), pVecOnScreen.z));
+                        ofSetColor(ofColor::greenYellow);
+                        ofDrawEllipse(screenToCalibrationCamera(pVecOnScreen),0.03, 0.03*outputScreensRectangle.getAspectRatio());
+                        if (pVec.distance(mouseInCam) < 0.06) {
+                            if(ofGetMousePressed()){
+                                plane->quadLeft.selectedPoint = cp;
+                                plane->quadLeft.selectedPoint.lock()->set(mouseInCam);
+                            }
+                            break;
+                        }
+                    }
+                    if (!plane->quadLeft.selectedPoint.expired()) {
+                        ofSetColor(ofColor::yellow);
+                        ofDrawEllipse(plane->quadLeft.selectedPoint.lock()->get(), 0.05, 0.05*outputScreensRectangle.getAspectRatio());
+                    }
+                } else if (((ofxDatGuiToggle *)projectorCalibrationFolder->getComponent(ofxDatGuiType::TOGGLE, p.first + " RIGHT"))->ofxDatGuiToggle::getEnabled()) {
+                    
+                    ofSetColor(255,127);
+                    plane->drawRight();
+                    ofSetColor(plane->rightColor);
+                    plane->quadRight.drawOutputConfig();
+                    ofSetColor(ofColor::orangeRed);
+                    ofFill();
+                    
+                    for (shared_ptr<ofAbstractParameter> cornerPoint : plane->quadRight.outputPoints) {
+                        shared_ptr<ofParameter<ofVec3f>> cp = std::dynamic_pointer_cast<ofParameter<ofVec3f>>(cornerPoint);
+                        ofVec3f pVec = cp->get();
+                        ofVec3f pVecOnScreen = calibrationCameraToScreen(pVec);
+                        ofVec3f mouseInCam = screenToCalibrationCamera(ofVec3f(ofGetMouseX(), ofGetMouseY(), pVecOnScreen.z));
+                        ofSetColor(ofColor::greenYellow);
+                        ofDrawEllipse(screenToCalibrationCamera(pVecOnScreen),0.03, 0.03*outputScreensRectangle.getAspectRatio());
+                        if (pVec.distance(mouseInCam) < 0.06) {
+                            if(ofGetMousePressed()){
+                                plane->quadRight.selectedPoint = cp;
+                                plane->quadRight.selectedPoint.lock()->set(mouseInCam);
+                            }
+                            break;
+                        }
+                    }
+                    if (!plane->quadRight.selectedPoint.expired()) {
+                        ofSetColor(ofColor::yellow);
+                        ofDrawEllipse(plane->quadRight.selectedPoint.lock()->get(), 0.05, 0.05*outputScreensRectangle.getAspectRatio());
+                    }
+                } else {
+                    plane->quadLeft.selectedPoint.reset();
+                    plane->quadRight.selectedPoint.reset();
+                }
+                
+            }
+            
+            ofFill();
+            calibrationCamera.end();
+            
+        }
+        
+        void keyPressed(int key){
+            
+        }
+        void keyReleased(int key){
+            
+        }
+        void mouseMoved(int x, int y ){
+            
+        }
+        void mouseDragged(int x, int y, int button){
+            
+        }
+        void mousePressed(int x, int y, int button){
+            
+        }
+        void mouseReleased(int x, int y, int button){
+            
+        }
+        void mouseEntered(int x, int y){
+            
+        }
+        
+        void mouseExited(int x, int y){
+            
+        }
+        
+        void mouseScrolled(int x, int y, int scrollX, int scrollY){
+            
+        }
+        
+        void windowResized(int w, int h){
+            
+        }
+        void dragEvent(ofDragInfo dragInfo){
+            
+        }
+        void gotMessage(ofMessage msg){
+            
+        }
+        
+        weak_ptr<ofParameter<ofVec3f>> point;
+        weak_ptr<Plane> plane;
+        bool rightEye;
+        
+        float outputAspect;
+        ofRectangle outputRectangle;
+
     };
     
     class Scene {

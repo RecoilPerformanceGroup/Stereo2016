@@ -1,6 +1,8 @@
 #include "ofApp.h"
 
 
+#pragma mark APP
+
 //--------------------------------------------------------------
 void ofApp::setup(){
     
@@ -19,7 +21,7 @@ void ofApp::setup(){
     ofSetCircleResolution(66);
     
     ofxDatGuiFolder * projectorCalibrationFolder = gui->getFolder("Projector Calibration");
-
+    
     world.addPlane(make_shared<ofxStereoscopy::Plane>(
                                                       "WALL",
                                                       800.0,
@@ -31,7 +33,7 @@ void ofApp::setup(){
     
     projectorCalibrationFolder->addToggle("WALL LEFT", false);
     projectorCalibrationFolder->addToggle("WALL RIGHT", false);
-
+    
     world.addPlane(make_shared<ofxStereoscopy::Plane>(
                                                       "FLOOR",
                                                       800.0,
@@ -40,213 +42,13 @@ void ofApp::setup(){
                                                       ofQuaternion(-90, ofVec3f(1,0,0)),
                                                       &world
                                                       ));
-
+    
     projectorCalibrationFolder->addToggle("FLOOR LEFT", false);
     projectorCalibrationFolder->addToggle("FLOOR RIGHT", false);
-
+    
     stage_size_cm.addListener(this, &ofApp::stageResized);
     
 }
-
-void ofApp::setupGui(shared_ptr<ofAppBaseWindow> gW,shared_ptr<ofAppBaseWindow> mW) {
-    
-    guiWindow = gW;
-    mainWindow = mW;
-    
-    worldModelCam.setFov(75);
-
-    // Dat Gui
-    
-    gui = new ofxDatGui( ofxDatGuiAnchor::TOP_LEFT );
-    gui->setTheme(new ofxDatGuiThemeWireframe());
-    
-    gui->addFRM(1.0f);
-    gui->addBreak();
-    
-    // Model View
-    
-    vector<string> views = {"Perspective Model View", "Camera Model View", "Free Model View"};
-    ofxDatGuiDropdown * viewDropdown = gui->addDropdown("Model View", views);
-    viewDropdown->select(0);
-    viewDropdown->onDropdownEvent(this, &ofApp::onDropdownEvent);
-    
-    guiBindings.push_back(make_shared<SlidersVec3f>(world.physical_camera_pos_cm, gui));
-
-    gui->addSlider(world.physical_eye_seperation_cm);
-    
-    gui->addBreak();
-
-    // Projector Calibration
-    
-    ofxDatGuiFolder * projectorCalibrationFolder = gui->addFolder("Projector Calibration");
-    
-    projectorCalibrationFolder->onFolderEvent(this, &ofApp::onFolderEvent);
-    
-    // Stage size
-    
-    guiBindings.push_back(make_shared<SlidersVec3f>(stage_size_cm, gui));
-    
-    ofxDatGuiSlider * resolutionSlider = gui->addSlider(world.pixels_cm);
-    resolutionSlider->onSliderEvent(this,&ofApp::onSliderEvent);
-    
-    gui->addBreak();
-    
-    // General
-
-    guiBindings.push_back(make_shared<ColorPickerWithAlpha>(background_color, gui));
-
-    // adding the optional header allows you to drag the gui around //
-    gui->addHeader(":: STEREO 2016 ::");
-    
-    // adding the optional footer allows you to collapse/expand the gui //
-    gui->addFooter();
-
-    ofSetFrameRate(60);
-    
-    oscReceiver.setup(9999);
-    
- 
-    panel.setup(mainParams);
-
-    
-}
-
-void ofApp::drawGui(ofEventArgs &args) {
-    
-    if(ofGetFrameNum() == 2){
-        worldModelCam.setPosition(ofVec3f(700, 600, 1500));
-        worldModelCam.lookAt(ofVec3f(-600,50,0));
-        worldModelCam.setNearClip(20);
-        worldModelCam.disableMouseInput();
-    }
-    
-    ofBackgroundGradient(ofColor(20), ofColor(40));
-    
-    // we draw stereography world here
-    
-    ofEnableDepthTest();
-
-    if(calibrate_planes){
-
-        //TODO: Move gui into world or plane object
-        //TODO: Use callbacks for mouseinteraction to catch dragging properly
-        //TODO: Use keyboard for nudging.
-        //FIXME: Upside down matrix in camera or draw...
-        
-        outputScreensRectangle.set(0, 0, 1.0, mainWindow->getHeight()*1.0/(mainWindow->getWidth()/2));
-        
-        ofxDatGuiFolder * projectorCalibrationFolder = gui->getFolder("Projector Calibration");
-        
-        calibrationCamera.setPosition(0.5, 0.5/outputScreensRectangle.getAspectRatio(), 1);
-        calibrationCamera.setNearClip(0.1);
-        
-        calibrationCamera.begin();
-        ofScale(1.0, 1.0/outputScreensRectangle.getAspectRatio());
-        
-        ofFill();
-        
-        ofSetColor(255, 255, 255, 200);
-        ofDrawRectangle(0,0,1.0,1.0);
-
-        ofDisableDepthTest();
-
-        for(std::pair<string, shared_ptr<ofxStereoscopy::Plane>> p : world.planes){
-            
-            shared_ptr<ofxStereoscopy::Plane> plane = p.second;
-
-            if (((ofxDatGuiToggle *)projectorCalibrationFolder->getComponent(ofxDatGuiType::TOGGLE, p.first + " LEFT"))->ofxDatGuiToggle::getEnabled()) {
-                
-                ofSetColor(255,127);
-                plane->drawLeft();
-                ofSetColor(plane->leftColor);
-                plane->quadLeft.drawOutputConfig();
-                ofSetColor(ofColor::orangeRed);
-                ofFill();
-
-                for (shared_ptr<ofAbstractParameter> cornerPoint : plane->quadLeft.outputPoints) {
-                    shared_ptr<ofParameter<ofVec3f>> cp = std::dynamic_pointer_cast<ofParameter<ofVec3f>>(cornerPoint);
-                    ofVec3f pVec = cp->get();
-                    ofVec3f pVecOnScreen = calibrationCameraToScreen(pVec);
-                    ofVec3f mouseInCam = screenToCalibrationCamera(ofVec3f(ofGetMouseX(), ofGetMouseY(), pVecOnScreen.z));
-                    ofSetColor(ofColor::greenYellow);
-                    ofDrawEllipse(screenToCalibrationCamera(pVecOnScreen),0.03, 0.03*outputScreensRectangle.getAspectRatio());
-                    if (pVec.distance(mouseInCam) < 0.06) {
-                            if(ofGetMousePressed()){
-                                plane->quadLeft.selectedPoint = cp;
-                                plane->quadLeft.selectedPoint.lock()->set(mouseInCam);
-                            }
-                        break;
-                    }
-                }
-                if (!plane->quadLeft.selectedPoint.expired()) {
-                    ofSetColor(ofColor::yellow);
-                    ofDrawEllipse(plane->quadLeft.selectedPoint.lock()->get(), 0.05, 0.05*outputScreensRectangle.getAspectRatio());
-                }
-            } else if (((ofxDatGuiToggle *)projectorCalibrationFolder->getComponent(ofxDatGuiType::TOGGLE, p.first + " RIGHT"))->ofxDatGuiToggle::getEnabled()) {
-                
-                    ofSetColor(255,127);
-                    plane->drawRight();
-                    ofSetColor(plane->rightColor);
-                    plane->quadRight.drawOutputConfig();
-                    ofSetColor(ofColor::orangeRed);
-                    ofFill();
-                    
-                    for (shared_ptr<ofAbstractParameter> cornerPoint : plane->quadRight.outputPoints) {
-                        shared_ptr<ofParameter<ofVec3f>> cp = std::dynamic_pointer_cast<ofParameter<ofVec3f>>(cornerPoint);
-                        ofVec3f pVec = cp->get();
-                        ofVec3f pVecOnScreen = calibrationCameraToScreen(pVec);
-                        ofVec3f mouseInCam = screenToCalibrationCamera(ofVec3f(ofGetMouseX(), ofGetMouseY(), pVecOnScreen.z));
-                        ofSetColor(ofColor::greenYellow);
-                        ofDrawEllipse(screenToCalibrationCamera(pVecOnScreen),0.03, 0.03*outputScreensRectangle.getAspectRatio());
-                        if (pVec.distance(mouseInCam) < 0.06) {
-                            if(ofGetMousePressed()){
-                                plane->quadRight.selectedPoint = cp;
-                                plane->quadRight.selectedPoint.lock()->set(mouseInCam);
-                            }
-                            break;
-                        }
-                    }
-                    if (!plane->quadRight.selectedPoint.expired()) {
-                        ofSetColor(ofColor::yellow);
-                        ofDrawEllipse(plane->quadRight.selectedPoint.lock()->get(), 0.05, 0.05*outputScreensRectangle.getAspectRatio());
-                    }
-            } else {
-                plane->quadLeft.selectedPoint.reset();
-                plane->quadRight.selectedPoint.reset();
-            }
-            
-        }
-        
-        ofFill();
-        calibrationCamera.end();
-    } else {
-        worldModelCam.begin();
-        world.drawModel(!(gui->getDropdown("Model View")->getSelected()->getLabel() == "CAMERA MODEL VIEW"));
-        worldModelCam.end();
-    }
-    ofDisableDepthTest();
-
-    gui->draw();
-    
-    for( auto s : scenes) {
-        //s->drawGui();
-        
-    }
-    
-    panel.draw();
-}
-
-ofVec3f ofApp::calibrationCameraToScreen(ofVec3f v){
-    v.y/=outputScreensRectangle.getAspectRatio();
-    return calibrationCamera.worldToScreen(v);
-}
-
-ofVec3f ofApp::screenToCalibrationCamera(ofVec3f v){
-    v = calibrationCamera.screenToWorld(v);
-    v.y*=outputScreensRectangle.getAspectRatio();
-    return v;
-}
-
 
 //--------------------------------------------------------------
 void ofApp::update(){
@@ -380,18 +182,16 @@ void ofApp::update(){
     }
     
     updateStage();
-
+    
 }
-
-
 
 //--------------------------------------------------------------
 void ofApp::draw(){
     
     ofBackground(0);
-
+    
     ofEnableDepthTest();
-
+    
     if(calibrate_planes){
         world.renderProjectorCalibrations();
     } else {
@@ -419,7 +219,7 @@ void ofApp::draw(){
     
     
     ofDisableDepthTest();
-
+    
     ofPushMatrix();
     
     ofScale(ofGetWidth()*0.5, ofGetHeight(), ofGetHeight());
@@ -439,6 +239,205 @@ void ofApp::draw(){
     ofPopMatrix();
 }
 
+void ofApp::keyPressed(int key){
+    
+    if(key=='s') saveParameters(mainParams);
+    
+    if(key=='l') loadParameters(mainParams);
+    
+    if(key=='c') {
+        worldModelCam.setGlobalPosition(world.physical_camera_pos_cm);
+        worldModelCam.lookAt(ofVec3f(0,0,0));
+    }
+    
+    
+}
+
+//--------------------------------------------------------------
+void ofApp::keyReleased(int key){
+    
+}
+
+//--------------------------------------------------------------
+void ofApp::mouseMoved(int x, int y ){
+    
+}
+
+//--------------------------------------------------------------
+void ofApp::mouseDragged(int x, int y, int button){
+    
+}
+
+//--------------------------------------------------------------
+void ofApp::mousePressed(int x, int y, int button){
+    
+}
+
+//--------------------------------------------------------------
+void ofApp::mouseReleased(int x, int y, int button){
+    
+}
+
+//--------------------------------------------------------------
+void ofApp::mouseEntered(int x, int y){
+    
+}
+
+//--------------------------------------------------------------
+void ofApp::mouseExited(int x, int y){
+    
+}
+
+//--------------------------------------------------------------
+void ofApp::windowResized(int w, int h){
+    world.calibrator.updateOutputAspect(w*0.5/h);
+}
+
+//--------------------------------------------------------------
+void ofApp::gotMessage(ofMessage msg){
+    
+}
+
+//--------------------------------------------------------------
+void ofApp::dragEvent(ofDragInfo dragInfo){
+    
+}
+
+
+//--------------------------------------------------------------
+#pragma mark GUI
+
+void ofApp::setupGui(shared_ptr<ofAppBaseWindow> gW,shared_ptr<ofAppBaseWindow> mW) {
+    
+    guiWindow = gW;
+    mainWindow = mW;
+    
+    worldModelCam.setFov(75);
+
+    // Dat Gui
+    
+    gui = new ofxDatGui( ofxDatGuiAnchor::TOP_LEFT );
+    gui->setTheme(new ofxDatGuiThemeWireframe());
+    
+    gui->addFRM(1.0f);
+    gui->addBreak();
+    
+    // Model View
+    
+    vector<string> views = {"Perspective Model View", "Camera Model View", "Free Model View"};
+    ofxDatGuiDropdown * viewDropdown = gui->addDropdown("Model View", views);
+    viewDropdown->select(0);
+    viewDropdown->onDropdownEvent(this, &ofApp::onDropdownEvent);
+    
+    guiBindings.push_back(make_shared<SlidersVec3f>(world.physical_camera_pos_cm, gui));
+
+    gui->addSlider(world.physical_eye_seperation_cm);
+    
+    gui->addBreak();
+
+    // Projector Calibration
+    
+    ofxDatGuiFolder * projectorCalibrationFolder = gui->addFolder("Projector Calibration");
+    
+    projectorCalibrationFolder->onFolderEvent(this, &ofApp::onFolderEvent);
+    
+    // Stage size
+    
+    guiBindings.push_back(make_shared<SlidersVec3f>(stage_size_cm, gui));
+    
+    ofxDatGuiSlider * resolutionSlider = gui->addSlider(world.pixels_cm);
+    resolutionSlider->onSliderEvent(this,&ofApp::onSliderEvent);
+    
+    gui->addBreak();
+    
+    // General
+
+    guiBindings.push_back(make_shared<ColorPickerWithAlpha>(background_color, gui));
+
+    // adding the optional header allows you to drag the gui around //
+    gui->addHeader(":: STEREO 2016 ::");
+    
+    // adding the optional footer allows you to collapse/expand the gui //
+    gui->addFooter();
+
+    ofSetFrameRate(60);
+    
+    oscReceiver.setup(9999);
+    
+ 
+    panel.setup(mainParams);
+
+    
+}
+
+void ofApp::drawGui(ofEventArgs &args) {
+    
+    if(ofGetFrameNum() == 2){
+        worldModelCam.setPosition(ofVec3f(700, 600, 1500));
+        worldModelCam.lookAt(ofVec3f(-600,50,0));
+        worldModelCam.setNearClip(20);
+        worldModelCam.disableMouseInput();
+    }
+    
+    ofBackgroundGradient(ofColor(20), ofColor(40));
+    
+    // we draw stereography world here
+    
+    ofEnableDepthTest();
+
+    if(calibrate_planes){
+        
+        ofxDatGuiFolder * projectorCalibrationFolder = gui->getFolder("Projector Calibration");
+        
+        for(std::pair<string, shared_ptr<ofxStereoscopy::Plane>> p : world.planes){
+            
+            if (((ofxDatGuiToggle *)projectorCalibrationFolder->getComponent(ofxDatGuiType::TOGGLE, p.first + " LEFT"))->ofxDatGuiToggle::getEnabled()) {
+                world.calibrator.setPlane(p.second, false);
+            } else if (((ofxDatGuiToggle *)projectorCalibrationFolder->getComponent(ofxDatGuiType::TOGGLE, p.first + " RIGHT"))->ofxDatGuiToggle::getEnabled()) {
+                world.calibrator.setPlane(p.second, true);
+            } else
+                world.calibrator.clearPlane();
+            
+        }
+        
+        calibrationCamera.setPosition(0.5, 0.5/world.calibrator.aspect, 1);
+        calibrationCamera.setNearClip(0.1);
+        calibrationCamera.begin();
+        world.calibrator.draw();
+        calibrationCamera.end();
+    } else {
+        worldModelCam.begin();
+        world.drawModel(!(gui->getDropdown("Model View")->getSelected()->getLabel() == "CAMERA MODEL VIEW"));
+        worldModelCam.end();
+    }
+    ofDisableDepthTest();
+
+    gui->draw();
+    
+    for( auto s : scenes) {
+        //s->drawGui();
+        
+    }
+    
+    panel.draw();
+}
+
+ofVec3f ofApp::calibrationCameraToScreen(ofVec3f v){
+    v.y/=outputScreensRectangle.getAspectRatio();
+    return calibrationCamera.worldToScreen(v);
+}
+
+ofVec3f ofApp::screenToCalibrator(ofVec2f v){
+    ofVec3f zeroZvec = ofVec3f(0,0,0);
+    ofVec3f zeroZvecOnScreen = calibrationCameraToScreen(zeroZvec);
+    return screenToCalibrationCamera(ofVec3f(v.x, v.y, zeroZvecOnScreen.z));
+}
+
+ofVec3f ofApp::screenToCalibrationCamera(ofVec3f v){
+    v = calibrationCamera.screenToWorld(v);
+    v.y*=outputScreensRectangle.getAspectRatio();
+    return v;
+}
 
 void ofApp::onButtonEvent(ofxDatGuiButtonEvent e){
     ;
@@ -496,69 +495,45 @@ void ofApp::updateStage(){
     }
 }
 
-//--------------------------------------------------------------
-void ofApp::keyPressed(int key){
-    
-    if(key=='s') saveParameters(mainParams);
-    
-    if(key=='l') loadParameters(mainParams);
-    
-    if(key=='c') {
-        worldModelCam.setGlobalPosition(world.physical_camera_pos_cm);
-        worldModelCam.lookAt(ofVec3f(0,0,0));
-    }
-    
+
+void ofApp::keyPressedGui(int key){
+
+}
+void ofApp::keyReleasedGui(int key){
     
 }
+void ofApp::mouseMovedGui(int x, int y ){
 
-//--------------------------------------------------------------
-void ofApp::keyReleased(int key){
+}
+void ofApp::mouseDraggedGui(int x, int y, int button){
     
 }
+void ofApp::mousePressedGui(int x, int y, int button){
 
-//--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
-    
+}
+void ofApp::mouseReleasedGui(int x, int y, int button){
+
+}
+void ofApp::mouseEnteredGui(int x, int y){
+
 }
 
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-    
+void ofApp::mouseExitedGui(int x, int y){
+
 }
 
-//--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
-    
+void ofApp::mouseScrolledGui(int x, int y, int scrollX, int scrollY){
+
 }
 
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-    
-}
+void ofApp::windowResizedGui(int w, int h){
 
-//--------------------------------------------------------------
-void ofApp::mouseEntered(int x, int y){
-    
 }
+void ofApp::dragEventGui(ofDragInfo dragInfo){
 
-//--------------------------------------------------------------
-void ofApp::mouseExited(int x, int y){
-    
 }
+void ofApp::gotMessageGui(ofMessage msg){
 
-//--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){
-    
 }
 
 

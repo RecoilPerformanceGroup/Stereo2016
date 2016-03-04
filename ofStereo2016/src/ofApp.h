@@ -37,7 +37,7 @@ public:
     ofParameter<ofVec3f> stage_size_cm{"Stage Size", ofVec3f{800,500,800}, ofVec3f{600,300,600}, ofVec3f{1000,800,1000}};
     ofParameter<bool> calibrate_planes{"Calibrate Planes", false, false, true};
     ofParameter<ofColor> background_color{"Background Color", ofColor(255,255,255,255),ofColor(0,0,0,0),ofColor(255,255,255,255)};
-
+    
     ofParameterGroup mainParams{
         "mainParams",
         stage_size_cm,
@@ -48,12 +48,10 @@ public:
     ofxPanel panel;
     
     void setup();
-    void setupGui(shared_ptr<ofAppBaseWindow> gW, shared_ptr<ofAppBaseWindow> mW);
     
     void update();
     
     void draw();
-    void drawGui(ofEventArgs & args);
     
     void keyPressed(int key);
     void keyReleased(int key);
@@ -67,10 +65,74 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     
+    void setupGui(shared_ptr<ofAppBaseWindow> gW, shared_ptr<ofAppBaseWindow> mW);
+    void drawGui(ofEventArgs & args);
+
     shared_ptr<ParameterFadeManager> fadeManager;
     
     vector<shared_ptr<AbstractDatGuiParameterBinding>> guiBindings;
     ofxDatGui* gui;
+    
+    virtual void windowResizedGui(ofResizeEventArgs & resize){
+        windowResizedGui(resize.width,resize.height);
+    }
+    
+    virtual void keyPressedGui( ofKeyEventArgs & key ){
+        keyPressedGui(key.key);
+    }
+    virtual void keyReleasedGui( ofKeyEventArgs & key ){
+        keyReleasedGui(key.key);
+    }
+    
+    virtual void mouseMovedGui( ofMouseEventArgs & mouse ){
+        mouseX=mouse.x;
+        mouseY=mouse.y;
+        mouseMovedGui(mouse.x,mouse.y);
+    }
+    virtual void mouseDraggedGui( ofMouseEventArgs & mouse ){
+        mouseX=mouse.x;
+        mouseY=mouse.y;
+        mouseDraggedGui(mouse.x,mouse.y,mouse.button);
+    }
+    virtual void mousePressedGui( ofMouseEventArgs & mouse ){
+        mouseX=mouse.x;
+        mouseY=mouse.y;
+        mousePressedGui(mouse.x,mouse.y,mouse.button);
+    }
+    virtual void mouseReleasedGui(ofMouseEventArgs & mouse){
+        mouseX=mouse.x;
+        mouseY=mouse.y;
+        mouseReleasedGui(mouse.x,mouse.y,mouse.button);
+    }
+    virtual void mouseScrolledGui( ofMouseEventArgs & mouse ){
+        mouseScrolledGui(mouse.x, mouse.y, mouse.scrollX, mouse.scrollY);
+    }
+    virtual void mouseEnteredGui( ofMouseEventArgs & mouse ){
+        mouseEnteredGui(mouse.x,mouse.y);
+    }
+    virtual void mouseExitedGui( ofMouseEventArgs & mouse ){
+        mouseExitedGui(mouse.x,mouse.y);
+    }
+    virtual void draggedGui(ofDragInfo & drag){
+        dragEventGui(drag);
+    }
+    virtual void messageReceivedGui(ofMessage & message){
+        gotMessageGui(message);
+    }
+    
+    void keyPressedGui(int key);
+    void keyReleasedGui(int key);
+    void mouseMovedGui(int x, int y );
+    void mouseDraggedGui(int x, int y, int button);
+    void mousePressedGui(int x, int y, int button);
+    void mouseReleasedGui(int x, int y, int button);
+    void mouseEnteredGui(int x, int y);
+    void mouseExitedGui(int x, int y);
+    void mouseScrolledGui(int x, int y, int scrollX, int scrollY);
+
+    void windowResizedGui(int w, int h);
+    void dragEventGui(ofDragInfo dragInfo);
+    void gotMessageGui(ofMessage msg);
     
     void onFolderEvent(ofxDatGuiFolderEvent e);
     void onButtonEvent(ofxDatGuiButtonEvent e);
@@ -92,7 +154,7 @@ public:
     // stereoscopy
     ofxStereoscopy::World world;
     ofEasyCam worldModelCam;
-        
+    
     vector<shared_ptr<ofxStereoscopy::Scene>> scenes;
     void drawScenes();
     
