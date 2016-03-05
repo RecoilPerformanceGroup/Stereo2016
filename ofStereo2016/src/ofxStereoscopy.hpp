@@ -15,8 +15,6 @@
 
 namespace ofxStereoscopy {
     
-    namespace Homography {
-        
         class Quad
         {
         public:
@@ -233,8 +231,6 @@ namespace ofxStereoscopy {
             
             ofColor lineColor;
         };
-        
-    }
     
     class Plane;
     
@@ -247,59 +243,13 @@ namespace ofxStereoscopy {
             outputRectangle.set(0, 0, 1.0, outputAspect);
         }
         
-        void setPlane(shared_ptr<Plane> p, bool rightEye){
-            plane = p;
-            this->rightEye = rightEye;
-            if(rightEye){
-                quad = &p->quadRight;
-            }else{
-                quad = &p->quadLeft;
-            }
-        }
+        void setPlane(shared_ptr<Plane> p, bool rightEye);
         
         void clearPlane(){
             plane.reset();
         }
         
-        void draw(){
-            
-            ofScale(1.0, 1.0/outputRectangle.getAspectRatio());
-            
-            ofFill();
-            
-            ofSetColor(255, 255, 255, 200);
-            ofDrawRectangle(0,0,1.0,1.0);
-            
-            ofDisableDepthTest();
-            
-            if(!plane.expired()){
-                
-                shared_ptr<ofxStereoscopy::Plane> p = plane.lock();
-                
-                if(rightEye){
-                    p->drawRight();
-                    ofSetColor(p->rightColor);
-                }else{
-                    p->drawLeft();
-                    ofSetColor(p->leftColor);
-                }
-                quad->drawOutputConfig();
-                ofSetColor(ofColor::orangeRed);
-                ofFill();
-                
-                for (shared_ptr<ofAbstractParameter> cornerPoint : quad->outputPoints) {
-                    shared_ptr<ofParameter<ofVec3f>> cp = std::dynamic_pointer_cast<ofParameter<ofVec3f>>(cornerPoint);
-                    ofVec3f cpVec = cp->get();
-                    ofSetColor(ofColor::greenYellow);
-                    ofDrawEllipse(cpVec,0.03, 0.03*outputAspect);
-                    
-                }
-                if (!point.expired()) {
-                    ofSetColor(ofColor::yellow);
-                    ofDrawEllipse(point.lock()->get(), 0.05, 0.05*outputAspect);
-                }
-            }
-        }
+        void draw();
         
         void keyPressed(int key){
             
@@ -307,55 +257,24 @@ namespace ofxStereoscopy {
         void keyReleased(int key){
             
         }
-        void mouseMoved(int x, int y ){
-            mouseVec.set(x,y,0);
+        void mouseMoved(ofVec3f v){
+            mouseVec.set(v);
         }
-        void mouseDragged(int x, int y, int button){
-            
-        }
-        void mousePressed(int x, int y, int button){
-            mouseVec.set(x,y,0);
-            if(button == 0){
-                
-                if(!plane.expired()){
-                    
-                    shared_ptr<ofxStereoscopy::Plane> p = plane.lock();
-                    
-                    Homography::Quad * quad;
-                    
-                    if(rightEye){
-                        p->drawRight();
-                        ofSetColor(p->rightColor);
-                        quad = &p->quadRight;
-                    }else{
-                        p->drawLeft();
-                        ofSetColor(p->leftColor);
-                        quad = &p->quadLeft;
-                    }
-                    for (shared_ptr<ofAbstractParameter> cornerPoint : quad->outputPoints) {
-                        shared_ptr<ofParameter<ofVec3f>> cp = std::dynamic_pointer_cast<ofParameter<ofVec3f>>(cornerPoint);
-                        ofVec3f cpVec = cp->get();
-                        if (cpVec.distance(mouseVec) < 0.06) {
-                            point.lock()->set(mouseVec);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
+        void mouseDragged(ofVec3f v, int button);
+        void mousePressed(ofVec3f v, int button);
         
-        void mouseReleased(int x, int y, int button){
+        void mouseReleased(ofVec3f v, int button){
             point.reset();
         }
-        void mouseEntered(int x, int y){
+        void mouseEntered(ofVec3f v){
             
         }
         
-        void mouseExited(int x, int y){
+        void mouseExited(ofVec3f v){
             
         }
         
-        void mouseScrolled(int x, int y, int scrollX, int scrollY){
+        void mouseScrolled(ofVec3f v, int scrollX, int scrollY){
             
         }
         
@@ -371,7 +290,7 @@ namespace ofxStereoscopy {
         
         weak_ptr<ofParameter<ofVec3f>> point;
         weak_ptr<Plane> plane;
-        Homography::Quad * quad;
+        Quad * quad;
         bool rightEye;
         
         float outputAspect;
@@ -869,7 +788,7 @@ namespace ofxStereoscopy {
         ofColor rightColor {255, 255, 127};
         ofTexture textureLeft, textureRight;
         World * world;
-        Homography::Quad quadLeft, quadRight;
+        Quad quadLeft, quadRight;
         
         float nearClip = 10;
         float farClip = 10000.0;

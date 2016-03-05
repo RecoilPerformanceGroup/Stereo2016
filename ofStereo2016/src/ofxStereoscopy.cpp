@@ -10,8 +10,6 @@
 
 namespace ofxStereoscopy {
     
-    namespace Homography {
-    
         Quad::Quad() {
             Quad(ofPoint(0, 0), ofPoint(1, 0), ofPoint(1, 1), ofPoint(0, 1));
         }
@@ -64,12 +62,90 @@ namespace ofxStereoscopy {
             ofPopStyle();
         }
     
+    void Calibrator::setPlane(shared_ptr<Plane> p, bool rightEye){
+        plane = p;
+        this->rightEye = rightEye;
+        if(rightEye){
+            quad = &p->quadRight;
+        }else{
+            quad = &p->quadLeft;
+        }
     }
     
+    void Calibrator::draw(){
+        
+        ofScale(1.0, 1.0*outputRectangle.getAspectRatio());
+        
+        ofFill();
+        
+        ofSetColor(255, 255, 255, 127);
+        ofDrawRectangle(0,0,1.0,1.0);
+        
+        ofDisableDepthTest();
+        
+        if(!plane.expired()){
+            
+            shared_ptr<ofxStereoscopy::Plane> p = plane.lock();
+            
+            if(rightEye){
+                p->drawRight();
+                ofSetColor(p->rightColor);
+            }else{
+                p->drawLeft();
+                ofSetColor(p->leftColor);
+            }
+            quad->drawOutputConfig();
+            ofSetColor(ofColor::orangeRed);
+            ofFill();
+            ofDrawEllipse(mouseVec,0.03, 0.03*outputAspect);
+            
+            
+            for (shared_ptr<ofAbstractParameter> cornerPoint : quad->outputPoints) {
+                shared_ptr<ofParameter<ofVec3f>> cp = std::dynamic_pointer_cast<ofParameter<ofVec3f>>(cornerPoint);
+                ofVec3f cpVec = cp->get();
+                ofSetColor(ofColor::greenYellow);
+                ofDrawEllipse(cpVec,0.03, 0.03*outputAspect);
+                
+            }
+            if (!point.expired()) {
+                ofSetColor(ofColor::yellow);
+                ofDrawEllipse(point.lock()->get(), 0.05, 0.05*outputAspect);
+            }
+        }
+    }
+    
+    void Calibrator::mouseDragged(ofVec3f v, int button){
+        if(button== 0)mouseVec.set(v);
+        if(!point.expired()){
+            point.lock()->set(mouseVec);
+        }
+    }
+    
+    void Calibrator::mousePressed(ofVec3f v, int button){
+        mouseVec.set(v);
+        if(button == 0){
+            
+            if(!plane.expired()){
+                
+                shared_ptr<Plane> p = plane.lock();
+                
+                for (shared_ptr<ofAbstractParameter> cornerPoint : quad->outputPoints) {
+                    shared_ptr<ofParameter<ofVec3f>> cp = std::dynamic_pointer_cast<ofParameter<ofVec3f>>(cornerPoint);
+                    ofVec3f cpVec = cp->get();
+                    if (cpVec.distance(mouseVec) < 0.06) {
+                        point = cp;
+                        point.lock()->set(mouseVec);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
     void World::addPlane( shared_ptr<Plane> p){
         planes.insert(std::pair<string, shared_ptr<Plane>>(p->params.getName(),p));
     }
-    
+
     shared_ptr<Plane> World::getPlane(std::string name){
         return planes[name];
     }

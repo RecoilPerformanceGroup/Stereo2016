@@ -17,6 +17,9 @@ void ofApp::setup(){
     int resolutionX = ofGetWidth()/2;
     int resolutionY = (resolutionX * 9) / 16;
     
+    world.calibrator.updateOutputAspect((ofGetWidth()*0.5)/ofGetHeight());
+
+    
     ofEnableAlphaBlending();
     ofSetCircleResolution(66);
     
@@ -389,15 +392,15 @@ void ofApp::drawGui(ofEventArgs &args) {
         
         ofxDatGuiFolder * projectorCalibrationFolder = gui->getFolder("Projector Calibration");
         
+        world.calibrator.clearPlane();
+
         for(std::pair<string, shared_ptr<ofxStereoscopy::Plane>> p : world.planes){
             
             if (((ofxDatGuiToggle *)projectorCalibrationFolder->getComponent(ofxDatGuiType::TOGGLE, p.first + " LEFT"))->ofxDatGuiToggle::getEnabled()) {
                 world.calibrator.setPlane(p.second, false);
             } else if (((ofxDatGuiToggle *)projectorCalibrationFolder->getComponent(ofxDatGuiType::TOGGLE, p.first + " RIGHT"))->ofxDatGuiToggle::getEnabled()) {
                 world.calibrator.setPlane(p.second, true);
-            } else
-                world.calibrator.clearPlane();
-            
+            }
         }
         
         calibrationCamera.setPosition(0.5, 0.5/world.calibrator.outputAspect, 1);
@@ -423,19 +426,19 @@ void ofApp::drawGui(ofEventArgs &args) {
 }
 
 ofVec3f ofApp::calibrationCameraToScreen(ofVec3f v){
-    v.y/=outputScreensRectangle.getAspectRatio();
+    v.y/=world.calibrator.outputAspect;
     return calibrationCamera.worldToScreen(v);
 }
 
 ofVec3f ofApp::screenToCalibrator(ofVec2f v){
-    ofVec3f zeroZvec = ofVec3f(0,0,0);
+    ofVec3f zeroZvec(0.0,0.0,0.0);
     ofVec3f zeroZvecOnScreen = calibrationCameraToScreen(zeroZvec);
     return screenToCalibrationCamera(ofVec3f(v.x, v.y, zeroZvecOnScreen.z));
 }
 
 ofVec3f ofApp::screenToCalibrationCamera(ofVec3f v){
     v = calibrationCamera.screenToWorld(v);
-    v.y*=outputScreensRectangle.getAspectRatio();
+    v.y*=world.calibrator.outputAspect;
     return v;
 }
 
@@ -503,16 +506,24 @@ void ofApp::keyReleasedGui(int key){
     
 }
 void ofApp::mouseMovedGui(int x, int y ){
-
+    if(calibrate_planes){
+        world.calibrator.mouseMoved(screenToCalibrator(ofVec3f(x,y,0)));
+    }
 }
 void ofApp::mouseDraggedGui(int x, int y, int button){
-    
+    if(calibrate_planes){
+        world.calibrator.mouseDragged(screenToCalibrator(ofVec3f(x,y,0)), button);
+    }
 }
 void ofApp::mousePressedGui(int x, int y, int button){
-
+    if(calibrate_planes){
+        world.calibrator.mousePressed(screenToCalibrator(ofVec3f(x,y,0)), button);
+    }
 }
 void ofApp::mouseReleasedGui(int x, int y, int button){
-
+    if(calibrate_planes){
+        world.calibrator.mouseReleased(screenToCalibrator(ofVec3f(x,y,0)), button);
+    }
 }
 void ofApp::mouseEnteredGui(int x, int y){
 
