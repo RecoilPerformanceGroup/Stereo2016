@@ -400,7 +400,7 @@ void ofApp::drawGui(ofEventArgs &args) {
             
         }
         
-        calibrationCamera.setPosition(0.5, 0.5/world.calibrator.aspect, 1);
+        calibrationCamera.setPosition(0.5, 0.5/world.calibrator.outputAspect, 1);
         calibrationCamera.setNearClip(0.1);
         calibrationCamera.begin();
         world.calibrator.draw();

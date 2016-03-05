@@ -161,6 +161,7 @@ public:
     ofCamera calibrationCamera;
     ofVec3f calibrationCameraToScreen(ofVec3f v);
     ofVec3f screenToCalibrationCamera(ofVec3f v);
+    ofVec3f screenToCalibrator(ofVec2f v);
     ofRectangle outputScreensRectangle;
     
     void stageResized(ofVec3f& v);
