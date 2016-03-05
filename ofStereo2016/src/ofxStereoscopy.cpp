@@ -17,8 +17,8 @@ namespace ofxStereoscopy {
         Quad::Quad(ofPoint outputPoint1, ofPoint outputPoint2, ofPoint outputPoint3, ofPoint outputPoint4) {
             outputPointTopLeft.set(outputPoint1);
             outputPointTopRight.set(outputPoint2);
-            outputPointBottomLeft.set(outputPoint3);
-            outputPointBottomRight.set(outputPoint4);
+            outputPointBottomRight.set(outputPoint3);
+            outputPointBottomLeft.set(outputPoint4);
             
             lineColor.setHex(0xffffff);
         }
@@ -26,8 +26,8 @@ namespace ofxStereoscopy {
         void Quad::beginDraw() {
             // Start quad transform
             
-            ofPoint inputPoints[4] = {ofPoint(0,0), ofPoint(1,0), ofPoint(0,1), ofPoint(1,1)};
-            ofPoint outputPoints[4] = {outputPointTopLeft, outputPointTopRight, outputPointBottomLeft, outputPointBottomRight};
+            ofPoint inputPoints[4] = {ofPoint(0,0), ofPoint(1,0), ofPoint(1,1), ofPoint(0,1)};
+            ofPoint outputPoints[4] = {outputPointTopLeft, outputPointTopRight, outputPointBottomRight, outputPointBottomLeft};
             
             findHomography(inputPoints, outputPoints, transformMatrix);
             ofPushMatrix();
@@ -40,12 +40,12 @@ namespace ofxStereoscopy {
         }
         
         void Quad::drawInputConfig() {
-            ofPoint inputPoints[4] = {ofPoint(0,0), ofPoint(1,0), ofPoint(0,1), ofPoint(1,1)};
+            ofPoint inputPoints[4] = {ofPoint(0,0), ofPoint(1,0), ofPoint(1,1), ofPoint(0,1)};
             drawConfig(inputPoints);
         }
         
         void Quad::drawOutputConfig() {
-            ofPoint outputPoints[4] = {outputPointTopLeft, outputPointTopRight, outputPointBottomLeft, outputPointBottomRight};
+            ofPoint outputPoints[4] = {outputPointTopLeft, outputPointTopRight, outputPointBottomRight, outputPointBottomLeft};
             drawConfig(outputPoints);
         }
         
@@ -94,30 +94,58 @@ namespace ofxStereoscopy {
                 p->drawLeft();
                 ofSetColor(p->leftColor);
             }
-            quad->drawOutputConfig();
-            ofSetColor(ofColor::orangeRed);
-            ofFill();
-            ofDrawEllipse(mouseVec,0.03, 0.03*outputAspect);
-            
             
             for (shared_ptr<ofAbstractParameter> cornerPoint : quad->outputPoints) {
                 shared_ptr<ofParameter<ofVec3f>> cp = std::dynamic_pointer_cast<ofParameter<ofVec3f>>(cornerPoint);
                 ofVec3f cpVec = cp->get();
-                ofSetColor(ofColor::greenYellow);
+                if (cpVec.distance(mouseVec) < 0.03) {
+                    ofSetColor(ofColor::yellow);
+                } else {
+                    ofSetColor(ofColor::greenYellow);
+                }
                 ofDrawEllipse(cpVec,0.03, 0.03*outputAspect);
                 
             }
             if (!point.expired()) {
                 ofSetColor(ofColor::yellow);
-                ofDrawEllipse(point.lock()->get(), 0.05, 0.05*outputAspect);
+                ofDrawEllipse(point.lock()->get(), 0.04, 0.04*outputAspect);
             }
         }
+    }
+    
+    void Calibrator::keyPressed(int key){
+        
+        ofVec3f keyVec(0,0,0);
+        
+        if(key == OF_KEY_LEFT){
+            keyVec.x = -1;
+        }
+        if(key == OF_KEY_RIGHT){
+            keyVec.x = 1;
+        }
+        if(key == OF_KEY_UP){
+            keyVec.y = 1;
+        }
+        if(key == OF_KEY_DOWN){
+            keyVec.y = -1;
+        }
+        
+        if(ofGetKeyPressed(OF_KEY_SHIFT)){
+            keyVec *= 0.01;
+        } else {
+            keyVec *= 0.00025;
+        }
+        
+        if(!point.expired()){
+            point.lock()->set(keyVec + point.lock()->get());
+        }
+
     }
     
     void Calibrator::mouseDragged(ofVec3f v, int button){
         if(button== 0)mouseVec.set(v);
         if(!point.expired()){
-            point.lock()->set(mouseVec);
+            point.lock()->set(mouseVec + mouseOffsetVec);
         }
     }
     
@@ -132,12 +160,16 @@ namespace ofxStereoscopy {
                 for (shared_ptr<ofAbstractParameter> cornerPoint : quad->outputPoints) {
                     shared_ptr<ofParameter<ofVec3f>> cp = std::dynamic_pointer_cast<ofParameter<ofVec3f>>(cornerPoint);
                     ofVec3f cpVec = cp->get();
-                    if (cpVec.distance(mouseVec) < 0.06) {
+                    if (cpVec.distance(mouseVec) < 0.03) {
+                        mouseOffsetVec = cpVec - mouseVec;
                         point = cp;
-                        point.lock()->set(mouseVec);
-                        break;
+                        point.lock()->set(mouseVec + mouseOffsetVec);
+                        return;
                     }
                 }
+                
+                point.reset();
+                
             }
         }
     }

@@ -500,11 +500,16 @@ void ofApp::updateStage(){
 
 
 void ofApp::keyPressedGui(int key){
-
+    if(calibrate_planes){
+        world.calibrator.keyPressed(key);
+    }
 }
 void ofApp::keyReleasedGui(int key){
-    
+    if(calibrate_planes){
+        world.calibrator.keyReleased(key);
+    }
 }
+
 void ofApp::mouseMovedGui(int x, int y ){
     if(calibrate_planes){
         world.calibrator.mouseMoved(screenToCalibrator(ofVec3f(x,y,0)));

@@ -52,8 +52,8 @@ namespace ofxStereoscopy {
                 "Output Points",
                 outputPointTopLeft,
                 outputPointTopRight,
-                outputPointBottomLeft,
-                outputPointBottomRight
+                outputPointBottomRight,
+                outputPointBottomLeft
             };
             
             ofParameterGroup params {
@@ -251,9 +251,8 @@ namespace ofxStereoscopy {
         
         void draw();
         
-        void keyPressed(int key){
-            
-        }
+        void keyPressed(int key);
+        
         void keyReleased(int key){
             
         }
@@ -264,7 +263,7 @@ namespace ofxStereoscopy {
         void mousePressed(ofVec3f v, int button);
         
         void mouseReleased(ofVec3f v, int button){
-            point.reset();
+
         }
         void mouseEntered(ofVec3f v){
             
@@ -295,7 +294,7 @@ namespace ofxStereoscopy {
         
         float outputAspect;
         ofRectangle outputRectangle;
-        ofVec3f mouseVec;
+        ofVec3f mouseVec, mouseOffsetVec;
     };
     
 
