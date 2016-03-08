@@ -47,6 +47,18 @@ public:
         isSplit = false;
         mesh = _mesh;
         setParent(parent);
+        
+        // calculate bounding box from parent
+        
+    };
+    
+    ~VoroUnit() {
+        
+        for(auto s : subVoroUnits) {
+            delete s;
+        }
+        
+        subVoroUnits.clear();
     };
     
     vector<VoroUnit *> getChildren() {
@@ -55,6 +67,8 @@ public:
     
     void split() {
         isSplit = true;
+        
+        // todo: cut all cells by own faces after tesselation
     };
     
     
@@ -72,7 +86,11 @@ public:
         //if(nCells != cells.size()) {
             //generate();
         //}
-        // TODO: make recursive
+        
+        for(auto c : getChildren()) {
+            c->update();
+        }
+        
     };
     
     void generate() {
@@ -101,6 +119,8 @@ public:
         
         vector<ofVboMesh> cellMeshes = getCellsFromContainer(con, 0);
         
+        subVoroUnits.clear();
+        
         for(auto && m : cellMeshes) {
             
             VoroUnit * sub = new VoroUnit(*this, m);
@@ -111,7 +131,6 @@ public:
         //cells.clear(); // todo clear children
         /*
         for (int i=0; i < cellMeshes.size(); i++) {
-            
             Cell cell;
             cell.mesh.setMode(OF_PRIMITIVE_TRIANGLE_FAN);
             
@@ -133,7 +152,6 @@ private:
 class CrystalScene : public ofxStereoscopy::Scene {
     
 public:
-    
     
     ofParameter<int> numCells {"Cells", 40, 0, 1000};
     ofParameter<ofVec3f> autoRotation {"Automatic rotation", ofVec3f(0,0,0),

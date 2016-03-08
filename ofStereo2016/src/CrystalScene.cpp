@@ -52,7 +52,7 @@ void CrystalScene::draw() {
     
     ofPushMatrix(); {
         
-        ofTranslate(origin);
+        //ofTranslate(origin);
         
         float s = min(ofGetHeight(), ofGetWidth()) * scale;
         ofScale(s,s,s);
@@ -133,6 +133,7 @@ void CrystalScene::update() {
     }
     
     cube->nCells = numCells.get();
+    cube->setPosition(origin);
     cube->update();
     
     float s = min(ofGetHeight(), ofGetWidth()) * scale;
