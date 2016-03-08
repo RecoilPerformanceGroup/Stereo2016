@@ -113,7 +113,85 @@ public:
     void split() {
         isSplit = true;
         
-        // todo: cut all cells by own faces after tesselation
+        voro::container con(-width,width,
+                            -height,height,
+                            -depth,depth,
+                            1,1,1,
+                            false,false,false, // set true to flow beyond box
+                            8);
+        
+        //voro::wall_sphere sph(0, 0, 0, min(width, height) );
+        //con.add_wall(sph);
+        
+        /*voro::wall_sphere sph2(0.5, 0.5, 0, min(width, height) );
+         con.add_wall(sph2);
+         */
+        
+        for(ofMeshFace f : mesh.getUniqueFaces()){
+            
+            /** Constructs a plane wall object.
+             * \param[in] (xc_,yc_,zc_) a normal vector to the plane.
+             * \param[in] ac_ a displacement along the normal vector.
+             * \param[in] w_id_ an ID number to associate with the wall for
+             *		      neighbor tracking. */
+            
+            /*
+            // dist_Point_to_Plane(): get distance (and perp base) from a point to a plane
+            //    Input:  P  = a 3D point
+            //            PL = a  plane with point V0 and normal n
+            //    Output: *B = base point on PL of perpendicular from P
+            //    Return: the distance from P to the plane PL
+            float
+            dist_Point_to_Plane( Point P, Plane PL, Point* B)
+            {
+                float    sb, sn, sd;
+                
+                sn = -dot( PL.n, (P - PL.V0));
+                sd = dot(PL.n, PL.n);
+                sb = sn / sd;
+                
+                *B = P + sb * PL.n;
+                return d(P, *B);
+            }
+            */
+            
+            // UNTESTED!
+            
+            ofVec3f fNormal = f.getFaceNormal();
+            ofVec3f fOrigin = ofVec3f(0,0,0);
+            
+            float sb, sn, sd;
+            
+            sn = -fNormal.dot(fOrigin - f.getVertex(0));
+            sd = fNormal.dot(fNormal);
+            sb = sn / sd;
+            
+            ofVec3f basePointOnPlane(fOrigin + sb * fNormal);
+            
+            float distance = fOrigin.distance(basePointOnPlane);
+            
+            voro::wall_plane planeWall(fNormal.x, fNormal.y, fNormal.z, distance);
+            con.add_wall(planeWall);
+        }
+        
+        for(int i = 0; i < nCells;i++){
+            ofPoint newCell = ofPoint(ofRandom(-width,width),
+                                      ofRandom(-height,height),
+                                      ofRandom(-depth,depth));
+            
+            addCellSeed(con, newCell, i, true);
+        }
+        
+        vector<ofVboMesh> cellMeshes = getCellsFromContainer(con, 0);
+        
+        children.clear();
+        
+        for(auto && m : cellMeshes) {
+            
+            VoroUnit * sub = new VoroUnit(m, *this);
+            
+        }
+        
     };
     
     

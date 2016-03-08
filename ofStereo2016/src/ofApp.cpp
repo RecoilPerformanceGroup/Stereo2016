@@ -244,16 +244,6 @@ void ofApp::draw(){
 
 void ofApp::keyPressed(int key){
     
-    if(key=='s') saveParameters(mainParams);
-    
-    if(key=='l') loadParameters(mainParams);
-    
-    if(key=='c') {
-        worldModelCam.setGlobalPosition(world.physical_camera_pos_cm);
-        worldModelCam.lookAt(ofVec3f(0,0,0));
-    }
-    
-    
 }
 
 //--------------------------------------------------------------
@@ -357,6 +347,12 @@ void ofApp::setupGui(shared_ptr<ofAppBaseWindow> gW,shared_ptr<ofAppBaseWindow> 
 
     guiBindings.push_back(make_shared<ColorPickerWithAlpha>(background_color, gui));
 
+    
+    ofxDatGuiButton * saveButton = gui->addButton("save settings");
+    saveButton->onButtonEvent(this,&ofApp::onButtonEvent);
+    ofxDatGuiButton * loadButton = gui->addButton("load settings");
+    loadButton->onButtonEvent(this,&ofApp::onButtonEvent);
+    
     // adding the optional header allows you to drag the gui around //
     gui->addHeader(":: STEREO 2016 ::");
     
@@ -443,7 +439,12 @@ ofVec3f ofApp::screenToCalibrationCamera(ofVec3f v){
 }
 
 void ofApp::onButtonEvent(ofxDatGuiButtonEvent e){
-    ;
+    
+    if(e.target->getLabel() == "SAVE SETTINGS")
+        saveParameters(mainParams);
+        
+        if(e.target->getLabel() == "LOAD SETTINGS")
+            loadParameters(mainParams);
 }
 
 void ofApp::onFolderEvent(ofxDatGuiFolderEvent e){
@@ -556,43 +557,13 @@ void ofApp::gotMessageGui(ofMessage msg){
 // Recursively save parameters in parameter group
 void ofApp::saveParameters(ofParameterGroup & params) {
     
-    
-    // cout<<params.toString()<<endl;
-    
-    // like this maybe: https://github.com/elliotwoods/ofxRulr/blob/master/Core/src/ofxRulr/Utils/Serializable.h
-    
-    
-    
-    //string json = params.toString();
-    
-    //string filename = "settings.txt";
-    // ofFile output;
-    
     ofxPanel panel(params);
     panel.saveToFile("settings.xml");
-    
-    
-    //output.open(filename, ofFile::WriteOnly, false);
-    //output << json;
-    
-    // todo json format
-    
-    //ofxPanel p;
-    //p.saveToFile(<#const std::string &filename#>)
     
 }
 
 // Recursively load parameters in parameter group
 void ofApp::loadParameters(ofParameterGroup & params) {
-    
-    
-    //string filename = "settings.txt";
-    //ofFile input;
-    //input.open(filename, ofFile::ReadOnly, false);
-    
-    //ofBuffer buf = input.readToBuffer();
-    
-    //params.fromString(buf); // not implemented
     
     ofxPanel panel(params);
     panel.loadFromFile("settings.xml");
