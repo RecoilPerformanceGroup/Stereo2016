@@ -16,7 +16,6 @@ void CrystalScene::setup() {
     light.setPosition(-2, -2, -2);
     
     //shader.load("shadersGL3/shader");
-
     //pointlight..setDirectional();
     //pointlight..setDiffuseColor(ofColor(100,55,100));
     //pointlight..setAmbientColor(ofColor(10));
@@ -33,9 +32,7 @@ void CrystalScene::setup() {
     cube->setup(200,100,100,numCells);
     
     //ofLoadImage(tex, "grain-texture.png");
-    
     //grab.setup(1080, 720, true);
-    
 }
 
 void CrystalScene::draw() {
@@ -58,8 +55,6 @@ void CrystalScene::draw() {
         //ofScale(s,s,s);
         
         //ofDrawBox(5, 5, 5);
-        
-        
         
         //ofRotateX(rotation.x);
         //ofRotateY(rotation.y);
@@ -116,22 +111,18 @@ void CrystalScene::draw() {
         
     } ofPopMatrix();
     
-    
-    //grab.getTexture().unbind();
-    
-    
     spotlight.disable();
     pointlight.disable();
     
     ofDisableNormalizedTexCoords();
     ofDisableDepthTest();
     ofDisableLighting();
-    //tex.draw(0,0);
 }
 
 void CrystalScene::update() {
     if(rebuild) {
         cube->generate();
+                
         rebuild = false;
     }
     
@@ -149,22 +140,22 @@ void CrystalScene::update() {
     
     cube->setOrientation(rotation);
     //cube->setScale(-scaleCells);
+    cube->setScale(scale.get());
     
     for(auto c : cube->getChildren()) {
         
         c->setScale(scaleCells);
         
+        //c->setGlobalPosition(oldPos);
+        
+        //ofTranslate(-c->getPosition());
     }
     
-    
-    float s = min(ofGetHeight(), ofGetWidth()) * scale;
-    
-    spotlight.setPosition(spotlightPosition.get() * s);
+    spotlight.setPosition(spotlightPosition.get());
     spotlight.lookAt(ofVec3f(0,0,0));
     
     pointlight.lookAt(ofVec3f(0,0,0));
     mat.setDiffuseColor(crystalColor.get());
-    plane.set(0.2, 0.2, 20, 20, OF_PRIMITIVE_TRIANGLES);
 }
 
 void CrystalScene::drawGui() {

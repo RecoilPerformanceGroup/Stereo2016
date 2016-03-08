@@ -41,14 +41,12 @@ public:
     ofVboMesh mesh;
     
     int nCells;
-    
     list<VoroUnit *> children;
 
     VoroUnit() {
         isSplit = false;
         bDraw = false;
         level = 0;
-        
     };
     
     VoroUnit(ofVboMesh _mesh) {
@@ -59,11 +57,45 @@ public:
     VoroUnit(ofVboMesh _mesh, VoroUnit & parent) {
         isSplit = false;
         bDraw = true;
-        mesh = _mesh;
-        setParent(parent);
+        
         level += 1;
         
-        // calculate bounding box from parent
+        // make the mesh vertices local for the node
+        // move th relative position to the nodes position
+        // transformations on the unit are around the centroid of the mesh not the centroid of the parent
+        mesh = _mesh;
+        setPosition(mesh.getCentroid());
+        
+        //ofBoxPrimitive bounds;
+        
+        for(int i=0; i<_mesh.getNumVertices(); i++) {
+            mesh.setVertex(i,  _mesh.getVertex(i)-_mesh.getCentroid());
+        }
+        
+        
+        ofBoxPrimitive boundingBox;
+        ofVec3f minBounds = mesh.getVertex(0);
+        ofVec3f maxBounds = mesh.getVertex(0);
+        
+        for(int i=0; i<_mesh.getNumVertices(); i++) {
+        
+            minBounds.x = min(mesh.getVertex(i).x, minBounds.x);
+            minBounds.y = min(mesh.getVertex(i).y, minBounds.y);
+            minBounds.z = min(mesh.getVertex(i).z, minBounds.z);
+            
+            maxBounds.x = max(mesh.getVertex(i).x, maxBounds.x);
+            maxBounds.y = max(mesh.getVertex(i).y, maxBounds.y);
+            maxBounds.z = max(mesh.getVertex(i).z, maxBounds.z);
+        
+        }
+        
+        width = abs(maxBounds.x - minBounds.x);
+        height = abs(maxBounds.y - minBounds.y);
+        depth = abs(maxBounds.z - minBounds.z);
+        
+        
+        setParent(parent);
+        
         
     };
     
@@ -217,12 +249,36 @@ public:
     };
     
     
+    
+    /*void customDraw(const ofBaseRenderer * renderer) {
+        
+        
+        //renderer->pushMatrix();
+        renderer->translate(getPosition().x, getPosition().y, getPosition().z);
+        //renderer->scale(0.5, 0.5, 0.5);
+        if(bDraw) renderer->draw(mesh, OF_MESH_FILL);
+        //renderer->translate(-getPosition().x, -getPosition().y, -getPosition().z);
+        
+        //renderer->popMatrix();
+    }*/
+    
+    
     void customDraw() {
         
         
-        if(bDraw) mesh.drawWireframe();
+        /*ofPushMatrix();
+        ofTranslate(mesh.getCentroid().x, mesh.getCentroid().y, mesh.getCentroid().z);
+        ofScale(0.5, 0.5, 0.5);
+        ofTranslate(-mesh.getCentroid().x, -mesh.getCentroid().y, -mesh.getCentroid().z);
+        */
+        if(bDraw) mesh.drawFaces(); //mesh.drawWireframe();
         
-    };
+        ofBoxPrimitive(width, height, depth).drawWireframe();
+        //ofDrawBox();
+        
+        //ofPopMatrix();
+        
+    }
     
     void draw() {
         
@@ -235,9 +291,9 @@ public:
     
     void generate() {
         
-        voro::container con(-width,width,
-                            -height,height,
-                            -depth,depth,
+        voro::container con(-width/2,width/2,
+                            -height/2,height/2,
+                            -depth/2,depth/2,
                             1,1,1,
                             false,false,false, // set true to flow beyond box
                             8);
@@ -250,9 +306,9 @@ public:
          */
         
         for(int i = 0; i < nCells;i++){
-            ofPoint newCell = ofPoint(ofRandom(-width,width),
-                                      ofRandom(-height,height),
-                                      ofRandom(-depth,depth));
+            ofPoint newCell = ofPoint(ofRandom(-width/2,width/2),
+                                      ofRandom(-height/2,height/2),
+                                      ofRandom(-depth/2,depth/2));
             
             addCellSeed(con, newCell, i, true);
         }
@@ -260,6 +316,9 @@ public:
         vector<ofVboMesh> cellMeshes = getCellsFromContainer(con, 0);
         
         children.clear();
+        
+        vector<ofPoint> centroids = getCellsCentroids(con);
+
         
         for(auto && m : cellMeshes) {
             
@@ -329,8 +388,6 @@ public:
         ofxStereoscopy::Scene::params = params;
         params.setName(oscAddress);
     }
-    
-
     
     void draw();
     void drawGui();
