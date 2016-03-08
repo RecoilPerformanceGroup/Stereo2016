@@ -30,7 +30,7 @@ void CrystalScene::setup() {
     //spotlight.setAttenuation(0.61);
     
     cube = new VoroUnit();
-    cube->setup(0.2,0.2,0.2,numCells);
+    cube->setup(200,100,100,numCells);
     
     //ofLoadImage(tex, "grain-texture.png");
     
@@ -54,22 +54,16 @@ void CrystalScene::draw() {
         
         //ofTranslate(origin);
         
-        float s = min(ofGetHeight(), ofGetWidth()) * scale;
-        ofScale(s,s,s);
+        //float s = min(ofGetHeight(), ofGetWidth()) * scale;
+        //ofScale(s,s,s);
         
         //ofDrawBox(5, 5, 5);
         
-        rotation += ofGetLastFrameTime() * 60.0 * ofVec3f(
-                                                          autoRotation.get().x*
-                                                          autoRotationSpeed.get(),
-                                                          autoRotation.get().y*
-                                                          autoRotationSpeed.get(),
-                                                          autoRotation.get().z
-                                                          *autoRotationSpeed.get());
         
-        ofRotateX(rotation.x);
-        ofRotateY(rotation.y);
-        ofRotateZ(rotation.z);
+        
+        //ofRotateX(rotation.x);
+        //ofRotateY(rotation.y);
+        //ofRotateZ(rotation.z);
         
         mat.begin();
         //shader.begin();
@@ -80,7 +74,13 @@ void CrystalScene::draw() {
         
         //plane.drawWireframe();
         
-        for(int i = 0; i < cube->getChildren().size(); i++){
+        /*for(auto c : cube->getChildren()) {
+            
+            // TODO:  node based drawing
+            
+        }*/
+        
+        /*for(int i = 0; i < cube->getChildren().size(); i++){
             ofPushMatrix(); {
                 
                 ofSetColor(255,255,255,255);
@@ -106,9 +106,12 @@ void CrystalScene::draw() {
                 //tex.unbind();
                 
             } ofPopMatrix();
-        }
+        }*/
         
         //shader.end();
+        
+        cube->draw();
+        
         mat.end();
         
     } ofPopMatrix();
@@ -135,6 +138,24 @@ void CrystalScene::update() {
     cube->nCells = numCells.get();
     cube->setPosition(origin);
     cube->update();
+    
+    rotation += ofGetLastFrameTime() * 60.0 * ofVec3f(
+                                                      autoRotation.get().x*
+                                                      autoRotationSpeed.get(),
+                                                      autoRotation.get().y*
+                                                      autoRotationSpeed.get(),
+                                                      autoRotation.get().z
+                                                      *autoRotationSpeed.get());
+    
+    cube->setOrientation(rotation);
+    //cube->setScale(-scaleCells);
+    
+    for(auto c : cube->getChildren()) {
+        
+        c->setScale(scaleCells);
+        
+    }
+    
     
     float s = min(ofGetHeight(), ofGetWidth()) * scale;
     

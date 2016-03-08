@@ -28,12 +28,13 @@
 class VoroUnit : public ofNode {
 public:
     
-    // bounding
+    // bounding box
     float width;
     float height;
     float depth;
     
     bool isSplit;
+    bool bDraw;
     
     int level;
     
@@ -43,11 +44,14 @@ public:
     
     VoroUnit() {
         isSplit = false;
+        bDraw = false;
         level = 0;
+        
     };
     
     VoroUnit(VoroUnit & parent, ofVboMesh _mesh) {
         isSplit = false;
+        bDraw = true;
         mesh = _mesh;
         setParent(parent);
         level += 1;
@@ -77,7 +81,7 @@ public:
     
     
     // start from a box
-    void setup(float _w = 0.2, float _h = 0.2, float _d = 0.2, int _c = 40) {
+    void setup(float _w = 100, float _h = 100, float _d = 100, int _c = 10) {
         width  = _w;
         height = _h;
         depth  = _d;
@@ -95,6 +99,23 @@ public:
             c->update();
         }
         
+    };
+    
+    
+    void customDraw() {
+        
+        
+        if(bDraw) mesh.drawWireframe();
+        
+    };
+    
+    void draw() {
+        
+        ofNode::draw();
+        
+        for(auto c : getChildren()) {
+            c->draw();
+        }
     };
     
     void generate() {
