@@ -73,6 +73,8 @@ public:
             mesh.setVertex(i,  _mesh.getVertex(i)-_mesh.getCentroid());
         }
         
+        mesh.setupIndicesAuto();
+        
         
         ofBoxPrimitive boundingBox;
         ofVec3f minBounds = mesh.getVertex(0);
@@ -276,9 +278,9 @@ public:
         ofTranslate(-mesh.getCentroid().x, -mesh.getCentroid().y, -mesh.getCentroid().z);
         */
         
-        if(bDraw) mesh.drawWireframe(); //mesh.drawFaces();
+        if(bDraw && level <= 1) mesh.drawWireframe(); // mesh.drawWireframe(); //
         
-        //if(level >1 ) mesh.drawFaces();
+        if(level >1 ) mesh.drawFaces();
         
         
         //ofBoxPrimitive(width, height, depth).drawWireframe();

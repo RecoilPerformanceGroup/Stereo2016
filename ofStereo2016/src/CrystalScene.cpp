@@ -148,6 +148,11 @@ void CrystalScene::update() {
         
         c->setScale(scaleCells);
         
+        for(auto cc : c->getChildren()) {
+            
+            cc->setScale(scaleCells);
+        }
+        
         //c->setGlobalPosition(oldPos);
         
         //ofTranslate(-c->getPosition());
