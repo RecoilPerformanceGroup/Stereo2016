@@ -60,18 +60,42 @@ public:
         
         level += 1;
         
-        
         // make the mesh vertices local for the node
         // move th relative position to the nodes position
         // transformations on the unit are around the centroid of the mesh not the centroid of the parent
         mesh = _mesh;
         setPosition(mesh.getCentroid());
+        
+        //ofBoxPrimitive bounds;
+        
         for(int i=0; i<_mesh.getNumVertices(); i++) {
             mesh.setVertex(i,  _mesh.getVertex(i)-_mesh.getCentroid());
         }
+        
+        
+        ofBoxPrimitive boundingBox;
+        ofVec3f minBounds = mesh.getVertex(0);
+        ofVec3f maxBounds = mesh.getVertex(0);
+        
+        for(int i=0; i<_mesh.getNumVertices(); i++) {
+        
+            minBounds.x = min(mesh.getVertex(i).x, minBounds.x);
+            minBounds.y = min(mesh.getVertex(i).y, minBounds.y);
+            minBounds.z = min(mesh.getVertex(i).z, minBounds.z);
+            
+            maxBounds.x = max(mesh.getVertex(i).x, maxBounds.x);
+            maxBounds.y = max(mesh.getVertex(i).y, maxBounds.y);
+            maxBounds.z = max(mesh.getVertex(i).z, maxBounds.z);
+        
+        }
+        
+        width = abs(maxBounds.x - minBounds.x);
+        height = abs(maxBounds.y - minBounds.y);
+        depth = abs(maxBounds.z - minBounds.z);
+        
+        
         setParent(parent);
         
-        // calculate bounding box from parent
         
     };
     
@@ -120,6 +144,11 @@ public:
     
     void split() {
         isSplit = true;
+        
+        bDraw = false;
+        
+        
+        generate();
         
         // todo: cut all cells by own faces after tesselation
     };
@@ -171,6 +200,9 @@ public:
         */
         if(bDraw) mesh.drawFaces(); //mesh.drawWireframe();
         
+        ofBoxPrimitive(width, height, depth).drawWireframe();
+        //ofDrawBox();
+        
         //ofPopMatrix();
         
     }
@@ -186,9 +218,9 @@ public:
     
     void generate() {
         
-        voro::container con(-width,width,
-                            -height,height,
-                            -depth,depth,
+        voro::container con(-width/2,width/2,
+                            -height/2,height/2,
+                            -depth/2,depth/2,
                             1,1,1,
                             false,false,false, // set true to flow beyond box
                             8);
@@ -201,9 +233,9 @@ public:
          */
         
         for(int i = 0; i < nCells;i++){
-            ofPoint newCell = ofPoint(ofRandom(-width,width),
-                                      ofRandom(-height,height),
-                                      ofRandom(-depth,depth));
+            ofPoint newCell = ofPoint(ofRandom(-width/2,width/2),
+                                      ofRandom(-height/2,height/2),
+                                      ofRandom(-depth/2,depth/2));
             
             addCellSeed(con, newCell, i, true);
         }
