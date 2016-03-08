@@ -41,14 +41,12 @@ public:
     ofVboMesh mesh;
     
     int nCells;
-    
     list<VoroUnit *> children;
 
     VoroUnit() {
         isSplit = false;
         bDraw = false;
         level = 0;
-        
     };
     
     VoroUnit(ofVboMesh _mesh) {
@@ -59,9 +57,19 @@ public:
     VoroUnit(ofVboMesh _mesh, VoroUnit & parent) {
         isSplit = false;
         bDraw = true;
-        mesh = _mesh;
-        setParent(parent);
+        
         level += 1;
+        
+        
+        // make the mesh vertices local for the node
+        // move th relative position to the nodes position
+        // transformations on the unit are around the centroid of the mesh not the centroid of the parent
+        mesh = _mesh;
+        setPosition(mesh.getCentroid());
+        for(int i=0; i<_mesh.getNumVertices(); i++) {
+            mesh.setVertex(i,  _mesh.getVertex(i)-_mesh.getCentroid());
+        }
+        setParent(parent);
         
         // calculate bounding box from parent
         
@@ -139,12 +147,33 @@ public:
     };
     
     
+    
+    /*void customDraw(const ofBaseRenderer * renderer) {
+        
+        
+        //renderer->pushMatrix();
+        renderer->translate(getPosition().x, getPosition().y, getPosition().z);
+        //renderer->scale(0.5, 0.5, 0.5);
+        if(bDraw) renderer->draw(mesh, OF_MESH_FILL);
+        //renderer->translate(-getPosition().x, -getPosition().y, -getPosition().z);
+        
+        //renderer->popMatrix();
+    }*/
+    
+    
     void customDraw() {
         
         
-        if(bDraw) mesh.drawWireframe();
+        /*ofPushMatrix();
+        ofTranslate(mesh.getCentroid().x, mesh.getCentroid().y, mesh.getCentroid().z);
+        ofScale(0.5, 0.5, 0.5);
+        ofTranslate(-mesh.getCentroid().x, -mesh.getCentroid().y, -mesh.getCentroid().z);
+        */
+        if(bDraw) mesh.drawFaces(); //mesh.drawWireframe();
         
-    };
+        //ofPopMatrix();
+        
+    }
     
     void draw() {
         
@@ -182,6 +211,9 @@ public:
         vector<ofVboMesh> cellMeshes = getCellsFromContainer(con, 0);
         
         children.clear();
+        
+        vector<ofPoint> centroids = getCellsCentroids(con);
+
         
         for(auto && m : cellMeshes) {
             
@@ -251,8 +283,6 @@ public:
         ofxStereoscopy::Scene::params = params;
         params.setName(oscAddress);
     }
-    
-
     
     void draw();
     void drawGui();
