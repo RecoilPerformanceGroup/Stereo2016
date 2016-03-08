@@ -14,25 +14,51 @@
 #include "ofxGui.h"
 
 
-struct Cell {
+// provide specific seeds
+//
+
+/*struct Cell {
     ofMesh mesh;
     ofVec3f offset;
     ofVec3f rotation;
     ofColor color;
     float r = 0;
-};
+};*/
 
-class VoroCube {
+class VoroUnit : public ofNode {
 public:
     
+    // bounding
     float width;
     float height;
     float depth;
     
-    vector<ofVboMesh>  cellMeshes;
-    int nCells;
-    vector<Cell> cells;
+    bool isSplit;
     
+    ofVboMesh mesh;
+    
+    int nCells;
+    
+    VoroUnit() {
+        isSplit = false;
+    };
+    
+    VoroUnit(VoroUnit & parent, ofVboMesh _mesh) {
+        isSplit = false;
+        mesh = _mesh;
+        setParent(parent);
+    };
+    
+    vector<VoroUnit *> getChildren() {
+        return subVoroUnits;
+    };
+    
+    void split() {
+        isSplit = true;
+    };
+    
+    
+    // start from a box
     void setup(float _w = 0.2, float _h = 0.2, float _d = 0.2, int _c = 40) {
         width  = _w;
         height = _h;
@@ -40,16 +66,16 @@ public:
         nCells = _c;
         
         generate();
-    }
+    };
     
     void update() {
-        if(nCells != cells.size()) {
+        //if(nCells != cells.size()) {
             //generate();
-        }
-    }
+        //}
+        // TODO: make recursive
+    };
     
     void generate() {
-        
         
         voro::container con(-width,width,
                             -height,height,
@@ -73,23 +99,34 @@ public:
             addCellSeed(con, newCell, i, true);
         }
         
+        vector<ofVboMesh> cellMeshes = getCellsFromContainer(con, 0);
         
-        cellMeshes = getCellsFromContainer(con, 0);
+        for(auto && m : cellMeshes) {
+            
+            VoroUnit * sub = new VoroUnit(*this, m);
+            subVoroUnits.push_back(sub);
+            
+        }
         
-        cells.clear();
+        //cells.clear(); // todo clear children
+        /*
         for (int i=0; i < cellMeshes.size(); i++) {
             
             Cell cell;
             cell.mesh.setMode(OF_PRIMITIVE_TRIANGLE_FAN);
-            
             
             cell.offset = ofVec3f(0,0,0);
             cell.r = ofRandom(-1.0,1.0);
             cell.mesh = cellMeshes[i];
             
             cells.push_back(cell);
-        }
+        }*/
+        
     }
+    
+private:
+    vector<VoroUnit *> subVoroUnits;
+
 };
 
 
@@ -103,15 +140,23 @@ public:
         ofVec3f(-1,-1,-1),
         ofVec3f(1,1,1)};
     
+    ofParameter<ofVec3f> origin {"origin", ofVec3f(0,0,0),
+        ofVec3f(-1000,-1000,-1000),
+        ofVec3f(1000,1000,1000)};
+
     ofParameter<float> autoRotationSpeed {"rot speed", 0, -1, 1};
     ofParameter<ofColor_<float>> crystalColor {"Crystal color", ofColor_<float>(1,1,1,1), ofColor_<float>(0,0,0,0), ofColor_<float>(1,1,1,1)};
-    ofParameter<ofVec3f> spotlightPosition {"spotlightPosition", ofVec3f(0,0,0), ofVec3f(-4,-4,-4), ofVec3f(4,4,4)};
+    ofParameter<ofVec3f> spotlightPosition {"spotlightPosition", ofVec3f(0,0,0), ofVec3f(-2000,-2000,-2000), ofVec3f(2000,2000,2000)};
     ofParameter<float> scale {"scale", 0, 0, 10};
     ofParameter<float> scaleCells {"scaleCells", 0,0,0.999};
     ofParameter<bool> debugDraw {"Debug draw", false};
     
+    ofParameter<bool> rebuild {"rebuild", false};
+    
     ofParameterGroup params {"",
         enabled,
+        rebuild,
+        origin,
         numCells,
         autoRotation,
         autoRotationSpeed,
@@ -129,7 +174,6 @@ public:
         
         ofxStereoscopy::Scene::params = params;
         params.setName(oscAddress);
-        
     }
     
 
@@ -148,7 +192,7 @@ public:
     ofLight pointlight;
     ofLight spotlight;
     
-    VoroCube * cube;
+    VoroUnit * cube;
     
     ofShader shader;
     ofPlanePrimitive plane;

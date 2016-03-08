@@ -12,12 +12,11 @@
 void CrystalScene::setup() {
 
     light.setPointLight();
+    light.setAmbientColor(ofColor(10));
     light.setPosition(-2, -2, -2);
-    
     
     //shader.load("shadersGL3/shader");
 
-    
     //pointlight..setDirectional();
     //pointlight..setDiffuseColor(ofColor(100,55,100));
     //pointlight..setAmbientColor(ofColor(10));
@@ -30,14 +29,12 @@ void CrystalScene::setup() {
     
     //spotlight.setAttenuation(0.61);
     
-    cube = new VoroCube();
+    cube = new VoroUnit();
     cube->setup(0.2,0.2,0.2,numCells);
     
     //ofLoadImage(tex, "grain-texture.png");
     
     //grab.setup(1080, 720, true);
-    
-    
     
 }
 
@@ -51,12 +48,11 @@ void CrystalScene::draw() {
     
     pointlight.enable();
     spotlight.enable();
-    
+    spotlight.lookAt(origin);
     
     ofPushMatrix(); {
         
-        
-        ofTranslate(0, 0);
+        ofTranslate(origin);
         
         float s = min(ofGetHeight(), ofGetWidth()) * scale;
         ofScale(s,s,s);
@@ -84,35 +80,32 @@ void CrystalScene::draw() {
         
         //plane.drawWireframe();
         
-        for(int i = 0; i < cube->cellMeshes.size(); i++){
+        for(int i = 0; i < cube->getChildren().size(); i++){
             ofPushMatrix(); {
                 
                 ofSetColor(255,255,255,255);
                 
                 float explode = ofMap(ofSignedNoise(ofGetElapsedTimef()), -1, 1, 0.4, 1);
                 
-                ofTranslate(cube->cellMeshes[i].getCentroid().x, cube->cellMeshes[i].getCentroid().y, cube->cellMeshes[i].getCentroid().z);
+                ofTranslate(cube->getChildren()[i]->mesh.getCentroid().x, cube->getChildren()[i]->mesh.getCentroid().y, cube->getChildren()[i]->mesh.getCentroid().z);
                 
                 ofScale(scaleCells,scaleCells,scaleCells);
                 
-                ofTranslate(-cube->cellMeshes[i].getCentroid().x, -cube->cellMeshes[i].getCentroid().y, -cube->cellMeshes[i].getCentroid().z);
-                
+                ofTranslate(-cube->getChildren()[i]->mesh.getCentroid().x, -cube->getChildren()[i]->mesh.getCentroid().y, -cube->getChildren()[i]->mesh.getCentroid().z);
                 
                 //tex.bind();
                 
                 ofSetColor(0);
-                cube->cellMeshes[i].drawWireframe();
+                cube->getChildren()[i]->mesh.drawWireframe();
                 
                 ofSetColor(255);
-                cube->cellMeshes[i].drawFaces();
+                cube->getChildren()[i]->mesh.drawFaces();
                 
                 //ofDrawSphere(cube->cellMeshes[i].getCentroid(), 0.005);
                 
                 //tex.unbind();
                 
-                
             } ofPopMatrix();
-            
         }
         
         //shader.end();
@@ -130,11 +123,15 @@ void CrystalScene::draw() {
     ofDisableNormalizedTexCoords();
     ofDisableDepthTest();
     ofDisableLighting();
-    
     //tex.draw(0,0);
 }
 
 void CrystalScene::update() {
+    if(rebuild) {
+        cube->generate();
+        rebuild = false;
+    }
+    
     cube->nCells = numCells.get();
     cube->update();
     
@@ -144,9 +141,7 @@ void CrystalScene::update() {
     spotlight.lookAt(ofVec3f(0,0,0));
     
     pointlight.lookAt(ofVec3f(0,0,0));
-    
     mat.setDiffuseColor(crystalColor.get());
-    
     plane.set(0.2, 0.2, 20, 20, OF_PRIMITIVE_TRIANGLES);
 }
 
