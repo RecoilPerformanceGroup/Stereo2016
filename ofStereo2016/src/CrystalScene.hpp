@@ -52,13 +52,14 @@ public:
     VoroUnit(ofVboMesh _mesh) {
         isSplit = false;
         mesh = _mesh;
+        level = 0;
     };
     
     VoroUnit(ofVboMesh _mesh, VoroUnit & parent) {
         isSplit = false;
         bDraw = true;
         
-        level += 1;
+        level = parent.level+1;
         
         // make the mesh vertices local for the node
         // move th relative position to the nodes position
@@ -95,7 +96,6 @@ public:
         
         
         setParent(parent);
-        
         
     };
     
@@ -142,15 +142,19 @@ public:
         return children;
     };
     
-    void split() {
-        isSplit = true;
+    void split(int _nCells=10) {
+        nCells = _nCells;
         
-        voro::container con(-width,width,
-                            -height,height,
-                            -depth,depth,
+        isSplit = true;
+        bDraw = false;
+        
+        voro::container con(-width/2,width/2,
+                            -height/2,height/2,
+                            -depth/2,depth/2,
                             1,1,1,
                             false,false,false, // set true to flow beyond box
                             8);
+        
         
         //voro::wall_sphere sph(0, 0, 0, min(width, height) );
         //con.add_wall(sph);
@@ -207,9 +211,9 @@ public:
         }
         
         for(int i = 0; i < nCells;i++){
-            ofPoint newCell = ofPoint(ofRandom(-width,width),
-                                      ofRandom(-height,height),
-                                      ofRandom(-depth,depth));
+            ofPoint newCell = ofPoint(ofRandom(-width/2,width/2),
+                                      ofRandom(-height/2,height/2),
+                                      ofRandom(-depth/2,depth/2));
             
             addCellSeed(con, newCell, i, true);
         }
@@ -228,7 +232,7 @@ public:
     
     
     // start from a box
-    void setup(float _w = 100, float _h = 100, float _d = 100, int _c = 10) {
+    void setup(float _w = 100, float _h = 100, float _d = 100, int _c = 5) {
         width  = _w;
         height = _h;
         depth  = _d;
@@ -271,13 +275,15 @@ public:
         ofScale(0.5, 0.5, 0.5);
         ofTranslate(-mesh.getCentroid().x, -mesh.getCentroid().y, -mesh.getCentroid().z);
         */
-        if(bDraw) mesh.drawFaces(); //mesh.drawWireframe();
         
-        ofBoxPrimitive(width, height, depth).drawWireframe();
+        if(bDraw) mesh.drawWireframe(); //mesh.drawFaces();
+        
+        //if(level >1 ) mesh.drawFaces();
+        
+        
+        //ofBoxPrimitive(width, height, depth).drawWireframe();
         //ofDrawBox();
-        
         //ofPopMatrix();
-        
     }
     
     void draw() {
