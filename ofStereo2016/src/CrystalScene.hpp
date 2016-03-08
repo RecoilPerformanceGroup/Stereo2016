@@ -35,18 +35,22 @@ public:
     
     bool isSplit;
     
+    int level;
+    
     ofVboMesh mesh;
     
     int nCells;
     
     VoroUnit() {
         isSplit = false;
+        level = 0;
     };
     
     VoroUnit(VoroUnit & parent, ofVboMesh _mesh) {
         isSplit = false;
         mesh = _mesh;
         setParent(parent);
+        level += 1;
         
         // calculate bounding box from parent
         
