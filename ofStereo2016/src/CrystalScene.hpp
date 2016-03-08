@@ -28,12 +28,15 @@
 class VoroUnit : public ofNode {
 public:
     
-    // bounding
+    // bounding box
     float width;
     float height;
     float depth;
     
     bool isSplit;
+    bool bDraw;
+    
+    int level;
     
     ofVboMesh mesh;
     
@@ -43,6 +46,9 @@ public:
 
     VoroUnit() {
         isSplit = false;
+        bDraw = false;
+        level = 0;
+        
     };
     
     VoroUnit(ofVboMesh _mesh) {
@@ -52,8 +58,22 @@ public:
     
     VoroUnit(ofVboMesh _mesh, VoroUnit & parent) {
         isSplit = false;
+        bDraw = true;
         mesh = _mesh;
         setParent(parent);
+        level += 1;
+        
+        // calculate bounding box from parent
+        
+    };
+    
+    ~VoroUnit() {
+        
+        for(auto s : children) {
+            delete s;
+        }
+        
+        children.clear();
     };
     
     
@@ -92,11 +112,13 @@ public:
     
     void split() {
         isSplit = true;
+        
+        // todo: cut all cells by own faces after tesselation
     };
     
     
     // start from a box
-    void setup(float _w = 0.2, float _h = 0.2, float _d = 0.2, int _c = 40) {
+    void setup(float _w = 100, float _h = 100, float _d = 100, int _c = 10) {
         width  = _w;
         height = _h;
         depth  = _d;
@@ -109,7 +131,28 @@ public:
         //if(nCells != cells.size()) {
             //generate();
         //}
-        // TODO: make recursive
+        
+        for(auto c : getChildren()) {
+            c->update();
+        }
+        
+    };
+    
+    
+    void customDraw() {
+        
+        
+        if(bDraw) mesh.drawWireframe();
+        
+    };
+    
+    void draw() {
+        
+        ofNode::draw();
+        
+        for(auto c : getChildren()) {
+            c->draw();
+        }
     };
     
     void generate() {
@@ -138,6 +181,8 @@ public:
         
         vector<ofVboMesh> cellMeshes = getCellsFromContainer(con, 0);
         
+        children.clear();
+        
         for(auto && m : cellMeshes) {
             
             VoroUnit * sub = new VoroUnit(m, *this);
@@ -147,7 +192,6 @@ public:
         //cells.clear(); // todo clear children
         /*
         for (int i=0; i < cellMeshes.size(); i++) {
-            
             Cell cell;
             cell.mesh.setMode(OF_PRIMITIVE_TRIANGLE_FAN);
             
@@ -166,7 +210,6 @@ public:
 class CrystalScene : public ofxStereoscopy::Scene {
     
 public:
-    
     
     ofParameter<int> numCells {"Cells", 40, 0, 1000};
     ofParameter<ofVec3f> autoRotation {"Automatic rotation", ofVec3f(0,0,0),
