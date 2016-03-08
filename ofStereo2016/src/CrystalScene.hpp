@@ -39,18 +39,55 @@ public:
     
     int nCells;
     
+    list<VoroUnit *> children;
+
     VoroUnit() {
         isSplit = false;
     };
     
-    VoroUnit(VoroUnit & parent, ofVboMesh _mesh) {
+    VoroUnit(ofVboMesh _mesh) {
+        isSplit = false;
+        mesh = _mesh;
+    };
+    
+    VoroUnit(ofVboMesh _mesh, VoroUnit & parent) {
         isSplit = false;
         mesh = _mesh;
         setParent(parent);
     };
     
-    vector<VoroUnit *> getChildren() {
-        return subVoroUnits;
+    
+    void setParent(ofNode& parent, bool bMaintainGlobalTransform = false ){
+        if(this->parent != nullptr){
+            // we have a parent allready
+            if (VoroUnit* oldVoroParent = dynamic_cast<VoroUnit*>(this->parent)) {
+                // our old parent is also VoroUnit
+                // remove this from parents' children.
+                oldVoroParent->children.remove(this);
+            }
+        }
+        if (VoroUnit* newVoroParent = dynamic_cast<VoroUnit*>(&parent)){
+            // our new parent is a VoroUnit
+            newVoroParent->children.push_back(this);
+        }
+        ofNode::setParent(parent, bMaintainGlobalTransform);
+    };
+    
+    /// \brief Remove parent node linking
+    void clearParent(bool bMaintainGlobalTransform = false){
+        if(this->parent != nullptr){
+            // we have a parent allready
+            if (VoroUnit* oldVoroParent = dynamic_cast<VoroUnit*>(this->parent)) {
+                // our old parent is also VoroUnit
+                // remove this from parents' children.
+                oldVoroParent->children.remove(this);
+            }
+        }
+        ofNode::clearParent();
+    }
+    
+    list<VoroUnit *> getChildren() {
+        return children;
     };
     
     void split() {
@@ -103,8 +140,7 @@ public:
         
         for(auto && m : cellMeshes) {
             
-            VoroUnit * sub = new VoroUnit(*this, m);
-            subVoroUnits.push_back(sub);
+            VoroUnit * sub = new VoroUnit(m, *this);
             
         }
         
@@ -123,9 +159,6 @@ public:
         }*/
         
     }
-    
-private:
-    vector<VoroUnit *> subVoroUnits;
 
 };
 
