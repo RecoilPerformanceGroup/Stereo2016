@@ -8,10 +8,10 @@
 	<position1>50, 50</position1>
 <mainParams/>
 	<Calibrate_Planes>0</Calibrate_Planes>
-	<Background_Color>218, 255, 0, 253</Background_Color>
+	<Background_Color>218, 255, 0, 4</Background_Color>
 <world>
 		<camera>
-			<camera_position>0, 250, 1200</camera_position>
+			<camera_position>0, 250, 153.846</camera_position>
 			<eye_separation>6.5</eye_separation>
 			<focus_distance>200</focus_distance>
 			<camera_near_clip>20</camera_near_clip>
@@ -67,13 +67,13 @@
 		<enabled>1</enabled>
 		<rebuild>0</rebuild>
 		<origin>0, 0, 0</origin>
-		<Cells>40</Cells>
-		<Automatic_rotation>0.635568, -0.374427, 0.146189</Automatic_rotation>
+		<Cells>5</Cells>
+		<Automatic_rotation>0.0316535, 1, 0.146189</Automatic_rotation>
 		<rot_speed>0.316326</rot_speed>
 		<Crystal_color>1, 1, 1, 1</Crystal_color>
 		<spotlightPosition>0, 0, 0</spotlightPosition>
-		<scale>5.45918</scale>
-		<scaleCells>0.871577</scaleCells>
+		<scale>1.32653</scale>
+		<scaleCells>0.922546</scaleCells>
 		<Debug_draw>0</Debug_draw>
 	</crystaltest>
 </mainParams>

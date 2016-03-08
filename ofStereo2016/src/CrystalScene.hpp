@@ -42,7 +42,9 @@ public:
     
     int nCells;
     list<VoroUnit *> children;
-
+    
+    vector <ofPlanePrimitive> planes;
+    
     VoroUnit() {
         isSplit = false;
         bDraw = false;
@@ -144,7 +146,7 @@ public:
         return children;
     };
     
-    void split(int _nCells=10) {
+    void split(int _nCells=3) {
         nCells = _nCells;
         
         isSplit = true;
@@ -164,6 +166,8 @@ public:
         /*voro::wall_sphere sph2(0.5, 0.5, 0, min(width, height) );
          con.add_wall(sph2);
          */
+        
+        vector<voro::wall_plane*> walls;
         
         for(ofMeshFace f : mesh.getUniqueFaces()){
             
@@ -200,7 +204,7 @@ public:
             
             float sb, sn, sd;
             
-            sn = -fNormal.dot(fOrigin - f.getVertex(0));
+            sn = -fNormal.dot(fOrigin - f.getVertex(1));
             sd = fNormal.dot(fNormal);
             sb = sn / sd;
             
@@ -208,8 +212,17 @@ public:
             
             float distance = fOrigin.distance(basePointOnPlane);
             
-            voro::wall_plane planeWall(fNormal.x, fNormal.y, fNormal.z, distance);
+            voro::wall_plane * planeWall = new voro::wall_plane(-fNormal.x, -fNormal.y, -fNormal.z, distance);
+            walls.push_back(planeWall);
             con.add_wall(planeWall);
+            
+            ofPlanePrimitive planeToDraw(50, 50, 2, 2 );
+            planeToDraw.setPosition(-fNormal.getScaled(distance));
+            planeToDraw.lookAt(fNormal);
+            //planeToDraw.setParent(*this);
+            
+            planes.push_back(planeToDraw);
+            
         }
         
         for(int i = 0; i < nCells;i++){
@@ -221,6 +234,10 @@ public:
         }
         
         vector<ofVboMesh> cellMeshes = getCellsFromContainer(con, 0);
+        
+        for (auto w : walls){
+            delete(w);
+        }
         
         children.clear();
         
@@ -278,11 +295,33 @@ public:
         ofTranslate(-mesh.getCentroid().x, -mesh.getCentroid().y, -mesh.getCentroid().z);
         */
         
-        if(bDraw && level <= 1) mesh.drawWireframe(); // mesh.drawWireframe(); //
+        ofPushStyle();
         
-        if(level >1 ) mesh.drawFaces();
+        ofSetColor(255,255,0, 127);
         
+        if(bDraw && level <= 1) mesh.drawFaces(); // mesh.drawWireframe(); //
         
+        ofSetColor(0,255,255, 127);
+        
+        if(level >1 ) {
+            mesh.drawFaces();
+            mesh.drawWireframe();
+            for (ofMeshFace face : mesh.getUniqueFaces()){
+                ofDrawSphere(face.getFaceNormal(), 5);
+            }
+            mesh.draw();
+        }
+        
+        ofSetColor(255, 0,255, 127);
+
+        for (auto plane : planes){
+            
+            plane.draw();
+            plane.drawWireframe();
+        }
+
+        ofPopStyle();
+
         //ofBoxPrimitive(width, height, depth).drawWireframe();
         //ofDrawBox();
         //ofPopMatrix();

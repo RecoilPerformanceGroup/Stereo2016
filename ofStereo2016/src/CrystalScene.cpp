@@ -60,7 +60,7 @@ void CrystalScene::draw() {
         //ofRotateY(rotation.y);
         //ofRotateZ(rotation.z);
         
-        mat.begin();
+        //mat.begin();
         //shader.begin();
         
         // a lot of the time you have to pass in variables into the shader.
@@ -107,7 +107,7 @@ void CrystalScene::draw() {
         
         cube->draw();
         
-        mat.end();
+        //mat.end();
         
     } ofPopMatrix();
     
