@@ -122,7 +122,9 @@ void CrystalScene::draw() {
 void CrystalScene::update() {
     if(rebuild) {
         cube->generate();
-                
+        
+        cube->getChildren().front()->split();
+        
         rebuild = false;
     }
     
