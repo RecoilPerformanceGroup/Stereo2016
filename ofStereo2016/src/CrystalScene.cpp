@@ -28,7 +28,7 @@ void CrystalScene::setup() {
     
     //spotlight.setAttenuation(0.61);
     
-    cube = new VoroUnit();
+    cube = new VoroNode();
     cube->setup(200,100,100,numCells);
     
     ofLoadImage(tex, "grain-texture.png");
