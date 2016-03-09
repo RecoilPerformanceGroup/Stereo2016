@@ -49,89 +49,57 @@ void CrystalScene::draw() {
     
     ofPushMatrix(); {
         
-        //ofTranslate(origin);
+
+        // twist example
         
-        //float s = min(ofGetHeight(), ofGetWidth()) * scale;
-        //ofScale(s,s,s);
-        
-        //ofDrawBox(5, 5, 5);
-        
-        //ofRotateX(rotation.x);
-        //ofRotateY(rotation.y);
-        //ofRotateZ(rotation.z);
-        
-        //mat.begin();
-        //shader.begin();
-        
-        // a lot of the time you have to pass in variables into the shader.
-        // in this case we need to pass it the elapsed time for the sine wave animation.
-        //shader.setUniform1f("time", ofGetElapsedTimef()*1.0);
-        
-        //plane.drawWireframe();
-        
-        /*for(auto c : cube->getChildren()) {
-            
-            // TODO:  node based drawing
-            
-        }*/
-        
-        /*for(int i = 0; i < cube->getChildren().size(); i++){
-            ofPushMatrix(); {
-                
-                ofSetColor(255,255,255,255);
-                
-                float explode = ofMap(ofSignedNoise(ofGetElapsedTimef()), -1, 1, 0.4, 1);
-                
-                ofTranslate(cube->getChildren()[i]->mesh.getCentroid().x, cube->getChildren()[i]->mesh.getCentroid().y, cube->getChildren()[i]->mesh.getCentroid().z);
-                
-                ofScale(scaleCells,scaleCells,scaleCells);
-                
-                ofTranslate(-cube->getChildren()[i]->mesh.getCentroid().x, -cube->getChildren()[i]->mesh.getCentroid().y, -cube->getChildren()[i]->mesh.getCentroid().z);
-                
-                //tex.bind();
-                
-                ofSetColor(0);
-                cube->getChildren()[i]->mesh.drawWireframe();
-                
-                ofSetColor(255);
-                cube->getChildren()[i]->mesh.drawFaces();
-                
-                //ofDrawSphere(cube->cellMeshes[i].getCentroid(), 0.005);
-                
-                //tex.unbind();
-                
-            } ofPopMatrix();
-        }*/
-        
-        //shader.end();
-        
-        mat.begin();
-        tex.bind();
-        cube->draw();
-        tex.unbind();
-        mat.end();
-        
+        ofVec3f rotateAround = cube->getPosition();
         
         for(auto c : cube->getChildren()) {
             
             
             c->modMesh = c->mesh;
             
+            //ofMesh m;
+            
+            //m = c->mesh;
+            
+            
             for(int i=0; i<  c->modMesh.getNumVertices(); i++) {
                 
-  
-                
                 ofVec3f v = c->modMesh.getVertex(i);
+                ofVec3f gv = v * c->getGlobalTransformMatrix();
+                ofVec3f vn = v+c->getPosition();//gv;
                 
-                ofDrawSphere(v * c->getGlobalTransformMatrix(), 5);
-
                 
-                c->modMesh.setVertex(i, v);
+                //ofDrawSphere(v * c->getGlobalTransformMatrix(), 5);
+                
+                float rotateAmt = sin(ofGetElapsedTimef() + (gv.y / 100.0)) * 90;
+                
+                vn.rotate(rotateAmt, rotateAround, ofVec3f(0,1,0));
+                
+                //m.setVertex(i, vn);
+                c->modMesh.setVertex(i, vn);
             }
+            
+            /*mat.begin();
+            m.draw();
+            mat.end();*/
         }
         
         
+        mat.begin();
+         tex.bind();
+         cube->draw();
+         tex.unbind();
+         mat.end();
+        
+        
+        
+        
+        
     } ofPopMatrix();
+    
+    
     
     spotlight.disable();
     pointlight.disable();
