@@ -31,7 +31,7 @@ void CrystalScene::setup() {
     cube = new VoroUnit();
     cube->setup(200,100,100,numCells);
     
-    //ofLoadImage(tex, "grain-texture.png");
+    ofLoadImage(tex, "grain-texture.png");
     //grab.setup(1080, 720, true);
 }
 
@@ -105,7 +105,10 @@ void CrystalScene::draw() {
         
         //shader.end();
         
+        
+        tex.bind();
         cube->draw();
+        tex.unbind();
         
         mat.end();
         
@@ -167,7 +170,6 @@ void CrystalScene::update() {
 
 void CrystalScene::drawGui() {
     ofSetColor(255);
-    
 }
 
 
