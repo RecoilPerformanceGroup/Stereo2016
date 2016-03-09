@@ -10,7 +10,7 @@
 
 
 void CrystalScene::setup() {
-
+    
     light.setPointLight();
     light.setAmbientColor(ofColor(10));
     light.setPosition(-2, -2, -2);
@@ -111,6 +111,26 @@ void CrystalScene::draw() {
         tex.unbind();
         mat.end();
         
+        
+        for(auto c : cube->getChildren()) {
+            
+            
+            c->modMesh = c->mesh;
+            
+            for(int i=0; i<  c->modMesh.getNumVertices(); i++) {
+                
+  
+                
+                ofVec3f v = c->modMesh.getVertex(i);
+                
+                ofDrawSphere(v * c->getGlobalTransformMatrix(), 5);
+
+                
+                c->modMesh.setVertex(i, v);
+            }
+        }
+        
+        
     } ofPopMatrix();
     
     spotlight.disable();
@@ -122,6 +142,91 @@ void CrystalScene::draw() {
 }
 
 void CrystalScene::update() {
+    
+    
+    // Vertex displace
+    
+    // sine wave
+    
+    // twist
+    
+    // pull
+    
+    
+    
+    for(auto c : cube->getChildren()) {
+        
+        
+        c->modMesh = c->mesh;
+        
+        for(int i=0; i<  c->modMesh.getNumVertices(); i++) {
+            
+            ofVec3f o = c->modMesh.getVertex(i);
+            
+            ofVec3f oG = c->modMesh.getVertex(i) + c->getPosition();
+            
+            ofVec3f v = c->modMesh.getVertex(i);
+            
+            
+            //
+            // sine curve on local Y
+            //
+            //float displacementHeight = 10.0;
+            //float displacementY = sin(ofGetElapsedTimef() + (v.x / 10.0)) * displacementHeight;
+            
+            //v.y += displacementY;
+            
+            
+            //
+            // sine curve on global Y
+            //
+            
+            /*float displacementHeight = 20.0;
+            float displacementY = sin(ofGetElapsedTimef() + (oG.x / 10.0)) * displacementHeight;
+            
+            v.y += displacementY;*/
+            
+            
+            //
+            // noise x,y,z local
+            /*v.x += ofNoise(o.z * 0.05, o.y * 0.05, ofGetElapsedTimef() * 0.5) * 10;
+            v.y += ofNoise(o.x * 0.05, o.z * 0.05, ofGetElapsedTimef() * 0.5) * 10;
+            v.z += ofNoise(o.y * 0.05, o.x * 0.05, ofGetElapsedTimef() * 0.5) * 10;*/
+            
+            
+            //
+            // noise x,y,z global
+            /*v.x += ofNoise(oG.z * 0.05, oG.y * 0.05, ofGetElapsedTimef() * 0.5) * 10;
+            v.y += ofNoise(oG.x * 0.05, oG.z * 0.05, ofGetElapsedTimef() * 0.5) * 10;
+            v.z += ofNoise(oG.y * 0.05, oG.x * 0.05, ofGetElapsedTimef() * 0.5) * 10;*/
+            
+            
+            // twist
+            
+            float twistAmt = sin(ofGetElapsedTimef() + (v.z / 10.0)) * 20;
+            
+            // get a point given a transform matrix
+            
+            v * c->getGlobalTransformMatrix();
+            
+            
+            c->modMesh.setVertex(i, v);
+        }
+        
+        //for(auto cc : c->getChildren()) {
+            
+            //cc->setScale(scaleCells);
+            
+            
+        //}
+        
+       
+    }
+    
+
+    
+    
+    
     if(rebuild) {
         cube->generate();
         

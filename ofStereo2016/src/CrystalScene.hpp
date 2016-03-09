@@ -13,7 +13,6 @@
 #include "ofxVoro.h"
 #include "ofxGui.h"
 
-
 // provide specific seeds
 //
 
@@ -42,8 +41,8 @@ public:
     bool bDraw;
     
     int level;
-    
     ofVboMesh mesh;
+    ofMesh modMesh;
     
     int nCells;
     list<VoroUnit *> children;
@@ -237,7 +236,6 @@ public:
             
             //planes.push_back(planeToDraw);
             
-            
         }
         
         
@@ -267,7 +265,6 @@ public:
     
     
     // start from a box
-    
     void setup(float _w = 100, float _h = 100, float _d = 100, int _c = 5) {
         width  = _w;
         height = _h;
@@ -290,14 +287,9 @@ public:
         for(auto c : getChildren()) {
             c->update();
         }
-        
     };
     
-    
-    
     /*void customDraw(const ofBaseRenderer * renderer) {
-        
-        
         //renderer->pushMatrix();
         renderer->translate(getPosition().x, getPosition().y, getPosition().z);
         //renderer->scale(0.5, 0.5, 0.5);
@@ -317,14 +309,14 @@ public:
         ofTranslate(-mesh.getCentroid().x, -mesh.getCentroid().y, -mesh.getCentroid().z);
         */
         
-        ofDrawAxis(20);
+        //ofDrawAxis(20);
 
         ofPushStyle();
         
         //ofSetColor(255,255,0, 255);
         
-        if(bDraw) mesh.drawFaces(); // mesh.drawWireframe(); //
-        boundingBox.drawWireframe();
+        if(bDraw) modMesh.drawFaces(); // mesh.drawWireframe(); //
+        //boundingBox.drawWireframe();
         
         //if(bDraw && level <= 1) { mesh.drawFaces(); mesh.drawWireframe(); }
         
@@ -351,8 +343,8 @@ public:
 
 
 
-        ofSetColor(255, 255,255, 127);
-        ofBoxPrimitive(width, height, depth).drawWireframe();
+        //ofSetColor(255, 255,255, 127);
+        //ofBoxPrimitive(width, height, depth).drawWireframe();
         ofPopStyle();
 
         //ofDrawBox();
