@@ -37,12 +37,14 @@ public:
     ofParameter<ofVec3f> stage_size_cm{"Stage Size", ofVec3f{800,500,800}, ofVec3f{600,300,600}, ofVec3f{1000,800,1000}};
     ofParameter<bool> calibrate_planes{"Calibrate Planes", false, false, true};
     ofParameter<ofColor> background_color{"Background Color", ofColor(255,255,255,255),ofColor(0,0,0,0),ofColor(255,255,255,255)};
+    ofParameter<bool> show_model_on_second_screen{"Second Screen Model", false, false, true};
     
     ofParameterGroup mainParams{
         "mainParams",
         stage_size_cm,
         calibrate_planes,
-        background_color
+        background_color,
+        show_model_on_second_screen
     };
     
     ofxPanel panel;

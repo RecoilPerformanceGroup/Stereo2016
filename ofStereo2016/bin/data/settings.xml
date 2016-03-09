@@ -1,5 +1,5 @@
 <mainParams>
-	<Stage_Size>800, 500, 800</Stage_Size>
+	<Stage_Size>832.168, 500, 800</Stage_Size>
 	<subParams>
 		<float01>1</float01>
 		<UnknownName>4.74227e+30</UnknownName>
@@ -8,19 +8,19 @@
 	<position1>50, 50</position1>
 <mainParams/>
 	<Calibrate_Planes>0</Calibrate_Planes>
-	<Background_Color>218, 255, 0, 4</Background_Color>
+	<Background_Color>255, 255, 255, 41</Background_Color>
 <world>
 		<camera>
-			<camera_position>0, 250, 153.846</camera_position>
+			<camera_position>13.9861, 195.804, 1090.91</camera_position>
 			<eye_separation>6.5</eye_separation>
 			<focus_distance>200</focus_distance>
 			<camera_near_clip>20</camera_near_clip>
 		</camera>
-		<pixels_pr__cm>2</pixels_pr__cm>
+		<pixels_pr__cm>2.0559</pixels_pr__cm>
 		<WALL>
 			<UnknownName>1</UnknownName>
 			<position>0, 0, 0</position>
-			<size>800, 500</size>
+			<size>832.168, 500</size>
 			<Left_Quad>
 				<Output_Points>
 					<Top_Left>0.716506, 0.655885, 0</Top_Left>
@@ -41,7 +41,7 @@
 		<FLOOR>
 			<UnknownName>1</UnknownName>
 			<position>0, 0, 0</position>
-			<size>800, 800</size>
+			<size>832.168, 800</size>
 			<Left_Quad>
 				<Output_Points>
 					<Top_Left>0, 0, 0</Top_Left>
@@ -66,14 +66,15 @@
 	<crystaltest>
 		<enabled>1</enabled>
 		<rebuild>0</rebuild>
-		<origin>0, 0, 0</origin>
-		<Cells>5</Cells>
-		<Automatic_rotation>0.0316535, 1, 0.146189</Automatic_rotation>
-		<rot_speed>0.316326</rot_speed>
-		<Crystal_color>1, 1, 1, 1</Crystal_color>
-		<spotlightPosition>0, 0, 0</spotlightPosition>
-		<scale>1.32653</scale>
-		<scaleCells>0.922546</scaleCells>
+		<origin>0.416626, 239.9, -207.83</origin>
+		<Cells>66</Cells>
+		<Automatic_rotation>0.10454, 0.10454, 0.000416636</Automatic_rotation>
+		<rot_speed>0</rot_speed>
+		<Crystal_color>0.34923, 0.713661, 0.677218, 1</Crystal_color>
+		<spotlightPosition>-19.9896, 625.575, 2000</spotlightPosition>
+		<scale>4.94898</scale>
+		<scaleCells>0.999</scaleCells>
 		<Debug_draw>0</Debug_draw>
 	</crystaltest>
+<Second_Screen_Model>1</Second_Screen_Model>
 </mainParams>

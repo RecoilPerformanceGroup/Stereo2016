@@ -340,7 +340,7 @@ namespace ofxStereoscopy {
         void addPlane(shared_ptr<Plane> p);
         shared_ptr<Plane> getPlane(std::string name);
         
-        void drawModel(bool showCameraFrustrums = true);
+        void drawModel(bool showCameraFrustrums = true, bool rightEye = false, bool showOrigin = true);
         void drawPlaneFBO(shared_ptr<Plane> p);
         
         void renderProjectorCalibrations();
@@ -460,12 +460,21 @@ namespace ofxStereoscopy {
             camRight.lookAt(v);
         }
         
-        void drawPlaneModel(){
+        void drawPlaneModel(bool rightEye = false){
+            
+            ofTexture * tEye;
+            
+            if(rightEye){
+                tEye = &textureRight;
+            } else {
+                tEye = &textureLeft;
+            }
+            
             ofPushStyle();
             ofEnableDepthTest();
             ofPlanePrimitive::transformGL();
             ofSetColor(255,255);
-            textureLeft.draw(-width/2, -height/2, width, height);
+            tEye->draw(-width/2, -height/2, width, height);
             ofSetColor(127, 255, 255);
             ofNoFill();
             ofDrawRectangle(-width/2, -height/2, width, height);
