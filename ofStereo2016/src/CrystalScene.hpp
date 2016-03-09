@@ -91,8 +91,8 @@ public:
     
     void calculateBoundingBox() {
       
-        ofVec3f minBounds = mesh.getVertex(0);
-        ofVec3f maxBounds = mesh.getVertex(0);
+        minBounds = mesh.getVertex(0);
+        maxBounds = mesh.getVertex(0);
         
         for(int i=0; i<mesh.getNumVertices(); i++) {
             
