@@ -295,34 +295,35 @@ public:
         ofTranslate(-mesh.getCentroid().x, -mesh.getCentroid().y, -mesh.getCentroid().z);
         */
         
+        ofDrawAxis(20);
+
         ofPushStyle();
         
         ofSetColor(255,255,0, 127);
         
-        if(bDraw && level <= 1) mesh.drawFaces(); // mesh.drawWireframe(); //
+        if(bDraw && level <= 1) { mesh.drawFaces(); mesh.drawWireframe(); }
         
         ofSetColor(0,255,255, 127);
         
         if(level >1 ) {
             mesh.drawFaces();
             mesh.drawWireframe();
-            for (ofMeshFace face : mesh.getUniqueFaces()){
-                ofDrawSphere(face.getFaceNormal(), 5);
-            }
-            mesh.draw();
         }
         
         ofSetColor(255, 0,255, 127);
 
-        for (auto plane : planes){
+/*        for (auto plane : planes){
             
-            plane.draw();
+            plane.drawFaces();
             plane.drawWireframe();
         }
+*/
 
+        ofSetColor(255, 255,255, 127);
+
+        ofBoxPrimitive(width, height, depth).drawWireframe();
         ofPopStyle();
 
-        //ofBoxPrimitive(width, height, depth).drawWireframe();
         //ofDrawBox();
         //ofPopMatrix();
     }
