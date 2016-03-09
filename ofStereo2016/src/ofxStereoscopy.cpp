@@ -188,10 +188,10 @@ namespace ofxStereoscopy {
         }
     }
     
-    void World::drawModel(bool showCameraFrustrums) {
+    void World::drawModel(bool showCameraFrustrums, bool rightEye, bool showOrigin) {
         
         for(std::pair<string, shared_ptr<Plane>> p : planes){
-            p.second->drawPlaneModel();
+            p.second->drawPlaneModel(rightEye);
         }
         
         if(showCameraFrustrums){
@@ -199,11 +199,13 @@ namespace ofxStereoscopy {
                 p.second->drawCamerasModel();
             }
         }
-        ofDisableDepthTest();
-        ofDrawAxis(100);
-        ofDrawBitmapString("+X", 100, 0, 0);
-        ofDrawBitmapString("+Y", 0, 100, 0);
-        ofDrawBitmapString("+Z", 0, 0, 100);
+        if(showOrigin){
+            ofDisableDepthTest();
+            ofDrawAxis(100);
+            ofDrawBitmapString("+X", 100, 0, 0);
+            ofDrawBitmapString("+Y", 0, 100, 0);
+            ofDrawBitmapString("+Z", 0, 0, 100);
+        }
     }
     
 }

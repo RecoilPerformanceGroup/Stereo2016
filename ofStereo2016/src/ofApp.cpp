@@ -51,6 +51,8 @@ void ofApp::setup(){
     
     stage_size_cm.addListener(this, &ofApp::stageResized);
     
+    loadParameters(mainParams);
+    
 }
 
 //--------------------------------------------------------------
@@ -224,21 +226,61 @@ void ofApp::draw(){
     ofDisableDepthTest();
     
     ofPushMatrix();
-    
-    ofScale(ofGetWidth()*0.5, ofGetHeight(), ofGetHeight());
-    
-    for(std::pair<string, shared_ptr<ofxStereoscopy::Plane>> p : world.planes){
-        ofSetColor(255,255);
-        p.second->drawLeft();
+
+    if(show_model_on_second_screen){
+        
+        worldModelCam.setPosition(world.physical_camera_pos_cm.get() - ofVec3f(world.physical_eye_seperation_cm*0.5,0,0));
+        worldModelCam.lookAt(ofVec3f(0,0,0));
+        worldModelCam.setNearClip(20);
+
+        ofPushMatrix();
+        ofPushView();
+        ofViewport(ofRectangle(0.0, 0.0, ofGetWidth()/2, ofGetHeight()));
+
+        worldModelCam.setAspectRatio(ofGetViewportWidth()*2.0/ofGetViewportHeight());
+        worldModelCam.setForceAspectRatio(true);
+
+        worldModelCam.begin();
+        //ofTranslate(0,0,-stage_size_cm.get().z);
+        //ofScale(2.0, 2.0, 2.0);
+        world.drawModel(false, false, false);
+        worldModelCam.end();
+        ofPopView();
+        ofPopMatrix();
+
+        worldModelCam.setPosition(world.physical_camera_pos_cm.get() + ofVec3f(world.physical_eye_seperation_cm*0.5,0,0));
+        worldModelCam.lookAt(ofVec3f(0,0,0));
+        worldModelCam.setNearClip(20);
+        
+        ofPushMatrix();
+        ofPushView();
+        ofViewport(ofRectangle(ofGetWidth()/2, 0.0, ofGetWidth()/2, ofGetHeight()));
+        worldModelCam.begin();
+        //ofTranslate(0,0,-stage_size_cm.get().z);
+        //ofScale(2.0, 2.0, 2.0);
+        world.drawModel(false, true, false);
+        worldModelCam.end();
+        ofPopView();
+        ofPopMatrix();
+        worldModelCam.setForceAspectRatio(false);
+        
+    } else {
+        
+        ofScale(ofGetWidth()*0.5, ofGetHeight(), ofGetHeight());
+        
+        for(std::pair<string, shared_ptr<ofxStereoscopy::Plane>> p : world.planes){
+            ofSetColor(255,255);
+            p.second->drawLeft();
+        }
+        
+        ofTranslate(1.0, 0);
+        
+        for(std::pair<string, shared_ptr<ofxStereoscopy::Plane>> p : world.planes){
+            ofSetColor(255,255);
+            p.second->drawRight();
+        }
+        
     }
-    
-    ofTranslate(1.0, 0);
-    
-    for(std::pair<string, shared_ptr<ofxStereoscopy::Plane>> p : world.planes){
-        ofSetColor(255,255);
-        p.second->drawRight();
-    }
-    
     ofPopMatrix();
 }
 
@@ -365,6 +407,8 @@ void ofApp::setupGui(shared_ptr<ofAppBaseWindow> gW,shared_ptr<ofAppBaseWindow> 
     
  
     panel.setup(mainParams);
+    panel.setUseTTF(true);
+    panel.setPosition(gW->getWidth()-panel.getWidth(), 0);
 
     
 }
