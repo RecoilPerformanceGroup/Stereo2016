@@ -288,7 +288,7 @@ public:
                             -height/2,height/2,
                             -depth/2,depth/2,
                             1,1,1,
-                            true,false,true, // set true to flow beyond box
+                            true,true,true, // set true to flow beyond box
                             8);
         
         for(int i = 0; i < nCells;i++){
