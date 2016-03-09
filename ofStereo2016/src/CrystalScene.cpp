@@ -105,12 +105,11 @@ void CrystalScene::draw() {
         
         //shader.end();
         
-        
+        mat.begin();
         tex.bind();
         cube->draw();
         tex.unbind();
-        
-        //mat.end();
+        mat.end();
         
     } ofPopMatrix();
     

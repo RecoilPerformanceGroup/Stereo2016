@@ -33,6 +33,11 @@ public:
     float height;
     float depth;
     
+    ofVec3f minBounds;
+    ofVec3f maxBounds;
+    
+    ofBoxPrimitive boundingBox;
+    
     bool isSplit;
     bool bDraw;
     
@@ -55,6 +60,8 @@ public:
         isSplit = false;
         mesh = _mesh;
         level = 0;
+        
+        calculateBoundingBox();
     };
     
     VoroUnit(ofVboMesh _mesh, VoroUnit & parent) {
@@ -69,21 +76,26 @@ public:
         mesh = _mesh;
         setPosition(mesh.getCentroid());
         
-        //ofBoxPrimitive bounds;
-        
         for(int i=0; i<_mesh.getNumVertices(); i++) {
             mesh.setVertex(i,  _mesh.getVertex(i)-_mesh.getCentroid());
         }
         
         mesh.setupIndicesAuto();
         
+        calculateBoundingBox();
         
-        ofBoxPrimitive boundingBox;
+        setParent(parent);
+        
+    };
+    
+    
+    void calculateBoundingBox() {
+      
         ofVec3f minBounds = mesh.getVertex(0);
         ofVec3f maxBounds = mesh.getVertex(0);
         
-        for(int i=0; i<_mesh.getNumVertices(); i++) {
-        
+        for(int i=0; i<mesh.getNumVertices(); i++) {
+            
             minBounds.x = min(mesh.getVertex(i).x, minBounds.x);
             minBounds.y = min(mesh.getVertex(i).y, minBounds.y);
             minBounds.z = min(mesh.getVertex(i).z, minBounds.z);
@@ -91,16 +103,18 @@ public:
             maxBounds.x = max(mesh.getVertex(i).x, maxBounds.x);
             maxBounds.y = max(mesh.getVertex(i).y, maxBounds.y);
             maxBounds.z = max(mesh.getVertex(i).z, maxBounds.z);
-        
         }
         
-        width = abs(maxBounds.x - minBounds.x);
-        height = abs(maxBounds.y - minBounds.y);
-        depth = abs(maxBounds.z - minBounds.z);
+        
+        float width = abs(maxBounds.x - minBounds.x);
+        float height = abs(maxBounds.y - minBounds.y);
+        float depth = abs(maxBounds.z - minBounds.z);
+        
+        boundingBox.set(width, height, depth);
+        //boundingBox.setParent(*this);
         
         
-        setParent(parent);
-        
+        boundingBox.setPosition(maxBounds.getMiddle(minBounds));
     };
     
     ~VoroUnit() {
@@ -152,13 +166,13 @@ public:
         isSplit = true;
         bDraw = false;
         
-        voro::container con(-width/2,width/2,
-                            -height/2,height/2,
-                            -depth/2,depth/2,
+        
+        voro::container con(minBounds.x,maxBounds.x,
+                            minBounds.y,maxBounds.y,
+                            minBounds.z,maxBounds.z,
                             1,1,1,
                             false,false,false, // set true to flow beyond box
                             8);
-        
         
         //voro::wall_sphere sph(0, 0, 0, min(width, height) );
         //con.add_wall(sph);
@@ -216,19 +230,21 @@ public:
             walls.push_back(planeWall);
             con.add_wall(planeWall);
             
-            ofPlanePrimitive planeToDraw(50, 50, 2, 2 );
+            /*ofPlanePrimitive planeToDraw(50, 50, 2, 2 );
             planeToDraw.setPosition(-fNormal.getScaled(distance));
-            planeToDraw.lookAt(fNormal);
+            planeToDraw.lookAt(fNormal);*/
             //planeToDraw.setParent(*this);
             
-            planes.push_back(planeToDraw);
+            //planes.push_back(planeToDraw);
+            
             
         }
         
+        
         for(int i = 0; i < nCells;i++){
-            ofPoint newCell = ofPoint(ofRandom(-width/2,width/2),
-                                      ofRandom(-height/2,height/2),
-                                      ofRandom(-depth/2,depth/2));
+            ofPoint newCell = ofPoint(ofRandom(minBounds.x,maxBounds.x),
+                                      ofRandom(minBounds.y,maxBounds.y),
+                                      ofRandom(minBounds.z,maxBounds.z));
             
             addCellSeed(con, newCell, i, true);
         }
@@ -251,13 +267,19 @@ public:
     
     
     // start from a box
+    
     void setup(float _w = 100, float _h = 100, float _d = 100, int _c = 5) {
         width  = _w;
         height = _h;
         depth  = _d;
         nCells = _c;
         
+        boundingBox.set(width, height, depth);
+        
+        // TODO: use split instead of generate
+        // rename this method something like setupFromBoundingBox ...
         generate();
+        
     };
     
     void update() {
@@ -297,11 +319,13 @@ public:
         
         ofPushStyle();
         
-        ofSetColor(255,255,0, 127);
+        //ofSetColor(255,255,0, 255);
         
-        if(bDraw && level <= 1) mesh.drawFaces(); // mesh.drawWireframe(); //
+        if(bDraw) mesh.drawFaces(); // mesh.drawWireframe(); //
         
-        ofSetColor(0,255,255, 127);
+        boundingBox.drawWireframe();
+        
+        /*ofSetColor(0,255,255, 127);
         
         if(level >1 ) {
             mesh.drawFaces();
@@ -310,15 +334,15 @@ public:
                 ofDrawSphere(face.getFaceNormal(), 5);
             }
             mesh.draw();
-        }
+        }*/
         
-        ofSetColor(255, 0,255, 127);
+        //ofSetColor(255, 0,255, 127);
 
-        for (auto plane : planes){
+        /*for (auto plane : planes){
             
             plane.draw();
             plane.drawWireframe();
-        }
+        }*/
 
         ofPopStyle();
 
