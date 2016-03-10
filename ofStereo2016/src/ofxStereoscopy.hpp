@@ -340,7 +340,7 @@ namespace ofxStereoscopy {
         void addPlane(shared_ptr<Plane> p);
         shared_ptr<Plane> getPlane(std::string name);
         
-        void drawModel(bool showCameraFrustrums = true, bool rightEye = false, bool showOrigin = true);
+        void drawModel(bool showCameraFrustrums = true, bool rightEye = false, bool showOrigin = true, bool showPlaneOutlines = true);
         void drawPlaneFBO(shared_ptr<Plane> p);
         
         void renderProjectorCalibrations();
@@ -460,7 +460,7 @@ namespace ofxStereoscopy {
             camRight.lookAt(v);
         }
         
-        void drawPlaneModel(bool rightEye = false){
+        void drawPlaneModel(bool rightEye = false, bool showPlaneOutlines = true){
             
             ofTexture * tEye;
             
@@ -475,12 +475,14 @@ namespace ofxStereoscopy {
             ofPlanePrimitive::transformGL();
             ofSetColor(255,255);
             tEye->draw(-width/2, -height/2, width, height);
-            ofSetColor(127, 255, 255);
-            ofNoFill();
-            ofDrawRectangle(-width/2, -height/2, width, height);
-            ofFill();
-            ofDisableDepthTest();
-            world->font.drawStringAsShapes(params.getName(), (-width/2)+15, (height/2)-world->font.getLineHeight());
+            if(showPlaneOutlines){
+                ofSetColor(127, 255, 255);
+                ofNoFill();
+                ofDrawRectangle(-width/2, -height/2, width, height);
+                ofFill();
+                ofDisableDepthTest();
+                world->font.drawStringAsShapes(params.getName(), (-width/2)+15, (height/2)-world->font.getLineHeight());
+            }
             ofPlanePrimitive::restoreTransformGL();
             ofPopStyle();
         }
@@ -878,7 +880,6 @@ namespace ofxStereoscopy {
         ofParameterGroup & getParameters() {
             return params;
         }
-        
         
         virtual void drawGui() {};
         virtual void setupGui() {};

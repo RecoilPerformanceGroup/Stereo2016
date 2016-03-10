@@ -188,10 +188,10 @@ namespace ofxStereoscopy {
         }
     }
     
-    void World::drawModel(bool showCameraFrustrums, bool rightEye, bool showOrigin) {
+    void World::drawModel(bool showCameraFrustrums, bool rightEye, bool showOrigin, bool showPlaneOutlines) {
         
         for(std::pair<string, shared_ptr<Plane>> p : planes){
-            p.second->drawPlaneModel(rightEye);
+            p.second->drawPlaneModel(rightEye, showPlaneOutlines);
         }
         
         if(showCameraFrustrums){

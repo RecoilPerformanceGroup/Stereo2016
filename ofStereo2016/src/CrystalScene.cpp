@@ -53,7 +53,7 @@ void CrystalScene::draw() {
     
     ofPushMatrix(); {
         
-
+        
         // twist example
         
         ofVec3f rotateAround = cube->getPosition();
@@ -86,16 +86,16 @@ void CrystalScene::draw() {
             //}
             
             /*mat.begin();
-            m.draw();
-            mat.end();*/
+             m.draw();
+             mat.end();*/
         }
         
         
         mat.begin();
-         tex.bind();
-         cube->draw();
-         tex.unbind();
-         mat.end();
+        tex.bind();
+        cube->draw();
+        tex.unbind();
+        mat.end();
         
         
         
@@ -149,23 +149,23 @@ void CrystalScene::update() {
             //
             
             /*float displacementHeight = 20.0;
-            float displacementY = sin(ofGetElapsedTimef() + (oG.x / 10.0)) * displacementHeight;
-            
-            v.y += displacementY;*/
+             float displacementY = sin(ofGetElapsedTimef() + (oG.x / 10.0)) * displacementHeight;
+             
+             v.y += displacementY;*/
             
             
             //
             // noise x,y,z local
             /*v.x += ofNoise(o.z * 0.05, o.y * 0.05, ofGetElapsedTimef() * 0.5) * 10;
-            v.y += ofNoise(o.x * 0.05, o.z * 0.05, ofGetElapsedTimef() * 0.5) * 10;
-            v.z += ofNoise(o.y * 0.05, o.x * 0.05, ofGetElapsedTimef() * 0.5) * 10;*/
+             v.y += ofNoise(o.x * 0.05, o.z * 0.05, ofGetElapsedTimef() * 0.5) * 10;
+             v.z += ofNoise(o.y * 0.05, o.x * 0.05, ofGetElapsedTimef() * 0.5) * 10;*/
             
             
             //
             // noise x,y,z global
             /*v.x += ofNoise(oG.z * 0.05, oG.y * 0.05, ofGetElapsedTimef() * 0.5) * 10;
-            v.y += ofNoise(oG.x * 0.05, oG.z * 0.05, ofGetElapsedTimef() * 0.5) * 10;
-            v.z += ofNoise(oG.y * 0.05, oG.x * 0.05, ofGetElapsedTimef() * 0.5) * 10;*/
+             v.y += ofNoise(oG.x * 0.05, oG.z * 0.05, ofGetElapsedTimef() * 0.5) * 10;
+             v.z += ofNoise(oG.y * 0.05, oG.x * 0.05, ofGetElapsedTimef() * 0.5) * 10;*/
             
             
             // twist
@@ -181,16 +181,16 @@ void CrystalScene::update() {
         }
         
         //for(auto cc : c->getChildren()) {
-            
-            //cc->setScale(scaleCells);
-            
-            
+        
+        //cc->setScale(scaleCells);
+        
+        
         //}
         
-       
+        
     }
     
-
+    
     
     
     

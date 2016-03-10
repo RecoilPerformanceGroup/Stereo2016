@@ -141,7 +141,7 @@ public:
         return children;
     };
     
-    void split(int _nCells=3) {
+    void split(int _nCells=3, bool overFlowX = false, bool overFlowY = false, bool overFlowZ = false) {
         nCells = _nCells;
         
         isSplit = true;
@@ -152,47 +152,12 @@ public:
                             minBounds.y,maxBounds.y,
                             minBounds.z,maxBounds.z,
                             1,1,1,
-                            false,false,false, // set true to flow beyond box
+                            overFlowX,overFlowY,overFlowZ, // set true to flow beyond box
                             8);
-        
-        //voro::wall_sphere sph(0, 0, 0, min(width, height) );
-        //con.add_wall(sph);
-        
-        /*voro::wall_sphere sph2(0.5, 0.5, 0, min(width, height) );
-         con.add_wall(sph2);
-         */
         
         vector<voro::wall_plane*> wallsToDeleteAfterGettingCells;
         
         for(ofMeshFace f : mesh.getUniqueFaces()){
-            
-            /** Constructs a plane wall object.
-             * \param[in] (xc_,yc_,zc_) a normal vector to the plane.
-             * \param[in] ac_ a displacement along the normal vector.
-             * \param[in] w_id_ an ID number to associate with the wall for
-             *		      neighbor tracking. */
-            
-            /*
-             // dist_Point_to_Plane(): get distance (and perp base) from a point to a plane
-             //    Input:  P  = a 3D point
-             //            PL = a  plane with point V0 and normal n
-             //    Output: *B = base point on PL of perpendicular from P
-             //    Return: the distance from P to the plane PL
-             float
-             dist_Point_to_Plane( Point P, Plane PL, Point* B)
-             {
-             float    sb, sn, sd;
-             
-             sn = -dot( PL.n, (P - PL.V0));
-             sd = dot(PL.n, PL.n);
-             sb = sn / sd;
-             
-             *B = P + sb * PL.n;
-             return d(P, *B);
-             }
-             */
-            
-            // UNTESTED!
             
             ofVec3f fNormal = f.getFaceNormal();
             ofVec3f fOrigin = ofVec3f(0,0,0);
@@ -250,10 +215,15 @@ public:
         nCells = _c;
         
         boundingBox.set(width, height, depth);
+        minBounds = ofVec3f(-width/2.0, -height/2.0, -depth/2.0);
+        maxBounds = ofVec3f(width/2.0, height/2.0, depth/2.0);
+
         
         // TODO: use split instead of generate
         // rename this method something like setupFromBoundingBox ...
-        generate();
+        // generate();
+        
+        split(nCells);
         
     };
     
