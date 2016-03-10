@@ -36,7 +36,7 @@ int main( ){
     settings.height = displayHeight;
     settings.setPosition(ofVec2f(displayBounds.origin.x,displayBounds.origin.y));
     settings.resizable = true;
-    settings.setGLVersion(3, 2);
+    settings.setGLVersion(4, 1);
     //settings.multiMonitorFullScreen = true;
     settings.decorated = false;
     shared_ptr<ofAppBaseWindow> mainWindow = ofCreateWindow(settings);
@@ -53,7 +53,7 @@ int main( ){
     settings.setPosition(ofVec2f(0,0));
     settings.resizable = true;
     settings.shareContextWith = mainWindow;
-    settings.setGLVersion(3, 2);
+    settings.setGLVersion(4, 1);
     shared_ptr<ofAppBaseWindow> guiWindow = ofCreateWindow(settings);
     //guiWindow->setVerticalSync(false);
     
