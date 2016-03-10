@@ -15,15 +15,11 @@
 
 #include "dispatch/dispatch.h"
 
-
-
-
 // Vertex displacement using grand central dispatch
 class VertexDisplacer {
 public:
     
     dispatch_queue_t vertexQueue;
-    
     
     void setup() {
         vertexQueue = dispatch_queue_create("stereo.voroNode.vertexQueue", NULL);
@@ -53,8 +49,18 @@ public:
             }
             
         });
-        
     }
+};
+
+
+class OrganicMaterial : public ofMaterial {
+public:
+    
+    // TODO overwirte the shaders with vertex displace methods and more set uniforms to use them
+    
+    
+    
+    //
     
 };
 
@@ -62,7 +68,6 @@ public:
 class CrystalScene : public ofxStereoscopy::Scene {
     
 public:
-    
     
     VertexDisplacer vertexDisplacer;
     

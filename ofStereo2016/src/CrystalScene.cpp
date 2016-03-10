@@ -115,15 +115,10 @@ void CrystalScene::draw() {
 
 void CrystalScene::update() {
     
-    
     // Vertex displace
-    
     // sine wave
-    
     // twist
-    
     // pull
-    
     
     for(auto c : cube->getChildren()) {
         
