@@ -13,6 +13,8 @@
 #include "VoroNode.hpp"
 #include "ofxGui.h"
 
+#include "dispatch/dispatch.h"
+
 
 class CrystalScene : public ofxStereoscopy::Scene {
     
@@ -33,7 +35,6 @@ public:
     ofParameter<float> scale {"scale", 0, 0, 10};
     ofParameter<float> scaleCells {"scaleCells", 0,0,0.999};
     ofParameter<bool> debugDraw {"Debug draw", false};
-    
     ofParameter<bool> rebuild {"rebuild", false};
     
     ofParameterGroup params {"",

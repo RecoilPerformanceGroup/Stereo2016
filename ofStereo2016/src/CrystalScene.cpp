@@ -10,7 +10,7 @@
 
 
 void CrystalScene::setup() {
-
+    
     light.setPointLight();
     light.setAmbientColor(ofColor(10));
     light.setPosition(-2, -2, -2);
@@ -49,69 +49,57 @@ void CrystalScene::draw() {
     
     ofPushMatrix(); {
         
-        //ofTranslate(origin);
+
+        // twist example
         
-        //float s = min(ofGetHeight(), ofGetWidth()) * scale;
-        //ofScale(s,s,s);
+        ofVec3f rotateAround = cube->getPosition();
         
-        //ofDrawBox(5, 5, 5);
-        
-        //ofRotateX(rotation.x);
-        //ofRotateY(rotation.y);
-        //ofRotateZ(rotation.z);
-        
-        //mat.begin();
-        //shader.begin();
-        
-        // a lot of the time you have to pass in variables into the shader.
-        // in this case we need to pass it the elapsed time for the sine wave animation.
-        //shader.setUniform1f("time", ofGetElapsedTimef()*1.0);
-        
-        //plane.drawWireframe();
-        
-        /*for(auto c : cube->getChildren()) {
+        for(auto c : cube->getChildren()) {
             
-            // TODO:  node based drawing
             
-        }*/
+            c->modMesh = c->mesh;
+            
+            //ofMesh m;
+            
+            //m = c->mesh;
+            
+            
+            for(int i=0; i<  c->modMesh.getNumVertices(); i++) {
+                
+                ofVec3f v = c->modMesh.getVertex(i);
+                ofVec3f gv = v * c->getGlobalTransformMatrix();
+                ofVec3f vn = v+c->getPosition();//gv;
+                
+                
+                //ofDrawSphere(v * c->getGlobalTransformMatrix(), 5);
+                
+                float rotateAmt = sin(ofGetElapsedTimef() + (gv.y / 100.0)) * 90;
+                
+                vn.rotate(rotateAmt, rotateAround, ofVec3f(0,1,0));
+                
+                //m.setVertex(i, vn);
+                c->modMesh.setVertex(i, vn);
+            }
+            
+            /*mat.begin();
+            m.draw();
+            mat.end();*/
+        }
         
-        /*for(int i = 0; i < cube->getChildren().size(); i++){
-            ofPushMatrix(); {
-                
-                ofSetColor(255,255,255,255);
-                
-                float explode = ofMap(ofSignedNoise(ofGetElapsedTimef()), -1, 1, 0.4, 1);
-                
-                ofTranslate(cube->getChildren()[i]->mesh.getCentroid().x, cube->getChildren()[i]->mesh.getCentroid().y, cube->getChildren()[i]->mesh.getCentroid().z);
-                
-                ofScale(scaleCells,scaleCells,scaleCells);
-                
-                ofTranslate(-cube->getChildren()[i]->mesh.getCentroid().x, -cube->getChildren()[i]->mesh.getCentroid().y, -cube->getChildren()[i]->mesh.getCentroid().z);
-                
-                //tex.bind();
-                
-                ofSetColor(0);
-                cube->getChildren()[i]->mesh.drawWireframe();
-                
-                ofSetColor(255);
-                cube->getChildren()[i]->mesh.drawFaces();
-                
-                //ofDrawSphere(cube->cellMeshes[i].getCentroid(), 0.005);
-                
-                //tex.unbind();
-                
-            } ofPopMatrix();
-        }*/
-        
-        //shader.end();
         
         mat.begin();
-        tex.bind();
-        cube->draw();
-        tex.unbind();
-        mat.end();
+         tex.bind();
+         cube->draw();
+         tex.unbind();
+         mat.end();
+        
+        
+        
+        
         
     } ofPopMatrix();
+    
+    
     
     spotlight.disable();
     pointlight.disable();
@@ -122,6 +110,91 @@ void CrystalScene::draw() {
 }
 
 void CrystalScene::update() {
+    
+    
+    // Vertex displace
+    
+    // sine wave
+    
+    // twist
+    
+    // pull
+    
+    
+    
+    for(auto c : cube->getChildren()) {
+        
+        
+        c->modMesh = c->mesh;
+        
+        for(int i=0; i<  c->modMesh.getNumVertices(); i++) {
+            
+            ofVec3f o = c->modMesh.getVertex(i);
+            
+            ofVec3f oG = c->modMesh.getVertex(i) + c->getPosition();
+            
+            ofVec3f v = c->modMesh.getVertex(i);
+            
+            
+            //
+            // sine curve on local Y
+            //
+            //float displacementHeight = 10.0;
+            //float displacementY = sin(ofGetElapsedTimef() + (v.x / 10.0)) * displacementHeight;
+            
+            //v.y += displacementY;
+            
+            
+            //
+            // sine curve on global Y
+            //
+            
+            /*float displacementHeight = 20.0;
+            float displacementY = sin(ofGetElapsedTimef() + (oG.x / 10.0)) * displacementHeight;
+            
+            v.y += displacementY;*/
+            
+            
+            //
+            // noise x,y,z local
+            /*v.x += ofNoise(o.z * 0.05, o.y * 0.05, ofGetElapsedTimef() * 0.5) * 10;
+            v.y += ofNoise(o.x * 0.05, o.z * 0.05, ofGetElapsedTimef() * 0.5) * 10;
+            v.z += ofNoise(o.y * 0.05, o.x * 0.05, ofGetElapsedTimef() * 0.5) * 10;*/
+            
+            
+            //
+            // noise x,y,z global
+            /*v.x += ofNoise(oG.z * 0.05, oG.y * 0.05, ofGetElapsedTimef() * 0.5) * 10;
+            v.y += ofNoise(oG.x * 0.05, oG.z * 0.05, ofGetElapsedTimef() * 0.5) * 10;
+            v.z += ofNoise(oG.y * 0.05, oG.x * 0.05, ofGetElapsedTimef() * 0.5) * 10;*/
+            
+            
+            // twist
+            
+            float twistAmt = sin(ofGetElapsedTimef() + (v.z / 10.0)) * 20;
+            
+            // get a point given a transform matrix
+            
+            v * c->getGlobalTransformMatrix();
+            
+            
+            c->modMesh.setVertex(i, v);
+        }
+        
+        //for(auto cc : c->getChildren()) {
+            
+            //cc->setScale(scaleCells);
+            
+            
+        //}
+        
+       
+    }
+    
+
+    
+    
+    
     if(rebuild) {
         cube->generate();
         
