@@ -18,7 +18,7 @@
 
 
 
-
+// Vertex displacement using grand central dispatch
 class VertexDisplacer {
 public:
     
@@ -35,7 +35,7 @@ public:
         
         float t = ofGetElapsedTimef();
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        dispatch_async(vertexQueue, ^{
             
             for(int i=0; i<m.getNumVertices(); i++) {
                 
