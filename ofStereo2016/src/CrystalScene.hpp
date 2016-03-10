@@ -16,9 +16,55 @@
 #include "dispatch/dispatch.h"
 
 
+
+
+
+class VertexDisplacer {
+public:
+    
+    dispatch_queue_t vertexQueue;
+    
+    
+    void setup() {
+        vertexQueue = dispatch_queue_create("stereo.voroNode.vertexQueue", NULL);
+    }
+    
+    void twistModel(ofVboMesh & m, const ofNode * node) {
+    
+        // give it to dispatch
+        
+        float t = ofGetElapsedTimef();
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            
+            for(int i=0; i<m.getNumVertices(); i++) {
+                
+                ofVec3f o = m.getVertex(i);
+                
+                ofVec3f oG = m.getVertex(i) + node->getPosition();
+                
+                ofVec3f v = m.getVertex(i);
+                
+                v.x += ofNoise(oG.z * 0.05, oG.y * 0.05, t * 0.5) * 10;
+                v.y += ofNoise(oG.x * 0.05, oG.z * 0.05, t * 0.5) * 10;
+                v.z += ofNoise(oG.y * 0.05, oG.x * 0.05, t * 0.5) * 10;
+                
+                m.setVertex(i, v);
+            }
+            
+        });
+        
+    }
+    
+};
+
+
 class CrystalScene : public ofxStereoscopy::Scene {
     
 public:
+    
+    
+    VertexDisplacer vertexDisplacer;
     
     ofParameter<int> numCells {"Cells", 40, 0, 1000};
     ofParameter<ofVec3f> autoRotation {"Automatic rotation", ofVec3f(0,0,0),

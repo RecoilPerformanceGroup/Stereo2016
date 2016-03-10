@@ -11,6 +11,10 @@
 
 void CrystalScene::setup() {
     
+    
+    vertexDisplacer.setup();
+    
+    
     light.setPointLight();
     light.setAmbientColor(ofColor(10));
     light.setPosition(-2, -2, -2);
@@ -57,29 +61,29 @@ void CrystalScene::draw() {
         for(auto c : cube->getChildren()) {
             
             
-            c->modMesh = c->mesh;
+            //c->modMesh = c->mesh;
             
             //ofMesh m;
             
             //m = c->mesh;
             
             
-            for(int i=0; i<  c->modMesh.getNumVertices(); i++) {
+            //for(int i=0; i<  c->modMesh.getNumVertices(); i++) {
                 
-                ofVec3f v = c->modMesh.getVertex(i);
-                ofVec3f gv = v * c->getGlobalTransformMatrix();
-                ofVec3f vn = v+c->getPosition();//gv;
+                //ofVec3f v = c->modMesh.getVertex(i);
+                //ofVec3f gv = v * c->getGlobalTransformMatrix();
+                //ofVec3f vn = v+c->getPosition();//gv;
                 
                 
                 //ofDrawSphere(v * c->getGlobalTransformMatrix(), 5);
                 
-                float rotateAmt = sin(ofGetElapsedTimef() + (gv.y / 100.0)) * 90;
+                //float rotateAmt = sin(ofGetElapsedTimef() + (gv.y / 100.0)) * 90;
                 
-                vn.rotate(rotateAmt, rotateAround, ofVec3f(0,1,0));
+                //vn.rotate(rotateAmt, rotateAround, ofVec3f(0,1,0));
                 
                 //m.setVertex(i, vn);
-                c->modMesh.setVertex(i, vn);
-            }
+                //c->modMesh.setVertex(i, vn);
+            //}
             
             /*mat.begin();
             m.draw();
@@ -121,19 +125,19 @@ void CrystalScene::update() {
     // pull
     
     
-    
     for(auto c : cube->getChildren()) {
         
         
         c->modMesh = c->mesh;
+        vertexDisplacer.twistModel(c->modMesh, c);
         
-        for(int i=0; i<  c->modMesh.getNumVertices(); i++) {
+        for(int i=0; i<c->modMesh.getNumVertices(); i++) {
             
-            ofVec3f o = c->modMesh.getVertex(i);
+         //   ofVec3f o = c->modMesh.getVertex(i);
             
-            ofVec3f oG = c->modMesh.getVertex(i) + c->getPosition();
+         //   ofVec3f oG = c->modMesh.getVertex(i) + c->getPosition();
             
-            ofVec3f v = c->modMesh.getVertex(i);
+         //   ofVec3f v = c->modMesh.getVertex(i);
             
             
             //
@@ -171,14 +175,14 @@ void CrystalScene::update() {
             
             // twist
             
-            float twistAmt = sin(ofGetElapsedTimef() + (v.z / 10.0)) * 20;
+            //float twistAmt = sin(ofGetElapsedTimef() + (v.z / 10.0)) * 20;
             
             // get a point given a transform matrix
             
-            v * c->getGlobalTransformMatrix();
+            //v * c->getGlobalTransformMatrix();
             
             
-            c->modMesh.setVertex(i, v);
+           // c->modMesh.setVertex(i, v);
         }
         
         //for(auto cc : c->getChildren()) {
