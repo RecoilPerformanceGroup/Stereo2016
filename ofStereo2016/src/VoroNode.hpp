@@ -10,6 +10,7 @@
 #define VoroNode_hpp
 #include "ofMain.h"
 #include "ofxVoro.h"
+#include "dispatch/dispatch.h"
 
 class VoroNode : public ofNode {
 public:
@@ -73,6 +74,120 @@ public:
         
     };
     
+    void getCellsFromContainerParallel(voro::container &_con, float _wallsThikness, vector<ofVboMesh>& cells, bool bWireframe){
+        
+        cells.clear();
+        
+        voro::c_loop_all vl( _con );
+        if( vl.start() ){
+            
+            do {
+//                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                    voro::voronoicell c;
+                if( !_con.compute_cell(c, vl) ) {
+                    return;
+                } else {
+                        double *pp = _con.p[vl.ijk] + _con.ps * vl.q;
+                        ofVboMesh cellMesh;
+                        getCellMesh(c, ofPoint(pp[0],pp[1],pp[2])*(float)(1.0+_wallsThikness), cellMesh, bWireframe);
+                        cells.push_back( cellMesh );
+                }
+ 
+//                });
+                
+            } while( vl.inc() );
+        }
+    }
+    
+    void getCellMesh(voro::voronoicell &_c, ofPoint _pos, ofVboMesh& _mesh, bool bWireframe){
+        if( _c.p ) {
+            
+            if( !bWireframe ) {
+                //  Extract Verteces
+                //
+                ofVboMesh mesh;
+                mesh.setMode(OF_PRIMITIVE_TRIANGLES );
+                mesh.addVertices(getCellVerteces(_c, _pos));
+                
+                //  Add triangles using Indeces
+                //
+                int k,l,m,n;
+                for(int i = 1; i < _c.p; i++){
+                    for(int j = 0; j < _c.nu[i]; j++) {
+                        
+                        k = _c.ed[i][j];
+                        
+                        if( k >= 0 ) {
+                            _c.ed[i][j]=-1-k;
+                            l = _c.cycle_up( _c.ed[i][ _c.nu[i]+j], k);
+                            m = _c.ed[k][l];
+                            _c.ed[k][l]=-1-m;
+                            
+                            while(m!=i) {
+                                n = _c.cycle_up( _c.ed[k][ _c.nu[k]+l],m);
+                                mesh.addTriangle(i, k, m);
+                                
+                                k=m;
+                                l=n;
+                                m=_c.ed[k][l];
+                                _c.ed[k][l]=-1-m;
+                            }
+                        }
+                    }
+                }
+                
+                //  Calculate Normals
+                //
+                _mesh.setMode(OF_PRIMITIVE_TRIANGLES);
+                vector<ofMeshFace> faces = mesh.getUniqueFaces();
+                for (int i = 0; i < faces.size(); i++) {
+                    ofMeshFace face = faces[i];
+                    ofPoint a = face.getVertex(0);
+                    ofPoint b = face.getVertex(1);
+                    ofPoint c = face.getVertex(2);
+                    
+                    ofPoint normal = ((b - a).cross(c - a)).normalize() * -1.;
+                    
+                    
+                    _mesh.addVertex(a);
+                    _mesh.addNormal(normal);
+                    
+                    _mesh.addVertex(b);
+                    _mesh.addNormal(normal);
+                    _mesh.addVertex(c);
+                    _mesh.addNormal(normal);
+                    
+                    // add texture coordinates
+                    if( i % 2 == 0) {
+                        _mesh.addTexCoord(ofVec2f(0.0, 0.0));
+                        _mesh.addTexCoord(ofVec2f(0.0, 1.0));
+                        _mesh.addTexCoord(ofVec2f(1.0, 0.0));
+                    } else {
+                        _mesh.addTexCoord(ofVec2f(1.0, 0.0));
+                        _mesh.addTexCoord(ofVec2f(0.0, 1.0));
+                        _mesh.addTexCoord(ofVec2f(1.0, 1.0));
+                    }
+                    
+                    
+                }
+            } else { // wireframe
+                _mesh.setMode(OF_PRIMITIVE_LINES);
+                _mesh.addVertices(getCellVerteces(_c, _pos));
+                for(int i = 1; i < _c.p; i++){
+                    for(int j = 0; j < _c.nu[i]; j++) {
+                        
+                        int k = _c.ed[i][j];
+                        
+                        if( k >= 0 ) {
+                            _mesh.addIndex(i);
+                            _mesh.addIndex(k);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     
     void calculateBoundingBox() {
         
@@ -189,8 +304,9 @@ public:
                 i--;
         }
         
-        vector<ofVboMesh> cellMeshes = getCellsFromContainer(con, 0);
-        
+        vector<ofVboMesh> cellMeshes;
+        getCellsFromContainerParallel(con, 0, cellMeshes, false);
+            
         for (auto w : wallsToDeleteAfterGettingCells){
             delete(w);
         }
@@ -217,7 +333,7 @@ public:
         boundingBox.set(width, height, depth);
         minBounds = ofVec3f(-width/2.0, -height/2.0, -depth/2.0);
         maxBounds = ofVec3f(width/2.0, height/2.0, depth/2.0);
-
+        
         
         // TODO: use split instead of generate
         // rename this method something like setupFromBoundingBox ...
@@ -270,7 +386,8 @@ public:
             addCellSeed(con, newCell, i, true);
         }
         
-        vector<ofVboMesh> cellMeshes = getCellsFromContainer(con, 0);
+        vector<ofVboMesh> cellMeshes;
+        getCellsFromContainerParallel(con, 0, cellMeshes, false);
         
         children.clear();
         
@@ -283,7 +400,7 @@ public:
         }
         
         //cells.clear(); // todo clear children
-
+        
     }
     
 };

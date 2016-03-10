@@ -46,10 +46,10 @@ void PlaneCutScene::update(){
     
     ofSeedRandom(randomSeed);
     for (auto vn : voroNodes) {
-        vn->split(cellCount, true, true, true);
-        for (auto * vnChild : vn->getChildren()) {
-            vnChild->modMesh = vnChild->mesh;
-        }
+            vn->split(cellCount, true, true, true);
+            for (auto * vnChild : vn->getChildren()) {
+                vnChild->modMesh = vnChild->mesh;
+            }
     }
 }
 
