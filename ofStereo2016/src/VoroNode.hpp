@@ -31,7 +31,7 @@ public:
     int level;
     
     ofVboMesh mesh;
-    ofMesh modMesh; //vbomesh ?
+    ofVboMesh modMesh; //vbomesh ?
     
     int nCells;
     list<VoroNode *> children;
