@@ -28,7 +28,7 @@ public:
     ofParameter<ofVec3f> origin {"origin", ofVec3f(0,0,0),
         ofVec3f(-1000,-1000,-1000),
         ofVec3f(1000,1000,1000)};
-
+    
     ofParameter<float> autoRotationSpeed {"rot speed", 0, -1, 1};
     ofParameter<ofColor_<float>> crystalColor {"Crystal color", ofColor_<float>(1,1,1,1), ofColor_<float>(0,0,0,0), ofColor_<float>(1,1,1,1)};
     ofParameter<ofVec3f> spotlightPosition {"spotlightPosition", ofVec3f(0,0,0), ofVec3f(-2000,-2000,-2000), ofVec3f(2000,2000,2000)};
@@ -78,7 +78,7 @@ public:
     
     ofShader shader;
     ofPlanePrimitive plane;
-        
+    
     ofVec3f rotation;
     
     ofxPanel panel;

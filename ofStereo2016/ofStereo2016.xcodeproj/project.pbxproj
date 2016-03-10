@@ -38,6 +38,7 @@
 		7A0D4D041C7F39A100CF4DD7 /* SceneTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A0D4D021C7F39A100CF4DD7 /* SceneTest.cpp */; };
 		7A1285361C80D879007B8689 /* ofxStereoscopy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A1285351C80D879007B8689 /* ofxStereoscopy.cpp */; };
 		7A6991491C91ACA700DDD9B9 /* SketchScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A6991471C91ACA700DDD9B9 /* SketchScene.cpp */; };
+		7A69914D1C91B36600DDD9B9 /* PlaneCutScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A69914B1C91B36600DDD9B9 /* PlaneCutScene.cpp */; };
 		7A8D63B81C9033E3000DD6CF /* VoroNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A8D63B61C9033E3000DD6CF /* VoroNode.cpp */; };
 		837220E80EB56CD44AD27F2A /* ofxSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15F2C6477A769C03A56D1401 /* ofxSlider.cpp */; };
 		856AA354D08AB4B323081444 /* ofxBaseGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9604B925D32EE39065747725 /* ofxBaseGui.cpp */; };
@@ -168,6 +169,8 @@
 		7A1285351C80D879007B8689 /* ofxStereoscopy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxStereoscopy.cpp; sourceTree = "<group>"; };
 		7A6991471C91ACA700DDD9B9 /* SketchScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SketchScene.cpp; sourceTree = "<group>"; };
 		7A6991481C91ACA700DDD9B9 /* SketchScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SketchScene.hpp; sourceTree = "<group>"; };
+		7A69914B1C91B36600DDD9B9 /* PlaneCutScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlaneCutScene.cpp; sourceTree = "<group>"; };
+		7A69914C1C91B36600DDD9B9 /* PlaneCutScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PlaneCutScene.hpp; sourceTree = "<group>"; };
 		7A8D63B61C9033E3000DD6CF /* VoroNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VoroNode.cpp; sourceTree = "<group>"; };
 		7A8D63B71C9033E3000DD6CF /* VoroNode.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VoroNode.hpp; sourceTree = "<group>"; };
 		802251BAF1B35B1D67B32FD0 /* ofxSliderGroup.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxSliderGroup.cpp; path = ../../../addons/ofxGui/src/ofxSliderGroup.cpp; sourceTree = SOURCE_ROOT; };
@@ -428,6 +431,21 @@
 			name = local_addons;
 			sourceTree = "<group>";
 		};
+		7A69914A1C91B35300DDD9B9 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				7A0D4D021C7F39A100CF4DD7 /* SceneTest.cpp */,
+				7A0D4D031C7F39A100CF4DD7 /* SceneTest.hpp */,
+				041E59621C886A2700FC2FE0 /* CrystalScene.cpp */,
+				041E59631C886A2700FC2FE0 /* CrystalScene.hpp */,
+				7A6991471C91ACA700DDD9B9 /* SketchScene.cpp */,
+				7A6991481C91ACA700DDD9B9 /* SketchScene.hpp */,
+				7A69914B1C91B36600DDD9B9 /* PlaneCutScene.cpp */,
+				7A69914C1C91B36600DDD9B9 /* PlaneCutScene.hpp */,
+			);
+			name = Scenes;
+			sourceTree = "<group>";
+		};
 		86D2677079A3AF4A5A88E29A /* oscpack */ = {
 			isa = PBXGroup;
 			children = (
@@ -531,16 +549,11 @@
 				04F001151C7EEE8B0001F8C7 /* ParameterFade.hpp */,
 				7A0D4CFE1C7F0D4E00CF4DD7 /* ofxStereoscopy.hpp */,
 				7A1285351C80D879007B8689 /* ofxStereoscopy.cpp */,
-				7A0D4D021C7F39A100CF4DD7 /* SceneTest.cpp */,
-				7A0D4D031C7F39A100CF4DD7 /* SceneTest.hpp */,
+				7A69914A1C91B35300DDD9B9 /* Scenes */,
 				0459E6C61C7F51B3000AB4C8 /* ofxDatGuiParameterBindings.cpp */,
 				0459E6C71C7F51B3000AB4C8 /* ofxDatGuiParameterBindings.hpp */,
-				041E59621C886A2700FC2FE0 /* CrystalScene.cpp */,
-				041E59631C886A2700FC2FE0 /* CrystalScene.hpp */,
 				7A8D63B61C9033E3000DD6CF /* VoroNode.cpp */,
 				7A8D63B71C9033E3000DD6CF /* VoroNode.hpp */,
-				7A6991471C91ACA700DDD9B9 /* SketchScene.cpp */,
-				7A6991481C91ACA700DDD9B9 /* SketchScene.hpp */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -692,6 +705,7 @@
 				ADE367465D2A8EBAD4C7A8D9 /* IpEndpointName.cpp in Sources */,
 				04F001161C7EEE8B0001F8C7 /* ParameterFade.cpp in Sources */,
 				041E59881C88759800FC2FE0 /* container_prd.cc in Sources */,
+				7A69914D1C91B36600DDD9B9 /* PlaneCutScene.cpp in Sources */,
 				67FE4C7B15C2F0478C8126C2 /* NetworkingUtils.cpp in Sources */,
 				7A1285361C80D879007B8689 /* ofxStereoscopy.cpp in Sources */,
 				510CAFE035E576A4E1502D52 /* UdpSocket.cpp in Sources */,

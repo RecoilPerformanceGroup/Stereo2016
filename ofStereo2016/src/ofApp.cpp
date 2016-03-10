@@ -6,6 +6,10 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     
+    for( auto s : scenes) {
+        s->setupScene();
+    }
+    
     mainParams.add(world.params);
     fadeManager = make_shared<ParameterFadeManager>();
     //guiManager = make_shared<GuiManager>();
@@ -226,43 +230,45 @@ void ofApp::draw(){
     ofDisableDepthTest();
     
     ofPushMatrix();
-
+    
     if(show_model_on_second_screen){
         
-        worldModelCam.setPosition(world.physical_camera_pos_cm.get() - ofVec3f(world.physical_eye_seperation_cm*0.5,0,0));
-        worldModelCam.lookAt(ofVec3f(0,0,0));
-        worldModelCam.setNearClip(20);
+        ofCamera cam(worldModelCam);
+
+        cam.setPosition(world.physical_camera_pos_cm.get() - ofVec3f(world.physical_eye_seperation_cm*0.5,0,0));
+        cam.lookAt(ofVec3f(0,0,0));
+        cam.setNearClip(20);
 
         ofPushMatrix();
         ofPushView();
         ofViewport(ofRectangle(0.0, 0.0, ofGetWidth()/2, ofGetHeight()));
 
-        worldModelCam.setAspectRatio(ofGetViewportWidth()*2.0/ofGetViewportHeight());
-        worldModelCam.setForceAspectRatio(true);
+        cam.setAspectRatio(ofGetViewportWidth()*2.0/ofGetViewportHeight());
+        cam.setForceAspectRatio(true);
 
-        worldModelCam.begin();
+        cam.begin();
         //ofTranslate(0,0,-stage_size_cm.get().z);
         //ofScale(2.0, 2.0, 2.0);
-        world.drawModel(false, false, false);
-        worldModelCam.end();
+        world.drawModel(false, false, false, false);
+        cam.end();
         ofPopView();
         ofPopMatrix();
 
-        worldModelCam.setPosition(world.physical_camera_pos_cm.get() + ofVec3f(world.physical_eye_seperation_cm*0.5,0,0));
-        worldModelCam.lookAt(ofVec3f(0,0,0));
-        worldModelCam.setNearClip(20);
+        cam.setPosition(world.physical_camera_pos_cm.get() + ofVec3f(world.physical_eye_seperation_cm*0.5,0,0));
+        cam.lookAt(ofVec3f(0,0,0));
+        cam.setNearClip(20);
         
         ofPushMatrix();
         ofPushView();
         ofViewport(ofRectangle(ofGetWidth()/2, 0.0, ofGetWidth()/2, ofGetHeight()));
-        worldModelCam.begin();
+        cam.begin();
         //ofTranslate(0,0,-stage_size_cm.get().z);
         //ofScale(2.0, 2.0, 2.0);
-        world.drawModel(false, true, false);
-        worldModelCam.end();
+        world.drawModel(false, true, false, false);
+        cam.end();
         ofPopView();
         ofPopMatrix();
-        worldModelCam.setForceAspectRatio(false);
+        cam.setForceAspectRatio(false);
         
     } else {
         

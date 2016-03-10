@@ -1,39 +1,43 @@
 //
-//  SketchScene.hpp
+//  PlaneCutScene.hpp
 //  ofStereo2016
 //
 //  Created by Ole Kristensen on 10/03/2016.
 //
 //
 
-#ifndef SketchScene_hpp
-#define SketchScene_hpp
+#ifndef PlaneCutScene_hpp
+#define PlaneCutScene_hpp
 
 #include "ofMain.h"
 #include "ofxStereoscopy.hpp"
 #include "VoroNode.hpp"
 #include "ofxGui.h"
+#include "dispatch/dispatch.h"
 
-class SketchScene : public ofxStereoscopy::Scene {
-
+class PlaneCutScene : public ofxStereoscopy::Scene {
+    
 public:
 
-    ofParameter<int> sketch {"Sketch", 0, 0, 10};
+    ofParameter<int> randomSeed {"Random Seed", 0,0,10000 };
+    ofParameter<int> cellCount {"Cell count", 15,1,1000 };
 
     ofParameterGroup params {"",
         enabled,
-        sketch};
+        randomSeed,
+        cellCount
+    };
     
     
-    SketchScene() {
+    PlaneCutScene() {
         
-        name = "sketch";
-        oscAddress = "sketch";
+        name = "PlaneCut";
+        oscAddress = "PlaneCut";
         
         ofxStereoscopy::Scene::params = params;
         params.setName(oscAddress);
     }
-
+    
     void draw();
     void drawGui();
     void update();
@@ -55,4 +59,4 @@ public:
 };
 
 
-#endif /* SketchScene_hpp */
+#endif /* PlaneCutScene_hpp */

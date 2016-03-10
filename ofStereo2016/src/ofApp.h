@@ -13,6 +13,7 @@
 
 #include "SceneTest.hpp"
 #include "CrystalScene.hpp"
+#include "PlaneCutScene.hpp"
 
 class ofApp : public ofBaseApp{
     
@@ -22,14 +23,15 @@ public:
         
         scenes.push_back(make_shared<SceneTest>());
         scenes.push_back(make_shared<CrystalScene>());
+        scenes.push_back(make_shared<PlaneCutScene>());
         
         for( auto s : scenes) {
-            s->setupScene();
             mainParams.add(s->getParameters());
         }
         
-        //scenes[0]->enabled = true;
-        scenes[1]->enabled = true;
+        scenes[0]->enabled = false;
+        scenes[1]->enabled = false;
+        scenes[2]->enabled = true;
         
         
     }
