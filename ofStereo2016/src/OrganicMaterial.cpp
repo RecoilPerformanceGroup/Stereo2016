@@ -155,6 +155,9 @@ void OrganicMaterial::updateMaterial(const ofShader & shader,ofGLProgrammableRen
     shader.setUniform4fv("mat_emissive", &data.emissive.r);
     shader.setUniform4fv("global_ambient", &ofGetGlobalAmbientColor().r);
     shader.setUniform1f("mat_shininess",data.shininess);
+    
+    shader.setUniform1f("time", ofGetElapsedTimef());
+    
 }
 
 void OrganicMaterial::updateLights(const ofShader & shader,ofGLProgrammableRenderer & renderer) const{
@@ -229,12 +232,11 @@ uniform float time;
 
 void main (void){
     
-    /*float displacementHeight = 100.0;
-    float displacementY = sin(time + (position.x / 0.1)) * displacementHeight;
+    float displacementHeight = 60.0;
+    float displacementY = sin(time + (position.x / 100)) * displacementHeight;
     
     vec4 modifiedPosition = modelViewProjectionMatrix * position;
-    modifiedPosition.y += displacementY;*/
-    
+    modifiedPosition.y += displacementY;
     
     vec4 eyePosition = modelViewMatrix * position;
     vec3 tempNormal = (normalMatrix * normal).xyz;
@@ -242,7 +244,7 @@ void main (void){
     eyePosition3 = (eyePosition.xyz) / eyePosition.w;
     
     outtexcoord = (textureMatrix*vec4(texcoord.x,texcoord.y,0,1)).xy;
-    gl_Position = modelViewProjectionMatrix * position;
+    gl_Position = modifiedPosition;
 }
 )";
 
