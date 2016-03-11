@@ -124,9 +124,9 @@ void CrystalScene::update() {
         
         
         c->modMesh = c->mesh;
-        vertexDisplacer.twistModel(c->modMesh, c);
+        //vertexDisplacer.twistModel(c->modMesh, c);
         
-        for(int i=0; i<c->modMesh.getNumVertices(); i++) {
+        //for(int i=0; i<c->modMesh.getNumVertices(); i++) {
             
          //   ofVec3f o = c->modMesh.getVertex(i);
             
@@ -178,7 +178,7 @@ void CrystalScene::update() {
             
             
            // c->modMesh.setVertex(i, v);
-        }
+        //}
         
         //for(auto cc : c->getChildren()) {
         
