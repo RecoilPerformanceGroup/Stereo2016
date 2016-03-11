@@ -12,7 +12,7 @@
 #include "ofxStereoscopy.hpp"
 #include "VoroNode.hpp"
 #include "ofxGui.h"
-
+#include "OrganicMaterial.hpp"
 #include "dispatch/dispatch.h"
 
 // Vertex displacement using grand central dispatch
@@ -50,18 +50,6 @@ public:
             
         });
     }
-};
-
-
-class OrganicMaterial : public ofMaterial {
-public:
-    
-    // TODO overwirte the shaders with vertex displace methods and more set uniforms to use them
-    
-    
-    
-    //
-    
 };
 
 
@@ -134,7 +122,7 @@ public:
     
     ofxPanel panel;
     
-    ofMaterial mat;
+    OrganicMaterial mat;
     ofTexture tex;
 };
 

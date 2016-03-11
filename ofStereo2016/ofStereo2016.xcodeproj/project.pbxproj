@@ -23,6 +23,7 @@
 		04B9CF3F1C7B43880035D79B /* ofxDatGuiComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04B9CF311C7B43880035D79B /* ofxDatGuiComponent.cpp */; };
 		04B9CF401C7B43880035D79B /* ofxSmartFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04B9CF381C7B43880035D79B /* ofxSmartFont.cpp */; };
 		04B9CF411C7B43880035D79B /* ofxDatGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04B9CF3A1C7B43880035D79B /* ofxDatGui.cpp */; };
+		04EB5EC71C92ECDB00C6931B /* OrganicMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EB5EC51C92ECDB00C6931B /* OrganicMaterial.cpp */; };
 		04F001161C7EEE8B0001F8C7 /* ParameterFade.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04F001141C7EEE8B0001F8C7 /* ParameterFade.cpp */; };
 		0546D1A38E13BD319CC9755B /* OscReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BF3AA0D4FAA89D0F8A0E545 /* OscReceivedElements.cpp */; };
 		1CD33E884D9E3358252E82A1 /* ofxToggle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 907C5B5E104864A2D3A25745 /* ofxToggle.cpp */; };
@@ -140,6 +141,8 @@
 		04B9CF3B1C7B43880035D79B /* ofxDatGui.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxDatGui.h; sourceTree = "<group>"; };
 		04B9CF3D1C7B43880035D79B /* ofxDatGuiTheme.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxDatGuiTheme.h; sourceTree = "<group>"; };
 		04B9CF3E1C7B43880035D79B /* ofxDatGuiThemes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxDatGuiThemes.h; sourceTree = "<group>"; };
+		04EB5EC51C92ECDB00C6931B /* OrganicMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OrganicMaterial.cpp; sourceTree = "<group>"; };
+		04EB5EC61C92ECDB00C6931B /* OrganicMaterial.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OrganicMaterial.hpp; sourceTree = "<group>"; };
 		04F001121C7CA8710001F8C7 /* easing_terms_of_use.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = easing_terms_of_use.html; sourceTree = "<group>"; };
 		04F001131C7CA8710001F8C7 /* ofxEasing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxEasing.h; sourceTree = "<group>"; };
 		04F001141C7EEE8B0001F8C7 /* ParameterFade.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParameterFade.cpp; sourceTree = "<group>"; };
@@ -554,6 +557,8 @@
 				0459E6C71C7F51B3000AB4C8 /* ofxDatGuiParameterBindings.hpp */,
 				7A8D63B61C9033E3000DD6CF /* VoroNode.cpp */,
 				7A8D63B71C9033E3000DD6CF /* VoroNode.hpp */,
+				04EB5EC51C92ECDB00C6931B /* OrganicMaterial.cpp */,
+				04EB5EC61C92ECDB00C6931B /* OrganicMaterial.hpp */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -685,6 +690,7 @@
 				5CBB2AB3A60F65431D7B555D /* ofxButton.cpp in Sources */,
 				B266578FC55D23BFEBC042E7 /* ofxGuiGroup.cpp in Sources */,
 				04B9CF411C7B43880035D79B /* ofxDatGui.cpp in Sources */,
+				04EB5EC71C92ECDB00C6931B /* OrganicMaterial.cpp in Sources */,
 				04B9CF3F1C7B43880035D79B /* ofxDatGuiComponent.cpp in Sources */,
 				483908258D00B98B4BE69F07 /* ofxLabel.cpp in Sources */,
 				F285EB3169F1566CA3D93C20 /* ofxPanel.cpp in Sources */,
