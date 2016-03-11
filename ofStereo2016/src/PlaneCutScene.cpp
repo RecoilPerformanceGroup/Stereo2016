@@ -14,10 +14,13 @@ void PlaneCutScene::setup(){
     ofApp * app = (ofApp*)ofGetAppPtr();
     
     VoroNode * vFloor = new VoroNode();
-    //void setup(float _w = 100, float _h = 100, float _d = 100, int _c = 5) {
     vFloor->setup(app->stage_size_cm.get().x-100, 50.0, app->stage_size_cm.get().z-100, cellCount);
     vFloor->setGlobalPosition(0, -25.0, app->stage_size_cm.get().z/2.0);
-    voroNodes.push_back(vFloor);
+//    voroNodes.push_back(vFloor);
+    VoroNode * vWall = new VoroNode();
+    vWall->setup(app->stage_size_cm.get().x, app->stage_size_cm.get().y, 100, cellCount);
+    vWall->setGlobalPosition(0, app->stage_size_cm.get().y/2.0, -50);
+    voroNodes.push_back(vWall);
     
     mat.setDiffuseColor(ofFloatColor::white);
     
@@ -31,7 +34,7 @@ void PlaneCutScene::setup(){
     directionalLight1.setDirectional();
     directionalLight1.setPosition(0, app->stage_size_cm.get().y*0.5, app->stage_size_cm.get().z*0.5);
     directionalLight1.setOrientation(ofVec3f(70,0,0));
-    directionalLight1.setDiffuseColor(ofFloatColor::wheat*0.95);
+    directionalLight1.setDiffuseColor(ofFloatColor::wheat*0.85);
     
     directionalLight2.setup();
     directionalLight2.setDirectional();
@@ -46,7 +49,7 @@ void PlaneCutScene::update(){
     
     ofSeedRandom(randomSeed);
     for (auto vn : voroNodes) {
-        vn->split(cellCount, true, true, true);
+        vn->split(cellCount, false,false, true);
         for (auto * vnChild : vn->getChildren()) {
             vnChild->modMesh = vnChild->mesh;
         }
@@ -65,7 +68,7 @@ void PlaneCutScene::draw(){
     directionalLight2.enable();
     mat.begin();
     
-    ofDrawBox(0, -10, app->stage_size_cm.get().z/2.0, app->stage_size_cm.get().x, 10, app->stage_size_cm.get().z);
+//    ofDrawBox(0, -10, app->stage_size_cm.get().z/2.0, app->stage_size_cm.get().x, 10, app->stage_size_cm.get().z);
     
     for (VoroNode * vn : voroNodes) {
         vn->draw();

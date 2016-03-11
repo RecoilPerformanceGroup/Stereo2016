@@ -8,11 +8,11 @@
 	<position1>50, 50</position1>
 <mainParams/>
 	<Calibrate_Planes>0</Calibrate_Planes>
-	<Background_Color>255, 255, 255, 213</Background_Color>
+	<Background_Color>255, 255, 255, 225</Background_Color>
 <world>
 		<camera>
-			<camera_position>97.9021, 517.483, 1748.25</camera_position>
-			<eye_separation>8.1119</eye_separation>
+			<camera_position>405.594, 1132.87, 2972.03</camera_position>
+			<eye_separation>20</eye_separation>
 			<focus_distance>200</focus_distance>
 			<camera_near_clip>20</camera_near_clip>
 		</camera>
@@ -23,18 +23,18 @@
 			<size>800, 520.28</size>
 			<Left_Quad>
 				<Output_Points>
-					<Top_Left>0.742285, 0.88565, 0</Top_Left>
-					<Top_Right>0.260589, 0.896406, 0</Top_Right>
-					<Bottom_Left>0.743006, 0.466273, 0</Bottom_Left>
-					<Bottom_Right>0.259167, 0.470641, 0</Bottom_Right>
+					<Top_Left>0.736914, 0.881353, 0</Top_Left>
+					<Top_Right>0.260265, 0.895838, 0</Top_Right>
+					<Bottom_Left>0.735757, 0.461773, 0</Bottom_Left>
+					<Bottom_Right>0.256167, 0.472641, 0</Bottom_Right>
 				</Output_Points>
 			</Left_Quad>
 			<Right_Quad>
 				<Output_Points>
-					<Top_Left>0.764118, 1.00682, 0</Top_Left>
-					<Top_Right>0.265903, 1.00291, 0</Top_Right>
-					<Bottom_Left>0.762091, 0.458761, 0</Bottom_Left>
-					<Bottom_Right>0.276355, 0.451033, 0</Bottom_Right>
+					<Top_Left>0.756599, 0.992498, 0</Top_Left>
+					<Top_Right>0.264829, 0.991453, 0</Top_Right>
+					<Bottom_Left>0.75672, 0.444439, 0</Bottom_Left>
+					<Bottom_Right>0.274207, 0.441008, 0</Bottom_Right>
 				</Output_Points>
 			</Right_Quad>
 		</WALL>
@@ -44,16 +44,16 @@
 			<size>800, 800</size>
 			<Left_Quad>
 				<Output_Points>
-					<Top_Left>0.741157, 0.46546, 0</Top_Left>
-					<Top_Right>0.256695, 0.475486, 0</Top_Right>
-					<Bottom_Left>0.819837, 0.15263, 0</Bottom_Left>
-					<Bottom_Right>0.132639, 0.15245, 0</Bottom_Right>
+					<Top_Left>0.735757, 0.461773, 0</Top_Left>
+					<Top_Right>0.256167, 0.472641, 0</Top_Right>
+					<Bottom_Left>0.820587, 0.16038, 0</Bottom_Left>
+					<Bottom_Right>0.137389, 0.16545, 0</Bottom_Right>
 				</Output_Points>
 			</Left_Quad>
 			<Right_Quad>
 				<Output_Points>
-					<Top_Left>0.766936, 0.461164, 0</Top_Left>
-					<Top_Right>0.278178, 0.454003, 0</Top_Right>
+					<Top_Left>0.75672, 0.444439, 0</Top_Left>
+					<Top_Right>0.274207, 0.441008, 0</Top_Right>
 					<Bottom_Left>0.839714, 0.00178661, 0</Bottom_Left>
 					<Bottom_Right>0.173447, -0.0125352, 0</Bottom_Right>
 				</Output_Points>
@@ -66,20 +66,20 @@
 	<crystaltest>
 		<enabled>1</enabled>
 		<rebuild>0</rebuild>
-		<origin>-82.8824, 198.25, -145.356</origin>
-		<Cells>5</Cells>
+		<origin>114.952, 416.909, 1000</origin>
+		<Cells>61</Cells>
 		<Automatic_rotation>1, 0.260725, 0.562682</Automatic_rotation>
-		<rot_speed>0.142857</rot_speed>
+		<rot_speed>-1</rot_speed>
 		<Crystal_color>1, 0.713661, 0.677218, 1</Crystal_color>
-		<spotlightPosition>0.83252, -269.888, -1477.72</spotlightPosition>
-		<scale>4.84694</scale>
+		<spotlightPosition>1062.89, -374.011, 1750.1</spotlightPosition>
+		<scale>2.04082</scale>
 		<scaleCells>0.718668</scaleCells>
 		<Debug_draw>0</Debug_draw>
 	</crystaltest>
 <Second_Screen_Model>0</Second_Screen_Model>
 <PlaneCut>
 		<enabled>0</enabled>
-	<Random_Seed>3010</Random_Seed>
-		<Cell_count>11</Cell_count>
+	<Random_Seed>357</Random_Seed>
+		<Cell_count>26</Cell_count>
 	</PlaneCut>
 </mainParams>
