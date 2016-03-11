@@ -302,8 +302,8 @@ namespace ofxStereoscopy {
         
     public:
         
-        ofParameter<float> physical_eye_seperation_cm {"eye separation", 6.5, 0, 10};
-        ofParameter<ofVec3f> physical_camera_pos_cm {"camera position", ofVec3f(0,250,1200), ofVec3f(-WORLD_DIMENSION_MAX/5,0,0), ofVec3f(WORLD_DIMENSION_MAX/5,WORLD_DIMENSION_MAX/5,WORLD_DIMENSION_MAX/5)};
+        ofParameter<float> physical_eye_seperation_cm {"eye separation", 6.5, 0, 20};
+        ofParameter<ofVec3f> physical_camera_pos_cm {"camera position", ofVec3f(0,250,1200), ofVec3f(-WORLD_DIMENSION_MAX/5,0,0), ofVec3f(WORLD_DIMENSION_MAX/5,WORLD_DIMENSION_MAX/5,WORLD_DIMENSION_MAX/2)};
         ofParameter<float> physical_focus_distance_cm {"focus distance", 200, 0, WORLD_DIMENSION_MAX};
         ofParameter<float> physical_camera_near_clip {"camera near clip", 20, 0, WORLD_DIMENSION_MAX};
         ofParameter<float> pixels_cm {"pixels pr. cm", 2, 0, 3};
