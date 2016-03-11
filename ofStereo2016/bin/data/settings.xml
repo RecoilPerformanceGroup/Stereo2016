@@ -1,5 +1,5 @@
 <mainParams>
-	<Stage_Size>800, 520.28, 800</Stage_Size>
+	<Stage_Size>800, 537.762, 800</Stage_Size>
 	<subParams>
 		<float01>1</float01>
 		<UnknownName>4.74227e+30</UnknownName>
@@ -8,11 +8,11 @@
 	<position1>50, 50</position1>
 <mainParams/>
 	<Calibrate_Planes>0</Calibrate_Planes>
-	<Background_Color>255, 255, 255, 225</Background_Color>
+	<Background_Color>255, 255, 255, 0</Background_Color>
 <world>
 		<camera>
 			<camera_position>405.594, 1132.87, 2972.03</camera_position>
-			<eye_separation>20</eye_separation>
+			<eye_separation>138.462</eye_separation>
 			<focus_distance>200</focus_distance>
 			<camera_near_clip>20</camera_near_clip>
 		</camera>
@@ -20,7 +20,7 @@
 		<WALL>
 			<UnknownName>1</UnknownName>
 			<position>0, 0, 0</position>
-			<size>800, 520.28</size>
+			<size>800, 537.762</size>
 			<Left_Quad>
 				<Output_Points>
 					<Top_Left>0.736914, 0.881353, 0</Top_Left>
@@ -66,14 +66,14 @@
 	<crystaltest>
 		<enabled>1</enabled>
 		<rebuild>0</rebuild>
-		<origin>114.952, 416.909, 1000</origin>
+		<origin>0.41626, 208.663, 73.3026</origin>
 		<Cells>61</Cells>
-		<Automatic_rotation>1, 0.260725, 0.562682</Automatic_rotation>
-		<rot_speed>-1</rot_speed>
+		<Automatic_rotation>1, -0.541025, 0.562682</Automatic_rotation>
+		<rot_speed>0.0306122</rot_speed>
 		<Crystal_color>1, 0.713661, 0.677218, 1</Crystal_color>
-		<spotlightPosition>1062.89, -374.011, 1750.1</spotlightPosition>
-		<scale>2.04082</scale>
-		<scaleCells>0.718668</scaleCells>
+		<spotlightPosition>1062.89, -374.011, 2000</spotlightPosition>
+		<scale>9.94898</scale>
+		<scaleCells>0.300719</scaleCells>
 		<Debug_draw>0</Debug_draw>
 	</crystaltest>
 <Second_Screen_Model>0</Second_Screen_Model>
