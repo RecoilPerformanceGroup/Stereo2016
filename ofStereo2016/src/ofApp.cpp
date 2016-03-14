@@ -12,18 +12,9 @@ void ofApp::setup(){
     
     mainParams.add(world.params);
     fadeManager = make_shared<ParameterFadeManager>();
-    //guiManager = make_shared<GuiManager>();
-    /*
-     int resolutionX = 1920;
-     int resolutionY = 1080;
-     */
-    
-    int resolutionX = ofGetWidth()/2;
-    int resolutionY = (resolutionX * 9) / 16;
     
     world.calibrator.updateOutputAspect((ofGetWidth()*0.5)/ofGetHeight());
 
-    
     ofEnableAlphaBlending();
     ofSetCircleResolution(66);
     
@@ -377,43 +368,54 @@ void ofApp::setupGui(shared_ptr<ofAppBaseWindow> gW,shared_ptr<ofAppBaseWindow> 
     // Dat Gui
     
     gui = new ofxDatGui( ofxDatGuiAnchor::TOP_LEFT );
-    gui->setTheme(new ofxDatGuiThemeWireframe());
+    //gui->setTheme(new ofxDatGuiThemeWireframe());
     
     gui->addFRM(1.0f);
     gui->addBreak();
     
-    // Model View
+    // Stage size
+    
+    guiBindings.push_back(make_shared<SlidersVec3f>(stage_size_cm, gui));
+    ofxDatGuiSlider * resolutionSlider = gui->addSlider(world.pixels_cm);
+    resolutionSlider->onSliderEvent(this,&ofApp::onSliderEvent);
+    gui->addBreak();
+    
+    // Model
     
     vector<string> views = {"Perspective Model View", "Camera Model View", "Free Model View"};
     ofxDatGuiDropdown * viewDropdown = gui->addDropdown("Model View", views);
     viewDropdown->select(0);
     viewDropdown->onDropdownEvent(this, &ofApp::onDropdownEvent);
+    gui->addBreak();
+    
+    // Camera
+    
+    /*
+    ofxDatGuiFolder * cameraCalibrationFolder = gui->addFolder("Camera Calibration");
+    cameraCalibrationFolder->onFolderEvent(this, &ofApp::onFolderEvent);
+    
+    cameraCalibrationFolder->addSlider("POSITION X", world.physical_camera_pos_cm.getMin().x, world.physical_camera_pos_cm.getMax().x);
+    cameraCalibrationFolder->addSlider("POSITION Y", world.physical_camera_pos_cm.getMin().y, world.physical_camera_pos_cm.getMax().y);
+    cameraCalibrationFolder->addSlider("POSITION Z", world.physical_camera_pos_cm.getMin().z, world.physical_camera_pos_cm.getMax().z);
+     */
     
     guiBindings.push_back(make_shared<SlidersVec3f>(world.physical_camera_pos_cm, gui));
 
     gui->addSlider(world.physical_eye_seperation_cm);
-    
     gui->addBreak();
 
-    // Projector Calibration
+    // Projectors
     
     ofxDatGuiFolder * projectorCalibrationFolder = gui->addFolder("Projector Calibration");
-    
     projectorCalibrationFolder->onFolderEvent(this, &ofApp::onFolderEvent);
-    
-    // Stage size
-    
-    guiBindings.push_back(make_shared<SlidersVec3f>(stage_size_cm, gui));
-    
-    ofxDatGuiSlider * resolutionSlider = gui->addSlider(world.pixels_cm);
-    resolutionSlider->onSliderEvent(this,&ofApp::onSliderEvent);
-    
     gui->addBreak();
-    
+
     // General
 
     guiBindings.push_back(make_shared<ColorPickerWithAlpha>(background_color, gui));
+    gui->addBreak();
 
+    // Settings
     
     ofxDatGuiButton * saveButton = gui->addButton("save settings");
     saveButton->onButtonEvent(this,&ofApp::onButtonEvent);
@@ -429,10 +431,8 @@ void ofApp::setupGui(shared_ptr<ofAppBaseWindow> gW,shared_ptr<ofAppBaseWindow> 
     ofSetFrameRate(60);
     
     oscReceiver.setup(9999);
-    
- 
+
     panel.setup(mainParams);
-    panel.setUseTTF(true);
     panel.setPosition(gW->getWidth()-panel.getWidth(), 0);
 
     
@@ -555,7 +555,7 @@ void ofApp::onDropdownEvent(ofxDatGuiDropdownEvent e){
         worldModelCam.setNearClip(20);
         worldModelCam.enableMouseInput();
     }
-    e.target->collapse();
+    gui->getDropdown("MODEL VIEW")->collapse();
 }
 
 void ofApp::onSliderEvent(ofxDatGuiSliderEvent e){

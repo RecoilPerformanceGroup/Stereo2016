@@ -29,7 +29,8 @@ OrganicMaterial::Data::Data()
 ,ambient(0.2f, 0.2f, 0.2f, 1.0f)
 ,specular(0.0f, 0.0f, 0.0f, 1.0f)
 ,emissive(0.0f, 0.0f, 0.0f, 1.0f)
-,shininess(0.2f){
+,shininess(0.2f)
+,distortion(0.0f,0.0f,0.0f){
     
 }
 
@@ -62,7 +63,11 @@ void OrganicMaterial::setEmissiveColor(ofFloatColor oEmissive) {
 void OrganicMaterial::setShininess(float nShininess) {
     data.shininess = nShininess;
 }
-
+/*
+void OrganicMaterial::setDistortion(ofVec3f vDistortion) {
+    data.distortion = vDistortion;
+}
+*/
 void OrganicMaterial::setData(const OrganicMaterial::Data &data){
     this->data = data;
 }
