@@ -232,13 +232,14 @@ uniform float time;
 
 void main (void){
     
-    float displacementHeight = 60.0;
-    float displacementY = sin(time + (position.x / 100)) * displacementHeight;
+    float displacementHeight = 10.0;
+    float displacementY = sin(time + (position.x / 2.0)) * displacementHeight;
     
-    vec4 modifiedPosition = modelViewProjectionMatrix * position;
-    modifiedPosition.y += displacementY;
+    vec4 displacementVec = vec4 (0.0, displacementY, 0.0, 0.0);
     
-    vec4 eyePosition = modelViewMatrix * position;
+    vec4 modifiedPosition = modelViewProjectionMatrix * (position+displacementVec);
+    
+    vec4 eyePosition = modelViewMatrix * modifiedPosition;
     vec3 tempNormal = (normalMatrix * normal).xyz;
     transformedNormal = normalize(tempNormal);
     eyePosition3 = (eyePosition.xyz) / eyePosition.w;

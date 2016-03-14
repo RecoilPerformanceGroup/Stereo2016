@@ -88,10 +88,10 @@ namespace ofxStereoscopy {
             shared_ptr<ofxStereoscopy::Plane> p = plane.lock();
             
             if(rightEye){
-                p->drawRight();
+                p->drawRight(0,1,1,-1); // no idea why the y axis of the texture needs reversion
                 ofSetColor(p->rightColor);
             }else{
-                p->drawLeft();
+                p->drawLeft(0,1,1,-1); // no idea why the y axis of the texture needs reversion
                 ofSetColor(p->leftColor);
             }
             
@@ -124,10 +124,10 @@ namespace ofxStereoscopy {
             keyVec.x = 1;
         }
         if(key == OF_KEY_UP){
-            keyVec.y = 1;
+            keyVec.y = -1;
         }
         if(key == OF_KEY_DOWN){
-            keyVec.y = -1;
+            keyVec.y = 1;
         }
         
         if(ofGetKeyPressed(OF_KEY_SHIFT)){

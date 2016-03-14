@@ -37,14 +37,15 @@ int main( ){
 
     if(numDisplays == 1){
         
+        float divisions = 4.0;
         // one display: palce gui and mainWindow in a default arrangement
         
-        mainSettings.width = round(mainDisplayBounds.size.width / 5.0);
+        mainSettings.width = round(mainDisplayBounds.size.width / divisions);
         mainSettings.height = round((mainSettings.width * (9.0 / 16.0)) / 2.0);
-        mainSettings.setPosition(ofVec2f(round(mainDisplayBounds.size.width * 4.0 / 5.0),mainDisplayBounds.origin.y));
+        mainSettings.setPosition(ofVec2f(round(mainDisplayBounds.size.width * (divisions-1) / divisions),mainDisplayBounds.origin.y));
         //rendering errors: mainSettings.decorated = true;
         
-        guiSettings.width = round(mainDisplayBounds.size.width * 4.0 / 5.0);
+        guiSettings.width = round(mainDisplayBounds.size.width * (divisions-1) / divisions);
         guiSettings.height = mainDisplayBounds.size.height - 100;
         guiSettings.setPosition(ofVec2f(mainDisplayBounds.origin.x, mainDisplayBounds.origin.y));
 

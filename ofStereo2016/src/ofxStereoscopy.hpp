@@ -769,15 +769,15 @@ namespace ofxStereoscopy {
             ofPopView();
         }
         
-        void drawLeft(){
+        void drawLeft(float texX = 0.0, float texY = 0.0, float texW = 1.0, float texH = 1.0){
             quadLeft.beginDraw();
-            textureLeft.draw(0,0,1,1);
+            textureLeft.draw(texX,texY,texW,texH);
             quadLeft.endDraw();
         }
         
-        void drawRight(){
+        void drawRight(float texX = 0.0, float texY = 0.0, float texW = 1.0, float texH = 1.0){
             quadRight.beginDraw();
-            textureRight.draw(0,0,1,1);
+            textureRight.draw(texX,texY,texW,texH);
             quadRight.endDraw();
         }
         

@@ -59,7 +59,7 @@ public:
     
     VertexDisplacer vertexDisplacer;
     
-    ofParameter<int> numCells {"Cells", 40, 0, 1000};
+    ofParameter<int> numCells {"Cells", 40, 0, 200};
     ofParameter<ofVec3f> autoRotation {"Automatic rotation", ofVec3f(0,0,0),
         ofVec3f(-1,-1,-1),
         ofVec3f(1,1,1)};

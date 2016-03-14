@@ -545,6 +545,7 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				7A69914A1C91B35300DDD9B9 /* Scenes */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
@@ -552,7 +553,6 @@
 				04F001151C7EEE8B0001F8C7 /* ParameterFade.hpp */,
 				7A0D4CFE1C7F0D4E00CF4DD7 /* ofxStereoscopy.hpp */,
 				7A1285351C80D879007B8689 /* ofxStereoscopy.cpp */,
-				7A69914A1C91B35300DDD9B9 /* Scenes */,
 				0459E6C61C7F51B3000AB4C8 /* ofxDatGuiParameterBindings.cpp */,
 				0459E6C71C7F51B3000AB4C8 /* ofxDatGuiParameterBindings.hpp */,
 				7A8D63B61C9033E3000DD6CF /* VoroNode.cpp */,
