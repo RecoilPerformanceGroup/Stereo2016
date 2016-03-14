@@ -31,7 +31,6 @@ public:
     int level;
     
     ofVboMesh mesh;
-    ofVboMesh modMesh; //vbomesh ?
     
     int nCells;
     list<VoroNode *> voroChildren;
@@ -356,7 +355,7 @@ public:
     
     void customDraw() {
         
-        if(bDraw) modMesh.drawFaces();
+        if(bDraw) mesh.drawFaces();
         
     }
     

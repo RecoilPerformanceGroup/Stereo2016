@@ -13,6 +13,7 @@
 #include "ofxStereoscopy.hpp"
 #include "VoroNode.hpp"
 #include "ofxGui.h"
+#include "OrganicMaterial.hpp"
 #include "dispatch/dispatch.h"
 
 class PlaneCutScene : public ofxStereoscopy::Scene {
@@ -21,11 +22,18 @@ public:
 
     ofParameter<int> randomSeed {"Random Seed", 0,0,10000 };
     ofParameter<int> cellCount {"Cell count", 15,1,1000 };
+    ofParameter<bool> rotateLights {"Rotate Lights", false,false, true };
+    ofParameter<bool> drawWall {"drawWall", false,false, true };
+    ofParameter<ofVec3f> distortionVec {"Distortion", ofVec3f(0,0,0), ofVec3f(-200,-200,-200),ofVec3f(200,200,200) };
+    ofParameter<ofVec3f> wallPos {"Wall Position", ofVec3f(0,0,0), ofVec3f(-1000,-1000,-1000),ofVec3f(1000,1000,1000) };
 
     ofParameterGroup params {"",
         enabled,
         randomSeed,
-        cellCount
+        cellCount,
+        rotateLights,
+        drawWall,
+        wallPos
     };
     
     
@@ -42,6 +50,8 @@ public:
     void drawGui();
     void update();
     void setup();
+    void reconstructMeshes(int& value);
+    
     
     ofLight directionalLight1;
     ofLight directionalLight2;
@@ -53,7 +63,8 @@ public:
     
     ofxPanel panel;
     
-    ofMaterial mat;
+    OrganicMaterial mat;
+    ofMaterial matstatic;
     ofTexture tex;
     
 };

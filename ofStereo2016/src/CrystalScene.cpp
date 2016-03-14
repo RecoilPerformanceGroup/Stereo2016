@@ -123,7 +123,7 @@ void CrystalScene::update() {
     for(auto c : cube->getChildren()) {
         
         
-        c->modMesh = c->mesh;
+//        c->modMesh = c->mesh;
         //vertexDisplacer.twistModel(c->modMesh, c);
         
         //for(int i=0; i<c->modMesh.getNumVertices(); i++) {

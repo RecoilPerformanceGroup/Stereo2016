@@ -40,6 +40,7 @@ public:
         ofFloatColor specular;
         ofFloatColor emissive;
         float shininess;
+        ofVec3f distortion;
     };
     Data getData() const;
     void setData(const OrganicMaterial::Data& data);
