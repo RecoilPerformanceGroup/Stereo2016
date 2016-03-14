@@ -287,7 +287,7 @@ namespace ofxStereoscopy {
             
         }
         
-        weak_ptr<ofParameter<ofVec3f>> point;
+        vector<ofParameter<ofVec3f>*> points;
         weak_ptr<Plane> plane;
         Quad * quad;
         bool rightEye;
@@ -295,6 +295,12 @@ namespace ofxStereoscopy {
         float outputAspect;
         ofRectangle outputRectangle;
         ofVec3f mouseVec, mouseOffsetVec;
+        
+        void linkPointParameters(ofParameter<ofVec3f> * pointFrom, ofParameter<ofVec3f> * pointTo ){
+            linkedPointParameters.insert ( std::pair<ofParameter<ofVec3f> *,ofParameter<ofVec3f> * >(pointFrom,pointTo) );
+        }
+        
+        std::unordered_multimap< ofParameter<ofVec3f> *, ofParameter<ofVec3f> * > linkedPointParameters;
     };
     
 
@@ -302,8 +308,8 @@ namespace ofxStereoscopy {
         
     public:
         
-        ofParameter<float> physical_eye_seperation_cm {"eye separation", 6.5, 0, 10};
-        ofParameter<ofVec3f> physical_camera_pos_cm {"camera position", ofVec3f(0,250,1200), ofVec3f(-WORLD_DIMENSION_MAX/5,0,0), ofVec3f(WORLD_DIMENSION_MAX/5,WORLD_DIMENSION_MAX/5,WORLD_DIMENSION_MAX/5)};
+        ofParameter<float> physical_eye_seperation_cm {"eye separation", 6.5, 0, 200};
+        ofParameter<ofVec3f> physical_camera_pos_cm {"camera position", ofVec3f(0,250,1200), ofVec3f(-WORLD_DIMENSION_MAX/5,0,0), ofVec3f(WORLD_DIMENSION_MAX/5,WORLD_DIMENSION_MAX/5,WORLD_DIMENSION_MAX/2)};
         ofParameter<float> physical_focus_distance_cm {"focus distance", 200, 0, WORLD_DIMENSION_MAX};
         ofParameter<float> physical_camera_near_clip {"camera near clip", 20, 0, WORLD_DIMENSION_MAX};
         ofParameter<float> pixels_cm {"pixels pr. cm", 2, 0, 3};
@@ -520,93 +526,231 @@ namespace ofxStereoscopy {
             ofPopStyle();
         }
         
-        void drawChessboard(ofColor camColor = ofColor::white) {
+        void drawChessboard(bool rightEye) {
+            
+            ofColor camColor = ofColor::white;
+            
+            if(rightEye){
+                camColor = leftColor;
+            } else {
+                camColor = rightColor;
+            }
             
             ofPushStyle();
             ofFill();
-            ofEnableDepthTest();
-            
-            ofLight areaLight;
-            areaLight.setParent(*this);
-            areaLight.setup();
-            areaLight.enable();
-            areaLight.setAreaLight(400,400);
-            areaLight.setAmbientColor(ofFloatColor(0.3,0.3,0.3));
-            areaLight.setAttenuation(0.75,0.000001,0.000001);
-            areaLight.setDiffuseColor(ofFloatColor(0.75,0.75,0.75));
-            areaLight.setSpecularColor(ofFloatColor(1,1,1));
-            areaLight.setGlobalPosition(0,400,400);
-            areaLight.setGlobalOrientation(ofQuaternion(-90, ofVec3f(1,0,0)));
-            
-/*            ofLight areaLight2;
-            areaLight2.setParent(*this);
-            areaLight2.setup();
-            areaLight2.enable();
-            areaLight2.setAreaLight(800,800);
-            areaLight2.setAmbientColor(ofFloatColor(0.1,0.1,0.1));
-            areaLight2.setAttenuation(0.25,0.0000001,0.000001);
-            areaLight2.setDiffuseColor(ofFloatColor(0.175,0.10,0.075));
-            areaLight2.setSpecularColor(ofFloatColor(0.175,0.10,0.075));
-            areaLight2.setGlobalPosition((sin(ofGetElapsedTimef()*0.5)*200)+200,500,50+(100*cos(ofGetElapsedTimef()*0.5)));
-            areaLight2.setGlobalOrientation(ofQuaternion(-135, ofVec3f(1,-0.5,0)));
-*/
-            ofMaterial materialSphere;
-            materialSphere.setAmbientColor(ofFloatColor(0.0,0.8,1.0,0.5));
-            materialSphere.setDiffuseColor(ofFloatColor(0.8,0.8,0.4,0.5));
-            materialSphere.setSpecularColor(ofFloatColor(0.8,0.8,0.8,1.0));
-            materialSphere.setShininess(10);
-            
-            ofMaterial materialFloorWhite;
-            materialFloorWhite.setAmbientColor(ofFloatColor(1.0,1.0,1.0,1.0));
-            materialFloorWhite.setDiffuseColor(ofFloatColor(0.8,0.8,0.4,1.0));
-            materialFloorWhite.setSpecularColor(ofFloatColor(0.8,0.8,0.8,1.0));
-            materialFloorWhite.setShininess(10);
-            
-            ofMaterial materialFloorBlack;
-            materialFloorBlack.setAmbientColor(ofFloatColor(0.1,0.1,0.1,1.0));
-            materialFloorBlack.setDiffuseColor(ofFloatColor(0.8,0.8,0.4,1.0));
-            materialFloorBlack.setSpecularColor(ofFloatColor(0.8,0.8,0.8,1.0));
-            materialFloorBlack.setShininess(10);
+            ofDisableDepthTest();
             
             float chessSize = 100;
             
             ofPushMatrix(); {
                 ofMultMatrix(getLocalTransformMatrix());
                 
-                ofEnableLighting();
-                
-                for(int x = -2; x <= width/chessSize; x++){
-                    for(int y = -2; y <= height/chessSize; y++){
-                        bool isWhite = (abs((y+x)%2)==1);
-                        if(isWhite) {
-                            materialFloorWhite.begin();
-                        }else{
-                            materialFloorBlack.begin();
-                        }
-                        ofPushMatrix(); {
-                            
-                            ofTranslate(-(width-fmodf(width, chessSize*4))/2, -(height-fmodf(height, chessSize*4))/2);
+                ofPushMatrix(); {
+                    
+                    ofTranslate(-(width-fmodf(width, chessSize*4))/2, -(height-fmodf(height, chessSize*4))/2);
+
+                    for(int x = -2; x <= width/chessSize; x++){
+                        for(int y = -2; y <= height/chessSize; y++){
+                            bool isWhite = (abs((y+x)%2)==1);
+                            if(isWhite ^ rightEye) {
+                                ofSetColor(127,255);
+                            }else{
+                                ofSetColor(ofColor::black);
+                            }
+                            ofFill();
                             ofDrawRectangle(x*chessSize, y*chessSize, chessSize, chessSize);
+                            ofNoFill();
+                            ofSetColor(ofColor::white);
+                            ofDrawRectangle(x*chessSize, y*chessSize, chessSize, chessSize);
+                            ofFill();
                             
-                        } ofPopMatrix();
-                        
-                        if(isWhite) {
-                            materialFloorWhite.end();
-                        }else{
-                            materialFloorBlack.end();
+                            // bottom stripes
+                            
+                            if((y*chessSize) - ((height-fmodf(height, chessSize*4))/2) < -(height/2.0)+chessSize ){
+                                if(isWhite ^ (x%2==0)) {
+                                    ofSetColor(camColor);
+                                }else{
+                                    ofSetColor(ofColor::black);
+                                }
+                                ofDrawRectangle(x*chessSize, (y*chessSize + (fmodf(-height/2.0, chessSize)))-10, chessSize*0.5, 20);
+                                if(isWhite ^ (x%2==0)) {
+                                    ofSetColor(camColor);
+                                }else{
+                                    ofSetColor(ofColor::white);
+                                }
+                                ofDrawRectangle(x*chessSize, (y*chessSize + (fmodf(-height/2.0, chessSize)))-5, chessSize*0.5, 10);
+                                if(isWhite ^ (x%2==0)) {
+                                    ofSetColor(ofColor::black);
+                                }else{
+                                    ofSetColor(camColor);
+                                }
+                                ofDrawRectangle((x*chessSize)+(chessSize*0.5), (y*chessSize + (fmodf(-height/2.0, chessSize)))-10, chessSize*0.5, 20);
+                                if(isWhite ^ (x%2==0)) {
+                                    ofSetColor(ofColor::white);
+                                }else{
+                                    ofSetColor(camColor);
+                                }
+                                ofDrawRectangle((x*chessSize)+(chessSize*0.5), (y*chessSize + (fmodf(-height/2.0, chessSize)))-5, chessSize*0.5, 10);
+                            }
+                            
+                            // top stripes
+                            
+                            if((y*chessSize) - ((height-fmodf(height, chessSize*4))/2) > (height/2.0)-chessSize ){
+                                if(isWhite ^ ((x+1)%2==0)) {
+                                    ofSetColor(camColor);
+                                }else{
+                                    ofSetColor(ofColor::black);
+                                }
+                                ofDrawRectangle(x*chessSize, (y*chessSize + (fmodf(height/2.0, chessSize)))-10, chessSize*0.5, 20);
+                                if(isWhite ^ ((x+1)%2==0)) {
+                                    ofSetColor(camColor);
+                                }else{
+                                    ofSetColor(ofColor::white);
+                                }
+                                ofDrawRectangle(x*chessSize, (y*chessSize + (fmodf(height/2.0, chessSize)))-5, chessSize*0.5, 10);
+                                if(isWhite ^ ((x+1)%2==0)) {
+                                    ofSetColor(ofColor::black);
+                                }else{
+                                    ofSetColor(camColor);
+                                }
+                                ofDrawRectangle((x*chessSize)+(chessSize*0.5), (y*chessSize + (fmodf(height/2.0, chessSize)))-10, chessSize*0.5, 20);
+                                if(isWhite ^ ((x+1)%2==0)) {
+                                    ofSetColor(ofColor::white);
+                                }else{
+                                    ofSetColor(camColor);
+                                }
+                                ofDrawRectangle((x*chessSize)+(chessSize*0.5), (y*chessSize + (fmodf(height/2.0, chessSize)))-5, chessSize*0.5, 10);
+
+                            }
+
+                            // left stripes
+                            
+                            if((x*chessSize) - ((width-fmodf(width, chessSize*4))/2) < -(width/2.0)+chessSize ){
+                                if(isWhite ^ (y%2==0)) {
+                                    ofSetColor(camColor);
+                                }else{
+                                    ofSetColor(ofColor::black);
+                                }
+                                ofDrawRectangle((x*chessSize + (fmodf(-width/2.0, chessSize)))-10, y*chessSize, 20, chessSize*0.5);
+                                if(isWhite ^ (y%2==0)) {
+                                    ofSetColor(camColor);
+                                }else{
+                                    ofSetColor(ofColor::white);
+                                }
+                                ofDrawRectangle((x*chessSize + (fmodf(-width/2.0, chessSize)))-5, y*chessSize, 10,chessSize*0.5);
+                                if(isWhite ^ (y%2==0)) {
+                                    ofSetColor(ofColor::black);
+                                }else{
+                                    ofSetColor(camColor);
+                                }
+                                ofDrawRectangle((x*chessSize + (fmodf(-width/2.0, chessSize)))-10 , (y*chessSize)+(chessSize*0.5), 20, chessSize*0.5);
+                                if(isWhite ^ (y%2==0)) {
+                                    ofSetColor(ofColor::white);
+                                }else{
+                                    ofSetColor(camColor);
+                                }
+                                ofDrawRectangle((x*chessSize + (fmodf(-width/2.0, chessSize)))-5, (y*chessSize)+(chessSize*0.5), 10, chessSize*0.5);
+                            }
+
+                            // right stripes
+                            
+                            if((x*chessSize) - ((width-fmodf(width, chessSize*4))/2) > (width/2.0)-chessSize ){
+                                if(isWhite ^ ((y+1)%2==0)) {
+                                    ofSetColor(camColor);
+                                }else{
+                                    ofSetColor(ofColor::black);
+                                }
+                                ofDrawRectangle((x*chessSize + (fmodf(width/2.0, chessSize)))-10, y*chessSize, 20, chessSize*0.5);
+                                if(isWhite ^ ((y+1)%2==0)) {
+                                    ofSetColor(camColor);
+                                }else{
+                                    ofSetColor(ofColor::white);
+                                }
+                                ofDrawRectangle((x*chessSize + (fmodf(width/2.0, chessSize)))-5, y*chessSize, 10, chessSize*0.5);
+                                if(isWhite ^ ((y+1)%2==0)) {
+                                    ofSetColor(ofColor::black);
+                                }else{
+                                    ofSetColor(camColor);
+                                }
+                                ofDrawRectangle((x*chessSize + (fmodf(width/2.0, chessSize)))-10, (y*chessSize)+(chessSize*0.5), 20, chessSize*0.5);
+                                if(isWhite ^ ((y+1)%2==0)) {
+                                    ofSetColor(ofColor::white);
+                                }else{
+                                    ofSetColor(camColor);
+                                }
+                                ofDrawRectangle((x*chessSize + (fmodf(width/2.0, chessSize)))-5, (y*chessSize)+(chessSize*0.5), 10 ,chessSize*0.5);
+                                
+                            }                            
                         }
-                        
                     }
-                }
-                ofDisableLighting();
+                    ofFill();
+                    for(int x = -2; x <= width/chessSize; x++){
+                        for(int y = -2; y <= height/chessSize; y++){
+                            ofSetColor(ofColor::black);
+                            ofDrawCircle(x*chessSize, y*chessSize, 7);
+                            ofDrawCircle((x+1)*chessSize, y*chessSize, 7);
+                            ofDrawCircle(x*chessSize, (y+1)*chessSize, 7);
+                            ofDrawCircle((x+1)*chessSize, (y+1)*chessSize, 7);
+                            ofSetColor(ofColor::white);
+                            ofDrawCircle(x*chessSize, y*chessSize, 5);
+                            ofDrawCircle((x+1)*chessSize, y*chessSize, 5);
+                            ofDrawCircle(x*chessSize, (y+1)*chessSize, 5);
+                            ofDrawCircle((x+1)*chessSize, (y+1)*chessSize, 5);
+                        }
+                    }
+                } ofPopMatrix();
+
+                ofFill();
                 
-                ofDisableDepthTest();
-
+                float cornerEdgeWidth = sqrt(pow(height/2.0, 2)*2);
+                ofPushMatrix();
+                ofTranslate(-width/2, -height/2);
+                ofRotateZ(45);
+                ofSetColor(0,255);
+                ofDrawCircle(0,0,12);
+                ofDrawRectangle(-cornerEdgeWidth, -6, cornerEdgeWidth*2, 6);
+                ofSetColor(255,255);
+                ofDrawCircle(0,0,10);
+                ofDrawRectangle(-cornerEdgeWidth, 0, cornerEdgeWidth*2, 6);
+                ofPopMatrix();
+                ofPushMatrix();
+                ofTranslate(width/2, -height/2);
+                ofRotateZ(-45);
+                ofSetColor(0,255);
+                ofDrawCircle(0,0,12);
+                ofDrawRectangle(-cornerEdgeWidth, -6, cornerEdgeWidth*2, 6);
+                ofSetColor(255,255);
+                ofDrawCircle(0,0,10);
+                ofDrawRectangle(-cornerEdgeWidth, 0, cornerEdgeWidth*2, 6);
+                ofPopMatrix();
+                ofPushMatrix();
+                ofTranslate(width/2, height/2);
+                ofRotateZ(45);
+                ofSetColor(0,255);
+                ofDrawCircle(0,0,12);
+                ofDrawRectangle(-cornerEdgeWidth, 0, cornerEdgeWidth*2, 6);
+                ofSetColor(255,255);
+                ofDrawCircle(0,0,10);
+                ofDrawRectangle(-cornerEdgeWidth, -6, cornerEdgeWidth*2, 6);
+                ofPopMatrix();
+                ofPushMatrix();
+                ofTranslate(-width/2, height/2);
+                ofRotateZ(-45);
+                ofSetColor(0,255);
+                ofDrawCircle(0,0,12);
+                ofDrawRectangle(-cornerEdgeWidth, 0, cornerEdgeWidth*2, 6);
+                ofSetColor(255,255);
+                ofDrawCircle(0,0,10);
+                ofDrawRectangle(-cornerEdgeWidth, -6, cornerEdgeWidth*2, 6);
+                ofPopMatrix();
+                
+                ofFill();
+                
                 float r = 200;
-
-                ofSetColor(255,255,255,96);
+                
+                ofSetColor(0,64);
                 ofDrawCircle(0,0,r);
-
+                
                 ofSetColor(camColor,127);
                 
                 ofNoFill();
@@ -616,27 +760,26 @@ namespace ofxStereoscopy {
                     ofDrawCircle(0,0,r-(px*i));
                     ofDrawCircle(0,0,(r*2)-(px*i));
                 }
-
-                ofSetColor(camColor,255);
-
+                
                 ofFill();
 
-                ofDrawRectangle(-width/2, (-height/2)-2, width, 4);
-                ofDrawRectangle((-width/2)+10, -3, width-20, 6);
-                ofDrawRectangle(-width/2, (height/2)-2, width, 4);
+                ofSetColor(255,255);
+                
                 int widthRound = roundf(width);
                 ofPushMatrix();
                 ofTranslate((width/2)-40, 15, 0);
                 ofScale(0.75,0.75,0.75);
                 world->font.drawString(ofToString(widthRound) + " cm", -world->font.getStringBoundingBox(ofToString(widthRound) + " cm", 0, 0).width, 0);
                 ofPopMatrix();
+
+                ofSetColor(camColor,255);
+                ofDrawRectangle((-width/2)+10, -3, width-20, 6);
                 ofDrawTriangle(ofPoint(width/2-20, -20), ofPoint(width/2-20, 20), ofPoint(width/2, 0));
                 ofDrawTriangle(ofPoint(-width/2+20, -20), ofPoint(-width/2+20, 20), ofPoint(-width/2, 0));
                 
-                ofDrawRectangle((-width/2)-2, -height/2, 4, height);
-                ofDrawRectangle(-3, (-height/2)+10, 6, height-20);
-                ofDrawRectangle((width/2)-2, -height/2, 4, height);
                 
+                ofSetColor(255,255);
+
                 ofPushMatrix();
                 ofRotateZ(90);
                 ofTranslate((height/2)-40, 15, 0);
@@ -644,6 +787,8 @@ namespace ofxStereoscopy {
                 int heightRound = roundf(height);
                 world->font.drawString(ofToString(heightRound) + " cm", -world->font.getStringBoundingBox(ofToString(heightRound) + " cm", 0, 0).width, 0);
                 ofPopMatrix();
+                ofSetColor(camColor,255);
+                ofDrawRectangle(-3, (-height/2)+10, 6, height-20);
                 ofDrawTriangle(ofPoint(-20,height/2-20), ofPoint(20, height/2-20), ofPoint(0, height/2));
                 ofDrawTriangle(ofPoint(-20,-height/2+20), ofPoint(20, -height/2+20), ofPoint(0, -height/2));
 
@@ -652,8 +797,14 @@ namespace ofxStereoscopy {
                 ofRectangle nameFrameRect(nameRect);
                 nameFrameRect.setFromCenter(ofPoint(0,0), nameRect.width+30.0, nameRect.height+30.0);
                 nameRect.setFromCenter(ofPoint(0,0), nameRect.width, nameRect.height);
-                
+
+                ofSetColor(0,255);
+                ofRectangle nameFrameBlackRect;
+                nameFrameBlackRect.setFromCenter(ofPoint(0,0,0), nameFrameRect.width + 150, nameFrameRect.height+10);
+                ofDrawRectRounded(nameFrameBlackRect, 10);
                 ofSetColor(camColor,255);
+                world->font.drawString((rightEye?"R":"L"), (rightEye? (nameFrameRect.width/2.0) + 30 : -((nameFrameRect.width/2.0) + 30 + world->font.getStringBoundingBox(rightEye?"R":"L",0,0).width )), nameRect.y);
+                
                 ofDrawRectRounded(nameFrameRect, 10);
                 
                 ofSetColor(0,255);
@@ -689,11 +840,11 @@ namespace ofxStereoscopy {
         void renderChessboards() {
             
             beginLeft();
-            drawChessboard(leftColor);
+            drawChessboard(false);
             endLeft();
             
             beginRight();
-            drawChessboard(rightColor);
+            drawChessboard(true);
             endRight();
         }
         
@@ -794,8 +945,8 @@ namespace ofxStereoscopy {
         
         ofCamera camLeft, camRight;
         ofFbo fboLeft, fboRight;
-        ofColor leftColor {127, 255, 255};
-        ofColor rightColor {255, 255, 127};
+        ofColor leftColor {255,255,0};
+        ofColor rightColor {0,255,255};
         ofTexture textureLeft, textureRight;
         World * world;
         Quad quadLeft, quadRight;

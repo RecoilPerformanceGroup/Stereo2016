@@ -81,6 +81,7 @@ namespace ofxStereoscopy {
         ofSetColor(255, 255, 255, 127);
         ofDrawRectangle(0,0,1.0,1.0);
         
+        ofSetColor(255, 255);
         ofDisableDepthTest();
         
         if(!plane.expired()){
@@ -106,9 +107,9 @@ namespace ofxStereoscopy {
                 ofDrawEllipse(cpVec,0.03, 0.03*outputAspect);
                 
             }
-            if (!point.expired()) {
+            for(auto point : points){
                 ofSetColor(ofColor::yellow);
-                ofDrawEllipse(point.lock()->get(), 0.04, 0.04*outputAspect);
+                ofDrawEllipse(point->get(), 0.04, 0.04*outputAspect);
             }
         }
     }
@@ -136,16 +137,16 @@ namespace ofxStereoscopy {
             keyVec *= 0.00025;
         }
         
-        if(!point.expired()){
-            point.lock()->set(keyVec + point.lock()->get());
+        for(auto point : points){
+            point->set(keyVec + point->get());
         }
 
     }
     
     void Calibrator::mouseDragged(ofVec3f v, int button){
         if(button== 0)mouseVec.set(v);
-        if(!point.expired()){
-            point.lock()->set(mouseVec + mouseOffsetVec);
+        for(auto point : points){
+            point->set(mouseVec + mouseOffsetVec);
         }
     }
     
@@ -161,14 +162,25 @@ namespace ofxStereoscopy {
                     shared_ptr<ofParameter<ofVec3f>> cp = std::dynamic_pointer_cast<ofParameter<ofVec3f>>(cornerPoint);
                     ofVec3f cpVec = cp->get();
                     if (cpVec.distance(mouseVec) < 0.03) {
+                        points.clear();
                         mouseOffsetVec = cpVec - mouseVec;
-                        point = cp;
-                        point.lock()->set(mouseVec + mouseOffsetVec);
+                        points.push_back(cp.get());
+                        for(auto pointPair : linkedPointParameters)
+                        {
+                            if(((ofParameter<ofVec3f>*)cp.get())->get() == ((ofParameter<ofVec3f>*)pointPair.first)->get())
+                                points.push_back(pointPair.second);
+                            if(((ofParameter<ofVec3f>*)cp.get())->get() == ((ofParameter<ofVec3f>*)pointPair.second)->get()){
+                                points.push_back(pointPair.first);
+                            }
+                        }
+                        for(auto point : points){
+                            point->set(mouseVec + mouseOffsetVec);
+                        }
                         return;
                     }
                 }
                 
-                point.reset();
+                points.clear();
                 
             }
         }

@@ -1,5 +1,5 @@
 <mainParams>
-	<Stage_Size>832.168, 500, 800</Stage_Size>
+	<Stage_Size>800, 537.762, 800</Stage_Size>
 	<subParams>
 		<float01>1</float01>
 		<UnknownName>4.74227e+30</UnknownName>
@@ -11,8 +11,8 @@
 	<Background_Color>255, 255, 255, 0</Background_Color>
 <world>
 		<camera>
-			<camera_position>0, 250, 1100</camera_position>
-			<eye_separation>6.5</eye_separation>
+			<camera_position>405.594, 1132.87, 2972.03</camera_position>
+			<eye_separation>138.462</eye_separation>
 			<focus_distance>200</focus_distance>
 			<camera_near_clip>20</camera_near_clip>
 		</camera>
@@ -20,7 +20,7 @@
 		<WALL>
 			<UnknownName>1</UnknownName>
 			<position>0, 0, 0</position>
-			<size>832.168, 500</size>
+			<size>800, 537.762</size>
 			<Left_Quad>
 				<Output_Points>
 					<Top_Left>0.176684, 0.270032, 0</Top_Left>
@@ -31,31 +31,31 @@
 			</Left_Quad>
 			<Right_Quad>
 				<Output_Points>
-					<Top_Left>0.324194, 0.623446, 0</Top_Left>
-					<Top_Right>0.670604, 0.623446, 0</Top_Right>
-					<Bottom_Left>0.315248, 0.998446, 0</Bottom_Left>
-					<Bottom_Right>0.697742, 0.998446, 0</Bottom_Right>
+					<Top_Left>0.756599, 0.992498, 0</Top_Left>
+					<Top_Right>0.264829, 0.991453, 0</Top_Right>
+					<Bottom_Left>0.75672, 0.444439, 0</Bottom_Left>
+					<Bottom_Right>0.274207, 0.441008, 0</Bottom_Right>
 				</Output_Points>
 			</Right_Quad>
 		</WALL>
 		<FLOOR>
 			<UnknownName>1</UnknownName>
 			<position>0, 0, 0</position>
-			<size>832.168, 800</size>
+			<size>800, 800</size>
 			<Left_Quad>
 				<Output_Points>
-					<Top_Left>0, 0, 0</Top_Left>
-					<Top_Right>1, 0, 0</Top_Right>
-					<Bottom_Left>0.342919, 0.567964, 0</Bottom_Left>
-					<Bottom_Right>0.632114, 0.573513, 0</Bottom_Right>
+					<Top_Left>0.735757, 0.461773, 0</Top_Left>
+					<Top_Right>0.256167, 0.472641, 0</Top_Right>
+					<Bottom_Left>0.820587, 0.16038, 0</Bottom_Left>
+					<Bottom_Right>0.137389, 0.16545, 0</Bottom_Right>
 				</Output_Points>
 			</Left_Quad>
 			<Right_Quad>
 				<Output_Points>
-					<Top_Left>0, 0, 0</Top_Left>
-					<Top_Right>1, 0, 0</Top_Right>
-					<Bottom_Left>0.326275, 0.62622, 0</Bottom_Left>
-					<Bottom_Right>0.665403, 0.62622, 0</Bottom_Right>
+					<Top_Left>0.75672, 0.444439, 0</Top_Left>
+					<Top_Right>0.274207, 0.441008, 0</Top_Right>
+					<Bottom_Left>0.839714, 0.00178661, 0</Bottom_Left>
+					<Bottom_Right>0.173447, -0.0125352, 0</Bottom_Right>
 				</Output_Points>
 			</Right_Quad>
 		</FLOOR>

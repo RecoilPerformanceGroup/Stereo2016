@@ -38,8 +38,8 @@ void ofApp::setup(){
                                                       &world
                                                       ));
     
-    projectorCalibrationFolder->addToggle("WALL LEFT", false);
-    projectorCalibrationFolder->addToggle("WALL RIGHT", false);
+    (projectorCalibrationFolder->addToggle("WALL LEFT", false))->onButtonEvent(this,&ofApp::onButtonEvent);
+    (projectorCalibrationFolder->addToggle("WALL RIGHT", false))->onButtonEvent(this,&ofApp::onButtonEvent);
     
     world.addPlane(make_shared<ofxStereoscopy::Plane>(
                                                       "FLOOR",
@@ -50,9 +50,28 @@ void ofApp::setup(){
                                                       &world
                                                       ));
     
-    projectorCalibrationFolder->addToggle("FLOOR LEFT", false);
-    projectorCalibrationFolder->addToggle("FLOOR RIGHT", false);
+    (projectorCalibrationFolder->addToggle("FLOOR LEFT", false))->onButtonEvent(this,&ofApp::onButtonEvent);
+    (projectorCalibrationFolder->addToggle("FLOOR RIGHT", false))->onButtonEvent(this,&ofApp::onButtonEvent);
     
+    world.calibrator.linkPointParameters(
+                                         &world.getPlane("FLOOR")->quadLeft.outputPointTopLeft,
+                                         &world.getPlane("WALL")->quadLeft.outputPointBottomLeft
+                                         );
+    world.calibrator.linkPointParameters(
+                                         &world.getPlane("FLOOR")->quadLeft.outputPointTopRight,
+                                         &world.getPlane("WALL")->quadLeft.outputPointBottomRight
+                                         );
+    world.calibrator.linkPointParameters(
+                                         &world.getPlane("FLOOR")->quadRight.outputPointTopLeft,
+                                         &world.getPlane("WALL")->quadRight.outputPointBottomLeft
+                                         );
+    world.calibrator.linkPointParameters(
+                                         &world.getPlane("FLOOR")->quadRight.outputPointTopRight,
+                                         &world.getPlane("WALL")->quadRight.outputPointBottomRight
+                                         );
+    
+
+
     stage_size_cm.addListener(this, &ofApp::stageResized);
     
     loadParameters(mainParams);
@@ -496,6 +515,19 @@ void ofApp::onButtonEvent(ofxDatGuiButtonEvent e){
         
         if(e.target->getLabel() == "LOAD SETTINGS")
             loadParameters(mainParams);
+    
+    ofxDatGuiFolder * projectorCalibrationFolder = gui->getFolder("Projector Calibration");
+
+    for (auto child : projectorCalibrationFolder->children) {
+        if (child == e.target){
+            for (auto otherChild : projectorCalibrationFolder->children) {
+                if(otherChild != child){
+                    ((ofxDatGuiToggle *) otherChild)->setEnabled(false);
+                }
+            }
+            break;
+        }
+    }
 }
 
 void ofApp::onFolderEvent(ofxDatGuiFolderEvent e){

@@ -34,7 +34,7 @@ public:
     ofVboMesh modMesh; //vbomesh ?
     
     int nCells;
-    list<VoroNode *> children;
+    list<VoroNode *> voroChildren;
     
     VoroNode() {
         isSplit = false;
@@ -216,11 +216,11 @@ public:
     
     ~VoroNode() {
         
-        for(auto s : children) {
+        for(auto s : voroChildren) {
             delete s;
         }
         
-        children.clear();
+        voroChildren.clear();
     };
     
     void setParent(ofNode& parent, bool bMaintainGlobalTransform = false ){
@@ -229,12 +229,12 @@ public:
             if (VoroNode* oldVoroParent = dynamic_cast<VoroNode*>(this->parent)) {
                 // our old parent is also VoroNode
                 // remove this from parents' children.
-                oldVoroParent->children.remove(this);
+                oldVoroParent->voroChildren.remove(this);
             }
         }
         if (VoroNode* newVoroParent = dynamic_cast<VoroNode*>(&parent)){
             // our new parent is a VoroNode
-            newVoroParent->children.push_back(this);
+            newVoroParent->voroChildren.push_back(this);
         }
         ofNode::setParent(parent, bMaintainGlobalTransform);
     };
@@ -246,14 +246,14 @@ public:
             if (VoroNode* oldVoroParent = dynamic_cast<VoroNode*>(this->parent)) {
                 // our old parent is also VoroNode
                 // remove this from parents' children.
-                oldVoroParent->children.remove(this);
+                oldVoroParent->voroChildren.remove(this);
             }
         }
         ofNode::clearParent();
     }
     
     list<VoroNode *> getChildren() {
-        return children;
+        return voroChildren;
     };
     
     void split(int _nCells=3, bool overFlowX = false, bool overFlowY = false, bool overFlowZ = false) {
@@ -311,7 +311,7 @@ public:
             delete(w);
         }
         
-        children.clear();
+        voroChildren.clear();
         
         for(auto && m : cellMeshes) {
             
@@ -389,7 +389,7 @@ public:
         vector<ofVboMesh> cellMeshes;
         getCellsFromContainerParallel(con, 0, cellMeshes, false);
         
-        children.clear();
+        voroChildren.clear();
         
         vector<ofPoint> centroids = getCellsCentroids(con);
         
