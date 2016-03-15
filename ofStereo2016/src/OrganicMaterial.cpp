@@ -231,6 +231,9 @@ OUT vec3 eyePosition3;
 OUT vec4 worldPosition;
 OUT vec4 modelViewPosition;
 OUT vec4 localPosition;
+OUT vec4 worldPositionBeforeNoise;
+OUT vec4 modelViewPositionBeforeNoise;
+OUT vec4 localPositionBeforeNoise;
 
 IN vec4 position;
 IN vec4 color;
@@ -329,12 +332,20 @@ void main (void){
     vec4 modifiedPosition = modelViewProjectionMatrix * (position+displacementVec);
     */
     
-    localPosition = (position+displacementVec);
-    modelViewPosition = modelViewMatrix * localPosition;
+    localPositionBeforeNoise = position;
+    modelViewPositionBeforeNoise = position * modelViewMatrix;
+    worldPositionBeforeNoise = worldMatrix * position;
+    
+    vec4 displacementVec = vec4(snoise(vec2(worldPositionBeforeNoise.z * 0.01, time * 0.5)) * 10.0,
+                                snoise(vec2(worldPositionBeforeNoise.x * 0.01, time * 0.5)) * 10.0,
+                                snoise(vec2(worldPositionBeforeNoise.y * 0.01, time * 0.5)) * 10.0, 0.0);
+    
+    localPosition = position + displacementVec;
     worldPosition = worldMatrix * localPosition;
+    modelViewPosition = modelViewMatrix * localPosition;
+    
+    
     vec4 modifiedPosition = modelViewProjectionMatrix * localPosition;
-    
-    
     
     vec4 eyePosition = modelViewMatrix * modifiedPosition;
     vec3 tempNormal = (normalMatrix * normal).xyz;
@@ -354,6 +365,9 @@ IN vec3 eyePosition3;
 IN vec4 worldPosition;
 IN vec4 modelViewPosition;
 IN vec4 localPosition;
+IN vec4 worldPositionBeforeNoise;
+IN vec4 modelViewPositionBeforeNoise;
+IN vec4 localPositionBeforeNoise;
 
 
 struct lightData
@@ -681,10 +695,10 @@ void main (void){
     
     vec4 orgInverted = inverse(projectionMatrix) * vec4(eyePosition3,1.0);
     
-    localColor.r -= (0.5+snoise(localPosition.xyz*0.6)*0.5)*0.1;
-    localColor.g -= (0.5+snoise(localPosition.yzx*0.6)*0.5)*0.1;
-    localColor.b -= (0.5+snoise(localPosition.zxy*0.6)*0.5)*0.1;
-    localColor.rgb *= 1.0+(0.25*snoise(vec3(worldPosition.xzz/2000.0)+vec3(0,time/6.0,time/6.0)));
+    float grainyNoise = (0.5+snoise(worldPosition.zxy*0.6)*0.5)*0.2;
+    
+    localColor.rgb -= vec3(grainyNoise,grainyNoise,grainyNoise);
+    localColor.rgb *= 1.0+(0.5*snoise(vec3(worldPosition.xzz/2000.0)+vec3(0,time/6.0,time/6.0)));
     
     //localColor.rgb = (mod((worldPosition.z)+(snoise(vec3(time, 0, 0)))*300, 200) > 180.0)?vec3(0,0,0):transformedNormal;
     
