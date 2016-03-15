@@ -1,0 +1,11 @@
+<group>
+	<Cells>190</Cells>
+<group/>
+<Debug_draw>0</Debug_draw>
+	<Automatic_rotation>-0.0102041, 0, 0</Automatic_rotation>
+	<rot_speed>0.02</rot_speed>
+<Crystal_color>1, 1, 1, 1</Crystal_color>
+<spotlightPosition>-2.20408, 0, 4</spotlightPosition>
+	<scale>5.75</scale>
+<scaleCells>0.9</scaleCells>
+</group>
