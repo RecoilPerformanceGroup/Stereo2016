@@ -35,7 +35,7 @@ int main( ){
     
     CGRect mainDisplayBounds= CGDisplayBounds ( displays[0] );
 
-    if(numDisplays == 1){
+    if(numDisplays == 1 ){
         
         float divisions = 4.0;
         // one display: palce gui and mainWindow in a default arrangement
@@ -70,7 +70,7 @@ int main( ){
         if(e == kCGErrorRangeCheck) cout << "no hardware stereo" << endl;
         if(e == kCGErrorSuccess) cout << "hardware stereo" << endl;
         
-        if (numDisplays > 2) {
+        if (numDisplays > 2 ) {
             
             // three or more displays: palce resizeable gui on first and fill second and third with undecorated mainWindow, if they are same size.
             
