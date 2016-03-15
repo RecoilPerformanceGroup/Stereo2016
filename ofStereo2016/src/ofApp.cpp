@@ -295,10 +295,11 @@ void ofApp::draw(){
         }
         
         ofTranslate(1.0, 0);
-        
-        for(std::pair<string, shared_ptr<ofxStereoscopy::Plane>> p : world.planes){
-            ofSetColor(255,255);
-            p.second->drawRight();
+        if((calibrate_planes && world.calibrator.rightEye) || !calibrate_planes){
+            for(std::pair<string, shared_ptr<ofxStereoscopy::Plane>> p : world.planes){
+                ofSetColor(255,255);
+                p.second->drawRight();
+            }
         }
         
     }
@@ -367,6 +368,10 @@ void ofApp::setupGui(shared_ptr<ofAppBaseWindow> gW,shared_ptr<ofAppBaseWindow> 
     
     guiWindow = gW;
     mainWindow = mW;
+    if (guiWindow->getWidth() == ofGetScreenWidth()) {
+        // hack to go fullscreen on two external monitors
+        mW->setWindowPosition(guiWindow->getWidth(), 0);
+    }
     
     worldModelCam.setFov(75);
 

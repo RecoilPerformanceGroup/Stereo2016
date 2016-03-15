@@ -10,6 +10,7 @@
 #define VoroNode_hpp
 #include "ofMain.h"
 #include "ofxVoro.h"
+#include "OrganicMaterial.hpp"
 #include "dispatch/dispatch.h"
 
 class VoroNode : public ofNode {
@@ -359,12 +360,14 @@ public:
         
     }
     
-    void draw() {
-        
+    void draw(OrganicMaterial * m = nullptr) {
+        if(m != nullptr){
+            m->setWorldMatrix(getGlobalTransformMatrix());
+        }
         ofNode::draw();
         
         for(auto c : getChildren()) {
-            c->draw();
+            c->draw(m);
         }
     };
     

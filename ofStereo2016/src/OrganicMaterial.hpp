@@ -26,12 +26,14 @@ public:
     void setSpecularColor(ofFloatColor oSpecular);
     void setEmissiveColor(ofFloatColor oEmmisive);
     void setShininess(float nShininess);
-    
+    void setWorldMatrix(ofMatrix4x4 m);
+
     ofFloatColor getDiffuseColor() const;
     ofFloatColor getAmbientColor() const;
     ofFloatColor getSpecularColor() const;
     ofFloatColor getEmissiveColor() const;
     float getShininess() const;
+    ofMatrix4x4 getWorldMatrix() const;
     
     struct Data{
         Data();
@@ -67,5 +69,7 @@ private:
     
     static string vertexShader;
     static string fragmentShader;
+    
+    ofMatrix4x4 worldMatrix;
     
 };
