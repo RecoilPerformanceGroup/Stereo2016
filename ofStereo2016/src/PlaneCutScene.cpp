@@ -26,9 +26,7 @@ void PlaneCutScene::setup(){
     voroNodes.push_back(vWall);
     
     mat.setDiffuseColor(ofFloatColor::white);
-    
-    ofSetSmoothLighting(true);
-    
+
     float falloff = 0.1/(app->stage_size_cm.get().y * 4.0 * app->world.pixels_cm);
     
     // directional lights emit along the +z axis
@@ -73,9 +71,9 @@ void PlaneCutScene::draw(){
     directionalLight2.setScale(2);
     directionalLight2.draw();
     */
-    ofEnableLighting();
-    directionalLight1.enable();
-    directionalLight2.enable();
+    //ofEnableLighting();
+    //directionalLight1.enable();
+    //directionalLight2.enable();
     matstatic.begin();
    // ofDrawBox(0, app->stage_size_cm.get().y/2, -100, app->stage_size_cm.get().x, app->stage_size_cm.get().y, 200);
     voroNodes[0]->draw();
@@ -99,7 +97,6 @@ void PlaneCutScene::draw(){
 */
     mat.end();
     directionalLight1.disable();
-    ofDisableLighting();
 
 }
 
