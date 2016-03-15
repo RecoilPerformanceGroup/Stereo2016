@@ -338,21 +338,21 @@ void main (void){
     */
     
     // noise displace
-    /*vec4 displaceAmount = vec4(10.0,10.0,10.0,0.0);
+    vec4 displaceAmount = vec4(10.0,10.0,10.0,0.0);
     vec4 displacementVec = vec4(
                                 snoise(vec2(time.x/10.0 + pos.z/100.0, 800)),
                                 snoise(vec2(time.y + pos.x,  600)),
                                 snoise(vec2(time.z + pos.y,  400)), 0.0
                         );
     
-    vec4 modifiedPosition = modelViewProjectionMatrix * (pos+(displacementVec*displaceAmount));*/
+    vec4 modifiedPosition = modelViewProjectionMatrix * (pos+(displacementVec*displaceAmount));
     
     
     //twist
     
     
-    float rotateAmt = sin(time.x/10 + (pos.y / 80.0)) * PI;
-    vec4 modifiedPosition = modelViewProjectionMatrix * (rotationMatrix(vec3(0.0,1.0,0.0), rotateAmt) * pos);
+    //float rotateAmt = sin(time.x/10 + (pos.y / 80.0)) * PI;
+    //vec4 modifiedPosition = modelViewProjectionMatrix * (rotationMatrix(vec3(0.0,1.0,0.0), rotateAmt) * pos);
     
     //vn.rotate(rotateAmt, rotteAround, ofVec3f(0,1,0));
 
