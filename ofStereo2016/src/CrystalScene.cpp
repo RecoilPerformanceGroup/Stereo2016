@@ -15,9 +15,10 @@ void CrystalScene::setup() {
     vertexDisplacer.setup();
     
     
-    light.setPointLight();
+    /*light.setPointLight();
     light.setAmbientColor(ofColor(10));
     light.setPosition(-2, -2, -2);
+    */
     
     //shader.load("shadersGL3/shader");
     //pointlight..setDirectional();
@@ -26,9 +27,10 @@ void CrystalScene::setup() {
     //pointlight..setSpecularColor(ofColor::blue);
     //pointlight..setAttenuation(0.81);
     
-    spotlight.setSpotlight();
+    /*spotlight.setSpotlight();
     spotlight.setDiffuseColor(ofColor(60,60,60));
     spotlight.setSpecularColor(200);
+    */
     
     //spotlight.setAttenuation(0.61);
     
@@ -41,39 +43,34 @@ void CrystalScene::setup() {
 
 void CrystalScene::draw() {
     
-    ofEnableDepthTest();
-    ofEnableLighting();
+    //ofEnableDepthTest();
+    //ofEnableLighting();
     ofEnableNormalizedTexCoords();
     
     ofSetColor(255);
     
-    pointlight.enable();
-    spotlight.enable();
-    spotlight.lookAt(origin);
+    //pointlight.enable();
+    //spotlight.enable();
+    //spotlight.lookAt(origin);
     
     ofPushMatrix(); {
         
         
         // twist example
         
-        ofVec3f rotateAround = cube->getPosition();
+        /*ofVec3f rotateAround = cube->getPosition();
         
         for(auto c : cube->getChildren()) {
             
             
-            //c->modMesh = c->mesh;
-            
-            //ofMesh m;
-            
-            //m = c->mesh;
+            ofMesh m = c->mesh;
             
             
-            //for(int i=0; i<  c->modMesh.getNumVertices(); i++) {
+            for(int i=0; i<  m.getNumVertices(); i++) {
                 
-                //ofVec3f v = c->modMesh.getVertex(i);
-                //ofVec3f gv = v * c->getGlobalTransformMatrix();
+                ofVec3f v = m.getVertex(i);
+                ofVec3f gv = v * c->getGlobalTransformMatrix();
                 //ofVec3f vn = v+c->getPosition();//gv;
-                
                 
                 //ofDrawSphere(v * c->getGlobalTransformMatrix(), 5);
                 
@@ -82,35 +79,32 @@ void CrystalScene::draw() {
                 //vn.rotate(rotateAmt, rotateAround, ofVec3f(0,1,0));
                 
                 //m.setVertex(i, vn);
-                //c->modMesh.setVertex(i, vn);
-            //}
+                m.setVertex(i, gv);
+            }
             
-            /*mat.begin();
+            mat.begin();
              m.draw();
-             mat.end();*/
-        }
+             mat.end();
+        }*/
         
         
         mat.begin();
-        tex.bind();
+        //tex.bind();
         cube->draw();
-        tex.unbind();
+        //tex.unbind();
         mat.end();
-        
-        
-        
         
         
     } ofPopMatrix();
     
     
     
-    spotlight.disable();
-    pointlight.disable();
+    //spotlight.disable();
+    //pointlight.disable();
     
     ofDisableNormalizedTexCoords();
-    ofDisableDepthTest();
-    ofDisableLighting();
+    //ofDisableDepthTest();
+    //ofDisableLighting();
 }
 
 void CrystalScene::update() {

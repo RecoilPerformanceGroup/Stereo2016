@@ -76,7 +76,7 @@ public:
     ofParameter<bool> debugDraw {"Debug draw", false};
     ofParameter<bool> rebuild {"rebuild", false};
     
-    ofParameterGroup params {"",
+    ofParameterGroup params {"Crystal",
         enabled,
         rebuild,
         origin,
@@ -91,12 +91,7 @@ public:
     
     
     CrystalScene() {
-        
-        name = "Crystal Test";
-        oscAddress = "crystaltest";
-        
         ofxStereoscopy::Scene::params = params;
-        params.setName(oscAddress);
     }
     
     void draw();

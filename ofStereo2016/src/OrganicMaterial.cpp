@@ -169,8 +169,14 @@ void OrganicMaterial::updateMaterial(const ofShader & shader,ofGLProgrammableRen
     shader.setUniform4fv("global_ambient", &ofGetGlobalAmbientColor().r);
     shader.setUniform1f("mat_shininess",data.shininess);
     
-    shader.setUniform1f("time", ofGetElapsedTimef());
+    shader.setUniform3f("time", ofGetElapsedTimef(), ofGetElapsedTimef(), ofGetElapsedTimef());
+    
+    
+    // TODO: set all vertex displace uniforms
+    
+
     shader.setUniformMatrix4f("worldMatrix", worldMatrix);
+    
 }
 
 void OrganicMaterial::updateLights(const ofShader & shader,ofGLProgrammableRenderer & renderer) const{
@@ -225,6 +231,8 @@ void OrganicMaterial::updateLights(const ofShader & shader,ofGLProgrammableRende
 
 static const string vertexShader = R"(
 
+const float PI = 3.14159265359;
+
 OUT vec2 outtexcoord; // pass the texCoord if needed
 OUT vec3 transformedNormal;
 OUT vec3 eyePosition3;
@@ -249,7 +257,7 @@ uniform mat4 normalMatrix;
 uniform mat4 worldMatrix;
 
 // the time value is passed into the shader by the OF app.
-uniform float time;
+uniform vec3 time;
 
 // Noise 2D
 //
@@ -322,9 +330,24 @@ float snoise(vec2 v)
     return 130.0 * dot(m, g);
 }
 
+mat4 rotationMatrix(vec3 axis, float angle)
+{
+    axis = normalize(axis);
+    float s = sin(angle);
+    float c = cos(angle);
+    float oc = 1.0 - c;
+    
+    return mat4(oc * axis.x * axis.x + c,           oc * axis.x * axis.y - axis.z * s,  oc * axis.z * axis.x + axis.y * s,  0.0,
+                oc * axis.x * axis.y + axis.z * s,  oc * axis.y * axis.y + c,           oc * axis.y * axis.z - axis.x * s,  0.0,
+                oc * axis.z * axis.x - axis.y * s,  oc * axis.y * axis.z + axis.x * s,  oc * axis.z * axis.z + c,           0.0,
+                0.0,                                0.0,                                0.0,                                1.0);
+}
+
 
 void main (void){
     
+    
+    vec4 pos = position;
     
     /*float displacementHeight = 10.0;
     float displacementY = sin(time + (position.x / 2.0)) * displacementHeight;
@@ -332,13 +355,33 @@ void main (void){
     vec4 modifiedPosition = modelViewProjectionMatrix * (position+displacementVec);
     */
     
+    // noise displace
+/*    vec4 displaceAmount = vec4(10.0,10.0,10.0,0.0);
+    vec4 displacementVec = vec4(
+                                snoise(vec2(time.x/10.0 + pos.z/100.0, 800)),
+                                snoise(vec2(time.y + pos.x,  600)),
+                                snoise(vec2(time.z + pos.y,  400)), 0.0
+                        );
+    
+    vec4 modifiedPosition = modelViewProjectionMatrix * (pos+(displacementVec*displaceAmount));
+    */
+    
+    //twist
+    
+    
+    //float rotateAmt = sin(time.x/10 + (pos.y / 80.0)) * PI;
+    //vec4 modifiedPosition = modelViewProjectionMatrix * (rotationMatrix(vec3(0.0,1.0,0.0), rotateAmt) * pos);
+    
+    //vn.rotate(rotateAmt, rotteAround, ofVec3f(0,1,0));
+
+    //vec4 modifiedPosition = modelViewProjectionMatrix * pos;
     localPositionBeforeNoise = position;
     modelViewPositionBeforeNoise = position * modelViewMatrix;
     worldPositionBeforeNoise = worldMatrix * position;
     
-    vec4 displacementVec = vec4(snoise(vec2(worldPositionBeforeNoise.z * 0.01, time * 0.5)) * 10.0,
-                                snoise(vec2(worldPositionBeforeNoise.x * 0.01, time * 0.5)) * 10.0,
-                                snoise(vec2(worldPositionBeforeNoise.y * 0.01, time * 0.5)) * 10.0, 0.0);
+    vec4 displacementVec = vec4(snoise(vec2(worldPositionBeforeNoise.z * 0.01, time.x * 0.5)) * 10.0,
+                                snoise(vec2(worldPositionBeforeNoise.x * 0.01, time.y * 0.5)) * 10.0,
+                                snoise(vec2(worldPositionBeforeNoise.y * 0.01, time.z * 0.5)) * 10.0, 0.0);
     
     localPosition = position + displacementVec;
     worldPosition = worldMatrix * localPosition;
@@ -414,7 +457,7 @@ uniform mat4 modelViewProjectionMatrix;
 
 uniform lightData lights[MAX_LIGHTS];
 
-uniform float time;
+uniform vec3 time;
 
 void pointLight( in lightData light, in vec3 normal, in vec3 ecPosition3, inout vec3 ambient, inout vec3 diffuse, inout vec3 specular ){
     float nDotVP;       // normal . light direction
@@ -698,7 +741,7 @@ void main (void){
     float grainyNoise = (0.5+snoise(worldPosition.zxy*0.6)*0.5)*0.2;
     
     localColor.rgb -= vec3(grainyNoise,grainyNoise,grainyNoise);
-    localColor.rgb *= 1.0+(0.5*snoise(vec3(worldPosition.xzz/2000.0)+vec3(0,time/6.0,time/6.0)));
+    localColor.rgb *= 1.0+(0.5*snoise(vec3(worldPosition.xzz/2000.0)+vec3(0,time.x/6.0,time.x/6.0)));
     
     //localColor.rgb = (mod((worldPosition.z)+(snoise(vec3(time, 0, 0)))*300, 200) > 180.0)?vec3(0,0,0):transformedNormal;
     

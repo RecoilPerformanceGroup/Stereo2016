@@ -960,14 +960,8 @@ namespace ofxStereoscopy {
         
     public:
         
-        int index;
-        string indexStr;
-        string name = "";
-        string oscAddress = "/default";
-        
-        
         ofParameter<bool> enabled {"enabled", true};
-        ofParameterGroup params {"sceneParameters", enabled};
+        ofParameterGroup params {"untitled", enabled};
         
         // add dynamic draw order
         
@@ -994,14 +988,7 @@ namespace ofxStereoscopy {
          
          virtual void guiEvent(ofxUIEventArgs &e) {};
          */
-        void setName(string _name) {
-            setName(_name, "/"+_name);
-        }
         
-        void setName(string _name, string _osc) {
-            name = _name;
-            oscAddress = _osc;
-        }
         
         void setupScene() {
             setup();

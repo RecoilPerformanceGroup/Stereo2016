@@ -27,7 +27,7 @@ public:
     ofParameter<ofVec3f> distortionVec {"Distortion", ofVec3f(0,0,0), ofVec3f(-200,-200,-200),ofVec3f(200,200,200) };
     ofParameter<ofVec3f> wallPos {"Wall Position", ofVec3f(0,0,0), ofVec3f(-1000,-1000,-1000),ofVec3f(1000,1000,1000) };
 
-    ofParameterGroup params {"",
+    ofParameterGroup params {"PlaneCut",
         enabled,
         randomSeed,
         cellCount,
@@ -37,13 +37,8 @@ public:
     };
     
     
-    PlaneCutScene() {
-        
-        name = "PlaneCut";
-        oscAddress = "PlaneCut";
-        
+    PlaneCutScene() {        
         ofxStereoscopy::Scene::params = params;
-        params.setName(oscAddress);
     }
     
     void draw();

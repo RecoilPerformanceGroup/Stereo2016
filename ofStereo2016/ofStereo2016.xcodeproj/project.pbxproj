@@ -19,6 +19,7 @@
 		041E598B1C88759800FC2FE0 /* v_base.cc in Sources */ = {isa = PBXBuildFile; fileRef = 041E597B1C88759800FC2FE0 /* v_base.cc */; };
 		041E598C1C88759800FC2FE0 /* v_compute.cc in Sources */ = {isa = PBXBuildFile; fileRef = 041E597D1C88759800FC2FE0 /* v_compute.cc */; };
 		041E598D1C88759800FC2FE0 /* wall.cc in Sources */ = {isa = PBXBuildFile; fileRef = 041E59801C88759800FC2FE0 /* wall.cc */; };
+		044EA0BC1C984148007B0072 /* LightScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 044EA0BA1C984148007B0072 /* LightScene.cpp */; };
 		0459E6C81C7F51B3000AB4C8 /* ofxDatGuiParameterBindings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0459E6C61C7F51B3000AB4C8 /* ofxDatGuiParameterBindings.cpp */; };
 		04B9CF3F1C7B43880035D79B /* ofxDatGuiComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04B9CF311C7B43880035D79B /* ofxDatGuiComponent.cpp */; };
 		04B9CF401C7B43880035D79B /* ofxSmartFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04B9CF381C7B43880035D79B /* ofxSmartFont.cpp */; };
@@ -115,6 +116,8 @@
 		041E59801C88759800FC2FE0 /* wall.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = wall.cc; sourceTree = "<group>"; };
 		041E59811C88759800FC2FE0 /* wall.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = wall.hh; sourceTree = "<group>"; };
 		041E59821C88759800FC2FE0 /* worklist.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = worklist.hh; sourceTree = "<group>"; };
+		044EA0BA1C984148007B0072 /* LightScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LightScene.cpp; sourceTree = "<group>"; };
+		044EA0BB1C984148007B0072 /* LightScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LightScene.hpp; sourceTree = "<group>"; };
 		0459E6C61C7F51B3000AB4C8 /* ofxDatGuiParameterBindings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxDatGuiParameterBindings.cpp; sourceTree = "<group>"; };
 		0459E6C71C7F51B3000AB4C8 /* ofxDatGuiParameterBindings.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ofxDatGuiParameterBindings.hpp; sourceTree = "<group>"; };
 		04B9CF231C7B43880035D79B /* ofxDatGui2dPad.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxDatGui2dPad.h; sourceTree = "<group>"; };
@@ -446,6 +449,8 @@
 				7A6991481C91ACA700DDD9B9 /* SketchScene.hpp */,
 				7A69914B1C91B36600DDD9B9 /* PlaneCutScene.cpp */,
 				7A69914C1C91B36600DDD9B9 /* PlaneCutScene.hpp */,
+				044EA0BA1C984148007B0072 /* LightScene.cpp */,
+				044EA0BB1C984148007B0072 /* LightScene.hpp */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -715,6 +720,7 @@
 				041E59881C88759800FC2FE0 /* container_prd.cc in Sources */,
 				7A69914D1C91B36600DDD9B9 /* PlaneCutScene.cpp in Sources */,
 				67FE4C7B15C2F0478C8126C2 /* NetworkingUtils.cpp in Sources */,
+				044EA0BC1C984148007B0072 /* LightScene.cpp in Sources */,
 				7A1285361C80D879007B8689 /* ofxStereoscopy.cpp in Sources */,
 				510CAFE035E576A4E1502D52 /* UdpSocket.cpp in Sources */,
 				041E598A1C88759800FC2FE0 /* unitcell.cc in Sources */,

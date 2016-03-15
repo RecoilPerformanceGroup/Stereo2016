@@ -6,8 +6,7 @@
 //
 //
 
-#ifndef SceneTest_hpp
-#define SceneTest_hpp
+#pragma once
 
 #include "ofMain.h"
 #include "ofxStereoscopy.hpp"
@@ -27,6 +26,3 @@ public:
   */
 };
 
-
-
-#endif /* SceneTest_hpp */

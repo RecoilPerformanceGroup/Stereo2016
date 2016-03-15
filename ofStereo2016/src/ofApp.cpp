@@ -6,6 +6,9 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     
+    ofSetSmoothLighting(true);
+
+    
     for( auto s : scenes) {
         s->setupScene();
     }
@@ -214,6 +217,7 @@ void ofApp::draw(){
     if(calibrate_planes){
         world.renderProjectorCalibrations();
     } else {
+        ofEnableLighting();
         for(std::pair<string, shared_ptr<ofxStereoscopy::Plane>> p : world.planes){
             p.second->beginLeft();
             ofClear(background_color);
@@ -234,6 +238,7 @@ void ofApp::draw(){
             
             p.second->endRight();
         }
+        ofDisableLighting();
     }
     
     
