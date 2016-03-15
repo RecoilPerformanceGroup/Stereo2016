@@ -14,6 +14,7 @@
 #include "SceneTest.hpp"
 #include "CrystalScene.hpp"
 #include "PlaneCutScene.hpp"
+#include "LightScene.hpp"
 
 class ofApp : public ofBaseApp{
     
@@ -24,6 +25,7 @@ public:
         scenes.push_back(make_shared<SceneTest>());
         scenes.push_back(make_shared<CrystalScene>());
         scenes.push_back(make_shared<PlaneCutScene>());
+        scenes.push_back(make_shared<LightScene>());
         
         for( auto s : scenes) {
             mainParams.add(s->getParameters());
