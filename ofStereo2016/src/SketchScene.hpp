@@ -20,18 +20,14 @@ public:
 
     ofParameter<int> sketch {"Sketch", 0, 0, 10};
 
-    ofParameterGroup params {"",
+    ofParameterGroup params {"sketch",
         enabled,
         sketch};
     
     
     SketchScene() {
-        
-        name = "sketch";
-        oscAddress = "sketch";
-        
         ofxStereoscopy::Scene::params = params;
-        params.setName(oscAddress);
+
     }
 
     void draw();

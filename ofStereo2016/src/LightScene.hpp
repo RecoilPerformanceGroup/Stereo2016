@@ -19,7 +19,6 @@ public:
     void setup();
     
     LightScene() {
-        name = "Lights";
         ofxStereoscopy::Scene::params = params;
     }
     

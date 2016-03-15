@@ -10,17 +10,15 @@
 
 
 void SceneTest::setup() {
-    name = "Test Scene";
-    oscAddress = "/SceneTest";
-    light.setPointLight();
-    light.setPosition(-2, -2, -2);
+    //light.setPointLight();
+    //light.setPosition(-2, -2, -2);
 }
 
 void SceneTest::draw() {
     
     
     // A scene can draw to multiple surfaces
-    light.enable();
+    //light.enable();
     
     ofSetColor(255,255,255);
     ofPushMatrix();
@@ -31,7 +29,7 @@ void SceneTest::draw() {
     
     
     ofPopMatrix();
-    light.disable();
+    //light.disable();
     
 }
 
