@@ -169,16 +169,14 @@ void OrganicMaterial::updateMaterial(const ofShader & shader,ofGLProgrammableRen
     shader.setUniform4fv("global_ambient", &ofGetGlobalAmbientColor().r);
     shader.setUniform1f("mat_shininess",data.shininess);
     
-<<<<<<< HEAD
     shader.setUniform3f("time", ofGetElapsedTimef(), ofGetElapsedTimef(), ofGetElapsedTimef());
     
     
     // TODO: set all vertex displace uniforms
     
-=======
-    shader.setUniform1f("time", ofGetElapsedTimef());
+
     shader.setUniformMatrix4f("worldMatrix", worldMatrix);
->>>>>>> 3b81e455fe6e6ce2ecdc8a6c13da9c34c06a96d7
+    
 }
 
 void OrganicMaterial::updateLights(const ofShader & shader,ofGLProgrammableRenderer & renderer) const{
@@ -381,9 +379,9 @@ void main (void){
     modelViewPositionBeforeNoise = position * modelViewMatrix;
     worldPositionBeforeNoise = worldMatrix * position;
     
-    vec4 displacementVec = vec4(snoise(vec2(worldPositionBeforeNoise.z * 0.01, time * 0.5)) * 10.0,
-                                snoise(vec2(worldPositionBeforeNoise.x * 0.01, time * 0.5)) * 10.0,
-                                snoise(vec2(worldPositionBeforeNoise.y * 0.01, time * 0.5)) * 10.0, 0.0);
+    vec4 displacementVec = vec4(snoise(vec2(worldPositionBeforeNoise.z * 0.01, time.x * 0.5)) * 10.0,
+                                snoise(vec2(worldPositionBeforeNoise.x * 0.01, time.y * 0.5)) * 10.0,
+                                snoise(vec2(worldPositionBeforeNoise.y * 0.01, time.z * 0.5)) * 10.0, 0.0);
     
     localPosition = position + displacementVec;
     worldPosition = worldMatrix * localPosition;
@@ -459,7 +457,7 @@ uniform mat4 modelViewProjectionMatrix;
 
 uniform lightData lights[MAX_LIGHTS];
 
-uniform float time;
+uniform vec3 time;
 
 void pointLight( in lightData light, in vec3 normal, in vec3 ecPosition3, inout vec3 ambient, inout vec3 diffuse, inout vec3 specular ){
     float nDotVP;       // normal . light direction
@@ -743,7 +741,7 @@ void main (void){
     float grainyNoise = (0.5+snoise(worldPosition.zxy*0.6)*0.5)*0.2;
     
     localColor.rgb -= vec3(grainyNoise,grainyNoise,grainyNoise);
-    localColor.rgb *= 1.0+(0.5*snoise(vec3(worldPosition.xzz/2000.0)+vec3(0,time/6.0,time/6.0)));
+    localColor.rgb *= 1.0+(0.5*snoise(vec3(worldPosition.xzz/2000.0)+vec3(0,time.x/6.0,time.x/6.0)));
     
     //localColor.rgb = (mod((worldPosition.z)+(snoise(vec3(time, 0, 0)))*300, 200) > 180.0)?vec3(0,0,0):transformedNormal;
     
