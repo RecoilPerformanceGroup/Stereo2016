@@ -428,10 +428,8 @@ void ofApp::setupGui(shared_ptr<ofAppBaseWindow> gW,shared_ptr<ofAppBaseWindow> 
     loadButton->onButtonEvent(this,&ofApp::onButtonEvent);
     
     // adding the optional header allows you to drag the gui around //
-    gui->addHeader(":: STEREO 2016 ::");
-    
-    // adding the optional footer allows you to collapse/expand the gui //
-    gui->addFooter();
+    gui->addHeader(":: World Calibration ::");
+    gui->addFooter()->setLabelWhenCollapsed("Expand: World Calibration");
 
     ofSetFrameRate(60);
     
