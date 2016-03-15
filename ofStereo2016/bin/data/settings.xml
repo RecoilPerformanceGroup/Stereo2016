@@ -8,7 +8,7 @@
 	<position1>50, 50</position1>
 <mainParams/>
 	<Calibrate_Planes>0</Calibrate_Planes>
-	<Background_Color>255, 255, 255, 207</Background_Color>
+	<Background_Color>255, 243, 70, 207</Background_Color>
 <world>
 		<camera>
 			<camera_position>405.594, 1132.87, 2972.03</camera_position>
@@ -23,18 +23,18 @@
 			<size>800, 537.762</size>
 			<Left_Quad>
 				<Output_Points>
-					<Top_Left>0.736459, 0.885622, 0</Top_Left>
-					<Top_Right>0.260045, 0.898828, 0</Top_Right>
-					<Bottom_Left>0.736866, 0.465127, 0</Bottom_Left>
-					<Bottom_Right>0.254849, 0.474058, 0</Bottom_Right>
+					<Top_Left>0.738607, 0.90424, 0</Top_Left>
+					<Top_Right>0.260045, 0.91315, 0</Top_Right>
+					<Bottom_Left>0.733366, 0.464627, 0</Bottom_Left>
+					<Bottom_Right>0.256775, 0.472626, 0</Bottom_Right>
 				</Output_Points>
 			</Left_Quad>
 			<Right_Quad>
 				<Output_Points>
-					<Top_Left>0.756599, 0.992498, 0</Top_Left>
-					<Top_Right>0.264829, 0.991453, 0</Top_Right>
-					<Bottom_Left>0.75672, 0.444439, 0</Bottom_Left>
-					<Bottom_Right>0.274207, 0.441008, 0</Bottom_Right>
+					<Top_Left>0.743034, 0.884969, 0</Top_Left>
+					<Top_Right>0.259884, 0.87856, 0</Top_Right>
+					<Bottom_Left>0.73946, 0.454464, 0</Bottom_Left>
+					<Bottom_Right>0.270762, 0.447419, 0</Bottom_Right>
 				</Output_Points>
 			</Right_Quad>
 		</WALL>
@@ -44,18 +44,18 @@
 			<size>800, 800</size>
 			<Left_Quad>
 				<Output_Points>
-					<Top_Left>0.736866, 0.465127, 0</Top_Left>
-					<Top_Right>0.254849, 0.474058, 0</Top_Right>
-					<Bottom_Left>0.824587, 0.16338, 0</Bottom_Left>
-					<Bottom_Right>0.138139, 0.16945, 0</Bottom_Right>
+					<Top_Left>0.735116, 0.464877, 0</Top_Left>
+					<Top_Right>0.255275, 0.472626, 0</Top_Right>
+					<Bottom_Left>0.821587, 0.15938, 0</Bottom_Left>
+					<Bottom_Right>0.135639, 0.15945, 0</Bottom_Right>
 				</Output_Points>
 			</Left_Quad>
 			<Right_Quad>
 				<Output_Points>
-					<Top_Left>0.75672, 0.444439, 0</Top_Left>
-					<Top_Right>0.274207, 0.441008, 0</Top_Right>
-					<Bottom_Left>0.839714, 0.00178661, 0</Bottom_Left>
-					<Bottom_Right>0.173447, -0.0125352, 0</Bottom_Right>
+					<Top_Left>0.73896, 0.454464, 0</Top_Left>
+					<Top_Right>0.270762, 0.447419, 0</Top_Right>
+					<Bottom_Left>0.829148, 0.116726, 0</Bottom_Left>
+					<Bottom_Right>0.16428, 0.098561, 0</Bottom_Right>
 				</Output_Points>
 			</Right_Quad>
 		</FLOOR>
@@ -79,10 +79,10 @@
 <Second_Screen_Model>0</Second_Screen_Model>
 <PlaneCut>
 		<enabled>1</enabled>
-	<Random_Seed>1683</Random_Seed>
+	<Random_Seed>408</Random_Seed>
 		<Cell_count>51</Cell_count>
 	<Rotate_Lights>0</Rotate_Lights>
 		<drawWall>0</drawWall>
-		<Wall_Position>-30.8207, -207.83, 208.663</Wall_Position>
+		<Wall_Position>-30.8207, -207.83, -770.096</Wall_Position>
 	</PlaneCut>
 </mainParams>

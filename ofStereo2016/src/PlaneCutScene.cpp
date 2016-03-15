@@ -19,10 +19,12 @@ void PlaneCutScene::setup(){
     VoroNode * vFloor = new VoroNode();
     vFloor->setup(app->stage_size_cm.get().x+400, 50.0, app->stage_size_cm.get().z+400, cellCount);
     vFloor->setGlobalPosition(0, -25.0, app->stage_size_cm.get().z/2.0);
+    vFloor->setParent(app->world.origin);
     voroNodes.push_back(vFloor);
     VoroNode * vWall = new VoroNode();
     vWall->setup(app->stage_size_cm.get().x+400, app->stage_size_cm.get().y+400, 400, cellCount);
     vWall->setGlobalPosition(0, app->stage_size_cm.get().y/2.0, -200);
+    vWall->setParent(app->world.origin);
     voroNodes.push_back(vWall);
     
     mat.setDiffuseColor(ofFloatColor::white);
@@ -57,7 +59,7 @@ void PlaneCutScene::update(){
         directionalLight1.rotate(1, ofVec3f(0,1,0));
     }
     
-    voroNodes[1]->setPosition(wallPos);
+    voroNodes[1]->setGlobalPosition(wallPos);
     
 }
 
@@ -76,14 +78,12 @@ void PlaneCutScene::draw(){
     ofEnableLighting();
     directionalLight1.enable();
     directionalLight2.enable();
-    matstatic.begin();
-   // ofDrawBox(0, app->stage_size_cm.get().y/2, -100, app->stage_size_cm.get().x, app->stage_size_cm.get().y, 200);
-    voroNodes[0]->draw();
-    matstatic.end();
-
     mat.begin();
     
-    voroNodes[1]->draw();
+   // ofDrawBox(0, app->stage_size_cm.get().y/2, -100, app->stage_size_cm.get().x, app->stage_size_cm.get().y, 200);
+    voroNodes[0]->draw(&mat);
+
+    voroNodes[1]->draw(&mat);
 
 /*
  
@@ -98,6 +98,7 @@ void PlaneCutScene::draw(){
     ofPopMatrix();
 */
     mat.end();
+
     directionalLight1.disable();
     ofDisableLighting();
 

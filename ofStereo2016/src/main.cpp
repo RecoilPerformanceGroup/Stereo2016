@@ -7,7 +7,7 @@ int main( ){
     
     ofGLFWWindowSettings mainSettings;
     
-    mainSettings.resizable = true;
+    mainSettings.resizable = false;
     mainSettings.setGLVersion(4, 1);
     mainSettings.decorated = false;
 
@@ -42,7 +42,7 @@ int main( ){
         
         mainSettings.width = round(mainDisplayBounds.size.width / divisions);
         mainSettings.height = round((mainSettings.width * (9.0 / 16.0)) / 2.0);
-        mainSettings.setPosition(ofVec2f(round(mainDisplayBounds.size.width * (divisions-1) / divisions),mainDisplayBounds.origin.y));
+        mainSettings.setPosition(ofVec2f(round(mainDisplayBounds.size.width * (divisions-1) / divisions) ,mainDisplayBounds.origin.y));
         //rendering errors: mainSettings.decorated = true;
         
         guiSettings.width = round(mainDisplayBounds.size.width * (divisions-1) / divisions);
@@ -65,10 +65,10 @@ int main( ){
         mainSettings.height = secondDisplayBounds.size.height;
         mainSettings.setPosition(ofVec2f(secondDisplayBounds.origin.x,secondDisplayBounds.origin.y));
         
-        CGError e = CGDisplaySetStereoOperation(displays[1], true, true, kCGConfigureForAppOnly);
+//        CGError e = CGDisplaySetStereoOperation(displays[1], true, true, kCGConfigureForAppOnly);
         
-        if(e == kCGErrorRangeCheck) cout << "no hardware stereo" << endl;
-        if(e == kCGErrorSuccess) cout << "hardware stereo" << endl;
+//        if(e == kCGErrorRangeCheck) cout << "no hardware stereo" << endl;
+//        if(e == kCGErrorSuccess) cout << "hardware stereo" << endl;
         
         if (numDisplays > 2 ) {
             
@@ -78,7 +78,7 @@ int main( ){
             if(secondDisplayBounds.size.width == thirdDisplayBounds.size.width && secondDisplayBounds.size.height == thirdDisplayBounds.size.height){
                
                 mainSettings.width = secondDisplayBounds.size.width * 2;
-                
+                mainSettings.setPosition(ofVec2f(1,1));
                 cout << "configured default three display setup" << endl;
 
             }

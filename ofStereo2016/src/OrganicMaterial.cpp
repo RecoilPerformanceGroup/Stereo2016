@@ -63,11 +63,15 @@ void OrganicMaterial::setEmissiveColor(ofFloatColor oEmissive) {
 void OrganicMaterial::setShininess(float nShininess) {
     data.shininess = nShininess;
 }
-/*
-void OrganicMaterial::setDistortion(ofVec3f vDistortion) {
-    data.distortion = vDistortion;
+
+void OrganicMaterial::setWorldMatrix(ofMatrix4x4 m){
+    worldMatrix = m;
+    // a hack as we want to set the matrix dynamically
+    shaderNoTexture.setUniformMatrix4f("worldMatrix", worldMatrix);
+    shaderTexture2D.setUniformMatrix4f("worldMatrix", worldMatrix);
+    shaderTextureRect.setUniformMatrix4f("worldMatrix", worldMatrix);
 }
-*/
+
 void OrganicMaterial::setData(const OrganicMaterial::Data &data){
     this->data = data;
 }
@@ -90,6 +94,10 @@ ofFloatColor OrganicMaterial::getSpecularColor()const {
 
 ofFloatColor OrganicMaterial::getEmissiveColor()const {
     return data.emissive;
+}
+
+ofMatrix4x4 OrganicMaterial::getWorldMatrix()const {
+    return worldMatrix;
 }
 
 OrganicMaterial::Data OrganicMaterial::getData()const{
@@ -162,7 +170,7 @@ void OrganicMaterial::updateMaterial(const ofShader & shader,ofGLProgrammableRen
     shader.setUniform1f("mat_shininess",data.shininess);
     
     shader.setUniform1f("time", ofGetElapsedTimef());
-    
+    shader.setUniformMatrix4f("worldMatrix", worldMatrix);
 }
 
 void OrganicMaterial::updateLights(const ofShader & shader,ofGLProgrammableRenderer & renderer) const{
@@ -219,6 +227,9 @@ static const string vertexShader = R"(
 OUT vec2 outtexcoord; // pass the texCoord if needed
 OUT vec3 transformedNormal;
 OUT vec3 eyePosition3;
+OUT vec4 worldPosition;
+OUT vec4 modelViewPosition;
+OUT vec4 localPosition;
 
 IN vec4 position;
 IN vec4 color;
@@ -231,6 +242,7 @@ uniform mat4 projectionMatrix;
 uniform mat4 textureMatrix;
 uniform mat4 modelViewProjectionMatrix;
 uniform mat4 normalMatrix;
+uniform mat4 worldMatrix;
 
 // the time value is passed into the shader by the OF app.
 uniform float time;
@@ -242,7 +254,10 @@ void main (void){
     
     vec4 displacementVec = vec4 (0.0, displacementY, 0.0, 0.0);
     
-    vec4 modifiedPosition = modelViewProjectionMatrix * (position+displacementVec);
+    localPosition = (position+displacementVec);
+    modelViewPosition = modelViewMatrix * localPosition;
+    worldPosition = worldMatrix * localPosition;
+    vec4 modifiedPosition = modelViewProjectionMatrix * localPosition;
     
     vec4 eyePosition = modelViewMatrix * modifiedPosition;
     vec3 tempNormal = (normalMatrix * normal).xyz;
@@ -259,6 +274,9 @@ IN vec2 outtexcoord; // pass the texCoord if needed
 IN vec3 transformedNormal;
 // Eye-coordinate position of vertex
 IN vec3 eyePosition3;
+IN vec4 worldPosition;
+IN vec4 modelViewPosition;
+IN vec4 localPosition;
 
 
 struct lightData
@@ -584,8 +602,14 @@ void main (void){
     vec4 localColor = vec4(ambient,1.0) * mat_ambient + vec4(diffuse,1.0) * mat_diffuse + vec4(specular,1.0) * mat_specular + mat_emissive;
 #endif
     
-    localColor -= (0.5+snoise(eyePosition3.xyz * 150)*0.5)*0.05;
-    localColor.rgb *= 1.0+(snoise(eyePosition3.xyz * 0.33));
+    vec4 orgInverted = inverse(projectionMatrix) * vec4(eyePosition3,1.0);
+    
+    localColor.r -= (0.5+snoise(localPosition.xyz*0.6)*0.5)*0.1;
+    localColor.g -= (0.5+snoise(localPosition.yzx*0.6)*0.5)*0.1;
+    localColor.b -= (0.5+snoise(localPosition.zxy*0.6)*0.5)*0.1;
+    localColor.rgb *= 1.0+(0.25*snoise(vec3(worldPosition.xzz/2000.0)+vec3(0,time/6.0,time/6.0)));
+    
+    //localColor.rgb = (mod((worldPosition.z)+(snoise(vec3(time, 0, 0)))*300, 200) > 180.0)?vec3(0,0,0):transformedNormal;
     
      FRAG_COLOR = clamp( localColor, 0.0, 1.0 );
 }
