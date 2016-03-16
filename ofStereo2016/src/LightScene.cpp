@@ -8,25 +8,17 @@
 
 #include "LightScene.hpp"
 
-
 void LightScene::setup() {
 
-
-
     areaLight.enable();
-    
-
     
 }
 
 void LightScene::update() {
-
+    
     areaLight.setAreaLight(areaLightWidth, areaLightHeight);
-    
     areaLight.setPosition(areaLightPos);
-    
-    
-        areaLight.lookAt(ofVec3f(0,0,0));
+    areaLight.lookAt(ofVec3f(0,0,0));
     
 }
 

@@ -175,10 +175,8 @@ void CrystalScene::update() {
     
     
     if(rebuild) {
-        cube->generate();
         
-        cube->getChildren().front()->split();
-        
+        cube->setup(200,100,100,numCells);
         rebuild = false;
     }
     

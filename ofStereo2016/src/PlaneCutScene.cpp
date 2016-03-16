@@ -7,52 +7,51 @@
 //
 
 #include "PlaneCutScene.hpp"
-#include "ofApp.h"
 
 void PlaneCutScene::setup(){
     
-    ofApp * app = (ofApp*)ofGetAppPtr();
+  
+    ofParameter<ofVec3f> &stage_size = mainParams.getVec3f("stage_size_cm");
+    
+    vnFloor = new VoroNode();
+    vnFloor->setup(stage_size->x+400, 50.0, stage_size->z+400, cellCount, false, true, false);
+    vnFloor->setGlobalPosition(0, -25.0, stage_size->z/2.0);
+    vnFloor->setParent(world.origin);
+    voroNodes.push_back(vnFloor);
+    vnWall = new VoroNode();
+    vnWall->setup(stage_size->x+400, stage_size->y+400, 400, cellCount, true, true, true);
+    vnWall->setGlobalPosition(0, stage_size->y/2.0, -200);
+    vnWall->setParent(world.origin);
+    voroNodes.push_back(vnWall);
 
-    randomSeed.addListener(this, &PlaneCutScene::reconstructMeshes);
-    cellCount.addListener(this, &PlaneCutScene::reconstructMeshes);
-    
-    VoroNode * vFloor = new VoroNode();
-    vFloor->setup(app->stage_size_cm.get().x+400, 50.0, app->stage_size_cm.get().z+400, cellCount);
-    vFloor->setGlobalPosition(0, -25.0, app->stage_size_cm.get().z/2.0);
-    vFloor->setParent(app->world.origin);
-    voroNodes.push_back(vFloor);
-    VoroNode * vWall = new VoroNode();
-    vWall->setup(app->stage_size_cm.get().x+400, app->stage_size_cm.get().y+400, 400, cellCount);
-    vWall->setGlobalPosition(0, app->stage_size_cm.get().y/2.0, -200);
-    vWall->setParent(app->world.origin);
-    voroNodes.push_back(vWall);
-    
-    mat.setDiffuseColor(ofFloatColor::white);
+    matFloor.setDiffuseColor(ofFloatColor::pink);
+    matWall.setDiffuseColor(ofFloatColor::yellow);
     
     ofSetSmoothLighting(true);
-    
-    float falloff = 0.1/(app->stage_size_cm.get().y * 4.0 * app->world.pixels_cm);
     
     // directional lights emit along the +z axis
     
     directionalLight1.setup();
     directionalLight1.setDirectional();
-    directionalLight1.setPosition(0, app->stage_size_cm.get().y*0.5, app->stage_size_cm.get().z*0.55);
+    directionalLight1.setPosition(0, stage_size->y*0.5, stage_size->z*0.55);
     directionalLight1.setOrientation(ofVec3f(70,0,0));
     directionalLight1.setDiffuseColor(ofFloatColor::pink*0.85);
     
     directionalLight2.setup();
     directionalLight2.setDirectional();
-    directionalLight2.setPosition(0, app->stage_size_cm.get().y*0.5, app->stage_size_cm.get().z*0.45);
-    directionalLight2.lookAt(ofVec3f(0, app->stage_size_cm.get().y*0.5, app->stage_size_cm.get().z*0.5));
+    directionalLight2.setPosition(0, stage_size->y*0.5, stage_size->z*0.45);
+    directionalLight2.lookAt(ofVec3f(0, stage_size->y*0.5, stage_size->z*0.5));
     directionalLight2.rotate(45, ofVec3f(1,1,0));
     
     directionalLight2.setDiffuseColor(ofFloatColor::blue*0.5);
+    
+    mainParams.getVec3f("stage_size_cm").addListener(this, &PlaneCutScene::onStageSize);
+    randomSeed.addListener(this, &PlaneCutScene::onRandomSeed);
+    cellCount.addListener(this, &PlaneCutScene::onCellCount);
+
 }
 
 void PlaneCutScene::update(){
-    
-    ofApp * app = (ofApp*)ofGetAppPtr();
     
     if(rotateLights){
         directionalLight2.rotate(1, ofVec3f(1,1,0));
@@ -67,8 +66,6 @@ void PlaneCutScene::update(){
 
 void PlaneCutScene::draw(){
     
-    ofApp * app = (ofApp*)ofGetAppPtr();
-
     ofSetColor(255);
    /* directionalLight1.setScale(2);
     directionalLight1.draw();
@@ -78,39 +75,52 @@ void PlaneCutScene::draw(){
     ofEnableLighting();
     directionalLight1.enable();
     directionalLight2.enable();
-    mat.begin();
     
-   // ofDrawBox(0, app->stage_size_cm.get().y/2, -100, app->stage_size_cm.get().x, app->stage_size_cm.get().y, 200);
-    voroNodes[0]->draw(&mat);
-
-    voroNodes[1]->draw(&mat);
-
-/*
- 
-    for (VoroNode * vn : voroNodes) {
-        vn->draw();
-    }
-*/
+    matFloor.begin();
+    vnFloor->draw(&matFloor);
+    matFloor.end();
     
-/*    ofPushMatrix();
-        ofTranslate(ofVec3f(app->world.physical_camera_pos_cm.get())*0.85);
-        ofDrawSphere(sin(ofGetElapsedTimef())*10.0, -20, 10);
-    ofPopMatrix();
-*/
-    mat.end();
-
+    matWall.begin();
+    vnWall->draw(&matWall);
+    matWall.end();
+    
     directionalLight1.disable();
+    directionalLight2.disable();
     ofDisableLighting();
 
 }
 
-void PlaneCutScene::reconstructMeshes(int& value){
-    
+void PlaneCutScene::reconstructMeshes(){
     ofSeedRandom(randomSeed);
-    for (auto vn : voroNodes) {
-        vn->split(cellCount, true,true, true);
-    }
+    vnFloor->split(cellCount, false, true, false);
+    vnWall->split(cellCount, true, true, true);
+}
 
+void PlaneCutScene::onCellCount(int& value){
+    reconstructMeshes();
+}
+
+void PlaneCutScene::onRandomSeed(int& value){
+    reconstructMeshes();
+}
+
+void PlaneCutScene::onStageSize(ofVec3f& stageSize){
+    for (auto vn : voroNodes) {
+        delete vn;
+    }
+    voroNodes.clear();
+    
+    vnFloor = new VoroNode();
+    vnFloor->setup(stageSize.x+400, 50.0, stageSize.z+400, cellCount);
+    vnFloor->setGlobalPosition(0, -25.0, stageSize.z/2.0);
+    vnFloor->setParent(world.origin);
+    voroNodes.push_back(vnFloor);
+    vnWall = new VoroNode();
+    vnWall->setup(stageSize.x+400, stageSize.y+400, 400, cellCount);
+    vnWall->setGlobalPosition(0, stageSize.y/2.0, -200);
+    vnWall->setParent(world.origin);
+    voroNodes.push_back(vnWall);
+    //reconstructMeshes();
 }
 
 void PlaneCutScene::drawGui(){

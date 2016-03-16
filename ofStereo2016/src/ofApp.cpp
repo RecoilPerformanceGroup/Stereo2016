@@ -10,7 +10,7 @@ void ofApp::setup(){
 
     
     for( auto s : scenes) {
-        s->setupScene();
+        s->setupScene(mainParams, world);
     }
     
     mainParams.add(world.params);
