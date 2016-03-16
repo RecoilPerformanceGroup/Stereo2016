@@ -58,6 +58,28 @@ void ParameterFade<ofColor>::updateValue(float t) {
 }
 
 template<>
+void ParameterFade<ofVec3f>::updateValue(float t) {
+    
+    value.x = ofxeasing::map(t, startTime, endTime, fromValue.x, toValue.x, ofxeasing::linear::easeIn);
+    value.y = ofxeasing::map(t, startTime, endTime, fromValue.y, toValue.y, easeFn);
+    value.z = ofxeasing::map(t, startTime, endTime, fromValue.z, toValue.z, easeFn);
+    
+    lastValue = value;
+    p->cast<ofVec3f>() = value;
+}
+
+template<>
+void ParameterFade<ofVec2f>::updateValue(float t) {
+    
+    value.x = ofxeasing::map(t, startTime, endTime, fromValue.x, toValue.x, ofxeasing::linear::easeIn);
+    value.y = ofxeasing::map(t, startTime, endTime, fromValue.y, toValue.y, easeFn);
+    
+    lastValue = value;
+    p->cast<ofVec2f>() = value;
+}
+
+
+template<>
 void ParameterFade<int>::updateValue(float t) {
     value = ofxeasing::map(t, startTime, endTime, fromValue, toValue, easeFn);
     lastValue = value;

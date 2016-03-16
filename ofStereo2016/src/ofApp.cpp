@@ -185,7 +185,21 @@ void ofApp::update(){
                                 ofParameter<ofColor> target;
                                 target.fromString(msg.getArgAsString(0));
                                 fadeManager->add(new ParameterFade<ofColor>(p, target.get(), fadeTime, easeFn));
+                                
+                            } else if(p->type()==typeid(ofParameter<ofVec3f>).name()) {
+                                
+                                ofParameter<ofVec3f> target;
+                                target.fromString(msg.getArgAsString(0));
+                                fadeManager->add(new ParameterFade<ofVec3f>(p, target.get(), fadeTime, easeFn));
+                            
+                            } else if(p->type()==typeid(ofParameter<ofVec2f>).name()) {
+                                
+                                ofParameter<ofVec2f> target;
+                                target.fromString(msg.getArgAsString(0));
+                                fadeManager->add(new ParameterFade<ofVec2f>(p, target.get(), fadeTime, easeFn));
                             }
+                            
+                            
                             
                         } else {
                             
