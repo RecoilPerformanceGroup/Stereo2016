@@ -11,3 +11,5 @@ Addons:
 - [ofxVoro](https://github.com/mrbichel/ofxVoro)
 
 
+Leap Motion OSC controller to input 3D position:
+(https://github.com/mrbichel/LeapOSC)

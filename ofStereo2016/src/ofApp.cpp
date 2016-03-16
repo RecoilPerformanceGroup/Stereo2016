@@ -90,7 +90,7 @@ void ofApp::update(){
         
         cout<<"Received "<<msg.getAddress()<<endl;
         
-        vector<string> address = ofSplitString(ofToLower(msg.getAddress()),"/",true);
+        vector<string> address = ofSplitString(msg.getAddress(),"/",true);
         
         // fade
         
@@ -128,13 +128,17 @@ void ofApp::update(){
         }
         
         for(unsigned int i=0;i<address.size();i++){
+            
             if(p) {
-                
-                cout<<p->getEscapedName()<<endl;
-                if(address[i]==ofToLower(p->getEscapedName())){
+                cout<<"matching: " << address[i]<<endl;
+                if(address[i]==p->getEscapedName()){
+                    cout<< "match" << p->getEscapedName()<<endl;
+                    
                     if(p->type()==typeid(ofParameterGroup).name()){
                         if(address.size()>=i+1){
+                            
                             p = &static_cast<ofParameterGroup*>(p)->get(address[i+1]);
+                            
                         }
                     }else if(p->type()==typeid(ofParameter<int>).name() && msg.getArgType(0)==OFXOSC_TYPE_INT32){
                         
@@ -183,9 +187,8 @@ void ofApp::update(){
                                 fadeManager->add(new ParameterFade<ofColor>(p, target.get(), fadeTime, easeFn));
                             }
                             
-                            
-                            
                         } else {
+                            
                             p->fromString(msg.getArgAsString(0));
                         }
                         
@@ -204,7 +207,6 @@ void ofApp::update(){
     }
     
     updateStage();
-    
 }
 
 //--------------------------------------------------------------
