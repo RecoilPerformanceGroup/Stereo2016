@@ -12,6 +12,7 @@
 #include "ofMain.h"
 #include "ofxEasing.h"
 
+
 class AbstractParameterFade {
 public:
     
@@ -47,6 +48,10 @@ public:
     float duration;
     float startTime;
     float endTime;
+    
+    string c; // 0 = all - 1 r/x 2 g/y etc
+
+    
 };
 
 template<typename ParameterType>
@@ -57,9 +62,12 @@ public:
                   ParameterType _toValue,
                   float _dur,
                   ofxeasing::function _easeFn=ofxeasing::linear::easeIn,
+                  string _component="all",
                   float _startTime=NULL) :
     AbstractParameterFade(_p, _dur, _easeFn, _startTime),
     toValue{_toValue} {
+    
+        c = _component;
         
         //fromValue =  (_fromValue != NULL) ? _fromValue : p->cast<ParameterType>().get();
         fromValue = p->cast<ParameterType>().get();
@@ -76,7 +84,8 @@ private:
     ParameterType value;
     
     void paramChanged(ParameterType & _val){
-        if(_val != lastValue) {
+        
+        if(_val != lastValue && c=="all") {
             isAlive = false;
         }
     }

@@ -136,7 +136,6 @@ void ofApp::update(){
                     
                     if(p->type()==typeid(ofParameterGroup).name()){
                         if(address.size()>=i+1){
-                            
                             p = &static_cast<ofParameterGroup*>(p)->get(address[i+1]);
                             
                         }
@@ -176,7 +175,82 @@ void ofApp::update(){
                         // Bool doesn't fade
                         p->cast<bool>() = msg.getArgAsBool(0);
                         
-                    }else if(msg.getArgType(0)==OFXOSC_TYPE_STRING){
+                    } else if(p->type()==typeid(ofParameter<ofColor>).name() &&
+                              msg.getArgType(0)!=OFXOSC_TYPE_STRING ) {
+                        
+                        ofColor col = p->cast<ofColor>();
+                        float val = msg.getArgAsFloat(0);
+                        
+                        // size check
+                        string suf = address.back(); i++;
+                        
+                        if(suf == "r") {
+                            col.r = val;
+                        } else if(suf == "g") {
+                            col.g = val;
+                        } else if(suf == "b") {
+                            col.b = val;
+                        } else if(suf == "a") {
+                            col.a = val;
+                        }
+                    
+                        if(fadeValue) {
+                            fadeManager->add(new ParameterFade<ofColor>(p, col, fadeTime, easeFn, suf));
+                        } else {
+                            p->cast<ofColor>().set(col);
+                        }
+                    
+                        
+                        
+                    } else if(p->type()==typeid(ofParameter<ofVec3f>).name() &&
+                              msg.getArgType(0)!=OFXOSC_TYPE_STRING ) {
+                        
+                        ofVec3f vec = p->cast<ofVec3f>();
+                        float val = msg.getArgAsFloat(0);
+                        
+                        // size check
+                        string suf = address.back(); i++;
+                        
+                        if(suf == "x") {
+                            vec.x = val;
+                        } else if(suf == "y") {
+                            vec.y = val;
+                        } else if(suf == "z") {
+                            vec.z = val;
+                        }
+                        
+                        if(fadeValue) {
+                            fadeManager->add(new ParameterFade<ofVec3f>(p, vec, fadeTime, easeFn, suf));
+                        } else {
+                            p->cast<ofVec3f>().set(vec);
+                        }
+                        
+                        
+                        
+                    } else if(p->type()==typeid(ofParameter<ofVec2f>).name() &&
+                              msg.getArgType(0)!=OFXOSC_TYPE_STRING ) {
+                        
+                        ofVec2f vec = p->cast<ofVec2f>();
+                        float val = msg.getArgAsFloat(0);
+                        
+                        // size check
+                        string suf = address.back(); i++;
+                        
+                        if(suf == "x") {
+                            vec.x = val;
+                        } else if(suf == "y") {
+                            vec.y = val;
+                        }
+                        
+                        if(fadeValue) {
+                            fadeManager->add(new ParameterFade<ofVec2f>(p, vec, fadeTime, easeFn, suf));
+                        } else {
+                            p->cast<ofVec2f>().set(vec);
+                        }
+                        
+                        
+                        
+                    } else if(msg.getArgType(0)==OFXOSC_TYPE_STRING){
                         
                         if(fadeValue) {
                             
@@ -200,12 +274,9 @@ void ofApp::update(){
                             }
                             
                             
-                            
                         } else {
-                            
                             p->fromString(msg.getArgAsString(0));
                         }
-                        
                         // todo: osc on individual components of complex params
                         // eg. x, y,z r, g, b, a, ...
                     }
