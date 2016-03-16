@@ -81,9 +81,8 @@ void PlaneCutScene::draw(){
     matFloor.end();
     
     matWall.begin();
-    vnWall->draw(&matFloor);
+    vnWall->draw(&matWall);
     matWall.end();
-    
     
     directionalLight1.disable();
     directionalLight2.disable();
