@@ -11,9 +11,7 @@
 
 void CrystalScene::setup() {
     
-    
     vertexDisplacer.setup();
-    
     
     /*light.setPointLight();
     light.setAmbientColor(ofColor(10));
@@ -31,7 +29,6 @@ void CrystalScene::setup() {
     spotlight.setDiffuseColor(ofColor(60,60,60));
     spotlight.setSpecularColor(200);
     */
-    
     //spotlight.setAttenuation(0.61);
     
     cube = new VoroNode();
@@ -39,6 +36,8 @@ void CrystalScene::setup() {
     
     ofLoadImage(tex, "grain-texture.png");
     //grab.setup(1080, 720, true);
+    
+    
 }
 
 void CrystalScene::draw() {
@@ -46,7 +45,6 @@ void CrystalScene::draw() {
     //ofEnableDepthTest();
     //ofEnableLighting();
     ofEnableNormalizedTexCoords();
-    
     ofSetColor(255);
     
     //pointlight.enable();
@@ -55,17 +53,12 @@ void CrystalScene::draw() {
     
     ofPushMatrix(); {
         
-        
         // twist example
-        
         /*ofVec3f rotateAround = cube->getPosition();
-        
         for(auto c : cube->getChildren()) {
             
             
             ofMesh m = c->mesh;
-            
-            
             for(int i=0; i<  m.getNumVertices(); i++) {
                 
                 ofVec3f v = m.getVertex(i);
@@ -97,8 +90,6 @@ void CrystalScene::draw() {
         
     } ofPopMatrix();
     
-    
-    
     //spotlight.disable();
     //pointlight.disable();
     
@@ -109,6 +100,8 @@ void CrystalScene::draw() {
 
 void CrystalScene::update() {
     
+    mat.updateParameters();
+    
     // Vertex displace
     // sine wave
     // twist
@@ -116,18 +109,14 @@ void CrystalScene::update() {
     
     for(auto c : cube->getChildren()) {
         
-        
 //        c->modMesh = c->mesh;
         //vertexDisplacer.twistModel(c->modMesh, c);
         
         //for(int i=0; i<c->modMesh.getNumVertices(); i++) {
             
          //   ofVec3f o = c->modMesh.getVertex(i);
-            
          //   ofVec3f oG = c->modMesh.getVertex(i) + c->getPosition();
-            
          //   ofVec3f v = c->modMesh.getVertex(i);
-            
             
             //
             // sine curve on local Y
@@ -183,9 +172,6 @@ void CrystalScene::update() {
         
         
     }
-    
-    
-    
     
     
     if(rebuild) {

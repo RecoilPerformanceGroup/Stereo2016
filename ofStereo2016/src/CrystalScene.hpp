@@ -91,6 +91,8 @@ public:
     
     
     CrystalScene() {
+        params.add(mat.noiseDisplaceParams);
+
         ofxStereoscopy::Scene::params = params;
     }
     

@@ -14,7 +14,25 @@
 class OrganicMaterial : public ofBaseMaterial {
 public:
     
-    // TODO overwirte the shaders with vertex displace methods and more set uniforms to use them
+    // Parameters for vertex displacements
+    
+    ofVec3f noiseDisplaceTime {0,0,0};
+    ofParameter<ofVec3f> noiseVelocity {"velocity",
+        ofVec3f(0,0,0),
+        ofVec3f(-1,-1,-1),
+        ofVec3f(1,1,1)};
+    
+    ofParameter<ofVec3f> noiseDisplacementAmount {"displacement",
+        ofVec3f(0,0,0),
+        ofVec3f(0,0,0),
+        ofVec3f(200,200,200)};
+    
+    
+    ofParameterGroup noiseDisplaceParams {
+        "Noise displacement parameters",
+        noiseVelocity,
+        noiseDisplacementAmount
+        };
     
     OrganicMaterial();
     virtual ~OrganicMaterial(){};
@@ -52,6 +70,8 @@ public:
     void end() const;
     
     
+    void updateParameters();
+
     
 private:
     void initShaders(ofGLProgrammableRenderer & renderer) const;
