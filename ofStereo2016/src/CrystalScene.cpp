@@ -207,6 +207,7 @@ void CrystalScene::update() {
                                                       *autoRotationSpeed.get());
     
     cube->setOrientation(rotation);
+//    cube->setGlobalOrientation(ofQuaternion(0, rotation));
     //cube->setScale(-scaleCells);
     cube->setScale(scale.get());
     
