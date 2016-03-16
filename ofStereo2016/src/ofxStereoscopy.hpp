@@ -972,7 +972,7 @@ namespace ofxStereoscopy {
         
         Scene() {
         };
-        
+                
         virtual ~Scene(){}
         
         virtual void debugDraw(int _surfaceId=0) {};
@@ -990,7 +990,9 @@ namespace ofxStereoscopy {
          */
         
         
-        void setupScene() {
+        void setupScene(ofParameterGroup &mainP, World &w) {
+            mainParams = mainP;
+            world = w;
             setup();
         };
         
@@ -1022,6 +1024,9 @@ namespace ofxStereoscopy {
         virtual void drawGui() {};
         virtual void setupGui() {};
         
+        ofParameterGroup mainParams;
+        World world;
+    
     private:
         virtual void setup(){};
         virtual void update(){};

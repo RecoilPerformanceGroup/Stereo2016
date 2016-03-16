@@ -7,3 +7,5 @@
 //
 
 #include "VoroNode.hpp"
+
+int VoroNode::counter = 0;

@@ -8,7 +8,7 @@
 	<position1>50, 50</position1>
 <mainParams/>
 	<Calibrate_Planes>0</Calibrate_Planes>
-	<Background_Color>255, 243, 70, 207</Background_Color>
+	<Background_Color>255, 243, 70, 0</Background_Color>
 <world>
 		<camera>
 			<camera_position>405.594, 1132.87, 2972.03</camera_position>
@@ -78,11 +78,33 @@
 	</crystaltest>
 <Second_Screen_Model>0</Second_Screen_Model>
 <PlaneCut>
-		<enabled>1</enabled>
-	<Random_Seed>408</Random_Seed>
-		<Cell_count>51</Cell_count>
+		<enabled>0</enabled>
+	<Random_Seed>3316</Random_Seed>
+		<Cell_count>72</Cell_count>
 	<Rotate_Lights>0</Rotate_Lights>
 		<drawWall>0</drawWall>
-		<Wall_Position>-30.8207, -207.83, -770.096</Wall_Position>
+		<Wall_Position>510.62, -447.314, 344.023</Wall_Position>
 	</PlaneCut>
+<untitled>
+		<enabled>0</enabled>
+	</untitled>
+	<Crystal>
+		<enabled>1</enabled>
+		<rebuild>0</rebuild>
+		<origin>0, 0, 0</origin>
+		<Cells>16</Cells>
+		<Automatic_rotation>0.479383, 0.541857, -0.239067</Automatic_rotation>
+		<rot_speed>0.877551</rot_speed>
+		<Crystal_color>1, 1, 1, 1</Crystal_color>
+		<spotlightPosition>917.118, 250.728, 354.852</spotlightPosition>
+		<scale>5</scale>
+		<scaleCells>0.652408</scaleCells>
+		<Debug_draw>0</Debug_draw>
+	</Crystal>
+	<Lights>
+		<enabled>1</enabled>
+		<width>100</width>
+		<height>100</height>
+		<position>0, 0, 0</position>
+	</Lights>
 </mainParams>

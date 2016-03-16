@@ -21,7 +21,7 @@ class PlaneCutScene : public ofxStereoscopy::Scene {
 public:
 
     ofParameter<int> randomSeed {"Random Seed", 0,0,10000 };
-    ofParameter<int> cellCount {"Cell count", 15,1,1000 };
+    ofParameter<int> cellCount {"Cell count", 2,1,1000 };
     ofParameter<bool> rotateLights {"Rotate Lights", false,false, true };
     ofParameter<bool> drawWall {"drawWall", false,false, true };
     ofParameter<ofVec3f> distortionVec {"Distortion", ofVec3f(0,0,0), ofVec3f(-200,-200,-200),ofVec3f(200,200,200) };
@@ -45,7 +45,10 @@ public:
     void drawGui();
     void update();
     void setup();
-    void reconstructMeshes(int& value);
+    void onRandomSeed(int& value);
+    void onCellCount(int& value);
+    void onStageSize(ofVec3f& vec);
+    void reconstructMeshes();
     
     
     ofLight directionalLight1;
@@ -56,10 +59,14 @@ public:
     
     vector<VoroNode *> voroNodes;
     
+    VoroNode * vnFloor;
+    VoroNode * vnWall;
+    
     ofxPanel panel;
     
-    OrganicMaterial mat;
-    ofMaterial matstatic;
+    OrganicMaterial matFloor;
+    OrganicMaterial matWall;
+
     ofTexture tex;
     
 };

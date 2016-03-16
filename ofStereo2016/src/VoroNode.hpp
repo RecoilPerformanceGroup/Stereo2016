@@ -14,7 +14,27 @@
 #include "dispatch/dispatch.h"
 
 class VoroNode : public ofNode {
+    
+    
 public:
+    
+    static int counter;
+    
+    template<class T>
+    struct del_fun_t
+    {
+        del_fun_t& operator()(T* p) {
+            delete p;
+            p = NULL;
+            return *this;
+        }
+    };
+    
+    template<class T>
+    del_fun_t<T> del_fun()
+    { 
+        return del_fun_t<T>(); 
+    }
     
     // bounding box
     float width;
@@ -34,27 +54,31 @@ public:
     ofVboMesh mesh;
     
     int nCells;
-    list<VoroNode *> voroChildren;
+    std::set<VoroNode*> voroChildren;
     
     VoroNode() {
+        counter++;
         isSplit = false;
         bDraw = false;
         level = 0;
+        clearParent();
     };
     
     VoroNode(ofVboMesh _mesh) {
+        counter++;
         isSplit = false;
         mesh = _mesh;
         level = 0;
-        
+        clearParent();
         calculateBoundingBox();
     };
     
-    VoroNode(ofVboMesh _mesh, VoroNode & parent) {
+    VoroNode(ofVboMesh _mesh, VoroNode& vnParent) {
+        counter++;
         isSplit = false;
         bDraw = true;
         
-        level = parent.level+1;
+        level = vnParent.level+1;
         
         // make the mesh vertices local for the node
         // move th relative position to the nodes position
@@ -70,7 +94,7 @@ public:
         
         calculateBoundingBox();
         
-        setParent(parent);
+        setParent(vnParent);
         
     };
     
@@ -215,44 +239,55 @@ public:
     };
     
     ~VoroNode() {
-        
-        for(auto s : voroChildren) {
-            delete s;
+
+        if(this->parent){
+            ofNode::clearParent();
         }
         
-        voroChildren.clear();
+        clearChildren();
+        
+        counter--;
+        
     };
     
-    void setParent(ofNode& parent, bool bMaintainGlobalTransform = false ){
+    void setParent(ofNode& p, bool bMaintainGlobalTransform = false ){
         if(this->parent != nullptr){
-            // we have a parent allready
-            if (VoroNode* oldVoroParent = dynamic_cast<VoroNode*>(this->parent)) {
-                // our old parent is also VoroNode
-                // remove this from parents' children.
-                oldVoroParent->voroChildren.remove(this);
-            }
+            clearParent(bMaintainGlobalTransform);
         }
-        if (VoroNode* newVoroParent = dynamic_cast<VoroNode*>(&parent)){
+        if (VoroNode* newVoroParent = dynamic_cast<VoroNode *>(&p)){
             // our new parent is a VoroNode
-            newVoroParent->voroChildren.push_back(this);
+            newVoroParent->addChild(*this);
         }
-        ofNode::setParent(parent, bMaintainGlobalTransform);
+        ofNode::setParent(p, bMaintainGlobalTransform);
     };
     
     /// \brief Remove parent node linking
     void clearParent(bool bMaintainGlobalTransform = false){
-        if(this->parent != nullptr){
+        if(parent){
             // we have a parent allready
             if (VoroNode* oldVoroParent = dynamic_cast<VoroNode*>(this->parent)) {
                 // our old parent is also VoroNode
                 // remove this from parents' children.
-                oldVoroParent->voroChildren.remove(this);
+                oldVoroParent->removeChild(*this);
             }
+            ofNode::clearParent(bMaintainGlobalTransform);
         }
-        ofNode::clearParent();
     }
     
-    list<VoroNode *> getChildren() {
+    void removeChild(VoroNode & vnChild){
+        voroChildren.erase(&vnChild);
+    }
+    
+    void addChild(VoroNode & vnChild){
+        voroChildren.insert(&vnChild);
+    }
+    
+    void clearChildren(){
+        for_each(voroChildren.begin(), voroChildren.end(), del_fun<VoroNode>());
+        voroChildren.clear();
+    }
+    
+    set<VoroNode *> getChildren() {
         return voroChildren;
     };
     
@@ -311,7 +346,7 @@ public:
             delete(w);
         }
         
-        voroChildren.clear();
+        clearChildren();
         
         for(auto && m : cellMeshes) {
             
@@ -324,7 +359,7 @@ public:
     
     // start from a box
     
-    void setup(float _w = 100, float _h = 100, float _d = 100, int _c = 5) {
+    void setup(float _w = 100, float _h = 100, float _d = 100, int _c = 5, bool overFlowX = false, bool overFlowY = false, bool overFlowZ = false) {
         width  = _w;
         height = _h;
         depth  = _d;
@@ -334,12 +369,13 @@ public:
         minBounds = ofVec3f(-width/2.0, -height/2.0, -depth/2.0);
         maxBounds = ofVec3f(width/2.0, height/2.0, depth/2.0);
         
+        clearChildren();
         
         // TODO: use split instead of generate
         // rename this method something like setupFromBoundingBox ...
         // generate();
         
-        split(nCells);
+        split(nCells, overFlowX, overFlowY, overFlowZ);
         
     };
     
@@ -371,39 +407,6 @@ public:
         }
     };
     
-    void generate() {
-        
-        voro::container con(-width/2,width/2,
-                            -height/2,height/2,
-                            -depth/2,depth/2,
-                            1,1,1,
-                            true,true,true, // set true to flow beyond box
-                            8);
-        
-        for(int i = 0; i < nCells;i++){
-            ofPoint newCell = ofPoint(ofRandom(-width/2,width/2),
-                                      ofRandom(-height/2,height/2),
-                                      ofRandom(-depth/2,depth/2));
-            
-            addCellSeed(con, newCell, i, true);
-        }
-        
-        vector<ofVboMesh> cellMeshes;
-        getCellsFromContainerParallel(con, 0, cellMeshes, false);
-        
-        voroChildren.clear();
-        
-        vector<ofPoint> centroids = getCellsCentroids(con);
-        
-        for(auto && m : cellMeshes) {
-            
-            VoroNode * sub = new VoroNode(m, *this);
-            
-        }
-        
-        //cells.clear(); // todo clear children
-        
-    }
     
 };
 
