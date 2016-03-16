@@ -17,8 +17,28 @@ void ParameterFadeManager::update() {
     }
 }
 
-void ParameterFadeManager::add(AbstractParameterFade * fade) {
-    parameterFades.push_back(fade);
+bool ParameterFadeManager::isFadingParameter(const ofAbstractParameter & p) {
+    for(auto fade : parameterFades) {
+        if(fade->p == &p) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void ParameterFadeManager::add(AbstractParameterFade * newFade) {
+    
+    bool _bAddNew = true;
+    for(auto & fade : parameterFades) {
+        if(fade->p == newFade->p) {
+            
+            // if we are already fading this value, overwrite the fade
+            fade = newFade;
+            _bAddNew = false;
+        }
+    }
+    
+    if(_bAddNew) parameterFades.push_back(newFade);
 }
 
 bool ParameterFadeManager::hasEaseFunction(string easeFunctionName) {
