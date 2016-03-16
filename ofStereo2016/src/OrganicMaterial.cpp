@@ -161,7 +161,14 @@ const ofShader & OrganicMaterial::getShader(int textureTarget, ofGLProgrammableR
     }
 }
 
+void OrganicMaterial::updateParameters() {
+    noiseDisplaceTime += noiseVelocity.get() * ofGetLastFrameTime();
+    
+    
+}
+
 void OrganicMaterial::updateMaterial(const ofShader & shader,ofGLProgrammableRenderer & renderer) const{
+    
     shader.setUniform4fv("mat_ambient", &data.ambient.r);
     shader.setUniform4fv("mat_diffuse", &data.diffuse.r);
     shader.setUniform4fv("mat_specular", &data.specular.r);
@@ -169,14 +176,14 @@ void OrganicMaterial::updateMaterial(const ofShader & shader,ofGLProgrammableRen
     shader.setUniform4fv("global_ambient", &ofGetGlobalAmbientColor().r);
     shader.setUniform1f("mat_shininess",data.shininess);
     
-    shader.setUniform3f("time", ofGetElapsedTimef(), ofGetElapsedTimef(), ofGetElapsedTimef());
+    // generic actual time
+    shader.setUniform1f("time", ofGetElapsedTimef());
     
-    
-    // TODO: set all vertex displace uniforms
-    
+    // noise displacement uniforms
+    shader.setUniform3f("noiseDisplaceTime", noiseDisplaceTime);
+    shader.setUniform3f("noiseDisplacementAmount", noiseDisplacementAmount);
 
     shader.setUniformMatrix4f("worldMatrix", worldMatrix);
-    
 }
 
 void OrganicMaterial::updateLights(const ofShader & shader,ofGLProgrammableRenderer & renderer) const{
@@ -257,7 +264,10 @@ uniform mat4 normalMatrix;
 uniform mat4 worldMatrix;
 
 // the time value is passed into the shader by the OF app.
-uniform vec3 time;
+uniform float time;
+uniform vec3 noiseDisplacementAmount;
+uniform vec3 noiseDisplaceTime;
+
 
 // Noise 2D
 //
@@ -344,49 +354,24 @@ mat4 rotationMatrix(vec3 axis, float angle)
 }
 
 
+vec4 noiseDisplace (vec4 pos, vec3 t, vec3 dis) {
+    return vec4(snoise(vec2(pos.z * 0.01, t.x)) * dis.x,
+                snoise(vec2(pos.x * 0.01, t.y)) * dis.y,
+                snoise(vec2(pos.y * 0.01, t.z)) * dis.z, 0.0);
+}
+
 void main (void){
     
     
-    vec4 pos = position;
-    
-    /*float displacementHeight = 10.0;
-    float displacementY = sin(time + (position.x / 2.0)) * displacementHeight;
-    vec4 displacementVec = vec4 (0.0, displacementY, 0.0, 0.0);
-    vec4 modifiedPosition = modelViewProjectionMatrix * (position+displacementVec);
-    */
-    
-    // noise displace
-/*    vec4 displaceAmount = vec4(10.0,10.0,10.0,0.0);
-    vec4 displacementVec = vec4(
-                                snoise(vec2(time.x/10.0 + pos.z/100.0, 800)),
-                                snoise(vec2(time.y + pos.x,  600)),
-                                snoise(vec2(time.z + pos.y,  400)), 0.0
-                        );
-    
-    vec4 modifiedPosition = modelViewProjectionMatrix * (pos+(displacementVec*displaceAmount));
-    */
-    
-    //twist
-    
-    
-    //float rotateAmt = sin(time.x/10 + (pos.y / 80.0)) * PI;
-    //vec4 modifiedPosition = modelViewProjectionMatrix * (rotationMatrix(vec3(0.0,1.0,0.0), rotateAmt) * pos);
-    
-    //vn.rotate(rotateAmt, rotteAround, ofVec3f(0,1,0));
-
-    //vec4 modifiedPosition = modelViewProjectionMatrix * pos;
     localPositionBeforeNoise = position;
     modelViewPositionBeforeNoise = position * modelViewMatrix;
     worldPositionBeforeNoise = worldMatrix * position;
     
-    vec4 displacementVec = vec4(snoise(vec2(worldPositionBeforeNoise.z * 0.01, time.x * 0.5)) * 10.0,
-                                snoise(vec2(worldPositionBeforeNoise.x * 0.01, time.y * 0.5)) * 10.0,
-                                snoise(vec2(worldPositionBeforeNoise.y * 0.01, time.z * 0.5)) * 10.0, 0.0);
+    vec4 displacementVec = noiseDisplace(worldPositionBeforeNoise, noiseDisplaceTime, noiseDisplacementAmount);
     
     localPosition = position + displacementVec;
     worldPosition = worldMatrix * localPosition;
     modelViewPosition = modelViewMatrix * localPosition;
-    
     
     vec4 modifiedPosition = modelViewProjectionMatrix * localPosition;
     

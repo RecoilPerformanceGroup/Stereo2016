@@ -17,8 +17,28 @@ void ParameterFadeManager::update() {
     }
 }
 
-void ParameterFadeManager::add(AbstractParameterFade * fade) {
-    parameterFades.push_back(fade);
+bool ParameterFadeManager::isFadingParameter(const ofAbstractParameter & p) {
+    for(auto fade : parameterFades) {
+        if(fade->p == &p) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void ParameterFadeManager::add(AbstractParameterFade * newFade) {
+    
+    bool _bAddNew = true;
+    for(auto & fade : parameterFades) {
+        if(fade->p == newFade->p) {
+            
+            // if we are already fading this value, overwrite the fade
+            fade = newFade;
+            _bAddNew = false;
+        }
+    }
+    
+    if(_bAddNew) parameterFades.push_back(newFade);
 }
 
 bool ParameterFadeManager::hasEaseFunction(string easeFunctionName) {
@@ -56,6 +76,28 @@ void ParameterFade<ofColor>::updateValue(float t) {
     lastValue = value;
     p->cast<ofColor>() = value;
 }
+
+template<>
+void ParameterFade<ofVec3f>::updateValue(float t) {
+    
+    value.x = ofxeasing::map(t, startTime, endTime, fromValue.x, toValue.x, ofxeasing::linear::easeIn);
+    value.y = ofxeasing::map(t, startTime, endTime, fromValue.y, toValue.y, easeFn);
+    value.z = ofxeasing::map(t, startTime, endTime, fromValue.z, toValue.z, easeFn);
+    
+    lastValue = value;
+    p->cast<ofVec3f>() = value;
+}
+
+template<>
+void ParameterFade<ofVec2f>::updateValue(float t) {
+    
+    value.x = ofxeasing::map(t, startTime, endTime, fromValue.x, toValue.x, ofxeasing::linear::easeIn);
+    value.y = ofxeasing::map(t, startTime, endTime, fromValue.y, toValue.y, easeFn);
+    
+    lastValue = value;
+    p->cast<ofVec2f>() = value;
+}
+
 
 template<>
 void ParameterFade<int>::updateValue(float t) {

@@ -47,9 +47,7 @@ public:
     float duration;
     float startTime;
     float endTime;
-    
 };
-
 
 template<typename ParameterType>
 class ParameterFade : public AbstractParameterFade {
