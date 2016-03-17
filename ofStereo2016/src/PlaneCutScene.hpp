@@ -36,7 +36,6 @@ public:
         wallPos
     };
     
-    
     PlaneCutScene() {        
         ofxStereoscopy::Scene::params = params;
     }
@@ -49,7 +48,6 @@ public:
     void onCellCount(int& value);
     void onStageSize(ofVec3f& vec);
     void reconstructMeshes();
-    
     
     ofLight directionalLight1;
     ofLight directionalLight2;

@@ -22,18 +22,16 @@ public:
     
     ofApp() {
         
+        sceneParams.setName("scene");
+        
         scenes.push_back(make_shared<SceneTest>());
         scenes.push_back(make_shared<CrystalScene>());
         scenes.push_back(make_shared<PlaneCutScene>());
         scenes.push_back(make_shared<LightScene>());
         
         for( auto s : scenes) {
-            mainParams.add(s->getParameters());
+            sceneParams.add(s->getParameters());
         }
-        
-        scenes[0]->enabled = false;
-        scenes[1]->enabled = false;
-        scenes[2]->enabled = true;
         
     }
     
@@ -42,15 +40,17 @@ public:
     ofParameter<ofColor> background_color{"Background Color", ofColor(255,255,255,255),ofColor(0,0,0,0),ofColor(255,255,255,255)};
     ofParameter<bool> show_model_on_second_screen{"Second Screen Model", false, false, true};
     
-    ofParameterGroup mainParams{
-        "mainParams",
+    ofParameterGroup globalParams{
+        "world",
         stage_size_cm,
         calibrate_planes,
         background_color,
         show_model_on_second_screen
     };
     
-    ofxPanel panel;
+    ofParameterGroup sceneParams{};
+    
+    vector<ofxPanel *> scenePanels;
     
     void setup();
     
@@ -173,8 +173,12 @@ public:
     void updateStage();
     bool flagStageResized = false;
     
+    void receiveOscParameter(ofxOscMessage & msg, ofAbstractParameter * p);
+    
     void saveParameters(ofParameterGroup & params);
     void loadParameters(ofParameterGroup & params);
+    void loadAllParameters();
+    void saveAllParameters();
     
     shared_ptr<ofAppBaseWindow> guiWindow;
     shared_ptr<ofAppBaseWindow> mainWindow;
