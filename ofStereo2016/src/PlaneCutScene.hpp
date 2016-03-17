@@ -50,7 +50,6 @@ public:
     void onStageSize(ofVec3f& vec);
     void reconstructMeshes();
     
-    
     ofLight directionalLight1;
     ofLight directionalLight2;
     

@@ -10,8 +10,7 @@
 
 void PlaneCutScene::setup(){
     
-  
-    ofParameter<ofVec3f> &stage_size = mainParams.getVec3f("stage_size_cm");
+    ofParameter<ofVec3f> &stage_size = globalParams->getVec3f("stage_size_cm");
     
     vnFloor = new VoroNode();
     vnFloor->setup(stage_size->x+400, 50.0, stage_size->z+400, cellCount, false, true, false);
@@ -45,7 +44,7 @@ void PlaneCutScene::setup(){
     
     directionalLight2.setDiffuseColor(ofFloatColor::blue*0.5);
     
-    mainParams.getVec3f("stage_size_cm").addListener(this, &PlaneCutScene::onStageSize);
+    globalParams->getVec3f("stage_size_cm").addListener(this, &PlaneCutScene::onStageSize);
     randomSeed.addListener(this, &PlaneCutScene::onRandomSeed);
     cellCount.addListener(this, &PlaneCutScene::onCellCount);
 

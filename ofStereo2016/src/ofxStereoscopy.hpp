@@ -1024,8 +1024,8 @@ namespace ofxStereoscopy {
          virtual void guiEvent(ofxUIEventArgs &e) {};
          */
         
-        void setupScene(ofParameterGroup &mainP, World  * w) {
-            mainParams = mainP;
+        void setupScene(ofParameterGroup * mainP, World  * w) {
+            globalParams = mainP;
             world = w;
             setup();
         };
@@ -1048,8 +1048,6 @@ namespace ofxStereoscopy {
             
         };
         
-        
-        
         ofParameterGroup & getParameters() {
             return params;
         }
@@ -1057,9 +1055,9 @@ namespace ofxStereoscopy {
         virtual void drawGui() {};
         virtual void setupGui() {};
         
-        ofParameterGroup mainParams;
+        ofParameterGroup * globalParams;
         World * world;
-    
+                
     private:
         virtual void setup(){};
         virtual void update(){};
