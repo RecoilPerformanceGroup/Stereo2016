@@ -11,10 +11,10 @@
 #include "ofxDatGuiParameterBindings.hpp"
 #include "ofxGui.h"
 
-#include "SceneTest.hpp"
-#include "CrystalScene.hpp"
-#include "PlaneCutScene.hpp"
+// scenes
+
 #include "LightScene.hpp"
+#include "MountainScene.hpp"
 
 class ofApp : public ofBaseApp{
     
@@ -22,18 +22,15 @@ public:
     
     ofApp() {
         
-        scenes.push_back(make_shared<SceneTest>());
-        scenes.push_back(make_shared<CrystalScene>());
-        scenes.push_back(make_shared<PlaneCutScene>());
+        scenes.push_back(make_shared<MountainScene>());
         scenes.push_back(make_shared<LightScene>());
         
         for( auto s : scenes) {
             mainParams.add(s->getParameters());
         }
         
-        scenes[0]->enabled = false;
-        scenes[1]->enabled = false;
-        scenes[2]->enabled = true;
+        scenes[0]->enabled = true;
+        scenes[1]->enabled = true;
         
     }
     

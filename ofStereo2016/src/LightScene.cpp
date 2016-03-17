@@ -11,20 +11,21 @@
 void LightScene::setup() {
 
     areaLight.enable();
-    
+    testLight.enable();
+    testLight.setSpotlight();
 }
 
 void LightScene::update() {
-    
+    updateLight(testLight);
+    testLight.setSpotConcentration(testLightSpotConcentration);
+    testLight.setAmbientColor(testLightAmbientColor.get());
     areaLight.setAreaLight(areaLightWidth, areaLightHeight);
     areaLight.setPosition(areaLightPos);
-    areaLight.lookAt(ofVec3f(0,0,0));
-    
+    areaLight.lookAt(areaLightLookAt);
 }
 
 void LightScene::draw() {
     //areaLight.enable();
-    
     
 }
 

@@ -8,10 +8,10 @@
 	<position1>50, 50</position1>
 <mainParams/>
 	<Calibrate_Planes>0</Calibrate_Planes>
-	<Background_Color>255, 243, 70, 0</Background_Color>
+	<Background_Color>0, 0, 0, 255</Background_Color>
 <world>
 		<camera>
-			<camera_position>405.594, 1132.87, 2972.03</camera_position>
+			<camera_position>0, 250, 1188.81</camera_position>
 			<eye_separation>138.462</eye_separation>
 			<focus_distance>200</focus_distance>
 			<camera_near_clip>20</camera_near_clip>
@@ -103,8 +103,27 @@
 	</Crystal>
 	<Lights>
 		<enabled>1</enabled>
-		<width>100</width>
-		<height>100</height>
-		<position>0, 0, 0</position>
+		<width>198.98</width>
+		<height>198.98</height>
+		<position>10.8286, 271.137, 281.549</position>
 	</Lights>
+<mountainScene>
+		<enabled>1</enabled>
+		<anaglyphAmount>0</anaglyphAmount>
+		<anaglyphColorLeft>0, 255, 255, 255</anaglyphColorLeft>
+		<anaglyphColorRight>255, 0, 0, 255</anaglyphColorRight>
+		<mountain>
+			<randomSeed>1670</randomSeed>
+			<cellCount>162</cellCount>
+			<size>9157.75, 2251.61, 2251.61</size>
+			<position>437.658, 118.914, -8168.45</position>
+			<rotation>-49.2682, -167.841, 0.455933</rotation>
+		</mountain>
+		<floor>
+			<color>253, 253, 253, 255</color>
+		</floor>
+		<wall>
+			<color>255, 255, 255, 255</color>
+		</wall>
+	</mountainScene>
 </mainParams>
