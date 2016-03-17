@@ -29,12 +29,16 @@ bool ParameterFadeManager::isFadingParameter(const ofAbstractParameter & p) {
 void ParameterFadeManager::add(AbstractParameterFade * newFade) {
     
     bool _bAddNew = true;
+    
     for(auto & fade : parameterFades) {
         if(fade->p == newFade->p) {
-            
-            // if we are already fading this value, overwrite the fade
-            fade = newFade;
-            _bAddNew = false;
+           
+            // Components interrupt all
+            if (fade->c == newFade->c || newFade->c == "all" || fade->c == "all") {
+                fade = newFade;
+                _bAddNew = false;
+                
+            }
         }
     }
     
@@ -66,12 +70,58 @@ void AbstractParameterFade::update(float t) {
 }
 
 template<>
+void ParameterFade<ofColor>::paramChanged(ofColor & _val){
+    
+    if( (_val   != lastValue    && c == "all") ||
+        (_val.r != lastValue.r  && c == "r")   ||
+        (_val.g != lastValue.g  && c == "g")   ||
+        (_val.b != lastValue.b  && c == "b")   ||
+        (_val.a != lastValue.a  && c == "a") )
+        { isAlive = false; }
+    
+}
+
+template<>
+void ParameterFade<ofVec3f>::paramChanged(ofVec3f & _val){
+    
+    if( (_val   != lastValue    && c == "all") ||
+        (_val.x != lastValue.x  && c == "x")   ||
+        (_val.y != lastValue.y  && c == "y")   ||
+        (_val.z != lastValue.z  && c == "z") )
+        { isAlive = false; }
+    
+}
+
+template<>
+void ParameterFade<ofVec2f>::paramChanged(ofVec2f & _val){
+    
+    if( (_val   != lastValue    && c == "all") ||
+        (_val.x != lastValue.x  && c == "x")   ||
+        (_val.y != lastValue.y  && c == "y") )
+        { isAlive = false; }
+    
+}
+
+template<>
 void ParameterFade<ofColor>::updateValue(float t) {
     
-    value.r = ofxeasing::map(t, startTime, endTime, fromValue.r, toValue.r, ofxeasing::linear::easeIn);
-    value.g = ofxeasing::map(t, startTime, endTime, fromValue.g, toValue.g, easeFn);
-    value.b = ofxeasing::map(t, startTime, endTime, fromValue.b, toValue.b, easeFn);
-    value.a = ofxeasing::map(t, startTime, endTime, fromValue.a, toValue.a, easeFn);
+    value = p->cast<ofColor>().get();
+
+    if(c == "all" || c == "r") {
+        value.r = ofxeasing::map(t, startTime, endTime, fromValue.r, toValue.r, ofxeasing::linear::easeIn);
+    }
+    
+    if(c == "all" || c == "g") {
+        value.g = ofxeasing::map(t, startTime, endTime, fromValue.g, toValue.g, easeFn);
+    }
+    
+    if(c == "all" || c == "b") {
+        value.b = ofxeasing::map(t, startTime, endTime, fromValue.b, toValue.b, easeFn);
+    }
+    
+    if(c == "all" || c == "a") {
+        value.a = ofxeasing::map(t, startTime, endTime, fromValue.a, toValue.a, easeFn);
+    }
     
     lastValue = value;
     p->cast<ofColor>() = value;
@@ -80,9 +130,17 @@ void ParameterFade<ofColor>::updateValue(float t) {
 template<>
 void ParameterFade<ofVec3f>::updateValue(float t) {
     
-    value.x = ofxeasing::map(t, startTime, endTime, fromValue.x, toValue.x, ofxeasing::linear::easeIn);
-    value.y = ofxeasing::map(t, startTime, endTime, fromValue.y, toValue.y, easeFn);
-    value.z = ofxeasing::map(t, startTime, endTime, fromValue.z, toValue.z, easeFn);
+    value = p->cast<ofVec3f>().get();
+    
+    if(c == "all" || c == "x") {
+        value.x = ofxeasing::map(t, startTime, endTime, fromValue.x, toValue.x, ofxeasing::linear::easeIn);
+    }
+    if(c == "all" || c == "y") {
+        value.y = ofxeasing::map(t, startTime, endTime, fromValue.y, toValue.y, easeFn);
+    }
+    if(c == "all" || c == "z") {
+        value.z = ofxeasing::map(t, startTime, endTime, fromValue.z, toValue.z, easeFn);
+    }
     
     lastValue = value;
     p->cast<ofVec3f>() = value;
@@ -91,8 +149,14 @@ void ParameterFade<ofVec3f>::updateValue(float t) {
 template<>
 void ParameterFade<ofVec2f>::updateValue(float t) {
     
-    value.x = ofxeasing::map(t, startTime, endTime, fromValue.x, toValue.x, ofxeasing::linear::easeIn);
-    value.y = ofxeasing::map(t, startTime, endTime, fromValue.y, toValue.y, easeFn);
+    value = p->cast<ofVec2f>().get();
+    
+    if(c == "all" || c == "x") {
+        value.x = ofxeasing::map(t, startTime, endTime, fromValue.x, toValue.x, ofxeasing::linear::easeIn);
+    }
+    if(c == "all" || c == "y") {
+        value.y = ofxeasing::map(t, startTime, endTime, fromValue.y, toValue.y, easeFn);
+    }
     
     lastValue = value;
     p->cast<ofVec2f>() = value;
