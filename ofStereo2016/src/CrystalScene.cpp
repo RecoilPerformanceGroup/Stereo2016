@@ -51,6 +51,12 @@ void CrystalScene::draw() {
     //spotlight.enable();
     //spotlight.lookAt(origin);
     
+    
+    if(world->isDrawingLeft()) {
+        ofBackground(255, 0, 0);
+    }
+    
+    
     ofPushMatrix(); {
         
         // twist example

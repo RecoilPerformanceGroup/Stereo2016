@@ -448,8 +448,8 @@
 				7A6991471C91ACA700DDD9B9 /* SketchScene.cpp */,
 				7A6991481C91ACA700DDD9B9 /* SketchScene.hpp */,
 				7A69914B1C91B36600DDD9B9 /* PlaneCutScene.cpp */,
-				7A69914C1C91B36600DDD9B9 /* PlaneCutScene.hpp */,
 				044EA0BA1C984148007B0072 /* LightScene.cpp */,
+				7A69914C1C91B36600DDD9B9 /* PlaneCutScene.hpp */,
 				044EA0BB1C984148007B0072 /* LightScene.hpp */,
 			);
 			name = Scenes;
@@ -783,7 +783,7 @@
 					../../../addons/ofxXmlSettings/libs,
 					../../../addons/ofxXmlSettings/src,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CPLUSPLUSFLAGS = (
 					"-D__MACOSX_CORE__",
@@ -827,7 +827,7 @@
 					../../../addons/ofxXmlSettings/libs,
 					../../../addons/ofxXmlSettings/src,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				OTHER_CPLUSPLUSFLAGS = (
 					"-D__MACOSX_CORE__",
 					"-mtune=native",
