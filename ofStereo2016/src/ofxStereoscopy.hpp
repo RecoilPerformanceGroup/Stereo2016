@@ -355,6 +355,30 @@ namespace ofxStereoscopy {
         ofImage logo;
         
         
+        bool isDrawingRight() {
+            if(currentPlane == nullptr) return false;
+            return bIsDrawingRight;
+        };
+        
+        bool isDrawingLeft() {
+            if(currentPlane == nullptr) return false;
+            return bIsDrawingLeft;
+        };
+        
+        Plane * getCurrentPlane() {
+            return currentPlane;
+        }
+        
+        void setCurrentPlane(Plane * plane) {
+            currentPlane = plane;
+        }
+        
+        bool bIsDrawingLeft;
+        bool bIsDrawingRight;
+        
+        Plane * currentPlane;
+        
+        
     };
     
     class Plane : public ofPlanePrimitive{
@@ -850,6 +874,9 @@ namespace ofxStereoscopy {
         
         void beginLeft()
         {
+            world->bIsDrawingLeft = true;
+            world->setCurrentPlane(this);
+            
             ofPushView();
             ofPushMatrix();
             float eye = world->physical_eye_seperation_cm;
@@ -882,10 +909,15 @@ namespace ofxStereoscopy {
             fboLeft.end();
             ofPopMatrix();
             ofPopView();
+            world->bIsDrawingLeft = false;
+            world->setCurrentPlane(nullptr);
         }
         
         void beginRight()
         {
+            world->setCurrentPlane(this);
+            world->bIsDrawingRight = true;
+            
             ofPushView();
             ofPushMatrix();
             float eye = world->physical_eye_seperation_cm;
@@ -918,6 +950,9 @@ namespace ofxStereoscopy {
             fboRight.end();
             ofPopMatrix();
             ofPopView();
+            world->bIsDrawingRight = false;
+            world->setCurrentPlane(nullptr);
+
         }
         
         void drawLeft(float texX = 0.0, float texY = 0.0, float texW = 1.0, float texH = 1.0){
@@ -989,8 +1024,7 @@ namespace ofxStereoscopy {
          virtual void guiEvent(ofxUIEventArgs &e) {};
          */
         
-        
-        void setupScene(ofParameterGroup &mainP, World &w) {
+        void setupScene(ofParameterGroup &mainP, World  * w) {
             mainParams = mainP;
             world = w;
             setup();
@@ -1001,9 +1035,11 @@ namespace ofxStereoscopy {
             if(enabled) {
                 update();
             }
+            
         };
         
         void drawScene() {
+            
             if(enabled) {
                 glPushMatrix();ofPushMatrix();ofPushStyle();
                 draw();
@@ -1013,6 +1049,7 @@ namespace ofxStereoscopy {
                 debugDraw();
                 ofPopStyle();ofPopMatrix();glPopMatrix();
             }
+            
         };
         
         
@@ -1025,7 +1062,7 @@ namespace ofxStereoscopy {
         virtual void setupGui() {};
         
         ofParameterGroup mainParams;
-        World world;
+        World * world;
     
     private:
         virtual void setup(){};

@@ -7,9 +7,8 @@ void ofApp::setup(){
     
     ofSetSmoothLighting(true);
 
-    
     for( auto s : scenes) {
-        s->setupScene(mainParams, world);
+        s->setupScene(mainParams, &world);
     }
     
     mainParams.add(world.params);
@@ -305,6 +304,7 @@ void ofApp::draw(){
     } else {
         ofEnableLighting();
         for(std::pair<string, shared_ptr<ofxStereoscopy::Plane>> p : world.planes){
+            
             p.second->beginLeft();
             ofClear(background_color);
             
@@ -320,7 +320,6 @@ void ofApp::draw(){
             for(auto s : scenes) {
                 s->drawScene();
             }
-            
             
             p.second->endRight();
         }

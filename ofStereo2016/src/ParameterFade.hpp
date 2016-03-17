@@ -49,7 +49,7 @@ public:
     float startTime;
     float endTime;
     
-    string c; // 0 = all - 1 r/x 2 g/y etc
+    string c; // all __ r,g,b,a __ x,y,z __ x,y
 
     
 };
