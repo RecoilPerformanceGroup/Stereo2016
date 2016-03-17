@@ -43,6 +43,7 @@ void MountainScene::draw(){
     matFloor.setAmbientColor(mountainColor.getLerped(ofColor::black, 0.75));
     float floorHeight = 10.0;
     float floorSize = 100000.0;
+    ofSetBoxResolution( 1000, 3, 1000 );
     ofDrawBox(ofPoint(0,-floorHeight/2.0, stage_size->z/2.0), floorSize, floorHeight, floorSize);
     matFloor.end();
     
@@ -56,13 +57,14 @@ void MountainScene::draw(){
 void MountainScene::reconstructMountain(){
     ofSeedRandom(mountainRandomSeed);
     mountain.setup(mountainSize->x, mountainSize->y, mountainSize->z, mountainCellCount, true,true,true);
-    mountain.setParent(world.origin);
+    mountain.setParent(world->origin);
 }
 
 void MountainScene::onStageSize(ofVec3f& stageSize){
     //reconstructMountain();
 }
 
-void MountainScene::drawGui(){
-    ofSetColor(255);//FIXME: Why? should we not always push/pop styles? Or do this in the superclass or caller?
+void MountainScene::drawModel(){
+    ofSetColor(255,64);
+    mountain.draw();
 }

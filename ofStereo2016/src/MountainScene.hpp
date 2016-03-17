@@ -76,7 +76,7 @@ public:
     }
     
     void draw();
-    void drawGui();
+    void drawModel();
     void update();
     void setup();
     void onStageSize(ofVec3f& vec);

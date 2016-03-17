@@ -446,6 +446,18 @@
 		7A69914A1C91B35300DDD9B9 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				044EA0BB1C984148007B0072 /* LightScene.hpp */,
+				044EA0BA1C984148007B0072 /* LightScene.cpp */,
+				7F6447701C9AC91E0021E43E /* MountainScene.hpp */,
+				7F64476F1C9AC91E0021E43E /* MountainScene.cpp */,
+				7F6447731C9AF3730021E43E /* Unused */,
+			);
+			name = Scenes;
+			sourceTree = "<group>";
+		};
+		7F6447731C9AF3730021E43E /* Unused */ = {
+			isa = PBXGroup;
+			children = (
 				7A0D4D021C7F39A100CF4DD7 /* SceneTest.cpp */,
 				7A0D4D031C7F39A100CF4DD7 /* SceneTest.hpp */,
 				041E59621C886A2700FC2FE0 /* CrystalScene.cpp */,
@@ -453,13 +465,9 @@
 				7A6991471C91ACA700DDD9B9 /* SketchScene.cpp */,
 				7A6991481C91ACA700DDD9B9 /* SketchScene.hpp */,
 				7A69914B1C91B36600DDD9B9 /* PlaneCutScene.cpp */,
-				044EA0BA1C984148007B0072 /* LightScene.cpp */,
 				7A69914C1C91B36600DDD9B9 /* PlaneCutScene.hpp */,
-				044EA0BB1C984148007B0072 /* LightScene.hpp */,
-				7F64476F1C9AC91E0021E43E /* MountainScene.cpp */,
-				7F6447701C9AC91E0021E43E /* MountainScene.hpp */,
 			);
-			name = Scenes;
+			name = Unused;
 			sourceTree = "<group>";
 		};
 		86D2677079A3AF4A5A88E29A /* oscpack */ = {

@@ -10,18 +10,24 @@
 
 void LightScene::setup() {
 
+    directionalLight.enable();
+    directionalLight.setParent(world->origin);
+    directionalLight.setDirectional();
+
+    spotLight.enable();
+    spotLight.setParent(world->origin);
+    spotLight.setSpotlight();
+    
     areaLight.enable();
-    testLight.enable();
-    testLight.setSpotlight();
+    areaLight.setParent(world->origin);
 }
 
 void LightScene::update() {
-    updateLight(testLight);
-    testLight.setSpotConcentration(testLightSpotConcentration);
-    testLight.setAmbientColor(testLightAmbientColor.get());
+    updateLight(directionalLight);
+    updateLight(spotLight);
+    spotLight.setSpotConcentration(spotLightSpotConcentration);
+    updateLight(areaLight);
     areaLight.setAreaLight(areaLightWidth, areaLightHeight);
-    areaLight.setPosition(areaLightPos);
-    areaLight.lookAt(areaLightLookAt);
 }
 
 void LightScene::draw() {
@@ -29,3 +35,9 @@ void LightScene::draw() {
     
 }
 
+void LightScene::drawModel(){
+    ofSetColor(255,127);
+    spotLight.draw();
+    directionalLight.draw();
+    areaLight.draw();
+}
