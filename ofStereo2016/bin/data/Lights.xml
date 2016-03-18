@@ -1,5 +1,10 @@
 <Lights>
 	<enabled>1</enabled>
+<<<<<<< HEAD
+	<width>100</width>
+	<height>100</height>
+	<position>357.143, 418.367, -428.571</position>
+=======
 	<directionalLight>
 		<diffuseColor>183, 183, 183, 255</diffuseColor>
 		<ambientColor>0, 0, 0, 255</ambientColor>
@@ -24,5 +29,6 @@
 		<width>765.306</width>
 		<height>765.306</height>
 	</areaLight>
+>>>>>>> 0cc030d2dca34dc679cf77b7be9817dd11d4f642
 <Lights/>
 </Lights>

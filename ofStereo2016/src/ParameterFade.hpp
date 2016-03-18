@@ -33,13 +33,14 @@ public:
     }
     
     ~AbstractParameterFade() {
+        //cout<<"delete fade"<<endl;
     }
     
     ofAbstractParameter * p;
     
     bool hasStarted, hasEnded, isAlive;
     
-    void update(float timeBase);
+    virtual void update(float timeBase) {};
     
     ofxeasing::function easeFn;
     
@@ -70,25 +71,44 @@ public:
         c = _component;
         
         //fromValue =  (_fromValue != NULL) ? _fromValue : p->cast<ParameterType>().get();
-        fromValue = p->cast<ParameterType>().get();
-        p->cast<ParameterType>().addListener(this, &ParameterFade::paramChanged);
+        fromValue  = p->cast<ParameterType>().get();
+        lastValue = fromValue;
+        
+        //p->cast<ParameterType>().addListener(this, &ParameterFade::paramChanged);
+        
+        //cout<<"parameter fade: " << p->getName() << ":" << c << " "  << fromValue << " - " << toValue<< " added"<<endl;
+
+        
+    }
+        
+    ~ParameterFade() {
+            
     }
     
 private:
     
-    void updateValue(float timeBase);
+    void update(float t) {
+      
+        
+        hasStarted = (t >= startTime);
+        hasEnded = (t >= endTime);
+        
+        if(isAlive) updateValue(t);
+        
+        //if(toValue == )
+        
+    };
+    
+    void updateValue(float t);
     
     ParameterType toValue;
     ParameterType fromValue;
     ParameterType lastValue;
-    ParameterType value;
     
-    void paramChanged(ParameterType & _val){
-        
-        if(_val != lastValue && c=="all") {
-            isAlive = false;
-        }
+    ParameterType getCurrentValue() {
+        return p->cast<ParameterType>().get();
     }
+    
 };
 
 class ParameterFadeManager {

@@ -1,0 +1,18 @@
+<Crystal>
+	<enabled>1</enabled>
+	<rebuild>0</rebuild>
+	<origin>0, 0, 0</origin>
+	<Cells>2</Cells>
+	<Automatic_rotation>0, 0, 0</Automatic_rotation>
+	<rot_speed>0</rot_speed>
+	<Crystal_color>1, 1, 1, 1</Crystal_color>
+	<spotlightPosition>0, 0, 0</spotlightPosition>
+	<scale>0</scale>
+	<scaleCells>0</scaleCells>
+	<Debug_draw>0</Debug_draw>
+	<Noise_displacement_parameters>
+		<velocity>0, 0, 0</velocity>
+		<displacement>89.6293, 0, 0</displacement>
+	</Noise_displacement_parameters>
+<Crystal/>
+</Crystal>

@@ -1,0 +1,9 @@
+<PlaneCut>
+	<enabled>1</enabled>
+	<Random_Seed>0</Random_Seed>
+	<Cell_count>2</Cell_count>
+	<Rotate_Lights>0</Rotate_Lights>
+	<drawWall>0</drawWall>
+	<Wall_Position>0, 0, 0</Wall_Position>
+<PlaneCut/>
+</PlaneCut>

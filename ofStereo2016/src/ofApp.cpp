@@ -64,16 +64,17 @@ void ofApp::setup(){
                                          );
     
 
-
     stage_size_cm.addListener(this, &ofApp::stageResized);
     
     loadAllParameters();
     
 }
 
-void ofApp::receiveOscParameter(ofxOscMessage & msg, ofAbstractParameter * p) {
+void ofApp::receiveOscParameter(ofxOscMessage & msg, ofAbstractParameter * _p) {
     
-    cout<<"Received "<<msg.getAddress()<<endl;
+    ofAbstractParameter * p = _p;
+    
+    //cout<<"Received "<<msg.getAddress()<<endl;
     
     vector<string> address = ofSplitString(msg.getAddress(),"/",true);
     // fade
@@ -116,7 +117,7 @@ void ofApp::receiveOscParameter(ofxOscMessage & msg, ofAbstractParameter * p) {
         if(p) {
             //cout<<"matching: " << address[i]<<endl;
             if(address[i]==p->getEscapedName()){
-                cout<< "match" << p->getEscapedName()<<endl;
+                //cout<< "match" << p->getEscapedName()<<endl;
                 
                 if(p->type()==typeid(ofParameterGroup).name()){
                     if(address.size()>=i+1){
@@ -166,7 +167,7 @@ void ofApp::receiveOscParameter(ofxOscMessage & msg, ofAbstractParameter * p) {
                     float val = msg.getArgAsFloat(0);
                     
                     // size check
-                    string suf = address.back(); i++;
+                    string suf = address.back();
                     
                     if(suf == "r") {
                         col.r = val;
@@ -183,6 +184,7 @@ void ofApp::receiveOscParameter(ofxOscMessage & msg, ofAbstractParameter * p) {
                     } else {
                         p->cast<ofColor>().set(col);
                     }
+                    break;
                     
                     
                 } else if(p->type()==typeid(ofParameter<ofVec3f>).name() &&
@@ -192,7 +194,7 @@ void ofApp::receiveOscParameter(ofxOscMessage & msg, ofAbstractParameter * p) {
                     float val = msg.getArgAsFloat(0);
                     
                     // size check
-                    string suf = address.back(); i++;
+                    string suf = address.back();
                     
                     if(suf == "x") {
                         vec.x = val;
@@ -207,6 +209,7 @@ void ofApp::receiveOscParameter(ofxOscMessage & msg, ofAbstractParameter * p) {
                     } else {
                         p->cast<ofVec3f>().set(vec);
                     }
+                    break;
                     
                 } else if(p->type()==typeid(ofParameter<ofVec2f>).name() &&
                           msg.getArgType(0)!=OFXOSC_TYPE_STRING ) {
@@ -215,7 +218,7 @@ void ofApp::receiveOscParameter(ofxOscMessage & msg, ofAbstractParameter * p) {
                     float val = msg.getArgAsFloat(0);
                     
                     // size check
-                    string suf = address.back(); i++;
+                    string suf = address.back();
                     
                     if(suf == "x") {
                         vec.x = val;
@@ -228,6 +231,7 @@ void ofApp::receiveOscParameter(ofxOscMessage & msg, ofAbstractParameter * p) {
                     } else {
                         p->cast<ofVec2f>().set(vec);
                     }
+                    break;
                     
                     
                     
@@ -538,6 +542,7 @@ void ofApp::setupGui(shared_ptr<ofAppBaseWindow> gW,shared_ptr<ofAppBaseWindow> 
         ofxPanel * p = new ofxPanel();
         p->setup(s->params);
         p->setPosition(gW->getWidth()-(p->getWidth()*sI), 0);
+
         scenePanels.push_back(p);
         sI++;
     }
