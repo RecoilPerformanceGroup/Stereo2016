@@ -1,7 +1,34 @@
 <Lights>
 	<enabled>1</enabled>
+<<<<<<< HEAD
 	<width>100</width>
 	<height>100</height>
 	<position>357.143, 418.367, -428.571</position>
+=======
+	<directionalLight>
+		<diffuseColor>255, 255, 255, 255</diffuseColor>
+		<ambientColor>0, 0, 0, 255</ambientColor>
+		<specularColor>0, 0, 0, 255</specularColor>
+		<position>316.535, 733.03, 0</position>
+		<lookAt>-308.197, -2390.66, 108.296</lookAt>
+	</directionalLight>
+	<spotLight>
+		<diffuseColor>255, 255, 255, 255</diffuseColor>
+		<ambientColor>0, 0, 0, 255</ambientColor>
+		<specularColor>255, 255, 255, 255</specularColor>
+		<position>-412.318, 1149.53, -308.194</position>
+		<lookAt>837.161, 420.668, 8125.79</lookAt>
+		<spotConcentration>32.6531</spotConcentration>
+	</spotLight>
+	<areaLight>
+		<diffuseColor>0, 0, 0, 255</diffuseColor>
+		<ambientColor>0, 0, 0, 255</ambientColor>
+		<specularColor>255, 255, 255, 255</specularColor>
+		<position>0, -100, 0</position>
+		<lookAt>0, 0, 0</lookAt>
+		<width>100</width>
+		<height>100</height>
+	</areaLight>
+>>>>>>> 0cc030d2dca34dc679cf77b7be9817dd11d4f642
 <Lights/>
 </Lights>

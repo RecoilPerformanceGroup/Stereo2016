@@ -1010,7 +1010,7 @@ namespace ofxStereoscopy {
                 
         virtual ~Scene(){}
         
-        virtual void debugDraw(int _surfaceId=0) {};
+        virtual void drawModel() {};
         virtual void exit(){};
         //    virtual void receiveOsc(ofxOscMessage * m, string rest) {};
         
@@ -1043,10 +1043,6 @@ namespace ofxStereoscopy {
             if(enabled) {
                 glPushMatrix();ofPushMatrix();ofPushStyle();
                 draw();
-                ofPopStyle();ofPopMatrix();glPopMatrix();
-                
-                glPushMatrix();ofPushMatrix();ofPushStyle();
-                debugDraw();
                 ofPopStyle();ofPopMatrix();glPopMatrix();
             }
             

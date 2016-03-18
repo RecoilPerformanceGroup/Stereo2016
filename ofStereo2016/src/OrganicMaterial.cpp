@@ -723,7 +723,7 @@ void main (void){
     
     vec4 orgInverted = inverse(projectionMatrix) * vec4(eyePosition3,1.0);
     
-    float grainyNoise = (0.5+snoise(worldPosition.zxy*0.6)*0.5)*0.2;
+    float grainyNoise = (0.5+snoise(worldPositionBeforeNoise.zxy*0.6)*0.5)*0.2;
     
     localColor.rgb -= vec3(grainyNoise,grainyNoise,grainyNoise);
     localColor.rgb *= 1.0+(0.5*snoise(vec3(worldPosition.xzz/2000.0)+vec3(0,time.x/6.0,time.x/6.0)));

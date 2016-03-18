@@ -1,6 +1,5 @@
 #include "ofApp.h"
 
-
 #pragma mark APP
 
 //--------------------------------------------------------------
@@ -334,6 +333,7 @@ void ofApp::draw(){
             
             p.second->endRight();
         }
+        
         ofDisableLighting();
     }
     
@@ -556,6 +556,7 @@ void ofApp::drawGui(ofEventArgs &args) {
         worldModelCam.setPosition(ofVec3f(700, 600, 1500));
         worldModelCam.lookAt(ofVec3f(-600,50,0));
         worldModelCam.setNearClip(20);
+        worldModelCam.setFarClip(100000);
         worldModelCam.disableMouseInput();
     }
     
@@ -588,7 +589,12 @@ void ofApp::drawGui(ofEventArgs &args) {
         calibrationCamera.end();
     } else {
         worldModelCam.begin();
+        ofEnableDepthTest();
         world.drawModel(!(gui->getDropdown("Model View")->getSelected()->getLabel() == "CAMERA MODEL VIEW"));
+        ofEnableDepthTest();
+        for(auto s : scenes) {
+            s->drawModel();
+        }
         worldModelCam.end();
     }
     ofDisableDepthTest();
@@ -601,7 +607,9 @@ void ofApp::drawGui(ofEventArgs &args) {
     }
     
     for( auto p : scenePanels) {
+        ofPushMatrix();ofPushStyle();ofPushView();
         p->draw();
+        ofPopMatrix();ofPopStyle();ofPopView();
     }
 }
 

@@ -1,0 +1,20 @@
+<mountainScene>
+	<enabled>1</enabled>
+	<anaglyphAmount>1</anaglyphAmount>
+	<anaglyphColorLeft>0, 255, 255, 255</anaglyphColorLeft>
+	<anaglyphColorRight>255, 0, 0, 255</anaglyphColorRight>
+	<mountain>
+		<randomSeed>2295</randomSeed>
+		<cellCount>97</cellCount>
+		<size>3685.97, 3165.36, 3165.39</size>
+		<position>524.782, -1349.44, -5514.37</position>
+		<rotation>-168.53, 22.6406, -179.775</rotation>
+	</mountain>
+	<floor>
+		<color>255, 255, 255, 255</color>
+	</floor>
+	<wall>
+		<color>255, 255, 255, 255</color>
+	</wall>
+<mountainScene/>
+</mountainScene>

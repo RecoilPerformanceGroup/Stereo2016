@@ -11,10 +11,10 @@
 #include "ofxDatGuiParameterBindings.hpp"
 #include "ofxGui.h"
 
-#include "SceneTest.hpp"
-#include "CrystalScene.hpp"
-#include "PlaneCutScene.hpp"
+// scenes
+
 #include "LightScene.hpp"
+#include "MountainScene.hpp"
 
 class ofApp : public ofBaseApp{
     
@@ -22,16 +22,15 @@ public:
     
     ofApp() {
         
-        sceneParams.setName("scene");
-        
-        scenes.push_back(make_shared<SceneTest>());
-        scenes.push_back(make_shared<CrystalScene>());
-        scenes.push_back(make_shared<PlaneCutScene>());
+        scenes.push_back(make_shared<MountainScene>());
         scenes.push_back(make_shared<LightScene>());
         
         for( auto s : scenes) {
             sceneParams.add(s->getParameters());
         }
+        
+        scenes[0]->enabled = true;
+        scenes[1]->enabled = true;
         
     }
     
@@ -41,7 +40,7 @@ public:
     ofParameter<bool> show_model_on_second_screen{"Second Screen Model", false, false, true};
     
     ofParameterGroup globalParams{
-        "world",
+        "stereo",
         stage_size_cm,
         calibrate_planes,
         background_color,

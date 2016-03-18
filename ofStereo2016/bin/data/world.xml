@@ -1,4 +1,5 @@
 <world>
+<<<<<<< HEAD
 	<Stage_Size>800, 500, 800</Stage_Size>
 	<Calibrate_Planes>0</Calibrate_Planes>
 	<Background_Color>255, 255, 255, 255</Background_Color>
@@ -6,15 +7,32 @@
 	<world/>
 	<camera>
 		<camera_position>0, 250, 1200</camera_position>
+=======
+	<Stage_Size>800, 600, 800</Stage_Size>
+	<Calibrate_Planes>0</Calibrate_Planes>
+	<Background_Color>32, 37, 46, 255</Background_Color>
+	<Second_Screen_Model>0</Second_Screen_Model>
+	<world/>
+	<camera>
+		<camera_position>5.56641, 250, 1200</camera_position>
+>>>>>>> 0cc030d2dca34dc679cf77b7be9817dd11d4f642
 		<eye_separation>6.5</eye_separation>
 		<focus_distance>200</focus_distance>
 		<camera_near_clip>20</camera_near_clip>
 	</camera>
+<<<<<<< HEAD
 	<pixels_pr__cm>2</pixels_pr__cm>
 	<WALL>
 		<UnknownName>1</UnknownName>
 		<position>0, 0, 0</position>
 		<size>800, 500</size>
+=======
+	<pixels_pr__cm>1.5944</pixels_pr__cm>
+	<WALL>
+		<UnknownName>1</UnknownName>
+		<position>0, 0, 0</position>
+		<size>800, 600</size>
+>>>>>>> 0cc030d2dca34dc679cf77b7be9817dd11d4f642
 		<Left_Quad>
 			<Output_Points>
 				<Top_Left>0, 0, 0</Top_Left>
