@@ -1,0 +1,56 @@
+<world>
+	<Stage_Size>800, 500, 800</Stage_Size>
+	<Calibrate_Planes>0</Calibrate_Planes>
+	<Background_Color>255, 255, 255, 255</Background_Color>
+	<Second_Screen_Model>0</Second_Screen_Model>
+	<world/>
+	<camera>
+		<camera_position>0, 250, 1200</camera_position>
+		<eye_separation>6.5</eye_separation>
+		<focus_distance>200</focus_distance>
+		<camera_near_clip>20</camera_near_clip>
+	</camera>
+	<pixels_pr__cm>2</pixels_pr__cm>
+	<WALL>
+		<UnknownName>1</UnknownName>
+		<position>0, 0, 0</position>
+		<size>800, 500</size>
+		<Left_Quad>
+			<Output_Points>
+				<Top_Left>0, 0, 0</Top_Left>
+				<Top_Right>1, 0, 0</Top_Right>
+				<Bottom_Right>1, 1, 0</Bottom_Right>
+				<Bottom_Left>0, 1, 0</Bottom_Left>
+			</Output_Points>
+		</Left_Quad>
+		<Right_Quad>
+			<Output_Points>
+				<Top_Left>0, 0, 0</Top_Left>
+				<Top_Right>1, 0, 0</Top_Right>
+				<Bottom_Right>1, 1, 0</Bottom_Right>
+				<Bottom_Left>0, 1, 0</Bottom_Left>
+			</Output_Points>
+		</Right_Quad>
+	</WALL>
+	<FLOOR>
+		<UnknownName>1</UnknownName>
+		<position>0, 0, 0</position>
+		<size>800, 800</size>
+		<Left_Quad>
+			<Output_Points>
+				<Top_Left>0, 0, 0</Top_Left>
+				<Top_Right>1, 0, 0</Top_Right>
+				<Bottom_Right>1, 1, 0</Bottom_Right>
+				<Bottom_Left>0, 1, 0</Bottom_Left>
+			</Output_Points>
+		</Left_Quad>
+		<Right_Quad>
+			<Output_Points>
+				<Top_Left>0, 0, 0</Top_Left>
+				<Top_Right>1, 0, 0</Top_Right>
+				<Bottom_Right>1, 1, 0</Bottom_Right>
+				<Bottom_Left>0, 1, 0</Bottom_Left>
+			</Output_Points>
+		</Right_Quad>
+	</FLOOR>
+</world>
