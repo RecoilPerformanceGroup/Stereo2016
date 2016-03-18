@@ -16,21 +16,21 @@ public:
     
     // Parameters for vertex displacements
     
-    ofVec3f noiseDisplaceTime {0,0,0};
-    ofParameter<ofVec3f> noiseVelocity {"velocity",
+    ofVec3f noiseDisplacementTime {0,0,0};
+    ofParameter<ofVec3f> noiseDisplacementVelocity {"velocity",
         ofVec3f(0,0,0),
         ofVec3f(-1,-1,-1),
         ofVec3f(1,1,1)};
     
-    ofParameter<ofVec3f> noiseDisplacementAmount {"displacement",
+    ofParameter<ofVec3f> noiseDisplacementAmount {"amount",
         ofVec3f(0,0,0),
         ofVec3f(0,0,0),
         ofVec3f(200,200,200)};
     
     
-    ofParameterGroup noiseDisplaceParams {
-        "Noise displacement parameters",
-        noiseVelocity,
+    ofParameterGroup noiseDisplacementParams {
+        "noiseDisplacement",
+        noiseDisplacementVelocity,
         noiseDisplacementAmount
         };
     

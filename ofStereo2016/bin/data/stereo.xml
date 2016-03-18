@@ -1,34 +1,40 @@
 <stereo>
 	<Stage_Size>800, 500, 800</Stage_Size>
 	<Calibrate_Planes>0</Calibrate_Planes>
-	<Background_Color>255, 255, 255, 0</Background_Color>
+	<Background_Color>255, 255, 255, 159</Background_Color>
 	<Second_Screen_Model>0</Second_Screen_Model>
 	<world>
 		<camera>
-			<camera_position>0, 250, 1200</camera_position>
-			<eye_separation>6.5</eye_separation>
+			<camera_position>0, 200, 1200</camera_position>
+			<eye_separation>145.455</eye_separation>
 			<focus_distance>200</focus_distance>
 			<camera_near_clip>20</camera_near_clip>
+		<cameraPosition>0, 250, 1200</cameraPosition>
+			<eyeSeparation>167.832</eyeSeparation>
+			<focusDistance>200</focusDistance>
+			<cameraNearClip>20</cameraNearClip>
+		<position>0, 250, 1200</position>
+			<nearClip>20</nearClip>
 		</camera>
-		<pixels_pr__cm>0.4406</pixels_pr__cm>
+		<pixels_pr__cm>2</pixels_pr__cm>
 		<WALL>
 			<UnknownName>1</UnknownName>
 			<position>0, 0, 0</position>
 			<size>800, 500</size>
 			<Left_Quad>
 				<Output_Points>
-					<Top_Left>0, 0, 0</Top_Left>
-					<Top_Right>1, 0, 0</Top_Right>
-					<Bottom_Right>1, 1, 0</Bottom_Right>
-					<Bottom_Left>0, 1, 0</Bottom_Left>
+					<Top_Left>0.299685, 0.1246, 0</Top_Left>
+					<Top_Right>0.774431, 0.114575, 0</Top_Right>
+					<Bottom_Right>0.774431, 0.530243, 0</Bottom_Right>
+					<Bottom_Left>0.303982, 0.53707, 0</Bottom_Left>
 				</Output_Points>
 			</Left_Quad>
 			<Right_Quad>
 				<Output_Points>
-					<Top_Left>0, 0, 0</Top_Left>
-					<Top_Right>1, 0, 0</Top_Right>
-					<Bottom_Right>1, 1, 0</Bottom_Right>
-					<Bottom_Left>0, 1, 0</Bottom_Left>
+					<Top_Left>0.364633, 0.163634, 0</Top_Left>
+					<Top_Right>0.843648, 0.170362, 0</Top_Right>
+					<Bottom_Right>0.828388, 0.578396, 0</Bottom_Right>
+					<Bottom_Left>0.363735, 0.565281, 0</Bottom_Left>
 				</Output_Points>
 			</Right_Quad>
 		</WALL>
@@ -38,21 +44,70 @@
 			<size>800, 800</size>
 			<Left_Quad>
 				<Output_Points>
-					<Top_Left>0, 0, 0</Top_Left>
-					<Top_Right>1, 0, 0</Top_Right>
-					<Bottom_Right>1, 1, 0</Bottom_Right>
-					<Bottom_Left>0, 1, 0</Bottom_Left>
+					<Top_Left>0.303982, 0.53707, 0</Top_Left>
+					<Top_Right>0.774431, 0.530243, 0</Top_Right>
+					<Bottom_Right>0.89366, 0.848188, 0</Bottom_Right>
+					<Bottom_Left>0.21805, 0.841027, 0</Bottom_Left>
 				</Output_Points>
 			</Left_Quad>
 			<Right_Quad>
 				<Output_Points>
-					<Top_Left>0, 0, 0</Top_Left>
-					<Top_Right>1, 0, 0</Top_Right>
-					<Bottom_Right>1, 1, 0</Bottom_Right>
-					<Bottom_Left>0, 1, 0</Bottom_Left>
+					<Top_Left>0.362985, 0.565031, 0</Top_Left>
+					<Top_Right>0.828388, 0.578396, 0</Top_Right>
+					<Bottom_Right>0.931431, 0.936552, 0</Bottom_Right>
+					<Bottom_Left>0.27623, 0.896409, 0</Bottom_Left>
 				</Output_Points>
 			</Right_Quad>
 		</FLOOR>
+	<pixelsCm>2</pixelsCm>
 	</world>
 <stereo/>
+<scenes>
+		<mountainScene>
+			<enabled>1</enabled>
+			<anaglyphAmount>0</anaglyphAmount>
+			<anaglyphColorLeft>0, 255, 255, 255</anaglyphColorLeft>
+			<anaglyphColorRight>255, 0, 0, 255</anaglyphColorRight>
+			<mountain>
+				<randomSeed>3877</randomSeed>
+				<cellCount>97</cellCount>
+				<size>5247.79, 2644.71, 5768.41</size>
+				<position>108.286, -2500, -6243.24</position>
+				<rotation>-116.052, -3.59857, -209.763</rotation>
+			</mountain>
+			<floor>
+				<color>255, 255, 255, 255</color>
+			</floor>
+			<wall>
+				<color>255, 255, 255, 255</color>
+			</wall>
+		</mountainScene>
+		<Lights>
+			<enabled>1</enabled>
+			<directionalLight>
+				<diffuseColor>183, 183, 183, 255</diffuseColor>
+				<ambientColor>0, 0, 0, 255</ambientColor>
+				<specularColor>0, 0, 0, 255</specularColor>
+				<position>-412.331, 628.903, 837.149</position>
+				<lookAt>4.16309, 4.16309, 420.656</lookAt>
+			</directionalLight>
+			<spotLight>
+				<diffuseColor>255, 255, 255, 255</diffuseColor>
+				<ambientColor>0, 0, 0, 255</ambientColor>
+				<specularColor>0, 0, 0, 255</specularColor>
+				<position>2294.88, 4481.46, -10000</position>
+				<lookAt>108.286, 4.16309, -4473.14</lookAt>
+				<spotConcentration>15.3061</spotConcentration>
+			</spotLight>
+			<areaLight>
+				<diffuseColor>63, 86, 108, 255</diffuseColor>
+				<ambientColor>0, 0, 0, 255</ambientColor>
+				<specularColor>31, 111, 120, 255</specularColor>
+				<position>1045.4, 1253.64, -2494.8</position>
+				<lookAt>316.533, 212.409, -4056.65</lookAt>
+				<width>765.306</width>
+				<height>765.306</height>
+			</areaLight>
+		</Lights>
+	</scenes>
 </stereo>

@@ -162,9 +162,7 @@ const ofShader & OrganicMaterial::getShader(int textureTarget, ofGLProgrammableR
 }
 
 void OrganicMaterial::updateParameters() {
-    noiseDisplaceTime += noiseVelocity.get() * ofGetLastFrameTime();
-    
-    
+    noiseDisplacementTime += noiseDisplacementVelocity.get() * ofGetLastFrameTime();
 }
 
 void OrganicMaterial::updateMaterial(const ofShader & shader,ofGLProgrammableRenderer & renderer) const{
@@ -180,7 +178,7 @@ void OrganicMaterial::updateMaterial(const ofShader & shader,ofGLProgrammableRen
     shader.setUniform1f("time", ofGetElapsedTimef());
     
     // noise displacement uniforms
-    shader.setUniform3f("noiseDisplaceTime", noiseDisplaceTime);
+    shader.setUniform3f("noiseDisplacementTime", noiseDisplacementTime);
     shader.setUniform3f("noiseDisplacementAmount", noiseDisplacementAmount);
 
     shader.setUniformMatrix4f("worldMatrix", worldMatrix);
@@ -264,9 +262,8 @@ uniform mat4 normalMatrix;
 uniform mat4 worldMatrix;
 
 // the time value is passed into the shader by the OF app.
-uniform float time;
 uniform vec3 noiseDisplacementAmount;
-uniform vec3 noiseDisplaceTime;
+uniform vec3 noiseDisplacementTime;
 
 
 // Noise 2D
@@ -367,7 +364,7 @@ void main (void){
     modelViewPositionBeforeNoise = position * modelViewMatrix;
     worldPositionBeforeNoise = worldMatrix * position;
     
-    vec4 displacementVec = noiseDisplace(worldPositionBeforeNoise, noiseDisplaceTime, noiseDisplacementAmount);
+    vec4 displacementVec = noiseDisplace(worldPositionBeforeNoise, noiseDisplacementTime, noiseDisplacementAmount);
     
     localPosition = position + displacementVec;
     worldPosition = worldMatrix * localPosition;
@@ -442,7 +439,7 @@ uniform mat4 modelViewProjectionMatrix;
 
 uniform lightData lights[MAX_LIGHTS];
 
-uniform vec3 time;
+uniform vec3 noiseDisplacementTime;
 
 void pointLight( in lightData light, in vec3 normal, in vec3 ecPosition3, inout vec3 ambient, inout vec3 diffuse, inout vec3 specular ){
     float nDotVP;       // normal . light direction
@@ -721,12 +718,14 @@ void main (void){
     vec4 localColor = vec4(ambient,1.0) * mat_ambient + vec4(diffuse,1.0) * mat_diffuse + vec4(specular,1.0) * mat_specular + mat_emissive;
 #endif
     
-    vec4 orgInverted = inverse(projectionMatrix) * vec4(eyePosition3,1.0);
+    
+    ///////////////
+    // fragment noise
     
     float grainyNoise = (0.5+snoise(worldPositionBeforeNoise.zxy*0.6)*0.5)*0.2;
     
     localColor.rgb -= vec3(grainyNoise,grainyNoise,grainyNoise);
-    localColor.rgb *= 1.0+(0.5*snoise(vec3(worldPosition.xzz/2000.0)+vec3(0,time.x/6.0,time.x/6.0)));
+    localColor.rgb *= 1.0+(0.5*snoise(vec3(worldPosition.xzz/10000.0)+vec3(noiseDisplacementTime.x,noiseDisplacementTime.y,noiseDisplacementTime.z)));
     
     //localColor.rgb = (mod((worldPosition.z)+(snoise(vec3(time, 0, 0)))*300, 200) > 180.0)?vec3(0,0,0):transformedNormal;
     
