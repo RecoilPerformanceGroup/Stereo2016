@@ -10,11 +10,11 @@
 
 void MountainScene::setup(){
     
-    ofParameter<ofVec3f> &stage_size = mainParams.getVec3f("stage_size_cm");
+    ofParameter<ofVec3f> &stage_size = globalParams->getVec3f("stage_size_cm");
     
     ofSetSmoothLighting(true);
     
-    mainParams.getVec3f("stage_size_cm").addListener(this, &MountainScene::onStageSize);
+    globalParams->getVec3f("stage_size_cm").addListener(this, &MountainScene::onStageSize);
     
     mountainRandomSeed.addListener(this, &MountainScene::reconstructMountain<int>);
     mountainCellCount.addListener(this, &MountainScene::reconstructMountain<int>);
@@ -30,7 +30,7 @@ void MountainScene::update(){
 
 void MountainScene::draw(){
     
-    ofParameter<ofVec3f> &stage_size = mainParams.getVec3f("stage_size_cm");
+    ofParameter<ofVec3f> &stage_size = globalParams->getVec3f("stage_size_cm");
 
     ofSetColor(255);
 

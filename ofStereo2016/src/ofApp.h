@@ -40,7 +40,7 @@ public:
     ofParameter<bool> show_model_on_second_screen{"Second Screen Model", false, false, true};
     
     ofParameterGroup globalParams{
-        "world",
+        "stereo",
         stage_size_cm,
         calibrate_planes,
         background_color,

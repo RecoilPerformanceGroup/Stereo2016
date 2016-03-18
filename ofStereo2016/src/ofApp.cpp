@@ -584,7 +584,9 @@ void ofApp::drawGui(ofEventArgs &args) {
         calibrationCamera.end();
     } else {
         worldModelCam.begin();
+        ofEnableDepthTest();
         world.drawModel(!(gui->getDropdown("Model View")->getSelected()->getLabel() == "CAMERA MODEL VIEW"));
+        ofEnableDepthTest();
         for(auto s : scenes) {
             s->drawModel();
         }
