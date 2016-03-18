@@ -45,6 +45,8 @@ public:
         floorColor
     };
     
+    ofBoxPrimitive floor;
+    
     // walll
     
     ofParameter<ofColor> wallColor {"color", ofColor::white, ofColor::black, ofColor::white };

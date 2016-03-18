@@ -20,6 +20,13 @@ void MountainScene::setup(){
     mountainCellCount.addListener(this, &MountainScene::reconstructMountain<int>);
     mountainSize.addListener(this, &MountainScene::reconstructMountain<ofVec3f>);
     
+    float floorHeight = 10.0;
+    float floorSize = 100000.0;
+
+    floor.set(floorSize, floorHeight, floorSize, 10, 10, 10);
+    floor.setParent(world->origin);
+    floor.setGlobalPosition(0,-floorHeight/2.0, stage_size->z/2.0);
+    
     reconstructMountain();
 }
 
@@ -29,6 +36,13 @@ void MountainScene::update(){
 }
 
 void MountainScene::draw(){
+
+    ofColor eyeColor;
+    
+    if(world->bIsDrawingLeft)
+        eyeColor = anaglyphColorLeft;
+    else
+        eyeColor = anaglyphColorRight;
     
     ofParameter<ofVec3f> &stage_size = globalParams->getVec3f("stage_size_cm");
 
@@ -36,15 +50,12 @@ void MountainScene::draw(){
 
     ofEnableLighting();
 
-    ofFloatColor mountainColor = floorColor->getLerped(anaglyphColorLeft, anaglyphAmount);
+    ofFloatColor mountainColor = floorColor->getLerped(eyeColor, anaglyphAmount);
     
     matFloor.begin();
     matFloor.setDiffuseColor(mountainColor);
     matFloor.setAmbientColor(mountainColor.getLerped(ofColor::black, 0.75));
-    float floorHeight = 10.0;
-    float floorSize = 100000.0;
-    ofSetBoxResolution( 1000, 3, 1000 );
-    ofDrawBox(ofPoint(0,-floorHeight/2.0, stage_size->z/2.0), floorSize, floorHeight, floorSize);
+    floor.drawFaces();
     matFloor.end();
     
     matMountain.begin();
@@ -66,5 +77,7 @@ void MountainScene::onStageSize(ofVec3f& stageSize){
 
 void MountainScene::drawModel(){
     ofSetColor(255,64);
+    ofNoFill();
     mountain.draw();
+    floor.drawWireframe();
 }

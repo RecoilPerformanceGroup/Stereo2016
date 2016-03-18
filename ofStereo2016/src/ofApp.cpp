@@ -602,7 +602,9 @@ void ofApp::drawGui(ofEventArgs &args) {
     }
     
     for( auto p : scenePanels) {
+        ofPushMatrix();ofPushStyle();ofPushView();
         p->draw();
+        ofPopMatrix();ofPopStyle();ofPopView();
     }
 }
 
