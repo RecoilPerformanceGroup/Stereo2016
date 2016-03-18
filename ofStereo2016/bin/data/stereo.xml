@@ -1,7 +1,7 @@
 <stereo>
 	<Stage_Size>800, 500, 800</Stage_Size>
 	<Calibrate_Planes>0</Calibrate_Planes>
-	<Background_Color>255, 255, 255, 159</Background_Color>
+	<Background_Color>255, 255, 255, 223</Background_Color>
 	<Second_Screen_Model>0</Second_Screen_Model>
 	<world>
 		<camera>
@@ -72,7 +72,7 @@
 				<randomSeed>3877</randomSeed>
 				<cellCount>97</cellCount>
 				<size>5247.79, 2644.71, 5768.41</size>
-				<position>941.273, -2286.55, -6347.36</position>
+				<position>1461.89, -2390.67, -6347.36</position>
 				<rotation>-116.052, -119.8, -191.021</rotation>
 			</mountain>
 			<floor>
@@ -85,10 +85,10 @@
 		<Lights>
 			<enabled>1</enabled>
 			<directionalLight>
-				<diffuseColor>183, 183, 183, 255</diffuseColor>
+				<diffuseColor>255, 255, 255, 255</diffuseColor>
 				<ambientColor>0, 0, 0, 255</ambientColor>
 				<specularColor>0, 0, 0, 255</specularColor>
-				<position>-412.331, 628.903, 837.149</position>
+				<position>-516.454, 628.903, 837.149</position>
 				<lookAt>4.16309, 4.16309, 420.656</lookAt>
 			</directionalLight>
 			<spotLight>
@@ -96,15 +96,15 @@
 				<ambientColor>0, 0, 0, 255</ambientColor>
 				<specularColor>0, 0, 0, 255</specularColor>
 				<position>2294.88, 4481.46, -10000</position>
-				<lookAt>108.286, 4.16309, -4473.14</lookAt>
+				<lookAt>108.286, 4.16309, -4264.89</lookAt>
 				<spotConcentration>15.3061</spotConcentration>
 			</spotLight>
 			<areaLight>
-				<diffuseColor>63, 86, 108, 255</diffuseColor>
+				<diffuseColor>85, 85, 85, 255</diffuseColor>
 				<ambientColor>0, 0, 0, 255</ambientColor>
 				<specularColor>31, 111, 120, 255</specularColor>
-				<position>1045.4, 1253.64, -2494.8</position>
-				<lookAt>316.533, 212.409, -4056.65</lookAt>
+				<position>3023.74, 1253.64, -2494.8</position>
+				<lookAt>941.273, 212.409, -4889.63</lookAt>
 				<width>765.306</width>
 				<height>765.306</height>
 			</areaLight>

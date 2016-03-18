@@ -722,10 +722,10 @@ void main (void){
     ///////////////
     // fragment noise
     
-    float grainyNoise = (0.5+snoise(worldPositionBeforeNoise.zxy*0.6)*0.5)*0.2;
+    float grainyNoise = (0.5+snoise(worldPositionBeforeNoise.zxy*0.6)*0.5)*0.1;
     
     localColor.rgb -= vec3(grainyNoise,grainyNoise,grainyNoise);
-    localColor.rgb *= 1.0+(0.5*snoise(vec3(worldPosition.xzz/10000.0)+vec3(noiseDisplacementTime.x,noiseDisplacementTime.y,noiseDisplacementTime.z)));
+    localColor.rgb *= 1.0+(0.25*snoise(vec3(worldPosition.xzz/10000.0)+vec3(noiseDisplacementTime.x,noiseDisplacementTime.y,noiseDisplacementTime.z)));
     
     //localColor.rgb = (mod((worldPosition.z)+(snoise(vec3(time, 0, 0)))*300, 200) > 180.0)?vec3(0,0,0):transformedNormal;
     
