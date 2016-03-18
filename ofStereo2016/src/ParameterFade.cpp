@@ -74,14 +74,14 @@ void ParameterFade<float>::updateValue(float t) {
     
     if(value != lastValue ) {
         isAlive = false;
-    }
+    } else {
     
     value = ofxeasing::map_clamp(t, startTime, endTime, fromValue, toValue, easeFn);
     
     lastValue = value;
     p->cast<float>() = value;
     
-    if(value == toValue) isAlive = false;
+    }
 };
 
 template<>
@@ -91,14 +91,14 @@ void ParameterFade<int>::updateValue(float t) {
     
     if(value != lastValue ) {
         isAlive = false;
+    } else {
+    
+        value = ofxeasing::map_clamp(t, startTime, endTime, fromValue, toValue, easeFn);
+    
+        lastValue = value;
+        p->cast<int>() = value;
+    
     }
-    
-    value = ofxeasing::map_clamp(t, startTime, endTime, fromValue, toValue, easeFn);
-    
-    lastValue = value;
-    p->cast<int>() = value;
-    
-    if(value == toValue) isAlive = false;
 };
 
 template<>
@@ -108,14 +108,14 @@ void ParameterFade<double>::updateValue(float t) {
     
     if(value != lastValue ) {
         isAlive = false;
+    } else {
+    
+        value = ofxeasing::map_clamp(t, startTime, endTime, fromValue, toValue, easeFn);
+    
+        lastValue = value;
+        p->cast<double>() = value;
+    
     }
-    
-    value = ofxeasing::map_clamp(t, startTime, endTime, fromValue, toValue, easeFn);
-    
-    lastValue = value;
-    p->cast<double>() = value;
-    
-    if(value == toValue) isAlive = false;
 };
 
 
@@ -131,7 +131,7 @@ void ParameterFade<ofColor>::updateValue(float t) {
        (val.a != lastValue.a  && c == "a") )
     {
         isAlive = false;
-    }
+    } else {
     
     if(c == "all" || c == "r") {
         val.r = ofxeasing::map_clamp(t, startTime, endTime, fromValue.r, toValue.r, easeFn);
@@ -151,6 +151,7 @@ void ParameterFade<ofColor>::updateValue(float t) {
     
     lastValue = val;
     p->cast<ofColor>() = val;
+    }
 }
 
 template<>
@@ -164,29 +165,21 @@ void ParameterFade<ofVec3f>::updateValue(float t) {
        (val.z != lastValue.z  && c == "z") )
     {
         isAlive = false;
-        //cout<<"parameter fade: for " << p->getName() << ":" << c << " "  << fromValue << " - " << toValue<< " killed by other"<<endl;
-    }
+    } else {
     
-    if(c == "all" || c == "x") {
-        val.x = ofxeasing::map_clamp(t, startTime, endTime, fromValue.x, toValue.x, easeFn);
-    }
-    if(c == "all" || c == "y") {
-        val.y = ofxeasing::map_clamp(t, startTime, endTime, fromValue.y, toValue.y, easeFn);
-    }
-    if(c == "all" || c == "z") {
-        val.z = ofxeasing::map_clamp(t, startTime, endTime, fromValue.z, toValue.z, easeFn);
-    }
+        if(c == "all" || c == "x") {
+            val.x = ofxeasing::map_clamp(t, startTime, endTime, fromValue.x, toValue.x, easeFn);
+        }
+        if(c == "all" || c == "y") {
+            val.y = ofxeasing::map_clamp(t, startTime, endTime, fromValue.y, toValue.y, easeFn);
+        }
+        if(c == "all" || c == "z") {
+            val.z = ofxeasing::map_clamp(t, startTime, endTime, fromValue.z, toValue.z, easeFn);
+        }
     
-    lastValue = val;
-    p->cast<ofVec3f>() = val;
+        lastValue = val;
+        p->cast<ofVec3f>() = val;
     
-    if( (val   == toValue    && c == "all") ||
-       (val.x == toValue.x  && c == "x")   ||
-       (val.y == toValue.y  && c == "y")   ||
-       (val.z == toValue.z  && c == "z") )
-    {
-        isAlive = false;
-        //cout<<"parameter fade: for " << p->getName() << ":" << c << " "  << fromValue << " - " << toValue<< " complete"<<endl;
     }
 
 }
@@ -211,14 +204,6 @@ void ParameterFade<ofVec2f>::updateValue(float t) {
     lastValue = val;
     p->cast<ofVec2f>() = val;
     
-    if( (val   == toValue    && c == "all") ||
-       (val.x == toValue.x  && c == "x")   ||
-       (val.y == toValue.y  && c == "y")
-       )
-    {
-        isAlive = false;
-        //cout<<"parameter fade: for " << p->getName() << ":" << c << " "  << fromValue << " - " << toValue<< " complete"<<endl;
-    }
 }
 
 

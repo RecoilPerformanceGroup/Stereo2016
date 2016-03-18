@@ -95,7 +95,7 @@ private:
         
         if(isAlive) updateValue(t);
         
-        //if(toValue == )
+        if(hasEnded) isAlive = false;
         
     };
     
