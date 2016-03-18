@@ -308,11 +308,11 @@ namespace ofxStereoscopy {
         
     public:
         
-        ofParameter<float> physical_eye_seperation_cm {"eye separation", 6.5, 0, 200};
-        ofParameter<ofVec3f> physical_camera_pos_cm {"camera position", ofVec3f(0,250,1200), ofVec3f(-WORLD_DIMENSION_MAX/5,0,0), ofVec3f(WORLD_DIMENSION_MAX/5,WORLD_DIMENSION_MAX/5,WORLD_DIMENSION_MAX/2)};
-        ofParameter<float> physical_focus_distance_cm {"focus distance", 200, 0, WORLD_DIMENSION_MAX};
-        ofParameter<float> physical_camera_near_clip {"camera near clip", 20, 0, WORLD_DIMENSION_MAX};
-        ofParameter<float> pixels_cm {"pixels pr. cm", 2, 0, 3};
+        ofParameter<float> physical_eye_seperation_cm {"eyeSeparation", 6.5, 0, 200};
+        ofParameter<ofVec3f> physical_camera_pos_cm {"position", ofVec3f(0,250,1200), ofVec3f(-WORLD_DIMENSION_MAX/5,0,0), ofVec3f(WORLD_DIMENSION_MAX/5,WORLD_DIMENSION_MAX/5,WORLD_DIMENSION_MAX/2)};
+        ofParameter<float> physical_focus_distance_cm {"focusDistance", 200, 0, WORLD_DIMENSION_MAX};
+        ofParameter<float> physical_camera_near_clip {"nearClip", 20, 0, WORLD_DIMENSION_MAX};
+        ofParameter<float> pixels_cm {"pixelsCm", 2, 0, 3};
         
         ofParameterGroup paramsCamera{
             "camera",
@@ -506,7 +506,7 @@ namespace ofxStereoscopy {
             ofSetColor(255,255);
             tEye->draw(-width/2, -height/2, width, height);
             if(showPlaneOutlines){
-                ofSetColor(127, 255, 255);
+                ofSetColor(0, 127);
                 ofNoFill();
                 ofDrawRectangle(-width/2, -height/2, width, height);
                 ofFill();

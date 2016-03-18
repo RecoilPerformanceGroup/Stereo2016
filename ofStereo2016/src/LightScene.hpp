@@ -12,21 +12,27 @@
     ofLight NAME; \
     ofParameter<ofColor> NAME ## DiffuseColor{"diffuseColor", ofColor::white, ofColor::black, ofColor::white}; \
     ofParameter<ofColor> NAME ## AmbientColor{"ambientColor", ofColor::black, ofColor::black, ofColor::white}; \
-    ofParameter<ofColor> NAME ## specularColor{"specularColor", ofColor::white, ofColor::black, ofColor::white}; \
-    ofParameter<ofVec3f> NAME ## Position {"position", ofVec3f(0,-100,0), ofVec3f(-10000,-10000,-10000),ofVec3f(10000,10000,10000) }; \
+    ofParameter<ofColor> NAME ## SpecularColor{"specularColor", ofColor::white, ofColor::black, ofColor::white}; \
+    ofParameter<ofVec3f> NAME ## Position {"position", ofVec3f(0,700,0), ofVec3f(-10000,-10000,-10000),ofVec3f(10000,10000,10000) }; \
     ofParameter<ofVec3f> NAME ## LookAt {"lookAt", ofVec3f(0,0,0), ofVec3f(-10000,-10000,-10000),ofVec3f(10000,10000,10000) }; \
     ofParameterGroup NAME ## Params{#NAME, \
         NAME ## DiffuseColor, \
         NAME ## AmbientColor, \
-        NAME ## specularColor, \
+        NAME ## SpecularColor, \
         NAME ## Position, \
         NAME ## LookAt, ##__VA_ARGS__ \
-    };
+    }; \
 
 #define updateLight(NAME) \
     NAME.setDiffuseColor(ofFloatColor(NAME ## DiffuseColor.get())); \
+    NAME.setAmbientColor(ofFloatColor(NAME ## AmbientColor.get())); \
+    NAME.setSpecularColor(ofFloatColor(NAME ## SpecularColor.get()));\
     NAME.setGlobalPosition(NAME ## Position); \
-    NAME.lookAt(-(NAME ## LookAt.get()));
+    if(NAME.getIsSpotlight() || NAME.getIsAreaLight()) \
+        NAME.lookAt((NAME ## LookAt.get()), ofVec3f(0.0,1.0,0.0)); \
+    if(NAME.getIsDirectional()) \
+        NAME.lookAt(-(NAME ## LookAt.get()-(2.0*NAME.getGlobalPosition())), ofVec3f(0.0,1.0,0.0));
+
 
 
 // ofAddListener(guiWindow->events() . NAME , mainApp.get(), &ofApp::NAME ## Gui);
@@ -49,6 +55,8 @@ public:
         ofxStereoscopy::Scene::params = params;
     }
     
+    vector<ofLight*> lights;
+
     ofParameter<float> spotLightSpotConcentration {"spotConcentration", 1.0, 0.0, 100.0};
 
     makeLight(spotLight, spotLightSpotConcentration);
@@ -66,6 +74,8 @@ public:
         spotLightParams,
         areaLightParams
     };
+    
+    ofMaterial lightModelMaterial;
     
 };
 

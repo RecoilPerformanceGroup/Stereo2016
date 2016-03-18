@@ -22,6 +22,7 @@ public:
     
     ofApp() {
         
+        sceneParams.setName("scenes");
         scenes.push_back(make_shared<MountainScene>());
         scenes.push_back(make_shared<LightScene>());
         
@@ -39,15 +40,16 @@ public:
     ofParameter<ofColor> background_color{"Background Color", ofColor(255,255,255,255),ofColor(0,0,0,0),ofColor(255,255,255,255)};
     ofParameter<bool> show_model_on_second_screen{"Second Screen Model", false, false, true};
     
+    ofParameterGroup sceneParams;
+    
     ofParameterGroup globalParams{
         "stereo",
         stage_size_cm,
         calibrate_planes,
         background_color,
-        show_model_on_second_screen
+        show_model_on_second_screen,
+        sceneParams
     };
-    
-    ofParameterGroup sceneParams{};
     
     vector<ofxPanel *> scenePanels;
     

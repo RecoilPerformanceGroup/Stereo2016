@@ -549,7 +549,7 @@ void ofApp::drawGui(ofEventArgs &args) {
     
     if(ofGetFrameNum() == 2){
         worldModelCam.setPosition(ofVec3f(700, 600, 1500));
-        worldModelCam.lookAt(ofVec3f(-600,50,0));
+        worldModelCam.lookAt(ofVec3f(0,0,0));
         worldModelCam.setNearClip(20);
         worldModelCam.setFarClip(100000);
         worldModelCam.disableMouseInput();
@@ -658,7 +658,7 @@ void ofApp::onFolderEvent(ofxDatGuiFolderEvent e){
 void ofApp::onDropdownEvent(ofxDatGuiDropdownEvent e){
     if(e.target->getLabel() == "PERSPECTIVE MODEL VIEW"){
         worldModelCam.setPosition(ofVec3f(700, 600, 1500));
-        worldModelCam.lookAt(ofVec3f(-600,50,0));
+        worldModelCam.lookAt(ofVec3f(0,0,0));
         worldModelCam.setNearClip(20);
         worldModelCam.disableMouseInput();
     }
@@ -669,16 +669,16 @@ void ofApp::onDropdownEvent(ofxDatGuiDropdownEvent e){
         worldModelCam.disableMouseInput();
     }
     if(e.target->getLabel() == "FREE MODEL VIEW"){
-        worldModelCam.setPosition(ofVec3f(700, 600, 1500));
-        worldModelCam.lookAt(ofVec3f(-600,50,0));
-        worldModelCam.setNearClip(20);
+//        worldModelCam.setPosition(ofVec3f(700, 600, 1500));
+//        worldModelCam.lookAt(ofVec3f(-600,50,0));
+//        worldModelCam.setNearClip(20);
         worldModelCam.enableMouseInput();
     }
     gui->getDropdown("MODEL VIEW")->collapse();
 }
 
 void ofApp::onSliderEvent(ofxDatGuiSliderEvent e){
-    if(e.target->getLabel() == "PIXELS PR. CM"){
+    if(e.target->getLabel() == "PIXELSCM"){
         flagStageResized = true;
     }
 }
