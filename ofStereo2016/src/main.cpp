@@ -40,14 +40,14 @@ int main( ){
         float divisions = 4.0;
         // one display: palce gui and mainWindow in a default arrangement
         
-        mainSettings.width = round(mainDisplayBounds.size.width / divisions);
+        mainSettings.width = round(mainDisplayBounds.size.width * (divisions-1) / divisions);
         mainSettings.height = round((mainSettings.width * (9.0 / 16.0)) / 2.0);
-        mainSettings.setPosition(ofVec2f(round(mainDisplayBounds.size.width * (divisions-1) / divisions) ,mainDisplayBounds.origin.y));
-        //rendering errors: mainSettings.decorated = true;
+        mainSettings.setPosition(ofVec2f(round(mainDisplayBounds.size.width / divisions) ,mainDisplayBounds.origin.y));
+        mainSettings.decorated = true;
         
-        guiSettings.width = round(mainDisplayBounds.size.width * (divisions-1) / divisions);
+        guiSettings.width = round(mainDisplayBounds.size.width - 100);
         guiSettings.height = mainDisplayBounds.size.height - 100;
-        guiSettings.setPosition(ofVec2f(mainDisplayBounds.origin.x, mainDisplayBounds.origin.y));
+        guiSettings.setPosition(ofVec2f(mainDisplayBounds.origin.x, mainDisplayBounds.origin.y + 80));
 
         cout << "configured default one display setup" << endl;
         

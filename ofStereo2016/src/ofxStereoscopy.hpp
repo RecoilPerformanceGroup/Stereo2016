@@ -351,6 +351,8 @@ namespace ofxStereoscopy {
         
         void renderProjectorCalibrations();
         
+        void renderCameraCalibrations(const ofVec3f& size);
+        
         ofTrueTypeFont font;
         ofImage logo;
         
@@ -506,7 +508,7 @@ namespace ofxStereoscopy {
             ofSetColor(255,255);
             tEye->draw(-width/2, -height/2, width, height);
             if(showPlaneOutlines){
-                ofSetColor(0, 127);
+                ofSetColor(63, 127);
                 ofNoFill();
                 ofDrawRectangle(-width/2, -height/2, width, height);
                 ofFill();
@@ -869,6 +871,26 @@ namespace ofxStereoscopy {
             
             beginRight();
             drawChessboard(true);
+            endRight();
+        }
+        
+        void drawCameraCalibration(const ofVec3f& size,bool rightEye){
+            ofPushStyle();
+            
+            ofDrawPlane(0, 0, size.x/2, size.y/2);
+            
+            ofEnableLighting();
+            
+            ofPopStyle();
+        }
+        
+        void renderCameraCalibrations(const ofVec3f& size){
+            beginLeft();
+            drawCameraCalibration(size, false);
+            endLeft();
+            
+            beginRight();
+            drawCameraCalibration(size, true);
             endRight();
         }
         

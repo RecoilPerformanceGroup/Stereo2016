@@ -2,7 +2,7 @@
 	<Stage_Size>800, 500, 800</Stage_Size>
 	<Calibrate_Planes>0</Calibrate_Planes>
 	<Background_Color>255, 255, 255, 223</Background_Color>
-	<Second_Screen_Model>0</Second_Screen_Model>
+	<Second_Screen_Model>1</Second_Screen_Model>
 	<world>
 		<camera>
 			<camera_position>0, 200, 1200</camera_position>
@@ -10,10 +10,10 @@
 			<focus_distance>200</focus_distance>
 			<camera_near_clip>20</camera_near_clip>
 		<cameraPosition>0, 250, 1200</cameraPosition>
-			<eyeSeparation>0</eyeSeparation>
+			<eyeSeparation>18.1818</eyeSeparation>
 			<focusDistance>200</focusDistance>
 			<cameraNearClip>20</cameraNearClip>
-		<position>0, 250, 1200</position>
+		<position>0, 250, 1100</position>
 			<nearClip>20</nearClip>
 		</camera>
 		<pixels_pr__cm>2</pixels_pr__cm>
@@ -59,7 +59,7 @@
 				</Output_Points>
 			</Right_Quad>
 		</FLOOR>
-	<pixelsCm>2</pixelsCm>
+	<pixelsCm>0.6084</pixelsCm>
 	</world>
 <stereo/>
 <scenes>
@@ -103,7 +103,7 @@
 				<diffuseColor>85, 85, 85, 255</diffuseColor>
 				<ambientColor>0, 0, 0, 255</ambientColor>
 				<specularColor>31, 111, 120, 255</specularColor>
-				<position>3023.74, 1253.64, -2494.8</position>
+				<position>5314.45, 1253.64, -2494.8</position>
 				<lookAt>941.273, 212.409, -4889.63</lookAt>
 				<width>765.306</width>
 				<height>765.306</height>
