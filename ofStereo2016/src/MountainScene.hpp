@@ -26,7 +26,7 @@ public:
     ofParameter<int> mountainRandomSeed {"randomSeed", 0,0,10000 };
     ofParameter<int> mountainCellCount {"cellCount", 2,1,1000 };
     ofParameter<ofVec3f> mountainSize {"size", ofVec3f(1000,1000,1000), ofVec3f(0,0,0), ofVec3f(100000,100000,100000) };
-    ofParameter<ofVec3f> mountainPosition {"position", ofVec3f(0,-100000,-50000), ofVec3f(-10000,-10000,-10000), ofVec3f(10000,10000,10000) };
+    ofParameter<ofVec3f> mountainPosition {"position", ofVec3f(0,-100000,-50000), ofVec3f(-10000,-10000,-100000), ofVec3f(10000,10000,100000) };
     ofParameter<ofVec3f> mountainRotation {"rotation", ofVec3f(0,0,0), ofVec3f(-360,-360,-360), ofVec3f(360,360,360) };
 
     ofParameterGroup mountainParams {"mountain",

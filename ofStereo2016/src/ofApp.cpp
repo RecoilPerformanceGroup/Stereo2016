@@ -345,15 +345,13 @@ void ofApp::draw(){
     ofPushMatrix();
     
     if(show_model_on_second_screen){
+        ofBackground(12,255);
         
-        ofVec3f windowTopLeft(-stage_size_cm->x/2,(stage_size_cm->y)-20,stage_size_cm->z+50);
-        ofVec3f windowBottomLeft(-stage_size_cm->x/2,-20,stage_size_cm->z+50);
-        ofVec3f windowBottomRight(stage_size_cm->x/2,-20,stage_size_cm->z+50);
-
         ofCamera cam(worldModelCam);
 
-        cam.setPosition(world.physical_camera_pos_cm.get() + ofVec3f(-world.physical_eye_seperation_cm*0.5,0,stage_size_cm->z*.25));
-        cam.setupOffAxisViewPortal(windowTopLeft , windowBottomLeft, windowBottomRight );
+        cam.setPosition(world.physical_camera_pos_cm.get() + ofVec3f(-world.physical_eye_seperation_cm*0.5, 0 , 0));
+        
+        cam.lookAt(world.physical_camera_pos_cm.get().getLimited(stage_size_cm->z));
         cam.setNearClip(20);
 
         ofPushMatrix();
@@ -371,8 +369,8 @@ void ofApp::draw(){
         ofPopView();
         ofPopMatrix();
 
-        cam.setPosition(world.physical_camera_pos_cm.get() + ofVec3f(world.physical_eye_seperation_cm*0.5,0,stage_size_cm->z*.25));
-        cam.setupOffAxisViewPortal(windowTopLeft , windowBottomLeft, windowBottomRight );
+        cam.setPosition(world.physical_camera_pos_cm.get() + ofVec3f(world.physical_eye_seperation_cm*0.5, 0 , 0));
+        cam.lookAt(world.physical_camera_pos_cm.get().getLimited(stage_size_cm->z));
         cam.setNearClip(20);
         
         ofPushMatrix();
@@ -567,7 +565,7 @@ void ofApp::drawGui(ofEventArgs &args) {
         worldModelCam.setPosition(world.physical_camera_pos_cm);
         worldModelCam.lookAt(ofVec3f(0,0,0));
         worldModelCam.setNearClip(20);
-        worldModelCam.setFarClip(50000);
+        worldModelCam.setFarClip(WORLD_DIMENSION_MAX);
         worldModelCam.disableMouseInput();
     }
     
