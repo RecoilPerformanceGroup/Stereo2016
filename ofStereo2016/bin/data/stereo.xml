@@ -1,8 +1,6 @@
 <stereo>
-	<Stage_Size>804, 402, 800</Stage_Size>
-	<Calibrate_Planes>0</Calibrate_Planes>
-	<Background_Color>255, 255, 255, 0</Background_Color>
-	<Second_Screen_Model>1</Second_Screen_Model>
+	<Background_Color>255, 255, 255, 223</Background_Color>
+	<Second_Screen_Model>0</Second_Screen_Model>
 	<world>
 		<camera>
 			<camera_position>0, 200, 1200</camera_position>
@@ -59,7 +57,7 @@
 				</Output_Points>
 			</Right_Quad>
 		</FLOOR>
-	<pixelsCm>0.8811</pixelsCm>
+	<pixelsCm>2</pixelsCm>
 	</world>
 <stereo/>
 <scenes>
@@ -110,7 +108,7 @@
 			</areaLight>
 		</Lights>
 	</scenes>
-<stageSize>800, 500, 800</stageSize>
+<stageSize>804, 402, 800</stageSize>
 	<Projector_Calibration>0</Projector_Calibration>
 	<Camera_Calibration>0</Camera_Calibration>
 </stereo>
