@@ -317,6 +317,8 @@ void ofApp::draw(){
         ofEnableLighting();
         for(std::pair<string, shared_ptr<ofxStereoscopy::Plane>> p : world.planes){
             
+            p.second->swap.set(swap_left_right);
+            
             p.second->beginLeft();
             ofClear(background_color);
             
@@ -523,6 +525,9 @@ void ofApp::setupGui(shared_ptr<ofAppBaseWindow> gW,shared_ptr<ofAppBaseWindow> 
     ofxDatGuiFolder * projectorCalibrationFolder = gui->addFolder("Projector Calibration");
     projectorCalibrationFolder->onFolderEvent(this, &ofApp::onFolderEvent);
     gui->addToggle(show_model_on_second_screen);
+    
+    gui->addToggle(swap_left_right);
+    
     gui->addBreak();
 
     // General
