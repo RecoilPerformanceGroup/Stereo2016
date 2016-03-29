@@ -315,6 +315,7 @@ void ofApp::draw(){
         ofEnableLighting();
         for(std::pair<string, shared_ptr<ofxStereoscopy::Plane>> p : world.planes){
             
+            // TODO add flip bool to swap left and right outputs
             p.second->beginLeft();
             ofClear(background_color);
             
@@ -758,7 +759,8 @@ void ofApp::gotMessageGui(ofMessage msg){
 
 }
 
-
+// TODO check if it worked
+// it fails silently on write protected file
 void ofApp::saveAllParameters() {
     saveParameters(globalParams);
     for( auto s : scenes) {
