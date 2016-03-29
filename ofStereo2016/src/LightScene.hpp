@@ -70,6 +70,7 @@ public:
     
     ofParameterGroup params {"Lights",
         enabled,
+        qlab,
         directionalLightParams,
         spotLightParams,
         areaLightParams

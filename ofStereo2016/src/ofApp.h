@@ -200,7 +200,21 @@ public:
     void paramsChanged(ofAbstractParameter & p) {
 
         vector<string> groupHierachy = p.getGroupHierarchyNames();
+
+        // handle qlab save
+        if(p.type()==typeid(ofParameter<bool>).name()){
+            ofParameter<bool> & pBool = static_cast<ofParameter<bool>&>(p);
+            if(pBool.getName() == "add to qlab" && pBool.get()){
+                pBool.set(false);
+                cout << "should save " << pBool.getFirstParent().getName() << endl;
+                
+                // TODO: Save to qlab via method called qlabParameters(ofParameterGroup & params)
+                
+                return;
+            }
+        }
         
+        // skip indirect params
         for(auto blacklistName : indirectParams ) {
             bool firstElementFound = false;
             for( auto pName : groupHierachy ) {
@@ -209,12 +223,13 @@ public:
                 }
                 if(firstElementFound){
                     if(pName == blacklistName.back()){
-                        return; // this path is blacklisted as an indirect parameter
+                        // this path is blacklisted as an indirect parameter
+                        // we simply return
+                        return;
                     }
                 }
             }
         }
-
         lastChangedParam = &p;
     }
     

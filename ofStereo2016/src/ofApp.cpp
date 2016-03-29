@@ -757,6 +757,7 @@ void ofApp::keyPressedGui(int key){
         if(lastChangedParam != nullptr) ofGetWindowPtr()->setClipboardString(findOscAddress(lastChangedParam));
     }
     if (key == 'q' || key == 'Q') {
+        // TODO: Factor out to a qlabParameter method
         if(lastChangedParam != nullptr) {
             string oscString(findOscAddress(lastChangedParam));
             

@@ -1164,7 +1164,8 @@ namespace ofxStereoscopy {
     public:
         
         ofParameter<bool> enabled {"enabled", true};
-        ofParameterGroup params {"untitled", enabled};
+        ofParameter<bool> qlab {"add to qlab", false};
+        ofParameterGroup params {"untitled", enabled, qlab};
         
         // add dynamic draw order
         
