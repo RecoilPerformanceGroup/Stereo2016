@@ -756,9 +756,13 @@ void ofApp::keyPressedGui(int key){
     if (key == 'c') {
         if(lastChangedParam != nullptr) ofGetWindowPtr()->setClipboardString(findOscAddress(lastChangedParam));
     }
-    if (key == 'q') {
+    if (key == 'q' || key == 'Q') {
         if(lastChangedParam != nullptr) {
             string oscString(findOscAddress(lastChangedParam));
+            
+            if(key == 'Q'){
+                oscString += " fade";
+            }
             
             ofxOscMessage mNewOsc;
             mNewOsc.setRemoteEndpoint("localhost", 53000);
