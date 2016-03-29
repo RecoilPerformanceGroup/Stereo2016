@@ -21,7 +21,7 @@ void MountainScene::setup(){
     mountainSize.addListener(this, &MountainScene::reconstructMountain<ofVec3f>);
     
     float floorHeight = 10.0;
-    float floorSize = 20000.0;
+    float floorSize = WORLD_DIMENSION_MAX*2;
 
     floor.set(floorSize, floorHeight, floorSize, 2, 2, 2);
     floor.setParent(world->origin);

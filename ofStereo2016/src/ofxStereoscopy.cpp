@@ -200,6 +200,12 @@ namespace ofxStereoscopy {
         }
     }
     
+    void World::renderCameraCalibrations(const ofVec3f& size){
+        for(std::pair<string, shared_ptr<Plane>> p : planes){
+            p.second->renderCameraCalibrations(size);
+        }
+    }
+    
     void World::drawModel(bool showCameraFrustrums, bool rightEye, bool showOrigin, bool showPlaneOutlines) {
         
         for(std::pair<string, shared_ptr<Plane>> p : planes){

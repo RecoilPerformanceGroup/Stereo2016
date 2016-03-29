@@ -309,8 +309,10 @@ void ofApp::draw(){
     
     ofEnableDepthTest();
     
-    if(calibrate_planes){
+    if(calibrate_projector){
         world.renderProjectorCalibrations();
+    } else if (calibrate_camera){
+        world.renderCameraCalibrations(stage_size_cm.get());
     } else {
         ofEnableLighting();
         for(std::pair<string, shared_ptr<ofxStereoscopy::Plane>> p : world.planes){
@@ -344,11 +346,13 @@ void ofApp::draw(){
     ofPushMatrix();
     
     if(show_model_on_second_screen){
+        ofBackground(12,255);
         
         ofCamera cam(worldModelCam);
 
-        cam.setPosition(world.physical_camera_pos_cm.get() - ofVec3f(world.physical_eye_seperation_cm*0.5,0,0));
-        cam.lookAt(ofVec3f(0,0,0));
+        cam.setPosition(world.physical_camera_pos_cm.get() + ofVec3f(-world.physical_eye_seperation_cm*0.5, 0 , 0));
+        
+        cam.lookAt(world.physical_camera_pos_cm.get().getLimited(stage_size_cm->z));
         cam.setNearClip(20);
 
         ofPushMatrix();
@@ -366,13 +370,17 @@ void ofApp::draw(){
         ofPopView();
         ofPopMatrix();
 
-        cam.setPosition(world.physical_camera_pos_cm.get() + ofVec3f(world.physical_eye_seperation_cm*0.5,0,0));
-        cam.lookAt(ofVec3f(0,0,0));
+        cam.setPosition(world.physical_camera_pos_cm.get() + ofVec3f(world.physical_eye_seperation_cm*0.5, 0 , 0));
+        cam.lookAt(world.physical_camera_pos_cm.get().getLimited(stage_size_cm->z));
         cam.setNearClip(20);
         
         ofPushMatrix();
         ofPushView();
         ofViewport(ofRectangle(ofGetWidth()/2, 0.0, ofGetWidth()/2, ofGetHeight()));
+
+        cam.setAspectRatio(ofGetViewportWidth()*2.0/ofGetViewportHeight());
+        cam.setForceAspectRatio(true);
+
         cam.begin();
         //ofTranslate(0,0,-stage_size_cm.get().z);
         //ofScale(2.0, 2.0, 2.0);
@@ -392,7 +400,7 @@ void ofApp::draw(){
         }
         
         ofTranslate(1.0, 0);
-        if((calibrate_planes && world.calibrator.rightEye) || !calibrate_planes){
+        if((calibrate_projector && world.calibrator.rightEye) || !calibrate_projector){
             for(std::pair<string, shared_ptr<ofxStereoscopy::Plane>> p : world.planes){
                 ofSetColor(255,255);
                 p.second->drawRight();
@@ -491,7 +499,7 @@ void ofApp::setupGui(shared_ptr<ofAppBaseWindow> gW,shared_ptr<ofAppBaseWindow> 
     
     vector<string> views = {"Perspective Model View", "Camera Model View", "Free Model View"};
     ofxDatGuiDropdown * viewDropdown = gui->addDropdown("Model View", views);
-    viewDropdown->select(0);
+    viewDropdown->select(1);
     viewDropdown->onDropdownEvent(this, &ofApp::onDropdownEvent);
     gui->addBreak();
     
@@ -506,8 +514,8 @@ void ofApp::setupGui(shared_ptr<ofAppBaseWindow> gW,shared_ptr<ofAppBaseWindow> 
     cameraCalibrationFolder->addSlider("POSITION Z", world.physical_camera_pos_cm.getMin().z, world.physical_camera_pos_cm.getMax().z);
      */
     
+    gui->addToggle(calibrate_camera);
     guiBindings.push_back(make_shared<SlidersVec3f>(world.physical_camera_pos_cm, gui));
-
     gui->addSlider(world.physical_eye_seperation_cm);
     gui->addBreak();
 
@@ -515,6 +523,7 @@ void ofApp::setupGui(shared_ptr<ofAppBaseWindow> gW,shared_ptr<ofAppBaseWindow> 
     
     ofxDatGuiFolder * projectorCalibrationFolder = gui->addFolder("Projector Calibration");
     projectorCalibrationFolder->onFolderEvent(this, &ofApp::onFolderEvent);
+    gui->addToggle(show_model_on_second_screen);
     gui->addBreak();
 
     // General
@@ -554,20 +563,20 @@ void ofApp::setupGui(shared_ptr<ofAppBaseWindow> gW,shared_ptr<ofAppBaseWindow> 
 void ofApp::drawGui(ofEventArgs &args) {
     
     if(ofGetFrameNum() == 2){
-        worldModelCam.setPosition(ofVec3f(700, 600, 1500));
+        worldModelCam.setPosition(world.physical_camera_pos_cm);
         worldModelCam.lookAt(ofVec3f(0,0,0));
         worldModelCam.setNearClip(20);
-        worldModelCam.setFarClip(100000);
+        worldModelCam.setFarClip(WORLD_DIMENSION_MAX);
         worldModelCam.disableMouseInput();
     }
     
-    ofBackgroundGradient(ofColor(20), ofColor(40));
+    ofBackgroundGradient(ofColor(20), ofColor(60));
     
     // we draw stereography world here
     
     ofEnableDepthTest();
 
-    if(calibrate_planes){
+    if(calibrate_projector){
         
         ofxDatGuiFolder * projectorCalibrationFolder = gui->getFolder("Projector Calibration");
         
@@ -657,7 +666,7 @@ void ofApp::onButtonEvent(ofxDatGuiButtonEvent e){
 
 void ofApp::onFolderEvent(ofxDatGuiFolderEvent e){
     if(e.target->getLabel() == "PROJECTOR CALIBRATION"){
-        calibrate_planes.set(e.expanded);
+        calibrate_projector.set(e.expanded);
     }
 }
 
@@ -709,33 +718,33 @@ void ofApp::updateStage(){
 
 
 void ofApp::keyPressedGui(int key){
-    if(calibrate_planes){
+    if(calibrate_projector){
         world.calibrator.keyPressed(key);
     }
 }
 void ofApp::keyReleasedGui(int key){
-    if(calibrate_planes){
+    if(calibrate_projector){
         world.calibrator.keyReleased(key);
     }
 }
 
 void ofApp::mouseMovedGui(int x, int y ){
-    if(calibrate_planes){
+    if(calibrate_projector){
         world.calibrator.mouseMoved(screenToCalibrator(ofVec3f(x,y,0)));
     }
 }
 void ofApp::mouseDraggedGui(int x, int y, int button){
-    if(calibrate_planes){
+    if(calibrate_projector){
         world.calibrator.mouseDragged(screenToCalibrator(ofVec3f(x,y,0)), button);
     }
 }
 void ofApp::mousePressedGui(int x, int y, int button){
-    if(calibrate_planes){
+    if(calibrate_projector){
         world.calibrator.mousePressed(screenToCalibrator(ofVec3f(x,y,0)), button);
     }
 }
 void ofApp::mouseReleasedGui(int x, int y, int button){
-    if(calibrate_planes){
+    if(calibrate_projector){
         world.calibrator.mouseReleased(screenToCalibrator(ofVec3f(x,y,0)), button);
     }
 }

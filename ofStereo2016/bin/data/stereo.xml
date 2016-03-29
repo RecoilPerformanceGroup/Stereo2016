@@ -1,8 +1,8 @@
 <stereo>
 	<Stage_Size>804, 402, 800</Stage_Size>
 	<Calibrate_Planes>0</Calibrate_Planes>
-	<Background_Color>255, 255, 255, 223</Background_Color>
-	<Second_Screen_Model>0</Second_Screen_Model>
+	<Background_Color>255, 255, 255, 0</Background_Color>
+	<Second_Screen_Model>1</Second_Screen_Model>
 	<world>
 		<camera>
 			<camera_position>0, 200, 1200</camera_position>
@@ -59,7 +59,7 @@
 				</Output_Points>
 			</Right_Quad>
 		</FLOOR>
-	<pixelsCm>2</pixelsCm>
+	<pixelsCm>0.8811</pixelsCm>
 	</world>
 <stereo/>
 <scenes>
@@ -69,11 +69,11 @@
 			<anaglyphColorLeft>0, 255, 255, 255</anaglyphColorLeft>
 			<anaglyphColorRight>255, 0, 0, 255</anaglyphColorRight>
 			<mountain>
-				<randomSeed>3877</randomSeed>
-				<cellCount>97</cellCount>
-				<size>5247.79, 2644.71, 5768.41</size>
-				<position>1461.89, -2390.67, -6347.36</position>
-				<rotation>-116.052, -119.8, -191.021</rotation>
+				<randomSeed>1785</randomSeed>
+				<cellCount>143</cellCount>
+				<size>55227, 29196.2, 38567.2</size>
+				<position>1461.89, -10000, -100000</position>
+				<rotation>-172.278, -146.039, -179.775</rotation>
 			</mountain>
 			<floor>
 				<color>255, 255, 255, 255</color>
@@ -88,7 +88,7 @@
 				<diffuseColor>255, 255, 255, 255</diffuseColor>
 				<ambientColor>0, 0, 0, 255</ambientColor>
 				<specularColor>0, 0, 0, 255</specularColor>
-				<position>-516.454, 628.903, 837.149</position>
+				<position>-516.454, 628.903, 9167.01</position>
 				<lookAt>4.16309, 4.16309, 420.656</lookAt>
 			</directionalLight>
 			<spotLight>
@@ -103,11 +103,14 @@
 				<diffuseColor>85, 85, 85, 255</diffuseColor>
 				<ambientColor>0, 0, 0, 255</ambientColor>
 				<specularColor>31, 111, 120, 255</specularColor>
-				<position>3023.74, 1253.64, -2494.8</position>
+				<position>5314.45, 1253.64, -2494.8</position>
 				<lookAt>941.273, 212.409, -4889.63</lookAt>
 				<width>765.306</width>
 				<height>765.306</height>
 			</areaLight>
 		</Lights>
 	</scenes>
+<stageSize>800, 500, 800</stageSize>
+	<Projector_Calibration>0</Projector_Calibration>
+	<Camera_Calibration>0</Camera_Calibration>
 </stereo>

@@ -4,11 +4,11 @@
 	<anaglyphColorLeft>0, 255, 255, 255</anaglyphColorLeft>
 	<anaglyphColorRight>255, 0, 0, 255</anaglyphColorRight>
 	<mountain>
-		<randomSeed>3877</randomSeed>
-		<cellCount>97</cellCount>
-		<size>5247.79, 2644.71, 5768.41</size>
-		<position>1461.89, -2390.67, -6347.36</position>
-		<rotation>-116.052, -119.8, -191.021</rotation>
+		<randomSeed>1785</randomSeed>
+		<cellCount>143</cellCount>
+		<size>55227, 29196.2, 38567.2</size>
+		<position>1461.89, -10000, -100000</position>
+		<rotation>-172.278, -146.039, -179.775</rotation>
 	</mountain>
 	<floor>
 		<color>255, 255, 255, 255</color>
