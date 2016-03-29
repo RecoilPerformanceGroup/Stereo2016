@@ -205,6 +205,8 @@ void ofApp::receiveOscParameter(ofxOscMessage & msg, ofAbstractParameter * _p) {
                     
                     // size check
                     string suf = address.back();
+
+                    // TODO: first time with a suffix all others are set to null, when loaded from file. when all set via osc, suf retains others. maybe loading from file fails to set a certain state?
                     
                     if(suf == "x") {
                         vec.x = val;
