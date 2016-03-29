@@ -29,8 +29,7 @@ OrganicMaterial::Data::Data()
 ,ambient(0.2f, 0.2f, 0.2f, 1.0f)
 ,specular(0.0f, 0.0f, 0.0f, 1.0f)
 ,emissive(0.0f, 0.0f, 0.0f, 1.0f)
-,shininess(0.2f)
-,distortion(0.0f,0.0f,0.0f){
+,shininess(0.2f){
     
 }
 
@@ -163,6 +162,8 @@ const ofShader & OrganicMaterial::getShader(int textureTarget, ofGLProgrammableR
 
 void OrganicMaterial::updateParameters() {
     noiseDisplacementTime += noiseDisplacementVelocity.get() * ofGetLastFrameTime();
+    noiseLightTime += noiseLightVelocity.get() * ofGetLastFrameTime();
+    noiseTextureTime += noiseTextureVelocity.get() * ofGetLastFrameTime();
 }
 
 void OrganicMaterial::updateMaterial(const ofShader & shader,ofGLProgrammableRenderer & renderer) const{
@@ -177,11 +178,25 @@ void OrganicMaterial::updateMaterial(const ofShader & shader,ofGLProgrammableRen
     // generic actual time
     shader.setUniform1f("time", ofGetElapsedTimef());
     
+    // world matrix
+    shader.setUniformMatrix4f("worldMatrix", worldMatrix);
+
     // noise displacement uniforms
     shader.setUniform3f("noiseDisplacementTime", noiseDisplacementTime);
+    shader.setUniform3f("noiseDisplacementScale", noiseDisplacementScale);
     shader.setUniform3f("noiseDisplacementAmount", noiseDisplacementAmount);
 
-    shader.setUniformMatrix4f("worldMatrix", worldMatrix);
+    // noise light uniforms
+    shader.setUniform3f("noiseLightTime", noiseLightTime);
+    shader.setUniform1f("noiseLightScale", noiseLightScale);
+    shader.setUniform1f("noiseLightAmount", noiseLightAmount);
+    shader.setUniform3f("noiseLightAngle", noiseLightAngle);
+    
+    // noise texture uniforms
+    shader.setUniform3f("noiseTextureTime", noiseTextureTime);
+    shader.setUniform3f("noiseTextureScale", noiseTextureScale);
+    shader.setUniform1f("noiseTextureAmount", noiseTextureAmount);
+    
 }
 
 void OrganicMaterial::updateLights(const ofShader & shader,ofGLProgrammableRenderer & renderer) const{
@@ -259,12 +274,17 @@ uniform mat4 projectionMatrix;
 uniform mat4 textureMatrix;
 uniform mat4 modelViewProjectionMatrix;
 uniform mat4 normalMatrix;
+
+// actual time
+uniform float time;
+
+// world matrix
 uniform mat4 worldMatrix;
 
-// the time value is passed into the shader by the OF app.
-uniform vec3 noiseDisplacementAmount;
+// noise displacement
 uniform vec3 noiseDisplacementTime;
-
+uniform vec3 noiseDisplacementScale;
+uniform vec3 noiseDisplacementAmount;
 
 // Noise 2D
 //
@@ -351,20 +371,19 @@ mat4 rotationMatrix(vec3 axis, float angle)
 }
 
 
-vec4 noiseDisplace (vec4 pos, vec3 t, vec3 dis) {
-    return vec4(snoise(vec2(pos.z * 0.01, t.x)) * dis.x,
-                snoise(vec2(pos.x * 0.01, t.y)) * dis.y,
-                snoise(vec2(pos.y * 0.01, t.z)) * dis.z, 0.0);
+vec4 noiseDisplace (vec4 pos, vec3 t, vec3 scale, vec3 amount) {
+    return vec4(snoise(vec2(pos.x / scale.x, t.x)) * amount.x,
+                snoise(vec2(pos.y / scale.y, t.y)) * amount.y,
+                snoise(vec2(pos.z / scale.z, t.z)) * amount.z, 0.0);
 }
 
 void main (void){
     
-    
     localPositionBeforeNoise = position;
-    modelViewPositionBeforeNoise = position * modelViewMatrix;
+    modelViewPositionBeforeNoise = modelViewMatrix * position;
     worldPositionBeforeNoise = worldMatrix * position;
     
-    vec4 displacementVec = noiseDisplace(worldPositionBeforeNoise, noiseDisplacementTime, noiseDisplacementAmount);
+    vec4 displacementVec = noiseDisplace(worldPositionBeforeNoise, noiseDisplacementTime, noiseDisplacementScale, noiseDisplacementAmount);
     
     localPosition = position + displacementVec;
     worldPosition = worldMatrix * localPosition;
@@ -390,10 +409,10 @@ IN vec3 eyePosition3;
 IN vec4 worldPosition;
 IN vec4 modelViewPosition;
 IN vec4 localPosition;
+
 IN vec4 worldPositionBeforeNoise;
 IN vec4 modelViewPositionBeforeNoise;
 IN vec4 localPositionBeforeNoise;
-
 
 struct lightData
 {
@@ -439,7 +458,22 @@ uniform mat4 modelViewProjectionMatrix;
 
 uniform lightData lights[MAX_LIGHTS];
 
-uniform vec3 noiseDisplacementTime;
+// actual time
+uniform float time;
+
+// world matrix
+uniform mat4 worldMatrix;
+
+// noise light
+uniform vec3 noiseLightTime;
+uniform float noiseLightScale;
+uniform float noiseLightAmount;
+uniform vec3 noiseLightAngle;
+
+// noise texture
+uniform vec3 noiseTextureTime;
+uniform vec3 noiseTextureScale;
+uniform float noiseTextureAmount;
 
 void pointLight( in lightData light, in vec3 normal, in vec3 ecPosition3, inout vec3 ambient, inout vec3 diffuse, inout vec3 specular ){
     float nDotVP;       // normal . light direction
@@ -457,7 +491,6 @@ void pointLight( in lightData light, in vec3 normal, in vec3 ecPosition3, inout 
     // Compute distance between surface and light position
     d = length(VP);
     
-    
     // Compute attenuation
     attenuation = 1.0 / (light.constantAttenuation + light.linearAttenuation * d + light.quadraticAttenuation * d * d);
     
@@ -466,7 +499,6 @@ void pointLight( in lightData light, in vec3 normal, in vec3 ecPosition3, inout 
     halfVector = normalize(VP + eye);
     nDotHV = max(0.0, dot(normal, halfVector));
     nDotVP = max(0.0, dot(normal, VP));
-    
     
     ambient += light.ambient.rgb * attenuation;
     diffuse += light.diffuse.rgb * nDotVP * attenuation;
@@ -719,13 +751,26 @@ void main (void){
 #endif
     
     
-    ///////////////
+    ////////////////////////////////////////////////////////////
     // fragment noise
     
-    float grainyNoise = (0.5+snoise(worldPositionBeforeNoise.zxy*0.6)*0.5)*0.1;
+/*    float noiseLightComponent = (0.5+snoise(
+                                 vec3(
+                                      worldPositionBeforeNoise.x,
+                                      worldPositionBeforeNoise.y,
+                                      worldPositionBeforeNoise.z,
+                                      
+                                            )
+                                            )*0.5)*0.1
     
-    localColor.rgb -= vec3(grainyNoise,grainyNoise,grainyNoise);
-    localColor.rgb *= 1.0+(0.25*snoise(vec3(worldPosition.xzz/10000.0)+vec3(noiseDisplacementTime.x,noiseDisplacementTime.y,noiseDisplacementTime.z)));
+*/
+    float textureNoise = (0.5+snoise(((worldPositionBeforeNoise.xyz-noiseTextureTime)/noiseTextureScale))*0.5)*noiseTextureAmount;
+    
+    float lightNoise = 1.0+(noiseLightAmount*snoise(((worldPosition.xyz * noiseLightAngle)-noiseLightTime)/noiseLightScale));
+    
+    localColor.rgb += textureNoise;
+    localColor.rgb *= lightNoise;
+ //   localColor.rgb *= 1.0+(0.25*snoise(vec3(worldPosition.xzz/10000.0)+vec3(noiseDisplacementTime.x,noiseDisplacementTime.y,noiseDisplacementTime.z)));
     
     //localColor.rgb = (mod((worldPosition.z)+(snoise(vec3(time, 0, 0)))*300, 200) > 180.0)?vec3(0,0,0):transformedNormal;
     
