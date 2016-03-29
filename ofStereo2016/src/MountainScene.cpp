@@ -11,7 +11,7 @@
 void MountainScene::setup(){
     
     ofParameter<ofVec3f> &stage_size = globalParams->getVec3f("stage_size_cm");
-    
+        
     ofSetSmoothLighting(true);
     
     globalParams->getVec3f("stage_size_cm").addListener(this, &MountainScene::onStageSize);
@@ -63,14 +63,10 @@ void MountainScene::draw(){
     mountainColor = mountainColor.getLerped(eyeColor, anaglyphAmount);
 
     
-    matFloor.begin();
-    matFloor.setDiffuseColor(mountainColor);
-    matFloor.setAmbientColor(mountainColor.getLerped(ofColor::black, 0.75));
-    floor.drawFaces();
-    matFloor.end();
-    
     matMountain.begin();
-    matMountain.setAmbientColor(mountainColor.getLerped(ofColor::black, 0.9));
+    matMountain.setAmbientColor(mountainColor.getLerped(ofColor::black, 0.9))  ;
+    matMountain.setWorldMatrix(floor.getGlobalTransformMatrix());
+    floor.drawFaces();
     matMountain.setDiffuseColor(mountainColor);
     mountain.draw(&matMountain);
     matMountain.end();

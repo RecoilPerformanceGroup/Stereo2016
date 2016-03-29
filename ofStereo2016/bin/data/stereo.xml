@@ -68,10 +68,31 @@
 			<anaglyphColorRight>255, 0, 0, 255</anaglyphColorRight>
 			<mountain>
 				<randomSeed>1785</randomSeed>
-				<cellCount>143</cellCount>
-				<size>55227, 29196.2, 38567.2</size>
-				<position>1461.89, -10000, -100000</position>
-				<rotation>-172.278, -146.039, -179.775</rotation>
+				<cellCount>31</cellCount>
+				<size>45335.3, 27634.3, 13057</size>
+				<position>1566.01, -6451.48, -96793</position>
+				<rotation>0.149872, 0.149872, 0.149872</rotation>
+			<color>255, 255, 255, 255</color>
+				<material>
+					<noise>
+						<displacement>
+							<velocity>0.154005, 0.375263, 0.375263</velocity>
+							<scale>100000, 100000, 69023.8</scale>
+							<amount>0, 0, 0</amount>
+						</displacement>
+						<light>
+							<velocity>4357.91, 43.377, 264.635</velocity>
+							<scale>30613.4</scale>
+							<amount>0.685592</amount>
+							<angle>1, -0.00672525, 1</angle>
+						</light>
+						<texture>
+							<velocity>0, 0, 0</velocity>
+							<scale>1, 1, 1</scale>
+							<amount>-0.203424</amount>
+						</texture>
+					</noise>
+				</material>
 			</mountain>
 			<floor>
 				<color>255, 255, 255, 255</color>
@@ -86,25 +107,25 @@
 				<diffuseColor>255, 255, 255, 255</diffuseColor>
 				<ambientColor>0, 0, 0, 255</ambientColor>
 				<specularColor>0, 0, 0, 255</specularColor>
-				<position>-516.454, 628.903, 9167.01</position>
-				<lookAt>4.16309, 4.16309, 420.656</lookAt>
+				<position>7084.55, 2086.63, -2494.8</position>
+				<lookAt>4.16309, 4.16309, -1349.44</lookAt>
 			</directionalLight>
 			<spotLight>
-				<diffuseColor>255, 255, 255, 255</diffuseColor>
+				<diffuseColor>71, 70, 70, 255</diffuseColor>
 				<ambientColor>0, 0, 0, 255</ambientColor>
 				<specularColor>0, 0, 0, 255</specularColor>
-				<position>2294.88, 4481.46, -10000</position>
-				<lookAt>108.286, 4.16309, -4264.89</lookAt>
-				<spotConcentration>15.3061</spotConcentration>
+				<position>2190.75, 316.533, 4481.46</position>
+				<lookAt>5002.08, 4.16309, -10000</lookAt>
+				<spotConcentration>25</spotConcentration>
 			</spotLight>
 			<areaLight>
-				<diffuseColor>85, 85, 85, 255</diffuseColor>
+				<diffuseColor>167, 167, 167, 255</diffuseColor>
 				<ambientColor>0, 0, 0, 255</ambientColor>
-				<specularColor>31, 111, 120, 255</specularColor>
-				<position>5314.45, 1253.64, -2494.8</position>
-				<lookAt>941.273, 212.409, -4889.63</lookAt>
-				<width>765.306</width>
-				<height>765.306</height>
+				<specularColor>0, 0, 0, 255</specularColor>
+				<position>-3223.66, 5210.33, -1141.19</position>
+				<lookAt>4.16309, 4.16309, -10000</lookAt>
+				<width>6887.76</width>
+				<height>6785.71</height>
 			</areaLight>
 		</Lights>
 	</scenes>

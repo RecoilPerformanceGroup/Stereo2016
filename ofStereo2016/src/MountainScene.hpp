@@ -29,12 +29,15 @@ public:
     ofParameter<ofVec3f> mountainPosition {"position", ofVec3f(0,-100000,-50000), ofVec3f(-10000,-10000,-100000), ofVec3f(10000,10000,100000) };
     ofParameter<ofVec3f> mountainRotation {"rotation", ofVec3f(0,0,0), ofVec3f(-360,-360,-360), ofVec3f(360,360,360) };
 
+    ofParameter<ofColor> mountainColor {"color", ofColor::white, ofColor::black, ofColor::white };
+    
     ofParameterGroup mountainParams {"mountain",
         mountainRandomSeed,
         mountainCellCount,
         mountainSize,
         mountainPosition,
-        mountainRotation
+        mountainRotation,
+        mountainColor
     };
     
     // floor
@@ -47,14 +50,6 @@ public:
     
     ofBoxPrimitive floor;
     
-    // walll
-    
-    ofParameter<ofColor> wallColor {"color", ofColor::white, ofColor::black, ofColor::white };
-    
-    ofParameterGroup wallParams {"wall",
-        wallColor
-    };
-
     // scene
     
     ofParameter<ofColor> anaglyphColorLeft {"anaglyphColorLeft", ofColor::cyan, ofColor::black, ofColor::white };
@@ -67,13 +62,13 @@ public:
         anaglyphAmount,
         anaglyphColorLeft,
         anaglyphColorRight,
-        mountainParams,
-        floorParams,
-        wallParams
+        floorParams
     };
     
     
     MountainScene() {
+        mountainParams.add(matMountain.params);
+        params.add(mountainParams);
         ofxStereoscopy::Scene::params = params;
     }
     

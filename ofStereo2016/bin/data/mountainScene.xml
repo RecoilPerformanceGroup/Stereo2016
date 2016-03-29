@@ -5,10 +5,31 @@
 	<anaglyphColorRight>255, 0, 0, 255</anaglyphColorRight>
 	<mountain>
 		<randomSeed>1785</randomSeed>
-		<cellCount>143</cellCount>
-		<size>55227, 29196.2, 38567.2</size>
-		<position>1461.89, -10000, -100000</position>
-		<rotation>-172.278, -146.039, -179.775</rotation>
+		<cellCount>31</cellCount>
+		<size>45335.3, 27634.3, 13057</size>
+		<position>1566.01, -6451.48, -96793</position>
+		<rotation>0.149872, 0.149872, 0.149872</rotation>
+	<color>255, 255, 255, 255</color>
+		<material>
+			<noise>
+				<displacement>
+					<velocity>0.154005, 0.375263, 0.375263</velocity>
+					<scale>100000, 100000, 69023.8</scale>
+					<amount>0, 0, 0</amount>
+				</displacement>
+				<light>
+					<velocity>4357.91, 43.377, 264.635</velocity>
+					<scale>30613.4</scale>
+					<amount>0.685592</amount>
+					<angle>1, -0.00672525, 1</angle>
+				</light>
+				<texture>
+					<velocity>0, 0, 0</velocity>
+					<scale>1, 1, 1</scale>
+					<amount>-0.203424</amount>
+				</texture>
+			</noise>
+		</material>
 	</mountain>
 	<floor>
 		<color>255, 255, 255, 255</color>

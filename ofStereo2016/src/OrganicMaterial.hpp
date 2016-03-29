@@ -17,22 +17,91 @@ public:
     // Parameters for vertex displacements
     
     ofVec3f noiseDisplacementTime {0,0,0};
+
     ofParameter<ofVec3f> noiseDisplacementVelocity {"velocity",
         ofVec3f(0,0,0),
-        ofVec3f(-1,-1,-1),
-        ofVec3f(1,1,1)};
-    
+        ofVec3f(-10,-10,-10),
+        ofVec3f(10,10,10)};
+
+    ofParameter<ofVec3f> noiseDisplacementScale {"scale",
+        ofVec3f(1,1,1),
+        ofVec3f(0,0,0),
+        ofVec3f(100000,100000,100000)};
+
     ofParameter<ofVec3f> noiseDisplacementAmount {"amount",
         ofVec3f(0,0,0),
         ofVec3f(0,0,0),
-        ofVec3f(200,200,200)};
-    
+        ofVec3f(10000,10000,10000)};
     
     ofParameterGroup noiseDisplacementParams {
-        "noiseDisplacement",
+        "displacement",
         noiseDisplacementVelocity,
+        noiseDisplacementScale,
         noiseDisplacementAmount
         };
+    
+    // Parameters for light noise
+    
+    ofVec3f noiseLightTime {0,0,0};
+    
+    ofParameter<ofVec3f> noiseLightVelocity {"velocity",
+        ofVec3f(0,0,0),
+        ofVec3f(-10000,-10000,-10000),
+        ofVec3f(10000,10000,10000)};
+    
+    ofParameter<float> noiseLightScale {"scale",
+        10000,0,100000};
+    
+    ofParameter<float> noiseLightAmount {"amount", 0, 0, 1};
+
+    ofParameter<ofVec3f> noiseLightAngle {"angle",
+        ofVec3f(0,1,0),
+        ofVec3f(-1,-1,-1),
+        ofVec3f(1,1,1)};
+    
+    
+    ofParameterGroup noiseLightParams {
+        "light",
+        noiseLightVelocity,
+        noiseLightScale,
+        noiseLightAmount,
+        noiseLightAngle
+    };
+    
+    // Parameters for texture noise
+    
+    ofVec3f noiseTextureTime {0,0,0};
+    
+    ofParameter<ofVec3f> noiseTextureVelocity {"velocity",
+        ofVec3f(0,0,0),
+        ofVec3f(-10000,-10000,-10000),
+        ofVec3f(10000,10000,10000)};
+    
+    ofParameter<ofVec3f> noiseTextureScale {"scale",
+        ofVec3f(1.6666,1.6666,1.6666),
+        ofVec3f(0,0,0),
+        ofVec3f(10000,10000,10000)};
+    
+    ofParameter<float> noiseTextureAmount {"amount", -0.05, -1, 1};
+    
+    ofParameterGroup noiseTextureParams {
+        "texture",
+        noiseTextureVelocity,
+        noiseTextureScale,
+        noiseTextureAmount
+    };
+
+    ofParameterGroup noiseParams {
+        "noise",
+        noiseDisplacementParams,
+        noiseLightParams,
+        noiseTextureParams
+    };
+    
+    ofParameterGroup params {
+        "material",
+        noiseParams
+    };
     
     OrganicMaterial();
     virtual ~OrganicMaterial(){};
@@ -60,7 +129,6 @@ public:
         ofFloatColor specular;
         ofFloatColor emissive;
         float shininess;
-        ofVec3f distortion;
     };
     Data getData() const;
     void setData(const OrganicMaterial::Data& data);
