@@ -16,6 +16,9 @@
 #include "LightScene.hpp"
 #include "MountainScene.hpp"
 
+
+
+
 class ofApp : public ofBaseApp{
     
 public:
@@ -190,5 +193,5 @@ public:
     shared_ptr<ofAppBaseWindow> guiWindow;
     shared_ptr<ofAppBaseWindow> mainWindow;
     
-    
+    string findOscAddress(ofAbstractParameter & p);
 };

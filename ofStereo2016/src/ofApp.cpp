@@ -722,6 +722,10 @@ void ofApp::updateStage(){
 
 
 void ofApp::keyPressedGui(int key){
+    
+    
+    ofGetWindowPtr()->setClipboardString(findOscAddress(background_color));
+    
     if(calibrate_projector){
         world.calibrator.keyPressed(key);
     }
@@ -798,4 +802,21 @@ void ofApp::saveParameters(ofParameterGroup & params) {
 void ofApp::loadParameters(ofParameterGroup & params) {
     ofxPanel panel(params);
     panel.loadFromFile(params.getName() + ".xml");
+}
+
+string ofApp::findOscAddress(ofAbstractParameter & p) {
+    
+    string a;
+    vector<string> h = p.getGroupHierarchyNames();
+    
+    for( auto s : h) {
+        a += s;
+        if (s != h.back()) a += "/";
+    }
+    
+    a += " " + p.toString();
+    
+    cout<<a<<endl;
+    return a;
+    
 }
