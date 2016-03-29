@@ -18,7 +18,6 @@
 
 
 
-
 class ofApp : public ofBaseApp{
     
 public:
@@ -193,5 +192,13 @@ public:
     shared_ptr<ofAppBaseWindow> guiWindow;
     shared_ptr<ofAppBaseWindow> mainWindow;
     
-    string findOscAddress(ofAbstractParameter & p);
+    string findOscAddress(ofAbstractParameter * p);
+    ofAbstractParameter * lastChangedParam = nullptr;
+    
+    
+    void paramsChanged(ofAbstractParameter & p) {
+        //cout<<"p changed: "<<p.getName()<<endl;
+        lastChangedParam = &p;
+    }
+    
 };

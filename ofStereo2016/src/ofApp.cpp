@@ -13,6 +13,14 @@ void ofApp::setup(){
     
     globalParams.add(world.params);
     
+    
+    
+    ofAddListener(globalParams.parameterChangedE(), this, &ofApp::paramsChanged);
+
+    
+    //globalParams.getParameter().addListener(this,&ofApp::paramChanged);
+    
+    
     fadeManager = make_shared<ParameterFadeManager>();
     
     world.calibrator.updateOutputAspect((ofGetWidth()*0.5)/ofGetHeight());
@@ -556,7 +564,7 @@ void ofApp::setupGui(shared_ptr<ofAppBaseWindow> gW,shared_ptr<ofAppBaseWindow> 
         ofxPanel * p = new ofxPanel();
         p->setup(s->params);
         p->setPosition(gW->getWidth()-(p->getWidth()*sI), 0);
-
+        
         scenePanels.push_back(p);
         sI++;
     }
@@ -723,8 +731,7 @@ void ofApp::updateStage(){
 
 void ofApp::keyPressedGui(int key){
     
-    
-    ofGetWindowPtr()->setClipboardString(findOscAddress(background_color));
+    if(lastChangedParam != nullptr) ofGetWindowPtr()->setClipboardString(findOscAddress(lastChangedParam));
     
     if(calibrate_projector){
         world.calibrator.keyPressed(key);
@@ -804,17 +811,17 @@ void ofApp::loadParameters(ofParameterGroup & params) {
     panel.loadFromFile(params.getName() + ".xml");
 }
 
-string ofApp::findOscAddress(ofAbstractParameter & p) {
+string ofApp::findOscAddress(ofAbstractParameter * p) {
     
     string a;
-    vector<string> h = p.getGroupHierarchyNames();
+    vector<string> h = p->getGroupHierarchyNames();
     
     for( auto s : h) {
         a += s;
         if (s != h.back()) a += "/";
     }
     
-    a += " " + p.toString();
+    a += " " + p->toString();
     
     cout<<a<<endl;
     return a;
