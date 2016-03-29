@@ -195,9 +195,26 @@ public:
     string findOscAddress(ofAbstractParameter * p);
     ofAbstractParameter * lastChangedParam = nullptr;
     
+    vector<vector<string>> indirectParams;
     
     void paramsChanged(ofAbstractParameter & p) {
-        //cout<<"p changed: "<<p.getName()<<endl;
+
+        vector<string> groupHierachy = p.getGroupHierarchyNames();
+        
+        for(auto blacklistName : indirectParams ) {
+            bool firstElementFound = false;
+            for( auto pName : groupHierachy ) {
+                if(pName == blacklistName.front()){
+                    firstElementFound = true;
+                }
+                if(firstElementFound){
+                    if(pName == blacklistName.back()){
+                        return; // this path is blacklisted as an indirect parameter
+                    }
+                }
+            }
+        }
+
         lastChangedParam = &p;
     }
     
