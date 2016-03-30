@@ -245,10 +245,7 @@ set<VoroNode *> VoroNode::getChildrenInSphere(ofPoint point, float radius) {
     }
     
     return select;
-    
 }
-
-
 
 
 void VoroNode::split(int _nCells, bool overFlowX, bool overFlowY, bool overFlowZ) {
@@ -323,24 +320,16 @@ void VoroNode::update() {
     }
 };
 
-void VoroNode::setup(float _w, float _h, float _d, int _c, bool overFlowX, bool overFlowY, bool overFlowZ) {
-    width  = _w;
-    height = _h;
-    depth  = _d;
+void VoroNode::setupFromBoundingBox(float _w, float _h, float _d, int _c, bool overFlowX, bool overFlowY, bool overFlowZ) {
     nCells = _c;
     
-    boundingBox.set(width, height, depth);
-    minBounds = ofVec3f(-width/2.0, -height/2.0, -depth/2.0);
-    maxBounds = ofVec3f(width/2.0, height/2.0, depth/2.0);
+    boundingBox.set(_w, _h, _d);
+    minBounds = ofVec3f(-_w/2.0, -_h/2.0, -_d/2.0);
+    maxBounds = ofVec3f(_w/2.0, _h/2.0, _d/2.0);
     
     clearChildren();
-    
-    // TODO: use split instead of generate
-    // rename this method something like setupFromBoundingBox ...
-    // generate();
-    
+
     split(nCells, overFlowX, overFlowY, overFlowZ);
-    
 };
 
 

@@ -41,9 +41,9 @@ public:
         return del_fun_t<T>(); 
     }
     
-    float width;
-    float height;
-    float depth;
+    //float width;
+    //float height;
+    //float depth;
     ofVec3f minBounds;
     ofVec3f maxBounds;
     ofBoxPrimitive boundingBox;
@@ -77,11 +77,10 @@ public:
     set<VoroNode *> getChildrenInSphere(ofPoint point, float radius);
     //set<VoroNode *> getChildrenInBoundingBox( corners or plane + dir + dist);
     
-    
     void split(int _nCells=3, bool overFlowX = false, bool overFlowY = false, bool overFlowZ = false);;
     
     // start from a box
-    void setup(float _w = 100, float _h = 100, float _d = 100, int _c = 5, bool overFlowX = false, bool overFlowY = false, bool overFlowZ = false);
+    void setupFromBoundingBox(float _w = 100, float _h = 100, float _d = 100, int _c = 5, bool overFlowX = false, bool overFlowY = false, bool overFlowZ = false);
     
     void update();
     

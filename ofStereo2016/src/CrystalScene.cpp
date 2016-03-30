@@ -32,7 +32,7 @@ void CrystalScene::setup() {
     //spotlight.setAttenuation(0.61);
     
     cube = new VoroNode();
-    cube->setup(200,100,100,numCells);
+    cube->setupFromBoundingBox(200,100,100,numCells);
     
     ofLoadImage(tex, "grain-texture.png");
     //grab.setup(1080, 720, true);
@@ -182,7 +182,7 @@ void CrystalScene::update() {
     
     if(rebuild) {
         
-        cube->setup(200,100,100,numCells);
+        cube->setupFromBoundingBox(200,100,100,numCells);
         rebuild = false;
     }
     

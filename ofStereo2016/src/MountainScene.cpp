@@ -79,7 +79,7 @@ void MountainScene::draw(){
 
 void MountainScene::reconstructMountain(){
     ofSeedRandom(mountainRandomSeed);
-    mountain.setup(mountainSize->x, mountainSize->y, mountainSize->z, mountainCellCount, true,true,true);
+    mountain.setupFromBoundingBox(mountainSize->x, mountainSize->y, mountainSize->z, mountainCellCount, true,true,true);
     mountain.setParent(world->origin);
 }
 
