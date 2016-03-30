@@ -825,7 +825,8 @@ void ofApp::gotMessageGui(ofMessage msg){
 
 }
 
-
+// TODO check if it worked
+// it fails silently on write protected file
 void ofApp::saveAllParameters() {
     saveParameters(globalParams);
     for( auto s : scenes) {

@@ -14,8 +14,62 @@
 class OrganicMaterial : public ofBaseMaterial {
 public:
     
+    
+    
+    
     // Parameters for vertex displacements
     
+    
+    // twist
+    // Work in progress
+    /*ofVec3f twistDisplacementTime {0,0,0};
+    
+    ofParameter<ofVec3f> twistDisplacementVelocity {"velocity",
+        ofVec3f(0,0,0),
+        ofVec3f(-10,-10,-10),
+        ofVec3f(10,10,10)};
+    
+    ofParameter<ofVec3f> twistDisplacementAmount {"amount",
+        ofVec3f(0,0,0),
+        ofVec3f(0,0,0),
+        ofVec3f(10000,10000,10000)};
+    
+    ofParameter<ofVec3f> twistAround {"amount",
+        ofVec3f(0,0,0),
+        ofVec3f(0,0,0),
+        ofVec3f(10000,10000,10000)};*/
+    
+    
+    // Rewrite to GLSL
+    /*ofVec3f rotateAround = cube->getPosition();
+     for(auto c : cube->getChildren()) {
+     
+     
+     ofMesh m = c->mesh;
+     for(int i=0; i<  m.getNumVertices(); i++) {
+     
+     ofVec3f v = m.getVertex(i);
+     ofVec3f gv = v * c->getGlobalTransformMatrix();
+     //ofVec3f vn = v+c->getPosition();//gv;
+     
+     //ofDrawSphere(v * c->getGlobalTransformMatrix(), 5);
+     
+     //float rotateAmt = sin(ofGetElapsedTimef() + (gv.y / 100.0)) * 90;
+     
+     //vn.rotate(rotateAmt, rotateAround, ofVec3f(0,1,0));
+     
+     //m.setVertex(i, vn);
+     m.setVertex(i, gv);
+     }
+     
+     mat.begin();
+     m.draw();
+     mat.end();
+     }*/
+
+    
+    
+    // noise
     ofVec3f noiseDisplacementTime {0,0,0};
 
     ofParameter<ofVec3f> noiseDisplacementVelocity {"velocity",

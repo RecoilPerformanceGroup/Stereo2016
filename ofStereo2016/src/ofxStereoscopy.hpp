@@ -1114,6 +1114,7 @@ namespace ofxStereoscopy {
             
         }
         
+        /// TODO hackyhacky flipswap
         void drawLeft(float texX = 0.0, float texY = 0.0, float texW = 1.0, float texH = 1.0){
             quadLeft.beginDraw();
             if(swap) {

@@ -62,19 +62,43 @@ void MountainScene::draw(){
     // transition to eyeColor
     mountainColor = mountainColor.getLerped(eyeColor, anaglyphAmount);
 
-    
     matMountain.begin();
     matMountain.setAmbientColor(mountainColor.getLerped(ofColor::black, 0.9))  ;
     matMountain.setWorldMatrix(floor.getGlobalTransformMatrix());
     floor.drawFaces();
     matMountain.setDiffuseColor(mountainColor);
+    
     mountain.draw(&matMountain);
+    
+    
+    // split in a way where we get a new node hirearchy, doesnt work with shader stuff otherwise
+    /*for( auto m : mountain.getChildrenInSphere(selectPosition.get() - ofVec3f(selectRadius, 0, 0), selectRadius)) {
+        
+        ofPushMatrix();
+        
+        ofTranslate(-mountainSplit, 0, 0);
+        m->draw();
+        
+        ofPopMatrix();
+    }
+    
+    
+    for( auto m : mountain.getChildrenInSphere(selectPosition.get() + ofVec3f(selectRadius, 0, 0), selectRadius)) {
+        
+        ofPushMatrix();
+        
+        ofTranslate(mountainSplit, 0, 0);
+        m->draw();
+        
+        ofPopMatrix();
+    }*/
+    
     matMountain.end();
 }
 
 void MountainScene::reconstructMountain(){
     ofSeedRandom(mountainRandomSeed);
-    mountain.setup(mountainSize->x, mountainSize->y, mountainSize->z, mountainCellCount, true,true,true);
+    mountain.setupFromBoundingBox(mountainSize->x, mountainSize->y, mountainSize->z, mountainCellCount, true,true,true);
     mountain.setParent(world->origin);
 }
 

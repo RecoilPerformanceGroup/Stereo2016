@@ -13,12 +13,12 @@ void PlaneCutScene::setup(){
     ofParameter<ofVec3f> &stage_size = globalParams->getVec3f("stage_size_cm");
     
     vnFloor = new VoroNode();
-    vnFloor->setup(stage_size->x+400, 50.0, stage_size->z+400, cellCount, false, true, false);
+    vnFloor->setupFromBoundingBox(stage_size->x+400, 50.0, stage_size->z+400, cellCount, false, true, false);
     vnFloor->setGlobalPosition(0, -25.0, stage_size->z/2.0);
     vnFloor->setParent(world->origin);
     voroNodes.push_back(vnFloor);
     vnWall = new VoroNode();
-    vnWall->setup(stage_size->x+400, stage_size->y+400, 400, cellCount, true, true, true);
+    vnWall->setupFromBoundingBox(stage_size->x+400, stage_size->y+400, 400, cellCount, true, true, true);
     vnWall->setGlobalPosition(0, stage_size->y/2.0, -200);
     vnWall->setParent(world->origin);
     voroNodes.push_back(vnWall);
@@ -110,12 +110,12 @@ void PlaneCutScene::onStageSize(ofVec3f& stageSize){
     voroNodes.clear();
     
     vnFloor = new VoroNode();
-    vnFloor->setup(stageSize.x+400, 50.0, stageSize.z+400, cellCount);
+    vnFloor->setupFromBoundingBox(stageSize.x+400, 50.0, stageSize.z+400, cellCount);
     vnFloor->setGlobalPosition(0, -25.0, stageSize.z/2.0);
     vnFloor->setParent(world->origin);
     voroNodes.push_back(vnFloor);
     vnWall = new VoroNode();
-    vnWall->setup(stageSize.x+400, stageSize.y+400, 400, cellCount);
+    vnWall->setupFromBoundingBox(stageSize.x+400, stageSize.y+400, 400, cellCount);
     vnWall->setGlobalPosition(0, stageSize.y/2.0, -200);
     vnWall->setParent(world->origin);
     voroNodes.push_back(vnWall);
