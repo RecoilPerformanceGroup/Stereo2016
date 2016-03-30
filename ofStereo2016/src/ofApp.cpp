@@ -758,16 +758,18 @@ void ofApp::updateStage(){
 
 void ofApp::keyPressedGui(int key){
     if (key == 'c') {
-        if(lastChangedParam != nullptr) ofGetWindowPtr()->setClipboardString(qlab.findOscAddress(lastChangedParam));
+        if(lastChangedParam != nullptr) {
+            ofGetWindowPtr()->setClipboardString(qlab.findOscAddress(*lastChangedParam));
+        }
     }
     if (key == 'q' || key == 'Q') {
         
         if(lastChangedParam != nullptr) {
             
             if(key == 'Q'){
-                qlab.newOscCueFromParameter(lastChangedParam, 2.0);
+                qlab.newOscCueFromParameter(*lastChangedParam, 2.0);
             } else {
-                qlab.newOscCueFromParameter(lastChangedParam);
+                qlab.newOscCueFromParameter(*lastChangedParam);
             }
         }
     }

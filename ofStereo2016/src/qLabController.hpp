@@ -10,12 +10,14 @@
 #include <iostream>
 #include <ofMain.h>
 #include "ofxOsc.h"
+#include "ofxJSON.h"
 
 class qLabController{
 
 public:
     ofxOscReceiver oscReceiver;
     ofxOscSender oscSender;
+    ofxJSONElement json;
     
     qLabController(){};
 
@@ -37,42 +39,11 @@ public:
         }
     };
     
-    void newOscCueFromString(string oscString){
+    string newOscCueFromString(string oscString){
         ofxOscMessage mNewOsc;
         mNewOsc.setAddress("/new");
         mNewOsc.addStringArg("osc");
         oscSender.sendMessage(mNewOsc, false);
-        
-        ofxOscMessage mMessageType;
-        mMessageType.setAddress("/cue/selected/messageType");
-        mMessageType.addIntArg(2);
-        oscSender.sendMessage(mMessageType, false);
-        
-        ofxOscMessage mCustomString;
-        mCustomString.setAddress("/cue/selected/customString");
-        mCustomString.addStringArg(oscString);
-        oscSender.sendMessage(mCustomString, false);
-    };
-    
-    void newOscCueFromParameter(ofAbstractParameter * p, float fadeTime = 0){
-        
-        string oscString( findOscAddress(p) );
-        
-        if(fadeTime > 0.0){
-            oscString += " fade " + ofToString(fadeTime);
-        }
-        
-        newOscCueFromString(oscString);
-        
-    };
-
-    
-    void newGroupWithOscCuesFromParameterGroup(const ofParameterGroup & g, string qlabRoot = "/"){
-        
-        ofxOscMessage mNewGroup;
-        mNewGroup.setAddress(qlabRoot+"new");
-        mNewGroup.addStringArg("group");
-        oscSender.sendMessage(mNewGroup, false);
         
         while(!oscReceiver.hasWaitingMessages());
         
@@ -80,48 +51,162 @@ public:
             
             ofxOscMessage msg;
             oscReceiver.getNextMessage(msg);
-            cout << msg.getAddress() << endl;
             
             vector<string> address = ofSplitString(msg.getAddress(),"/",true);
+            
+            if(address[0] == "reply" && address[address.size()-1] == "new"){
+                if(json.parse(msg.getArgAsString(0))){
+                    string newCueID = json["data"].asString();
+                    
+                    ofxOscMessage mMessageType;
+                    mMessageType.setAddress("/cue/selected/messageType");
+                    mMessageType.addIntArg(2);
+                    oscSender.sendMessage(mMessageType, false);
+                    
+                    ofxOscMessage mCustomString;
+                    mCustomString.setAddress("/cue/selected/customString");
+                    mCustomString.addStringArg(oscString);
+                    oscSender.sendMessage(mCustomString, false);
 
-            if(address[0] == "reply"){
-                for(int i = 0; i < msg.getNumArgs(); i++){
-                    cout << "\t" << msg.getArgAsString(i) << endl;
+                    return newCueID;
+                }
+            }
+        }
+    };
+    
+    string newOscCueFromParameter(const ofAbstractParameter& p, float fadeTime = 0){
+        
+        string oscString( findOscAddress(p) );
+        
+        if(fadeTime > 0.0){
+            oscString += " fade " + ofToString(fadeTime);
+        }
+        
+        return newOscCueFromString(oscString);
+        
+    };
+
+    
+    string newGroupWithOscCuesFromParameterGroup(const ofParameterGroup & g){
+        
+        string selectionString = "";
+
+        ////////////
+        // create a dummy cue
+        
+        string dummyID;
+        ofxOscMessage mNewDummy;
+        mNewDummy.setAddress("/new");
+        mNewDummy.addStringArg("memo");
+        oscSender.sendMessage(mNewDummy, false);
+        
+        while(!oscReceiver.hasWaitingMessages());
+        
+        while(oscReceiver.hasWaitingMessages()) {
+            
+            ofxOscMessage msg;
+            oscReceiver.getNextMessage(msg);
+            
+            vector<string> address = ofSplitString(msg.getAddress(),"/",true);
+            
+            if(address[0] == "reply" && address[address.size()-1] == "new"){
+                if(json.parse(msg.getArgAsString(0))){
+                    selectionString += json["data"].asString() + ",";
+                    dummyID = json["data"].asString();
                 }
             }
         }
         
-        ofxOscMessage mMode;
-        mMode.setAddress(qlabRoot+"cue/selected/mode");
-        mMode.addIntArg(3);
-        oscSender.sendMessage(mMode, false);
-        
-        ofxOscMessage mDisplayName;
-        mDisplayName.setAddress(qlabRoot+"cue/selected/name");
-        mDisplayName.addStringArg(g.getName());
-        oscSender.sendMessage(mDisplayName, false);
-        
+        ////////////
+        // create cues for children recursively
+
         for(std::size_t i=0;i<g.size();i++){
             if(g.getType(i)==typeid(ofParameterGroup).name()){
-//                newGroupWithOscCuesFromParameterGroup(g.getGroup(i), "/cue_id/"+ guidString+"/");
+                selectionString += newGroupWithOscCuesFromParameterGroup(g.getGroup(i)) + ",";
+            } else {
+                if(g.get(i).getName() != "add to qlab")
+                    selectionString += newOscCueFromParameter(g.get(i)) + ",";
+            }
+
+        }
+
+        ////////////
+        // select children before creating group
+
+        // remove trailing comma:
+        selectionString = selectionString.substr(0, selectionString.size()-1);
+        
+        ofxOscMessage mMessageType;
+        mMessageType.setAddress("/select_id/" + selectionString);
+        oscSender.sendMessage(mMessageType, false);
+
+        ////////////
+        // create group for selected cues
+
+        ofxOscMessage mNewGroup;
+        mNewGroup.setAddress("/new");
+        mNewGroup.addStringArg("group");
+        oscSender.sendMessage(mNewGroup, false);
+
+        while(!oscReceiver.hasWaitingMessages());
+        
+        while(oscReceiver.hasWaitingMessages()) {
+            
+            ofxOscMessage msg;
+            oscReceiver.getNextMessage(msg);
+            
+            vector<string> address = ofSplitString(msg.getAddress(),"/",true);
+
+            if(address[0] == "reply" && address[address.size()-1] == "new"){
+                if(json.parse(msg.getArgAsString(0))){
+                    string newCueID = json["data"].asString();
+                    
+                    ofxOscMessage mMode;
+                    mMode.setAddress("/cue/selected/mode");
+                    mMode.addIntArg(3);
+                    oscSender.sendMessage(mMode, false);
+                    
+                    ofxOscMessage mDisplayName;
+                    mDisplayName.setAddress("/cue/selected/name");
+                    mDisplayName.addStringArg(g.getName());
+                    //mDisplayName.addStringArg(g.getName() + " " + newCueID);
+                    oscSender.sendMessage(mDisplayName, false);
+                    
+                    ofxOscMessage mColorName;
+                    mColorName.setAddress("/cue/selected/colorName");
+                    mColorName.addStringArg("grey");
+                    oscSender.sendMessage(mColorName, false);
+                    
+                    ofxOscMessage mDeleteDummy;
+                    mDeleteDummy.setAddress("/delete_id/" + dummyID);
+                    oscSender.sendMessage(mDeleteDummy, false);
+
+                    // cout << g.getName() << " " << newCueID << ": "  << selectionString << endl;
+                    
+                    return newCueID;
+                    
+                } else {
+                    ofLogNotice("qLabController::newGroup") << "Failed to parse JSON.";
+                }
             }
         }
-        
     }
     
-    string findOscAddress(ofAbstractParameter * p) {
+    string findOscAddress(const ofAbstractParameter& p) {
         
         string a("/");
-        vector<string> h = p->getGroupHierarchyNames();
+        vector<string> h = p.getGroupHierarchyNames();
         
         for( auto s : h) {
             a += s;
             if (s != h.back()) a += "/";
         }
-        
-        a += " \"" + p->toString() + "\"";
-        
+        if(p.type() == typeid(ofParameter<bool>).name()){
+            a += " " + p.toString();
+        } else {
+            a += " \"" + p.toString() + "\"";
+        }
         return a;
     }
-
+    
 };
