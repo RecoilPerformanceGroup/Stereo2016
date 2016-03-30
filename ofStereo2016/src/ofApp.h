@@ -10,6 +10,7 @@
 #include "ofxStereoscopy.hpp"
 #include "ofxDatGuiParameterBindings.hpp"
 #include "ofxGui.h"
+#include "qLabController.hpp"
 
 // scenes
 
@@ -160,6 +161,7 @@ public:
     // osc
     ofxOscReceiver oscReceiver;
     ofxOscSender oscSender;
+    qLabController qlab;
     
     // program variables
     float circleRadius;
@@ -192,7 +194,6 @@ public:
     shared_ptr<ofAppBaseWindow> guiWindow;
     shared_ptr<ofAppBaseWindow> mainWindow;
     
-    string findOscAddress(ofAbstractParameter * p);
     ofAbstractParameter * lastChangedParam = nullptr;
     
     vector<vector<string>> indirectParams;
@@ -206,9 +207,12 @@ public:
             ofParameter<bool> & pBool = static_cast<ofParameter<bool>&>(p);
             if(pBool.getName() == "add to qlab" && pBool.get()){
                 pBool.set(false);
-                cout << "should save " << pBool.getFirstParent().getName() << endl;
                 
-                // TODO: Save to qlab via method called qlabParameters(ofParameterGroup & params)
+                ofParameterGroup g = pBool.getFirstParent();
+                
+                cout << "should save " << g.getName() << endl;
+                
+                qlab.newGroupWithOscCuesFromParameterGroup(g);
                 
                 return;
             }

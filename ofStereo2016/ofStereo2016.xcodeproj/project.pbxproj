@@ -39,6 +39,7 @@
 		72A929D3561B8232A182ABFC /* ofxOscBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65EEFA3DA3526E9CDD9C21F9 /* ofxOscBundle.cpp */; };
 		7A0D4D041C7F39A100CF4DD7 /* SceneTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A0D4D021C7F39A100CF4DD7 /* SceneTest.cpp */; };
 		7A1285361C80D879007B8689 /* ofxStereoscopy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A1285351C80D879007B8689 /* ofxStereoscopy.cpp */; };
+		7A1810BC1CABB16E00510F67 /* qLabController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A1810BA1CABB16E00510F67 /* qLabController.cpp */; };
 		7A6991491C91ACA700DDD9B9 /* SketchScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A6991471C91ACA700DDD9B9 /* SketchScene.cpp */; };
 		7A69914D1C91B36600DDD9B9 /* PlaneCutScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A69914B1C91B36600DDD9B9 /* PlaneCutScene.cpp */; };
 		7A8D63B81C9033E3000DD6CF /* VoroNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A8D63B61C9033E3000DD6CF /* VoroNode.cpp */; };
@@ -175,6 +176,8 @@
 		7A0D4D021C7F39A100CF4DD7 /* SceneTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneTest.cpp; sourceTree = "<group>"; };
 		7A0D4D031C7F39A100CF4DD7 /* SceneTest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SceneTest.hpp; sourceTree = "<group>"; };
 		7A1285351C80D879007B8689 /* ofxStereoscopy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxStereoscopy.cpp; sourceTree = "<group>"; };
+		7A1810BA1CABB16E00510F67 /* qLabController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = qLabController.cpp; sourceTree = "<group>"; };
+		7A1810BB1CABB16E00510F67 /* qLabController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = qLabController.hpp; sourceTree = "<group>"; };
 		7A6991471C91ACA700DDD9B9 /* SketchScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SketchScene.cpp; sourceTree = "<group>"; };
 		7A6991481C91ACA700DDD9B9 /* SketchScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SketchScene.hpp; sourceTree = "<group>"; };
 		7A69914B1C91B36600DDD9B9 /* PlaneCutScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlaneCutScene.cpp; sourceTree = "<group>"; };
@@ -580,6 +583,8 @@
 				7A8D63B71C9033E3000DD6CF /* VoroNode.hpp */,
 				04EB5EC51C92ECDB00C6931B /* OrganicMaterial.cpp */,
 				04EB5EC61C92ECDB00C6931B /* OrganicMaterial.hpp */,
+				7A1810BA1CABB16E00510F67 /* qLabController.cpp */,
+				7A1810BB1CABB16E00510F67 /* qLabController.hpp */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -734,6 +739,7 @@
 				04F001161C7EEE8B0001F8C7 /* ParameterFade.cpp in Sources */,
 				041E59881C88759800FC2FE0 /* container_prd.cc in Sources */,
 				7A69914D1C91B36600DDD9B9 /* PlaneCutScene.cpp in Sources */,
+				7A1810BC1CABB16E00510F67 /* qLabController.cpp in Sources */,
 				67FE4C7B15C2F0478C8126C2 /* NetworkingUtils.cpp in Sources */,
 				044EA0BC1C984148007B0072 /* LightScene.cpp in Sources */,
 				7A1285361C80D879007B8689 /* ofxStereoscopy.cpp in Sources */,

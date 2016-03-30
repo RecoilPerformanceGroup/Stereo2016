@@ -8,6 +8,7 @@ void ofApp::setup(){
     ofSetSmoothLighting(true);
 
     oscSender.setup("localhost", 53000);
+    qlab.setup();
     
     for( auto s : scenes) {
         s->setupScene(&globalParams, &world);
@@ -308,6 +309,7 @@ void ofApp::receiveOscParameter(ofxOscMessage & msg, ofAbstractParameter * _p) {
 //--------------------------------------------------------------
 void ofApp::update(){
     
+    qlab.update();
     
     for( auto s : scenes) {
         s->updateScene();
@@ -756,36 +758,17 @@ void ofApp::updateStage(){
 
 void ofApp::keyPressedGui(int key){
     if (key == 'c') {
-        if(lastChangedParam != nullptr) ofGetWindowPtr()->setClipboardString(findOscAddress(lastChangedParam));
+        if(lastChangedParam != nullptr) ofGetWindowPtr()->setClipboardString(qlab.findOscAddress(lastChangedParam));
     }
     if (key == 'q' || key == 'Q') {
-        // TODO: Factor out to a qlabParameter method
+        
         if(lastChangedParam != nullptr) {
-            string oscString(findOscAddress(lastChangedParam));
             
             if(key == 'Q'){
-                oscString += " fade";
+                qlab.newOscCueFromParameter(lastChangedParam, 2.0);
+            } else {
+                qlab.newOscCueFromParameter(lastChangedParam);
             }
-            
-            ofxOscMessage mNewOsc;
-            mNewOsc.setRemoteEndpoint("localhost", 53000);
-            mNewOsc.setAddress("/new");
-            mNewOsc.addStringArg("osc");
-            oscSender.sendMessage(mNewOsc, false);
-
-            ofxOscMessage mMessageType;
-            mMessageType.setRemoteEndpoint("localhost", 53000);
-            mMessageType.setAddress("/cue/selected/messageType");
-            mMessageType.addIntArg(2);
-            oscSender.sendMessage(mMessageType, false);
-            
-            ofxOscMessage mCustomString;
-            mCustomString.setRemoteEndpoint("localhost", 53000);
-            mCustomString.setAddress("/cue/selected/customString");
-            mCustomString.addStringArg(oscString);
-            oscSender.sendMessage(mCustomString, false);
-            
-            
         }
     }
     
@@ -866,20 +849,4 @@ void ofApp::saveParameters(ofParameterGroup & params) {
 void ofApp::loadParameters(ofParameterGroup & params) {
     ofxPanel panel(params);
     panel.loadFromFile(params.getName() + ".xml");
-}
-
-string ofApp::findOscAddress(ofAbstractParameter * p) {
-    
-    string a("/");
-    vector<string> h = p->getGroupHierarchyNames();
-    
-    for( auto s : h) {
-        a += s;
-        if (s != h.back()) a += "/";
-    }
-    
-    a += " \"" + p->toString() + "\"";
-    
-    cout<<a<<endl;
-    return a;
 }
