@@ -7,11 +7,18 @@ void ofApp::setup(){
     
     ofSetSmoothLighting(true);
 
+    oscSender.setup("localhost", 53000);
+    
     for( auto s : scenes) {
         s->setupScene(&globalParams, &world);
     }
     
     globalParams.add(world.params);
+    
+    ofAddListener(globalParams.parameterChangedE(), this, &ofApp::paramsChanged);
+    
+    //globalParams.getParameter().addListener(this,&ofApp::paramChanged);
+    
     
     fadeManager = make_shared<ParameterFadeManager>();
     
@@ -46,6 +53,10 @@ void ofApp::setup(){
     (projectorCalibrationFolder->addToggle("FLOOR LEFT", false))->onButtonEvent(this,&ofApp::onButtonEvent);
     (projectorCalibrationFolder->addToggle("FLOOR RIGHT", false))->onButtonEvent(this,&ofApp::onButtonEvent);
     
+    for (auto p : world.planes) {
+        indirectParams.push_back(vector<string> { p.first, "size"});
+    }
+    
     world.calibrator.linkPointParameters(
                                          &world.getPlane("FLOOR")->quadLeft.outputPointTopLeft,
                                          &world.getPlane("WALL")->quadLeft.outputPointBottomLeft
@@ -74,7 +85,7 @@ void ofApp::receiveOscParameter(ofxOscMessage & msg, ofAbstractParameter * _p) {
     
     ofAbstractParameter * p = _p;
     
-    //cout<<"Received "<<msg.getAddress()<<endl;
+    cout<<"Received "<<msg.getAddress()<<endl;
     
     vector<string> address = ofSplitString(msg.getAddress(),"/",true);
     // fade
@@ -94,10 +105,11 @@ void ofApp::receiveOscParameter(ofxOscMessage & msg, ofAbstractParameter * _p) {
     // if string from - next argument is the value to start the fade from
     
     for(int i=0; i<msg.getNumArgs(); i++) {
+        cout<<msg.getArgAsString(i)<<endl;
+
         if(msg.getArgType(i) == OFXOSC_TYPE_STRING) {
             if(msg.getArgAsString(i) == "fade") {
                 fadeValue = true;
-                
                 if(msg.getNumArgs() > i+1) {
                     if(msg.getArgType(i+1) == OFXOSC_TYPE_FLOAT) {
                         fadeTime = msg.getArgAsFloat(i+1);
@@ -117,7 +129,7 @@ void ofApp::receiveOscParameter(ofxOscMessage & msg, ofAbstractParameter * _p) {
         if(p) {
             //cout<<"matching: " << address[i]<<endl;
             if(address[i]==p->getEscapedName()){
-                //cout<< "match" << p->getEscapedName()<<endl;
+                //cout<< "match: " << p->getEscapedName()<<endl;
                 
                 if(p->type()==typeid(ofParameterGroup).name()){
                     if(address.size()>=i+1){
@@ -133,7 +145,6 @@ void ofApp::receiveOscParameter(ofxOscMessage & msg, ofAbstractParameter * _p) {
                     }
                     
                 }else if(p->type()==typeid(ofParameter<float>).name() && msg.getArgType(0)==OFXOSC_TYPE_FLOAT){
-                    
                     if(fadeValue) {
                         fadeManager->add(new ParameterFade<float>(p, msg.getArgAsFloat(0), fadeTime, easeFn));
                     } else {
@@ -141,7 +152,6 @@ void ofApp::receiveOscParameter(ofxOscMessage & msg, ofAbstractParameter * _p) {
                     }
                     
                 }else if(p->type()==typeid(ofParameter<double>).name() && msg.getArgType(0)==OFXOSC_TYPE_DOUBLE){
-                    
                     if(fadeValue) {
                         fadeManager->add(new ParameterFade<double>(p, msg.getArgAsDouble(0), fadeTime, easeFn));
                     } else {
@@ -195,6 +205,8 @@ void ofApp::receiveOscParameter(ofxOscMessage & msg, ofAbstractParameter * _p) {
                     
                     // size check
                     string suf = address.back();
+
+                    // TODO: first time with a suffix all others are set to null, when loaded from file. when all set via osc, suf retains others. maybe loading from file fails to set a certain state?
                     
                     if(suf == "x") {
                         vec.x = val;
@@ -257,6 +269,28 @@ void ofApp::receiveOscParameter(ofxOscMessage & msg, ofAbstractParameter * _p) {
                             target.fromString(msg.getArgAsString(0));
                             fadeManager->add(new ParameterFade<ofVec2f>(p, target.get(), fadeTime, easeFn));
                         }
+                        
+                        // Qlab will pass arguments as strings, if there's a following fade string, therefore we catch floats, ints and doubles here as well 
+                        
+                        else if(p->type()==typeid(ofParameter<float>).name()) {
+                            
+                            ofParameter<float> target;
+                            target.fromString(msg.getArgAsString(0));
+                            fadeManager->add(new ParameterFade<float>(p, target.get(), fadeTime, easeFn));
+                            
+                        } else if(p->type()==typeid(ofParameter<double>).name()) {
+                            
+                            ofParameter<double> target;
+                            target.fromString(msg.getArgAsString(0));
+                            fadeManager->add(new ParameterFade<double>(p, target.get(), fadeTime, easeFn));
+                        
+                        } else if(p->type()==typeid(ofParameter<int>).name()) {
+                            
+                            ofParameter<int> target;
+                            target.fromString(msg.getArgAsString(0));
+                            fadeManager->add(new ParameterFade<int>(p, target.get(), fadeTime, easeFn));
+                        }
+                        
                         
                         
                     } else {
@@ -524,6 +558,9 @@ void ofApp::setupGui(shared_ptr<ofAppBaseWindow> gW,shared_ptr<ofAppBaseWindow> 
     ofxDatGuiFolder * projectorCalibrationFolder = gui->addFolder("Projector Calibration");
     projectorCalibrationFolder->onFolderEvent(this, &ofApp::onFolderEvent);
     gui->addToggle(show_model_on_second_screen);
+    
+    gui->addToggle(swap_left_right);
+    
     gui->addBreak();
 
     // General
@@ -552,7 +589,7 @@ void ofApp::setupGui(shared_ptr<ofAppBaseWindow> gW,shared_ptr<ofAppBaseWindow> 
         ofxPanel * p = new ofxPanel();
         p->setup(s->params);
         p->setPosition(gW->getWidth()-(p->getWidth()*sI), 0);
-
+        
         scenePanels.push_back(p);
         sI++;
     }
@@ -613,7 +650,6 @@ void ofApp::drawGui(ofEventArgs &args) {
     
     for( auto s : scenes) {
         //s->drawGui();
-        
     }
     
     for( auto p : scenePanels) {
@@ -718,10 +754,45 @@ void ofApp::updateStage(){
 
 
 void ofApp::keyPressedGui(int key){
+    if (key == 'c') {
+        if(lastChangedParam != nullptr) ofGetWindowPtr()->setClipboardString(findOscAddress(lastChangedParam));
+    }
+    if (key == 'q' || key == 'Q') {
+        // TODO: Factor out to a qlabParameter method
+        if(lastChangedParam != nullptr) {
+            string oscString(findOscAddress(lastChangedParam));
+            
+            if(key == 'Q'){
+                oscString += " fade";
+            }
+            
+            ofxOscMessage mNewOsc;
+            mNewOsc.setRemoteEndpoint("localhost", 53000);
+            mNewOsc.setAddress("/new");
+            mNewOsc.addStringArg("osc");
+            oscSender.sendMessage(mNewOsc, false);
+
+            ofxOscMessage mMessageType;
+            mMessageType.setRemoteEndpoint("localhost", 53000);
+            mMessageType.setAddress("/cue/selected/messageType");
+            mMessageType.addIntArg(2);
+            oscSender.sendMessage(mMessageType, false);
+            
+            ofxOscMessage mCustomString;
+            mCustomString.setRemoteEndpoint("localhost", 53000);
+            mCustomString.setAddress("/cue/selected/customString");
+            mCustomString.addStringArg(oscString);
+            oscSender.sendMessage(mCustomString, false);
+            
+            
+        }
+    }
+    
     if(calibrate_projector){
         world.calibrator.keyPressed(key);
     }
 }
+
 void ofApp::keyReleasedGui(int key){
     if(calibrate_projector){
         world.calibrator.keyReleased(key);
@@ -795,4 +866,20 @@ void ofApp::saveParameters(ofParameterGroup & params) {
 void ofApp::loadParameters(ofParameterGroup & params) {
     ofxPanel panel(params);
     panel.loadFromFile(params.getName() + ".xml");
+}
+
+string ofApp::findOscAddress(ofAbstractParameter * p) {
+    
+    string a("/");
+    vector<string> h = p->getGroupHierarchyNames();
+    
+    for( auto s : h) {
+        a += s;
+        if (s != h.back()) a += "/";
+    }
+    
+    a += " \"" + p->toString() + "\"";
+    
+    cout<<a<<endl;
+    return a;
 }

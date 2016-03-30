@@ -1129,6 +1129,7 @@ namespace ofxStereoscopy {
             quadRight.endDraw();
         }
         
+        ofParameter<bool> swap {"swap", false};
         ofParameter<bool> enabled {true};
         ofParameter<ofVec3f> physical_pos_cm {"position", ofVec3f(0,0,0), ofVec3f(-WORLD_DIMENSION_MAX,-WORLD_DIMENSION_MAX,-WORLD_DIMENSION_MAX), ofVec3f(WORLD_DIMENSION_MAX,WORLD_DIMENSION_MAX,WORLD_DIMENSION_MAX)};
         ofParameter<ofVec2f> physical_size_cm {"size", ofVec2f(100,100), ofVec2f(0,0), ofVec2f(WORLD_DIMENSION_MAX*2,WORLD_DIMENSION_MAX*2)};
@@ -1158,7 +1159,8 @@ namespace ofxStereoscopy {
     public:
         
         ofParameter<bool> enabled {"enabled", true};
-        ofParameterGroup params {"untitled", enabled};
+        ofParameter<bool> qlab {"add to qlab", false};
+        ofParameterGroup params {"untitled", enabled, qlab};
         
         // add dynamic draw order
         

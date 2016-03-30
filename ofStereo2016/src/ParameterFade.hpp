@@ -77,7 +77,6 @@ public:
         //p->cast<ParameterType>().addListener(this, &ParameterFade::paramChanged);
         
         //cout<<"parameter fade: " << p->getName() << ":" << c << " "  << fromValue << " - " << toValue<< " added"<<endl;
-
         
     }
         

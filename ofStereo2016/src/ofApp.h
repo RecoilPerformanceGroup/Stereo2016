@@ -16,6 +16,8 @@
 #include "LightScene.hpp"
 #include "MountainScene.hpp"
 
+
+
 class ofApp : public ofBaseApp{
     
 public:
@@ -40,6 +42,10 @@ public:
     ofParameter<bool> calibrate_camera{"Camera Calibration", false, false, true};
     ofParameter<ofColor> background_color{"Background Color", ofColor(255,255,255,255),ofColor(0,0,0,0),ofColor(255,255,255,255)};
     ofParameter<bool> show_model_on_second_screen{"Second Screen Model", false, false, true};
+    
+    ofParameter<bool> swap_left_right{"swapLeftRight", true};
+    
+    
     
     ofParameterGroup sceneParams;
     
@@ -186,5 +192,45 @@ public:
     shared_ptr<ofAppBaseWindow> guiWindow;
     shared_ptr<ofAppBaseWindow> mainWindow;
     
+    string findOscAddress(ofAbstractParameter * p);
+    ofAbstractParameter * lastChangedParam = nullptr;
+    
+    vector<vector<string>> indirectParams;
+    
+    void paramsChanged(ofAbstractParameter & p) {
+
+        vector<string> groupHierachy = p.getGroupHierarchyNames();
+
+        // handle qlab save
+        if(p.type()==typeid(ofParameter<bool>).name()){
+            ofParameter<bool> & pBool = static_cast<ofParameter<bool>&>(p);
+            if(pBool.getName() == "add to qlab" && pBool.get()){
+                pBool.set(false);
+                cout << "should save " << pBool.getFirstParent().getName() << endl;
+                
+                // TODO: Save to qlab via method called qlabParameters(ofParameterGroup & params)
+                
+                return;
+            }
+        }
+        
+        // skip indirect params
+        for(auto blacklistName : indirectParams ) {
+            bool firstElementFound = false;
+            for( auto pName : groupHierachy ) {
+                if(pName == blacklistName.front()){
+                    firstElementFound = true;
+                }
+                if(firstElementFound){
+                    if(pName == blacklistName.back()){
+                        // this path is blacklisted as an indirect parameter
+                        // we simply return
+                        return;
+                    }
+                }
+            }
+        }
+        lastChangedParam = &p;
+    }
     
 };

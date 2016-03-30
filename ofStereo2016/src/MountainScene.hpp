@@ -59,6 +59,7 @@ public:
     
     ofParameterGroup params {"mountainScene",
         enabled,
+        qlab,
         anaglyphAmount,
         anaglyphColorLeft,
         anaglyphColorRight,
