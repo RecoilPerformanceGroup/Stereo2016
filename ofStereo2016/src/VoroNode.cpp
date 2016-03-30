@@ -231,6 +231,8 @@ set<VoroNode *> VoroNode::getChildren() {
     return voroChildren;
 };
 
+// consider creating select methods that return new top level nodes
+
 set<VoroNode *> VoroNode::getChildrenInSphere(ofPoint point, float radius) {
     
     set<VoroNode *> select;

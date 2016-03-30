@@ -35,6 +35,7 @@ public:
     ofParameter<ofVec3f> selectPosition {"selectPosition", ofVec3f(0,-100000,-50000), ofVec3f(-10000,-10000,-100000), ofVec3f(10000,10000,100000) };
     ofParameter<float> selectRadius {"selectRadius", 2,0,2000};
     
+    ofParameter<float> mountainSplit {"split", 2,0,2000};
     
     ofParameterGroup mountainParams {"mountain",
         mountainRandomSeed,
@@ -44,7 +45,8 @@ public:
         mountainRotation,
         mountainColor,
         selectRadius,
-        selectPosition
+        selectPosition,
+        mountainSplit
     };
     
     // floor

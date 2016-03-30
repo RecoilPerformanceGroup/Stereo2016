@@ -70,8 +70,27 @@ void MountainScene::draw(){
     
     mountain.draw(&matMountain);
     
-    /*for( auto m : mountain.getChildrenInSphere(selectPosition, selectRadius)) {
+    
+    // split in a way where we get a new node hirearchy, doesnt work with shader stuff otherwise
+    /*for( auto m : mountain.getChildrenInSphere(selectPosition.get() - ofVec3f(selectRadius, 0, 0), selectRadius)) {
+        
+        ofPushMatrix();
+        
+        ofTranslate(-mountainSplit, 0, 0);
         m->draw();
+        
+        ofPopMatrix();
+    }
+    
+    
+    for( auto m : mountain.getChildrenInSphere(selectPosition.get() + ofVec3f(selectRadius, 0, 0), selectRadius)) {
+        
+        ofPushMatrix();
+        
+        ofTranslate(mountainSplit, 0, 0);
+        m->draw();
+        
+        ofPopMatrix();
     }*/
     
     matMountain.end();
