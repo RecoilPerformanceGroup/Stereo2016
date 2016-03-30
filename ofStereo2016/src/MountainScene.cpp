@@ -62,13 +62,18 @@ void MountainScene::draw(){
     // transition to eyeColor
     mountainColor = mountainColor.getLerped(eyeColor, anaglyphAmount);
 
-    
     matMountain.begin();
     matMountain.setAmbientColor(mountainColor.getLerped(ofColor::black, 0.9))  ;
     matMountain.setWorldMatrix(floor.getGlobalTransformMatrix());
     floor.drawFaces();
     matMountain.setDiffuseColor(mountainColor);
+    
     mountain.draw(&matMountain);
+    
+    /*for( auto m : mountain.getChildrenInSphere(selectPosition, selectRadius)) {
+        m->draw();
+    }*/
+    
     matMountain.end();
 }
 

@@ -231,6 +231,26 @@ set<VoroNode *> VoroNode::getChildren() {
     return voroChildren;
 };
 
+set<VoroNode *> VoroNode::getChildrenInSphere(ofPoint point, float radius) {
+    
+    set<VoroNode *> select;
+    
+    for(auto n : voroChildren) {
+        if(n->getGlobalPosition().distance(point) < radius) {
+            select.insert(n);
+        }
+        
+        set<VoroNode *> rSelect = n->getChildrenInSphere(point, radius);
+        select.insert(rSelect.begin(), rSelect.end());
+    }
+    
+    return select;
+    
+}
+
+
+
+
 void VoroNode::split(int _nCells, bool overFlowX, bool overFlowY, bool overFlowZ) {
     nCells = _nCells;
     

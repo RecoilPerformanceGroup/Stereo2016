@@ -74,6 +74,10 @@ public:
     
     set<VoroNode *> getChildren();
     
+    set<VoroNode *> getChildrenInSphere(ofPoint point, float radius);
+    //set<VoroNode *> getChildrenInBoundingBox( corners or plane + dir + dist);
+    
+    
     void split(int _nCells=3, bool overFlowX = false, bool overFlowY = false, bool overFlowZ = false);;
     
     // start from a box
@@ -85,4 +89,5 @@ public:
     
     void draw(OrganicMaterial * m = nullptr);
     
+   
 };

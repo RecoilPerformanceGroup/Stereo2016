@@ -1117,15 +1117,21 @@ namespace ofxStereoscopy {
         /// TODO hackyhacky flipswap
         void drawLeft(float texX = 0.0, float texY = 0.0, float texW = 1.0, float texH = 1.0){
             quadLeft.beginDraw();
-            //textureLeft.draw(texX,texY,texW,texH);
-            textureRight.draw(texX,texY,texW,texH);
+            if(swap) {
+                textureRight.draw(texX,texY,texW,texH);
+            } else {
+                textureLeft.draw(texX,texY,texW,texH);
+            }
             quadLeft.endDraw();
         }
         
         void drawRight(float texX = 0.0, float texY = 0.0, float texW = 1.0, float texH = 1.0){
             quadRight.beginDraw();
-            //textureRight.draw(texX,texY,texW,texH);
-            textureLeft.draw(texX,texY,texW,texH);
+            if(swap) {
+                textureLeft.draw(texX,texY,texW,texH);
+            } else {
+                textureRight.draw(texX,texY,texW,texH);
+            }
             quadRight.endDraw();
         }
         

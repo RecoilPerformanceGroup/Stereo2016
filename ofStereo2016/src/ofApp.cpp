@@ -351,7 +351,8 @@ void ofApp::draw(){
         ofEnableLighting();
         for(std::pair<string, shared_ptr<ofxStereoscopy::Plane>> p : world.planes){
             
-            // TODO add flip bool to swap left and right outputs
+            p.second->swap.set(swap_left_right);
+            
             p.second->beginLeft();
             ofClear(background_color);
             
