@@ -4,32 +4,35 @@
 	<anaglyphColorLeft>0, 255, 255, 255</anaglyphColorLeft>
 	<anaglyphColorRight>255, 0, 0, 255</anaglyphColorRight>
 	<mountain>
-		<randomSeed>1785</randomSeed>
+		<randomSeed>1989</randomSeed>
 		<cellCount>31</cellCount>
-		<size>45335.3, 27634.3, 13057</size>
-		<position>1566.01, -6451.48, -96793</position>
-		<rotation>0.149872, 0.149872, 0.149872</rotation>
+		<size>500, 200, 200</size>
+		<position>0, -40, 600</position>
+		<rotation>90, 0, 0</rotation>
 	<color>255, 255, 255, 255</color>
 		<material>
 			<noise>
 				<displacement>
-					<velocity>0.154005, 0.375263, 0.375263</velocity>
-					<scale>100000, 100000, 69023.8</scale>
+					<velocity>0.15, 0.15, 0.75</velocity>
+					<scale>1540.06, 20, 400</scale>
 					<amount>0, 0, 0</amount>
 				</displacement>
 				<light>
 					<velocity>4357.91, 43.377, 264.635</velocity>
 					<scale>30613.4</scale>
-					<amount>0.685592</amount>
+					<amount>0</amount>
 					<angle>1, -0.00672525, 1</angle>
 				</light>
 				<texture>
 					<velocity>0, 0, 0</velocity>
 					<scale>1, 1, 1</scale>
-					<amount>-0.203424</amount>
+					<amount>0.00256753</amount>
 				</texture>
 			</noise>
 		</material>
+	<selectRadius>2</selectRadius>
+		<selectPosition>0, -100000, -50000</selectPosition>
+		<split>0</split>
 	</mountain>
 	<floor>
 		<color>255, 255, 255, 255</color>
@@ -38,4 +41,5 @@
 		<color>255, 255, 255, 255</color>
 	</wall>
 <mountainScene/>
+<add_to_qlab>0</add_to_qlab>
 </mountainScene>
