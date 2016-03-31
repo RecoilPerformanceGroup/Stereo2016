@@ -18,8 +18,6 @@
 #include "MountainScene.hpp"
 #include "RoomScene.hpp"
 
-
-
 class ofApp : public ofBaseApp{
     
 public:
@@ -35,8 +33,6 @@ public:
             sceneParams.add(s->getParameters());
         }
         
-        scenes[0]->enabled = true;
-        scenes[1]->enabled = true;
         
     }
     
