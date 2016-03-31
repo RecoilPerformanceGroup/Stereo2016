@@ -41,9 +41,7 @@ public:
         return del_fun_t<T>(); 
     }
     
-    //float width;
-    //float height;
-    //float depth;
+
     ofVec3f minBounds;
     ofVec3f maxBounds;
     ofBoxPrimitive boundingBox;
