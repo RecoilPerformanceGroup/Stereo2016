@@ -1,18 +1,44 @@
 <Crystal>
 	<enabled>1</enabled>
 	<rebuild>0</rebuild>
-	<origin>0, 0, 0</origin>
-	<Cells>2</Cells>
-	<Automatic_rotation>0, 0, 0</Automatic_rotation>
-	<rot_speed>0</rot_speed>
-	<Crystal_color>1, 1, 1, 1</Crystal_color>
-	<spotlightPosition>0, 0, 0</spotlightPosition>
-	<scale>0</scale>
-	<scaleCells>0</scaleCells>
+	<origin>0, -900, 0</origin>
+	<Cells>63</Cells>
+	<Automatic_rotation>0.204082, 0.377551, -0.153061</Automatic_rotation>
+	<rot_speed>0.31</rot_speed>
+	<Crystal_color>1, 1, 1, 0</Crystal_color>
+	<spotlightPosition>61.2244, 0, 0</spotlightPosition>
+	<scale>10</scale>
+	<scaleCells>0.41958</scaleCells>
 	<Debug_draw>0</Debug_draw>
 	<Noise_displacement_parameters>
 		<velocity>0, 0, 0</velocity>
 		<displacement>89.6293, 0, 0</displacement>
 	</Noise_displacement_parameters>
 <Crystal/>
+<displacement>
+		<velocity>0.941273, 0.941273, 0.941273</velocity>
+		<scale>0, 0, 0</scale>
+		<amount>0, 0, 0</amount>
+	</displacement>
+<material>
+		<noise>
+			<displacement>
+				<velocity>0, 0, 0</velocity>
+				<scale>3509.25, 1, 1</scale>
+				<amount>0, 0, 0</amount>
+			</displacement>
+			<light>
+				<velocity>-6587.74, 0, 0</velocity>
+				<scale>30407.4</scale>
+				<amount>0</amount>
+				<angle>0, 1, 0</angle>
+			</light>
+			<texture>
+				<velocity>0, 0, 0</velocity>
+				<scale>3657.63, 3820.26, 3603.42</scale>
+				<amount>-0.221855</amount>
+			</texture>
+		</noise>
+	</material>
+<add_to_qlab>0</add_to_qlab>
 </Crystal>

@@ -1,0 +1,42 @@
+<PlateauScene>
+	<enabled>0</enabled>
+	<add_to_qlab>0</add_to_qlab>
+	<anaglyphAmount>0</anaglyphAmount>
+	<anaglyphColorLeft>0, 255, 255, 255</anaglyphColorLeft>
+	<anaglyphColorRight>255, 0, 0, 255</anaglyphColorRight>
+	<floor>
+		<color>255, 255, 255, 255</color>
+	</floor>
+	<Plateau>
+		<randomSeed>0</randomSeed>
+		<cellCount>520</cellCount>
+		<size>420.656, 420.656, 264.471</size>
+		<position>-101, -201, 524.779</position>
+		<rotation>20, 0, 10</rotation>
+		<color>255, 255, 255, 255</color>
+		<selectRadius>0</selectRadius>
+		<selectPosition>0, 3648.48, -15576.9</selectPosition>
+		<split>1683.67</split>
+		<material>
+			<noise>
+				<displacement>
+					<velocity>5.35358, 4.24728, 3.69414</velocity>
+					<scale>0, 0, 1</scale>
+					<amount>0, 0, 0</amount>
+				</displacement>
+				<light>
+					<velocity>0, 0, 0</velocity>
+					<scale>10000</scale>
+					<amount>0</amount>
+					<angle>0, 1, 0</angle>
+				</light>
+				<texture>
+					<velocity>0, 0, 0</velocity>
+					<scale>1.6666, 1.6666, 1.6666</scale>
+					<amount>-0.05</amount>
+				</texture>
+			</noise>
+		</material>
+	</Plateau>
+<PlateauScene/>
+</PlateauScene>

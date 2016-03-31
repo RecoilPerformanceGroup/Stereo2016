@@ -643,7 +643,9 @@ void ofApp::drawGui(ofEventArgs &args) {
         world.drawModel(!(gui->getDropdown("Model View")->getSelected()->getLabel() == "CAMERA MODEL VIEW"));
         ofEnableDepthTest();
         for(auto s : scenes) {
-            s->drawModel();
+            if(s->enabled) {
+                s->drawModel();
+            }   
         }
         worldModelCam.end();
     }
