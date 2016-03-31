@@ -1,0 +1,52 @@
+<roomScene>
+	<enabled>1</enabled>
+	<add_to_qlab>0</add_to_qlab>
+	<floor>
+		<color>255, 255, 255, 255</color>
+		<light>255, 255, 255, 255</light>
+		<material>
+			<noise>
+				<displacement>
+					<velocity>0, 0, 0</velocity>
+					<scale>1, 1, 1</scale>
+					<amount>0, 0, 0</amount>
+				</displacement>
+				<light>
+					<velocity>0, 0, 0</velocity>
+					<scale>10000</scale>
+					<amount>0</amount>
+					<angle>0, 1, 0</angle>
+				</light>
+				<texture>
+					<velocity>0, 0, 0</velocity>
+					<scale>1.6666, 1.6666, 1.6666</scale>
+					<amount>-0.05</amount>
+				</texture>
+			</noise>
+		</material>
+	</floor>
+	<wall>
+		<color>255, 255, 255, 255</color>
+		<light>255, 255, 255, 255</light>
+		<material>
+			<noise>
+				<displacement>
+					<velocity>0, 0, 0</velocity>
+					<scale>1, 1, 1</scale>
+					<amount>0, 0, 0</amount>
+				</displacement>
+				<light>
+					<velocity>0, 0, 0</velocity>
+					<scale>10000</scale>
+					<amount>0</amount>
+					<angle>0, 1, 0</angle>
+				</light>
+				<texture>
+					<velocity>0, 0, 0</velocity>
+					<scale>1.6666, 1.6666, 1.6666</scale>
+					<amount>-0.05</amount>
+				</texture>
+			</noise>
+		</material>
+	</wall>
+</roomScene>

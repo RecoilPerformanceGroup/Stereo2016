@@ -20,23 +20,11 @@ void MountainScene::setup(){
     mountainCellCount.addListener(this, &MountainScene::reconstructMountain<int>);
     mountainSize.addListener(this, &MountainScene::reconstructMountain<ofVec3f>);
     
-    float floorHeight = 10.0;
-    float floorSize = WORLD_DIMENSION_MAX*2;
-
-    floor.set(floorSize, floorHeight, floorSize, 2, 2, 2);
-    floor.setParent(world->origin);
-    floor.setGlobalPosition(0,-floorHeight/2.0, stage_size->z/2.0);
-    
-    matFloor.noiseDisplacementVelocity = ofVec3f(0.1,0.0,0.25);
     matMountain.noiseDisplacementVelocity = ofVec3f(0.1,0.0,0.25);
-    matFloor.setShininess(0.2);
-    matFloor.setSpecularColor(ofColor::white);
-    
     reconstructMountain();
 }
 
 void MountainScene::update(){
-    matFloor.updateParameters();
     matMountain.updateParameters();
     mountain.setGlobalPosition(mountainPosition);
     mountain.setOrientation(mountainRotation);
@@ -58,15 +46,14 @@ void MountainScene::draw(){
     ofEnableLighting();
 
     // compensate for nonlinear transition to eyecolor
-    ofFloatColor mountainColor = floorColor->getLerped(ofColor::black, 0.1*(1.0-anaglyphAmount));
+    ofFloatColor mColor = mountainColor->getLerped(ofColor::black, 0.1*(1.0-anaglyphAmount));
     // transition to eyeColor
-    mountainColor = mountainColor.getLerped(eyeColor, anaglyphAmount);
+    mColor = mColor.getLerped(eyeColor, anaglyphAmount);
 
     matMountain.begin();
-    matMountain.setAmbientColor(mountainColor.getLerped(ofColor::black, 0.9))  ;
-    matMountain.setWorldMatrix(floor.getGlobalTransformMatrix());
-    floor.drawFaces();
-    matMountain.setDiffuseColor(mountainColor);
+    matMountain.setAmbientColor(mColor.getLerped(ofColor::black, 0.9))  ;
+    matMountain.setWorldMatrix(mountain.getGlobalTransformMatrix());
+    matMountain.setDiffuseColor(mColor);
     
     mountain.draw(&matMountain);
     
@@ -110,5 +97,4 @@ void MountainScene::drawModel(){
     ofSetColor(255,64);
     ofNoFill();
     mountain.draw();
-    floor.drawWireframe();
 }

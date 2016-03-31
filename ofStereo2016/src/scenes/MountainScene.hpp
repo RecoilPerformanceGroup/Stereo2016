@@ -29,7 +29,7 @@ public:
     ofParameter<ofVec3f> mountainPosition {"position", ofVec3f(0,-100000,-50000), ofVec3f(-10000,-10000,-100000), ofVec3f(10000,10000,100000) };
     ofParameter<ofVec3f> mountainRotation {"rotation", ofVec3f(0,0,0), ofVec3f(-360,-360,-360), ofVec3f(360,360,360) };
 
-    ofParameter<ofColor> mountainColor {"color", ofColor::white, ofColor::black, ofColor::white };
+    ofParameter<ofColor> mountainColor {"color", ofColor::white, ofColor(0,0,0,0), ofColor(255,255,255,255) };
     
     
     ofParameter<ofVec3f> selectPosition {"selectPosition", ofVec3f(0,-100000,-50000), ofVec3f(-10000,-10000,-100000), ofVec3f(10000,10000,100000) };
@@ -49,16 +49,6 @@ public:
         mountainSplit
     };
     
-    // floor
-
-    ofParameter<ofColor> floorColor {"color", ofColor::white, ofColor::black, ofColor::white };
-
-    ofParameterGroup floorParams {"floor",
-        floorColor
-    };
-    
-    ofBoxPrimitive floor;
-    
     // scene
     
     ofParameter<ofColor> anaglyphColorLeft {"anaglyphColorLeft", ofColor::cyan, ofColor::black, ofColor::white };
@@ -71,10 +61,8 @@ public:
         qlab,
         anaglyphAmount,
         anaglyphColorLeft,
-        anaglyphColorRight,
-        floorParams
+        anaglyphColorRight
     };
-    
     
     MountainScene() {
         mountainParams.add(matMountain.params);
@@ -96,7 +84,6 @@ public:
     ofxPanel panel;
     
     OrganicMaterial matMountain;
-    OrganicMaterial matFloor;
     OrganicMaterial matAnaglyphRight;
     OrganicMaterial matAnaglyphLeft;
     
