@@ -18,7 +18,7 @@
 		<WALL>
 			<UnknownName>1</UnknownName>
 			<position>0, 0, 0</position>
-			<size>804, 402</size>
+			<size>804, 499.301</size>
 			<Left_Quad>
 				<Output_Points>
 					<Top_Left>0.22582, 0.00843623, 0</Top_Left>
@@ -62,7 +62,7 @@
 <stereo/>
 <scenes>
 		<mountainScene>
-			<enabled>1</enabled>
+			<enabled>0</enabled>
 			<anaglyphAmount>0</anaglyphAmount>
 			<anaglyphColorLeft>0, 255, 255, 255</anaglyphColorLeft>
 			<anaglyphColorRight>255, 0, 0, 255</anaglyphColorRight>
@@ -108,14 +108,14 @@
 		<Lights>
 			<enabled>1</enabled>
 			<directionalLight>
-				<diffuseColor>83, 176, 249, 255</diffuseColor>
+				<diffuseColor>0, 0, 0, 255</diffuseColor>
 				<ambientColor>0, 0, 0, 255</ambientColor>
 				<specularColor>0, 0, 0, 255</specularColor>
-				<position>1149.52, 212.409, 3856.72</position>
+				<position>108.288, 212.409, 3856.72</position>
 				<lookAt>4.16309, 4.16309, 420.656</lookAt>
 			</directionalLight>
 			<spotLight>
-				<diffuseColor>71, 70, 70, 255</diffuseColor>
+				<diffuseColor>0, 0, 0, 255</diffuseColor>
 				<ambientColor>0, 0, 0, 255</ambientColor>
 				<specularColor>0, 0, 0, 255</specularColor>
 				<position>4.16309, -3744.28, 2399</position>
@@ -123,7 +123,7 @@
 				<spotConcentration>25</spotConcentration>
 			</spotLight>
 			<areaLight>
-				<diffuseColor>167, 167, 167, 255</diffuseColor>
+				<diffuseColor>0, 0, 0, 255</diffuseColor>
 				<ambientColor>0, 0, 0, 255</ambientColor>
 				<specularColor>0, 0, 0, 255</specularColor>
 				<position>-3223.66, -2807.17, 420.656</position>
@@ -133,8 +133,60 @@
 			</areaLight>
 		<add_to_qlab>0</add_to_qlab>
 		</Lights>
+	<roomScene>
+			<enabled>1</enabled>
+			<add_to_qlab>0</add_to_qlab>
+			<floor>
+				<color>255, 255, 255, 255</color>
+				<light>255, 255, 255, 255</light>
+				<material>
+					<noise>
+						<displacement>
+							<velocity>0, 0, 0</velocity>
+							<scale>1, 1, 1</scale>
+							<amount>0, 0, 0</amount>
+						</displacement>
+						<light>
+							<velocity>0, 0, 0</velocity>
+							<scale>10000</scale>
+							<amount>0</amount>
+							<angle>0, 1, 0</angle>
+						</light>
+						<texture>
+							<velocity>0, 0, 0</velocity>
+							<scale>1.6666, 1.6666, 1.6666</scale>
+							<amount>-0.05</amount>
+						</texture>
+					</noise>
+				</material>
+			</floor>
+			<wall>
+				<color>255, 255, 255, 255</color>
+				<light>255, 255, 255, 255</light>
+				<material>
+					<noise>
+						<displacement>
+							<velocity>0, 0, 0</velocity>
+							<scale>1, 1, 1</scale>
+							<amount>0, 0, 0</amount>
+						</displacement>
+						<light>
+							<velocity>0, 0, 0</velocity>
+							<scale>10000</scale>
+							<amount>0</amount>
+							<angle>0, 1, 0</angle>
+						</light>
+						<texture>
+							<velocity>0, 0, 0</velocity>
+							<scale>1.6666, 1.6666, 1.6666</scale>
+							<amount>-0.05</amount>
+						</texture>
+					</noise>
+				</material>
+			</wall>
+		</roomScene>
 	</scenes>
-<stageSize>804, 402, 800</stageSize>
+<stageSize>804, 499.301, 800</stageSize>
 	<Projector_Calibration>0</Projector_Calibration>
 	<Camera_Calibration>0</Camera_Calibration>
 </stereo>

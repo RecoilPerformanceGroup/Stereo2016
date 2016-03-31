@@ -16,6 +16,7 @@
 
 #include "LightScene.hpp"
 #include "MountainScene.hpp"
+#include "RoomScene.hpp"
 
 
 
@@ -26,6 +27,7 @@ public:
     ofApp() {
         
         sceneParams.setName("scenes");
+        scenes.push_back(make_shared<RoomScene>());
         scenes.push_back(make_shared<MountainScene>());
         scenes.push_back(make_shared<LightScene>());
         
