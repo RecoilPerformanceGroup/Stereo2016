@@ -128,9 +128,7 @@ void ofApp::receiveOscParameter(ofxOscMessage & msg, ofAbstractParameter * _p) {
     for(unsigned int i=0;i<address.size();i++){
         
         if(p) {
-            //cout<<"matching: " << address[i]<<endl;
             if(address[i]==p->getEscapedName()){
-                //cout<< "match: " << p->getEscapedName()<<endl;
                 
                 if(p->type()==typeid(ofParameterGroup).name()){
                     if(address.size()>=i+1){
@@ -197,6 +195,32 @@ void ofApp::receiveOscParameter(ofxOscMessage & msg, ofAbstractParameter * _p) {
                     }
                     break;
                     
+                } else if(p->type()==typeid(ofParameter<ofFloatColor>).name() &&
+                            msg.getArgType(0)!=OFXOSC_TYPE_STRING ) {
+                        
+                        ofFloatColor col = p->cast<ofFloatColor>();
+                        float val = msg.getArgAsFloat(0);
+                        
+                        // size check
+                        string suf = address.back();
+                        
+                        if(suf == "r") {
+                            col.r = val;
+                        } else if(suf == "g") {
+                            col.g = val;
+                        } else if(suf == "b") {
+                            col.b = val;
+                        } else if(suf == "a") {
+                            col.a = val;
+                        }
+                        
+                        if(fadeValue) {
+                            fadeManager->add(new ParameterFade<ofFloatColor>(p, col, fadeTime, easeFn, suf));
+                        } else {
+                            p->cast<ofFloatColor>().set(col);
+                        }
+                        break;
+
                     
                 } else if(p->type()==typeid(ofParameter<ofVec3f>).name() &&
                           msg.getArgType(0)!=OFXOSC_TYPE_STRING ) {
@@ -257,6 +281,12 @@ void ofApp::receiveOscParameter(ofxOscMessage & msg, ofAbstractParameter * _p) {
                             ofParameter<ofColor> target;
                             target.fromString(msg.getArgAsString(0));
                             fadeManager->add(new ParameterFade<ofColor>(p, target.get(), fadeTime, easeFn));
+                        
+                        } else if(p->type()==typeid(ofParameter<ofFloatColor>).name()) {
+                                
+                                ofParameter<ofFloatColor> target;
+                                target.fromString(msg.getArgAsString(0));
+                                fadeManager->add(new ParameterFade<ofFloatColor>(p, target.get(), fadeTime, easeFn));
                             
                         } else if(p->type()==typeid(ofParameter<ofVec3f>).name()) {
                             
@@ -293,7 +323,6 @@ void ofApp::receiveOscParameter(ofxOscMessage & msg, ofAbstractParameter * _p) {
                         }
                         
                         
-                        
                     } else {
                         p->fromString(msg.getArgAsString(0));
                     }
@@ -323,6 +352,7 @@ void ofApp::update(){
         oscReceiver.getNextMessage(msg);
         
         receiveOscParameter(msg, &globalParams);
+        receiveOscParameter(msg, &sceneParams);
         
         // custom osc hooks here
     }
