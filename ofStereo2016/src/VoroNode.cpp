@@ -10,8 +10,6 @@
 
 int VoroNode::counter = 0;
 
-
-
 VoroNode::VoroNode() {
     counter++;
     isSplit = false;
@@ -90,7 +88,7 @@ void VoroNode::getCellMesh(voro::voronoicell &_c, ofPoint _pos, ofVboMesh& _mesh
             mesh.setMode(OF_PRIMITIVE_TRIANGLES );
             mesh.addVertices(getCellVerteces(_c, _pos));
             
-            //  Add triangles using Indeces
+            //  Add triangles using Indices
             //
             int k,l,m,n;
             for(int i = 1; i < _c.p; i++){
