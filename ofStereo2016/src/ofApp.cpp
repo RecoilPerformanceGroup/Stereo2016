@@ -345,6 +345,8 @@ void ofApp::draw(){
     
     ofEnableDepthTest();
     
+    world.swap.set(swap_left_right);
+    
     if(calibrate_projector){
         world.renderProjectorCalibrations();
     } else if (calibrate_camera){
@@ -352,8 +354,6 @@ void ofApp::draw(){
     } else {
         ofEnableLighting();
         for(std::pair<string, shared_ptr<ofxStereoscopy::Plane>> p : world.planes){
-            
-            p.second->swap.set(swap_left_right);
             
             p.second->beginLeft();
             ofClear(background_color);

@@ -378,6 +378,8 @@ namespace ofxStereoscopy {
         bool bIsDrawingLeft;
         bool bIsDrawingRight;
         
+        ofParameter<bool> swap {"swap", false};
+
         Plane * currentPlane;
         
         
@@ -1117,7 +1119,7 @@ namespace ofxStereoscopy {
         /// TODO hackyhacky flipswap
         void drawLeft(float texX = 0.0, float texY = 0.0, float texW = 1.0, float texH = 1.0){
             quadLeft.beginDraw();
-            if(swap) {
+            if(world->swap) {
                 textureRight.draw(texX,texY,texW,texH);
             } else {
                 textureLeft.draw(texX,texY,texW,texH);
@@ -1127,7 +1129,7 @@ namespace ofxStereoscopy {
         
         void drawRight(float texX = 0.0, float texY = 0.0, float texW = 1.0, float texH = 1.0){
             quadRight.beginDraw();
-            if(swap) {
+            if(world->swap) {
                 textureLeft.draw(texX,texY,texW,texH);
             } else {
                 textureRight.draw(texX,texY,texW,texH);
@@ -1135,7 +1137,6 @@ namespace ofxStereoscopy {
             quadRight.endDraw();
         }
         
-        ofParameter<bool> swap {"swap", false};
         ofParameter<bool> enabled {true};
         ofParameter<ofVec3f> physical_pos_cm {"position", ofVec3f(0,0,0), ofVec3f(-WORLD_DIMENSION_MAX,-WORLD_DIMENSION_MAX,-WORLD_DIMENSION_MAX), ofVec3f(WORLD_DIMENSION_MAX,WORLD_DIMENSION_MAX,WORLD_DIMENSION_MAX)};
         ofParameter<ofVec2f> physical_size_cm {"size", ofVec2f(100,100), ofVec2f(0,0), ofVec2f(WORLD_DIMENSION_MAX*2,WORLD_DIMENSION_MAX*2)};

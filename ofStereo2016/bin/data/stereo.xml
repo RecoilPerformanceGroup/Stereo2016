@@ -1,5 +1,5 @@
 <stereo>
-	<Background_Color>255, 255, 255, 223</Background_Color>
+	<Background_Color>255, 255, 255, 0</Background_Color>
 	<Second_Screen_Model>0</Second_Screen_Model>
 	<world>
 		<camera>
@@ -11,7 +11,7 @@
 			<eyeSeparation>6.2</eyeSeparation>
 			<focusDistance>200</focusDistance>
 			<cameraNearClip>20</cameraNearClip>
-		<position>0, 170, 1200</position>
+		<position>0, 250, 1300</position>
 			<nearClip>20</nearClip>
 		</camera>
 		<pixels_pr__cm>2</pixels_pr__cm>
@@ -29,10 +29,10 @@
 			</Left_Quad>
 			<Right_Quad>
 				<Output_Points>
-					<Top_Left>0.225671, 0.0683386, 0</Top_Left>
-					<Top_Right>0.746585, 0.068177, 0</Top_Right>
-					<Bottom_Right>0.742031, 0.411944, 0</Bottom_Right>
-					<Bottom_Left>0.230495, 0.409219, 0</Bottom_Left>
+					<Top_Left>0.226171, 0.0655886, 0</Top_Left>
+					<Top_Right>0.746585, 0.067927, 0</Top_Right>
+					<Bottom_Right>0.742031, 0.412194, 0</Bottom_Right>
+					<Bottom_Left>0.229495, 0.407969, 0</Bottom_Left>
 				</Output_Points>
 			</Right_Quad>
 		</WALL>
@@ -50,14 +50,14 @@
 			</Left_Quad>
 			<Right_Quad>
 				<Output_Points>
-					<Top_Left>0.230495, 0.409219, 0</Top_Left>
-					<Top_Right>0.742031, 0.411944, 0</Top_Right>
-					<Bottom_Right>1.10091, 0.903549, 0</Bottom_Right>
-					<Bottom_Left>-0.179947, 0.879358, 0</Bottom_Left>
+					<Top_Left>0.229495, 0.407969, 0</Top_Left>
+					<Top_Right>0.742031, 0.412194, 0</Top_Right>
+					<Bottom_Right>1.09116, 0.901549, 0</Bottom_Right>
+					<Bottom_Left>-0.182697, 0.878608, 0</Bottom_Left>
 				</Output_Points>
 			</Right_Quad>
 		</FLOOR>
-	<pixelsCm>2</pixelsCm>
+	<pixelsCm>0.9441</pixelsCm>
 	</world>
 <stereo/>
 <scenes>
@@ -67,32 +67,35 @@
 			<anaglyphColorLeft>0, 255, 255, 255</anaglyphColorLeft>
 			<anaglyphColorRight>255, 0, 0, 255</anaglyphColorRight>
 			<mountain>
-				<randomSeed>1785</randomSeed>
+				<randomSeed>1989</randomSeed>
 				<cellCount>31</cellCount>
-				<size>45335.3, 27634.3, 13057</size>
-				<position>1566.01, -6451.48, -96793</position>
-				<rotation>0.149872, 0.149872, 0.149872</rotation>
+				<size>500, 200, 200</size>
+				<position>0, -40, 600</position>
+				<rotation>90, 0, 0</rotation>
 			<color>255, 255, 255, 255</color>
 				<material>
 					<noise>
 						<displacement>
-							<velocity>0.154005, 0.375263, 0.375263</velocity>
-							<scale>100000, 100000, 69023.8</scale>
+							<velocity>0.15, 0.15, 0.75</velocity>
+							<scale>1540.06, 20, 400</scale>
 							<amount>0, 0, 0</amount>
 						</displacement>
 						<light>
 							<velocity>4357.91, 43.377, 264.635</velocity>
 							<scale>30613.4</scale>
-							<amount>0.685592</amount>
+							<amount>0</amount>
 							<angle>1, -0.00672525, 1</angle>
 						</light>
 						<texture>
 							<velocity>0, 0, 0</velocity>
 							<scale>1, 1, 1</scale>
-							<amount>-0.203424</amount>
+							<amount>0.00256753</amount>
 						</texture>
 					</noise>
 				</material>
+			<selectRadius>2</selectRadius>
+				<selectPosition>0, -100000, -50000</selectPosition>
+				<split>0</split>
 			</mountain>
 			<floor>
 				<color>255, 255, 255, 255</color>
@@ -100,33 +103,35 @@
 			<wall>
 				<color>255, 255, 255, 255</color>
 			</wall>
+		<add_to_qlab>0</add_to_qlab>
 		</mountainScene>
 		<Lights>
 			<enabled>1</enabled>
 			<directionalLight>
-				<diffuseColor>255, 255, 255, 255</diffuseColor>
+				<diffuseColor>83, 176, 249, 255</diffuseColor>
 				<ambientColor>0, 0, 0, 255</ambientColor>
 				<specularColor>0, 0, 0, 255</specularColor>
-				<position>7084.55, 2086.63, -2494.8</position>
-				<lookAt>4.16309, 4.16309, -1349.44</lookAt>
+				<position>1149.52, 212.409, 3856.72</position>
+				<lookAt>4.16309, 4.16309, 420.656</lookAt>
 			</directionalLight>
 			<spotLight>
 				<diffuseColor>71, 70, 70, 255</diffuseColor>
 				<ambientColor>0, 0, 0, 255</ambientColor>
 				<specularColor>0, 0, 0, 255</specularColor>
-				<position>2190.75, 316.533, 4481.46</position>
-				<lookAt>5002.08, 4.16309, -10000</lookAt>
+				<position>4.16309, -3744.28, 2399</position>
+				<lookAt>4.16309, 4.16309, 628.903</lookAt>
 				<spotConcentration>25</spotConcentration>
 			</spotLight>
 			<areaLight>
 				<diffuseColor>167, 167, 167, 255</diffuseColor>
 				<ambientColor>0, 0, 0, 255</ambientColor>
 				<specularColor>0, 0, 0, 255</specularColor>
-				<position>-3223.66, 5210.33, -1141.19</position>
-				<lookAt>4.16309, 4.16309, -10000</lookAt>
+				<position>-3223.66, -2807.17, 420.656</position>
+				<lookAt>4.16309, 4.16309, 524.779</lookAt>
 				<width>6887.76</width>
 				<height>6785.71</height>
 			</areaLight>
+		<add_to_qlab>0</add_to_qlab>
 		</Lights>
 	</scenes>
 <stageSize>804, 402, 800</stageSize>
