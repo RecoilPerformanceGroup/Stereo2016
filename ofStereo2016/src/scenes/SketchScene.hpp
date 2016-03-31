@@ -34,6 +34,7 @@ public:
     void drawGui();
     void update();
     void setup();
+    void onStageSize(ofVec3f& vec);
     
     ofLight directionalLight1;
     ofLight directionalLight2;

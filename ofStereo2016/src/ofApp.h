@@ -19,8 +19,9 @@
 
 #include "LightScene.hpp"
 #include "MountainScene.hpp"
-
-
+#include "PlateauScene.hpp"
+#include "CrystalScene.hpp"
+#include "RoomScene.hpp"
 
 class ofApp : public ofBaseApp{
     
@@ -29,15 +30,17 @@ public:
     ofApp() {
         
         sceneParams.setName("scenes");
+        scenes.push_back(make_shared<RoomScene>());
         scenes.push_back(make_shared<MountainScene>());
         scenes.push_back(make_shared<LightScene>());
+        scenes.push_back(make_shared<PlateauScene>());
+        scenes.push_back(make_shared<CrystalScene>());
+
         
         for( auto s : scenes) {
             sceneParams.add(s->getParameters());
         }
         
-        scenes[0]->enabled = true;
-        scenes[1]->enabled = true;
         
     }
     

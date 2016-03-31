@@ -51,12 +51,22 @@ public:
     void update();
     void setup();
     
+    void enable() {
+        spotLight.enable();
+        areaLight.enable();
+        directionalLight.enable();
+    }
+    
+    void disable() {
+        spotLight.disable();
+        areaLight.disable();
+        directionalLight.disable();
+    }
+    
     LightScene() {
         ofxStereoscopy::Scene::params = params;
     }
     
-    vector<ofLight*> lights;
-
     ofParameter<float> spotLightSpotConcentration {"spotConcentration", 1.0, 0.0, 100.0};
 
     makeLight(spotLight, spotLightSpotConcentration);

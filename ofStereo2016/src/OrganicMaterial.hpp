@@ -80,12 +80,12 @@ public:
     ofParameter<ofVec3f> noiseDisplacementScale {"scale",
         ofVec3f(1,1,1),
         ofVec3f(0,0,0),
-        ofVec3f(100000,100000,100000)};
+        ofVec3f(1000,1000,1000)};
 
     ofParameter<ofVec3f> noiseDisplacementAmount {"amount",
         ofVec3f(0,0,0),
         ofVec3f(0,0,0),
-        ofVec3f(10000,10000,10000)};
+        ofVec3f(500,500,500)};
     
     ofParameterGroup noiseDisplacementParams {
         "displacement",
@@ -100,7 +100,7 @@ public:
     
     ofParameter<ofVec3f> noiseLightVelocity {"velocity",
         ofVec3f(0,0,0),
-        ofVec3f(-10000,-10000,-10000),
+        ofVec3f(-1000,-10000,-10000),
         ofVec3f(10000,10000,10000)};
     
     ofParameter<float> noiseLightScale {"scale",
@@ -128,15 +128,15 @@ public:
     
     ofParameter<ofVec3f> noiseTextureVelocity {"velocity",
         ofVec3f(0,0,0),
-        ofVec3f(-10000,-10000,-10000),
-        ofVec3f(10000,10000,10000)};
+        ofVec3f(-1000,-1000,-1000),
+        ofVec3f(1000,1000,1000)};
     
     ofParameter<ofVec3f> noiseTextureScale {"scale",
         ofVec3f(1.6666,1.6666,1.6666),
         ofVec3f(0,0,0),
-        ofVec3f(10000,10000,10000)};
+        ofVec3f(100,100,100)};
     
-    ofParameter<float> noiseTextureAmount {"amount", -0.05, -1, 1};
+    ofParameter<float> noiseTextureAmount {"amount", -0.025, -1, 1};
     
     ofParameterGroup noiseTextureParams {
         "texture",

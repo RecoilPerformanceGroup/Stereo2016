@@ -41,9 +41,7 @@ public:
         return del_fun_t<T>(); 
     }
     
-    //float width;
-    //float height;
-    //float depth;
+
     ofVec3f minBounds;
     ofVec3f maxBounds;
     ofBoxPrimitive boundingBox;
@@ -74,7 +72,7 @@ public:
     
     set<VoroNode *> getChildren();
     
-    set<VoroNode *> getChildrenInSphere(ofPoint point, float radius);
+    set<VoroNode *> getChildrenInSphere(ofPoint point, float radius, bool recursive = false);
     //set<VoroNode *> getChildrenInBoundingBox( corners or plane + dir + dist);
     
     void split(int _nCells=3, bool overFlowX = false, bool overFlowY = false, bool overFlowZ = false);;
@@ -87,6 +85,8 @@ public:
     void customDraw();
     
     void draw(OrganicMaterial * m = nullptr);
+    
+    VoroNode & detachNodes(set<VoroNode *> nodes);
     
    
 };

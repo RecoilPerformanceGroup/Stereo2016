@@ -2877,7 +2877,7 @@
 				<key>sourceTree</key>
 				<string>SOURCE_ROOT</string>
 			</dict>
-			<key>39E88FDFBC8B5D3051F11558</key>
+			<key>C0A404396303126E09765AEA</key>
 			<dict>
 				<key>explicitFileType</key>
 				<string>sourcecode.c.h</string>
@@ -2886,20 +2886,20 @@
 				<key>isa</key>
 				<string>PBXFileReference</string>
 				<key>name</key>
-				<string>SceneTest.hpp</string>
+				<string>RoomScene.hpp</string>
 				<key>path</key>
-				<string>src/scenes/SceneTest.hpp</string>
+				<string>src/scenes/RoomScene.hpp</string>
 				<key>sourceTree</key>
 				<string>SOURCE_ROOT</string>
 			</dict>
-			<key>D399E4C23C87C1B6F463410A</key>
+			<key>E896A5EA7FB9998EE0E6F916</key>
 			<dict>
 				<key>fileRef</key>
-				<string>84D040727D5C8E5A29ABB282</string>
+				<string>500658FEFA2D229E12216304</string>
 				<key>isa</key>
 				<string>PBXBuildFile</string>
 			</dict>
-			<key>84D040727D5C8E5A29ABB282</key>
+			<key>500658FEFA2D229E12216304</key>
 			<dict>
 				<key>explicitFileType</key>
 				<string>sourcecode.cpp.cpp</string>
@@ -2908,9 +2908,46 @@
 				<key>isa</key>
 				<string>PBXFileReference</string>
 				<key>name</key>
-				<string>SceneTest.cpp</string>
+				<string>RoomScene.cpp</string>
 				<key>path</key>
-				<string>src/scenes/SceneTest.cpp</string>
+				<string>src/scenes/RoomScene.cpp</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>8BABD03A9C68A724E897C751</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.c.h</string>
+				<key>fileEncoding</key>
+				<string>30</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>PlateauScene.hpp</string>
+				<key>path</key>
+				<string>src/scenes/PlateauScene.hpp</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>AD5CEB7DA4C7672EEBCD07DD</key>
+			<dict>
+				<key>fileRef</key>
+				<string>650F041FD82233563F7888D5</string>
+				<key>isa</key>
+				<string>PBXBuildFile</string>
+			</dict>
+			<key>650F041FD82233563F7888D5</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.cpp.cpp</string>
+				<key>fileEncoding</key>
+				<string>30</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>PlateauScene.cpp</string>
+				<key>path</key>
+				<string>src/scenes/PlateauScene.cpp</string>
 				<key>sourceTree</key>
 				<string>SOURCE_ROOT</string>
 			</dict>
@@ -3052,8 +3089,10 @@
 					<string>6186D8DA6EFCD2D8AB91FB64</string>
 					<string>25A1BC9D9497B6F1ADBF53B9</string>
 					<string>F2D565C575BBCAEBDFE4035E</string>
-					<string>84D040727D5C8E5A29ABB282</string>
-					<string>39E88FDFBC8B5D3051F11558</string>
+					<string>650F041FD82233563F7888D5</string>
+					<string>8BABD03A9C68A724E897C751</string>
+					<string>500658FEFA2D229E12216304</string>
+					<string>C0A404396303126E09765AEA</string>
 					<string>47EA2D084814BBA91864391A</string>
 					<string>BEA5BC9A80BD22ED0F263E62</string>
 				</array>
@@ -3669,7 +3708,8 @@
 					<string>BC127D9651A2CA3C09456D8E</string>
 					<string>43467A1D4226F935F2C9CA3C</string>
 					<string>6C180A14611D177486DB4F31</string>
-					<string>D399E4C23C87C1B6F463410A</string>
+					<string>AD5CEB7DA4C7672EEBCD07DD</string>
+					<string>E896A5EA7FB9998EE0E6F916</string>
 					<string>4D2C7CE3795E3A842B36E824</string>
 					<string>B96B39E410C021D1F0CD6098</string>
 					<string>D3C1C48E59CAA2D68C0DD477</string>

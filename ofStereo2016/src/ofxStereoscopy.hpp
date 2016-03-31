@@ -1179,7 +1179,10 @@ namespace ofxStereoscopy {
         Scene() {
         };
         
-        virtual ~Scene(){}
+        virtual ~Scene() {}
+        
+        virtual void enable() {}
+        virtual void disable() {}
         
         virtual void drawModel() {};
         virtual void exit(){};
@@ -1198,8 +1201,19 @@ namespace ofxStereoscopy {
         void setupScene(ofParameterGroup * mainP, World  * w) {
             globalParams = mainP;
             world = w;
+            
+            enabled.addListener(this, &ofxStereoscopy::Scene::enableToggled);
+            //ofAddListener(enabled.parameterChangedE(), this, &ofxStereoscopy::Scene::enableToggled);
             setup();
         };
+        
+        void enableToggled(bool & e) {
+            if(e) {
+                enable();
+            } else {
+                disable();
+            }
+        }
         
         void updateScene() {
             
