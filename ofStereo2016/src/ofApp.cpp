@@ -323,10 +323,8 @@ void ofApp::update(){
         oscReceiver.getNextMessage(msg);
         
         receiveOscParameter(msg, &globalParams);
-        receiveOscParameter(msg, &sceneParams);
         
         // custom osc hooks here
-        
     }
     
     if(gui->getDropdown("Model View")->getSelected()->getLabel() == "CAMERA MODEL VIEW"){
