@@ -1,10 +1,21 @@
 #include "ofApp.h"
 
+#pragma mark GLOBALS
+
+string jsonString = "";
+
+bool onUpdate = false;
+bool eInitRequest = false;
+
+ofxJSONElement paramUpdate;
+
 #pragma mark APP
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    
+
+    ofSetLogLevel(OF_LOG_ERROR);
+
     ofSetSmoothLighting(true);
 
     oscSender.setup("localhost", 53000);
@@ -80,6 +91,27 @@ void ofApp::setup(){
     
     loadAllParameters();
     
+    //setup sync for GUI
+    paramSync.setupFromParamGroup(globalParams);
+    
+    //listen to parameter changes from ofxSynchedParams
+    ofAddListener(paramSync.paramChangedE,this,&ofApp::parameterChanged);
+    
+    //setup web socket server
+    ofxLibwebsockets::ServerOptions options = ofxLibwebsockets::defaultServerOptions();
+    options.port = 9092;
+    options.bUseSSL = false; // you'll have to manually accept this self-signed cert if 'true'!
+    options.documentRoot = ofToDataPath("web"); // that is the default anyway but so you know how to change it :)
+    server.setup( options );
+    server.addListener(this);
+
+}
+
+//--------------------------------------------------------------
+void ofApp::parameterChanged( std::string & paramAsJsonString ){
+    //	ofLogVerbose("ofDatGuiApp::parameterChanged");
+    if(!onUpdate)
+        server.send( paramAsJsonString );
 }
 
 void ofApp::receiveOscParameter(ofxOscMessage & msg, ofAbstractParameter * _p) {
@@ -329,6 +361,19 @@ void ofApp::update(){
         
     }
     
+    //webUi
+    if(eInitRequest){
+        eInitRequest = false;
+        jsonString = paramSync.parseParamsToJson();
+        ofLogVerbose("ofDatGuiApp::update") << "parsed json string:" << jsonString;
+        server.send(jsonString);
+    }
+    
+    if(onUpdate){
+        paramSync.updateParamFromJson(paramUpdate);
+        onUpdate = false;
+    }
+
     if(gui->getDropdown("Model View")->getSelected()->getLabel() == "CAMERA MODEL VIEW"){
         worldModelCam.setPosition(world.physical_camera_pos_cm);
         worldModelCam.lookAt(ofVec3f(0,0,0));
@@ -502,6 +547,30 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
     
 }
 
+//--------------------------------------------------------------
+void ofApp::launchBrowser(){
+        string url = "http";
+        if ( server.usingSSL() ){
+            url += "s";
+        }
+        url += "://localhost:" + ofToString( server.getPort() );
+        ofLaunchBrowser(url);
+}
+
+//--------------------------------------------------------------
+void ofApp::onMessage( ofxLibwebsockets::Event& args ){
+    // trace out string messages or JSON messages!
+    if ( !args.json.isNull() ){
+        ofLogVerbose("ofDatGuiApp::onMessage") << "json message: " << args.json.toStyledString() << " from " << args.conn.getClientName();
+        
+        if(args.json["type"]=="initRequest"){
+            eInitRequest = true;
+        }else if(!onUpdate){
+            paramUpdate = args.json;
+            onUpdate = true;
+        }
+    }
+}
 
 //--------------------------------------------------------------
 #pragma mark GUI
@@ -577,6 +646,10 @@ void ofApp::setupGui(shared_ptr<ofAppBaseWindow> gW,shared_ptr<ofAppBaseWindow> 
     saveButton->onButtonEvent(this,&ofApp::onButtonEvent);
     ofxDatGuiButton * loadButton = gui->addButton("load settings");
     loadButton->onButtonEvent(this,&ofApp::onButtonEvent);
+    
+    ofxDatGuiButton * launchBrowserButton = gui->addButton("web interface");
+    
+    launchBrowserButton->onButtonEvent(this,&ofApp::onButtonEvent);
     
     // adding the optional header allows you to drag the gui around //
     gui->addHeader(":: World Calibration ::");
@@ -687,6 +760,8 @@ void ofApp::onButtonEvent(ofxDatGuiButtonEvent e){
         
     } else if(e.target->getLabel() == "LOAD SETTINGS") {
         loadAllParameters();
+    } else if (e.target->getLabel() == "WEB INTERFACE") {
+        launchBrowser();
     }
     
     ofxDatGuiFolder * projectorCalibrationFolder = gui->getFolder("Projector Calibration");

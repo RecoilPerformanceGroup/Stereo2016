@@ -11,6 +11,9 @@
 #include "ofxDatGuiParameterBindings.hpp"
 #include "ofxGui.h"
 #include "qLabController.hpp"
+#include "ofxSyncedParams.h"
+#include "ofxLibwebsockets.h"
+
 
 // scenes
 
@@ -190,6 +193,20 @@ public:
     void loadParameters(ofParameterGroup & params);
     void loadAllParameters();
     void saveAllParameters();
+    
+    void parameterChanged( std::string & );
+    void launchBrowser();
+    ofxSyncedParams paramSync;
+    ofxLibwebsockets::Server server;
+    
+    // websocket methods
+    void onMessage( ofxLibwebsockets::Event& args );
+    void onConnect( ofxLibwebsockets::Event& args ){}
+    void onOpen( ofxLibwebsockets::Event& args ){}
+    void onClose( ofxLibwebsockets::Event& args ){}
+    void onIdle( ofxLibwebsockets::Event& args ){}
+    void onBroadcast( ofxLibwebsockets::Event& args ){}
+
     
     shared_ptr<ofAppBaseWindow> guiWindow;
     shared_ptr<ofAppBaseWindow> mainWindow;
