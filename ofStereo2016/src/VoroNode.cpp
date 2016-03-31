@@ -11,6 +11,7 @@
 int VoroNode::counter = 0;
 
 
+
 VoroNode::VoroNode() {
     counter++;
     isSplit = false;
@@ -231,19 +232,34 @@ set<VoroNode *> VoroNode::getChildren() {
     return voroChildren;
 };
 
-// consider creating select methods that return new top level nodes
 
-set<VoroNode *> VoroNode::getChildrenInSphere(ofPoint point, float radius) {
+VoroNode & VoroNode::detachNodes(set<VoroNode *> nodes) {
+    
+    VoroNode * newNode = new VoroNode();
+    newNode->setParent(*this);
+    
+    for(auto n : nodes) {
+        n->setParent(*newNode);
+    }
+    
+    return *newNode;
+}
+
+
+// global flag ?
+set<VoroNode *> VoroNode::getChildrenInSphere(ofPoint point, float radius, bool recursive) {
     
     set<VoroNode *> select;
     
     for(auto n : voroChildren) {
-        if(n->getGlobalPosition().distance(point) < radius) {
+        if(n->getPosition().distance(point) < radius) {
             select.insert(n);
         }
         
-        set<VoroNode *> rSelect = n->getChildrenInSphere(point, radius);
-        select.insert(rSelect.begin(), rSelect.end());
+        if(recursive) {
+            set<VoroNode *> rSelect = n->getChildrenInSphere(point, radius);
+            select.insert(rSelect.begin(), rSelect.end());
+        }
     }
     
     return select;
