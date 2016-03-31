@@ -18,7 +18,7 @@
 		<WALL>
 			<UnknownName>1</UnknownName>
 			<position>0, 0, 0</position>
-			<size>804, 499.301</size>
+			<size>804, 402</size>
 			<Left_Quad>
 				<Output_Points>
 					<Top_Left>0.22582, 0.00843623, 0</Top_Left>
@@ -214,7 +214,7 @@
 		<add_to_qlab>0</add_to_qlab>
 		</Crystal>
 	</scenes>
-<stageSize>804, 499.301, 800</stageSize>
+<stageSize>804, 402, 800</stageSize>
 	<Projector_Calibration>0</Projector_Calibration>
 	<Camera_Calibration>0</Camera_Calibration>
 </stereo>

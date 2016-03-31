@@ -26,11 +26,9 @@ void CrystalScene::draw() {
         matCluster.begin();
         cluster.draw(&matCluster);
         matCluster.end();
-    ofDisableDepthTest();
     matCrystal.begin();
     crystalBoulder->draw(&matCrystal);
     matCrystal.end();
-    ofEnableDepthTest();
     
 }
 
@@ -39,10 +37,19 @@ void CrystalScene::update() {
     matCrystal.updateParameters();
     matCluster.updateParameters();
 
+    crystalRotation += ofGetLastFrameTime() * 60.0 * ofVec3f(
+                                                             crystalRotationAxis.get().x*
+                                                             crystalRotationSpeed.get(),
+                                                             crystalRotationAxis.get().y*
+                                                             crystalRotationSpeed.get(),
+                                                             crystalRotationAxis.get().z
+                                                             *crystalRotationSpeed.get());
+    
+    crystalBoulder->setOrientation(crystalRotation);
     crystalBoulder->setScale(crystalSize/crystalBoulder->boundingBox.getWidth());
     crystalBoulder->setGlobalPosition(crystalOrigin);
     
-    rotation += ofGetLastFrameTime() * 60.0 * ofVec3f(
+    clusterRotation += ofGetLastFrameTime() * 60.0 * ofVec3f(
                                                       clusterRotationAxis.get().x*
                                                       clusterRotationSpeed.get(),
                                                       clusterRotationAxis.get().y*
@@ -50,7 +57,7 @@ void CrystalScene::update() {
                                                       clusterRotationAxis.get().z
                                                       *clusterRotationSpeed.get());
     
-    cluster.setOrientation(rotation);
+    cluster.setOrientation(clusterRotation);
     cluster.setGlobalPosition(clusterOrigin);
     cluster.setScale(clusterScale.get());
     
@@ -76,17 +83,19 @@ void CrystalScene::reconstructCluster(){
 }
 
 void CrystalScene::reconstructCrystal(){
+    //TODO: Fix inconsistent random
     ofSeedRandom(crystalSeed);
-    crystal.setupFromBoundingBox(crystalSize*3, crystalSize*3, crystalSize*3, 10, true, true, true);
-    // TODO: get first boulder from center node into center pointer
-    for (auto c : crystal.getChildren()) {
+    crystal.setupFromBoundingBox(crystalSize*3, crystalSize*3, crystalSize*3, 15, true, true, true);
+
+/*    for (auto c : crystal.getChildren()) {
         crystalBoulder = c;
         break;
-    }
+    }*/
+    crystalBoulder = &crystal;
     crystalBoulder->setGlobalPosition(crystalOrigin);
 }
 
-void CrystalScene::drawGui() {
+void CrystalScene::drawModel() {
     ofSetColor(255,75);
     crystalBoulder->draw();
     cluster.draw();

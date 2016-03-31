@@ -18,6 +18,7 @@
 #include "MountainScene.hpp"
 #include "PlateauScene.hpp"
 #include "CrystalScene.hpp"
+#include "RoomScene.hpp"
 
 class ofApp : public ofBaseApp{
     
@@ -36,6 +37,7 @@ public:
         for( auto s : scenes) {
             sceneParams.add(s->getParameters());
         }
+        
         
     }
     

@@ -48,11 +48,17 @@ public:
     ofParameter<ofVec3f> crystalOrigin {"origin", ofVec3f(0,0,0),
         ofVec3f(-1000,-1000,-1000),
         ofVec3f(1000,1000,1000)};
+    ofParameter<ofVec3f> crystalRotationAxis {"rotationAxis", ofVec3f(0,0,0),
+        ofVec3f(-1,-1,-1),
+        ofVec3f(1,1,1)};
+    ofParameter<float> crystalRotationSpeed {"rotationSpeed", 0, -1, 1};
     ofParameter<ofFloatColor> crystalColor {"color", ofFloatColor(1,1,1,1), ofFloatColor(0,0,0,0), ofFloatColor(1,1,1,1)};
     ofParameterGroup crystalParams {"crystal",
         crystalSeed,
         crystalSize,
         crystalOrigin,
+        crystalRotationAxis,
+        crystalRotationSpeed,
         crystalColor
     };
     
@@ -70,7 +76,7 @@ public:
     }
     
     void draw();
-    void drawGui();
+    void drawModel ();
     void update();
     void setup();
     
@@ -92,7 +98,8 @@ public:
     VoroNode crystal;
     VoroNode * crystalBoulder;
     
-    ofVec3f rotation;
+    ofVec3f clusterRotation;
+    ofVec3f crystalRotation;
     
     OrganicMaterial matCrystal;
     OrganicMaterial matCluster;
