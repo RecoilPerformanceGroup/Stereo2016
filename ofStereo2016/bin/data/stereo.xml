@@ -1,5 +1,5 @@
 <stereo>
-	<Background_Color>237, 234, 234, 255</Background_Color>
+	<Background_Color>255, 255, 255, 0</Background_Color>
 	<Second_Screen_Model>0</Second_Screen_Model>
 	<world>
 		<camera>
@@ -8,10 +8,10 @@
 			<focus_distance>200</focus_distance>
 			<camera_near_clip>20</camera_near_clip>
 		<cameraPosition>0, 250, 1200</cameraPosition>
-			<eyeSeparation>6.2</eyeSeparation>
+			<eyeSeparation>6.5</eyeSeparation>
 			<focusDistance>200</focusDistance>
 			<cameraNearClip>20</cameraNearClip>
-		<position>60.937, 272.727, 1300</position>
+		<position>60.937, 250, 1300</position>
 			<nearClip>20</nearClip>
 		</camera>
 		<pixels_pr__cm>2</pixels_pr__cm>
@@ -32,7 +32,7 @@
 					<Top_Left>0.226171, 0.0655886, 0</Top_Left>
 					<Top_Right>0.746585, 0.067927, 0</Top_Right>
 					<Bottom_Right>0.742031, 0.412194, 0</Bottom_Right>
-					<Bottom_Left>0.229495, 0.407969, 0</Bottom_Left>
+					<Bottom_Left>0.229495, 0.404969, 0</Bottom_Left>
 				</Output_Points>
 			</Right_Quad>
 		</WALL>
@@ -50,10 +50,10 @@
 			</Left_Quad>
 			<Right_Quad>
 				<Output_Points>
-					<Top_Left>0.229495, 0.407969, 0</Top_Left>
+					<Top_Left>0.229495, 0.406469, 0</Top_Left>
 					<Top_Right>0.742031, 0.412194, 0</Top_Right>
 					<Bottom_Right>1.09116, 0.901549, 0</Bottom_Right>
-					<Bottom_Left>-0.182697, 0.878608, 0</Bottom_Left>
+					<Bottom_Left>-0.187697, 0.875608, 0</Bottom_Left>
 				</Output_Points>
 			</Right_Quad>
 		</FLOOR>
@@ -62,16 +62,16 @@
 <stereo/>
 <scenes>
 		<mountainScene>
-			<enabled>0</enabled>
+			<enabled>1</enabled>
 			<anaglyphAmount>0</anaglyphAmount>
 			<anaglyphColorLeft>0, 255, 255, 255</anaglyphColorLeft>
 			<anaglyphColorRight>255, 0, 0, 255</anaglyphColorRight>
 			<mountain>
-				<randomSeed>1989</randomSeed>
+				<randomSeed>1887</randomSeed>
 				<cellCount>31</cellCount>
 				<size>500, 200, 200</size>
-				<position>0, -40, 600</position>
-				<rotation>90, 0, 0</rotation>
+				<position>0, -60, 600</position>
+				<rotation>-7.34702, 3.89832, -3.59857</rotation>
 			<color>255, 255, 255, 255</color>
 				<material>
 					<noise>
@@ -108,22 +108,22 @@
 		<Lights>
 			<enabled>1</enabled>
 			<directionalLight>
-				<diffuseColor>0, 0, 0, 255</diffuseColor>
+				<diffuseColor>83, 176, 249, 255</diffuseColor>
 				<ambientColor>0, 0, 0, 255</ambientColor>
 				<specularColor>0, 0, 0, 255</specularColor>
-				<position>-1765.93, -1765.93, 3127.86</position>
-				<lookAt>316.533, 108.286, -5722.62</lookAt>
+				<position>1149.52, 212.409, 3856.72</position>
+				<lookAt>4.16309, 4.16309, 420.656</lookAt>
 			</directionalLight>
 			<spotLight>
-				<diffuseColor>95, 94, 89, 255</diffuseColor>
+				<diffuseColor>71, 70, 70, 255</diffuseColor>
 				<ambientColor>0, 0, 0, 255</ambientColor>
 				<specularColor>0, 0, 0, 255</specularColor>
-				<position>-516.454, 733.026, 941.273</position>
-				<lookAt>4.16309, 4.16309, -932.947</lookAt>
-				<spotConcentration>0</spotConcentration>
+				<position>4.16309, -3744.28, 2399</position>
+				<lookAt>4.16309, 4.16309, 628.903</lookAt>
+				<spotConcentration>25</spotConcentration>
 			</spotLight>
 			<areaLight>
-				<diffuseColor>0, 0, 0, 255</diffuseColor>
+				<diffuseColor>167, 167, 167, 255</diffuseColor>
 				<ambientColor>0, 0, 0, 255</ambientColor>
 				<specularColor>0, 0, 0, 255</specularColor>
 				<position>-3223.66, -2807.17, 420.656</position>
@@ -175,7 +175,7 @@
 			</Plateau>
 		</PlateauScene>
 	<Crystal>
-			<enabled>1</enabled>
+			<enabled>0</enabled>
 			<rebuild>0</rebuild>
 			<origin>0, -900, 0</origin>
 			<Cells>63</Cells>
@@ -212,7 +212,116 @@
 				</noise>
 			</material>
 		<add_to_qlab>0</add_to_qlab>
+		<cluster>
+				<cells>2</cells>
+				<origin>0, 0, 0</origin>
+				<scale>0</scale>
+				<scaleCells>0</scaleCells>
+				<rotationAxis>0, 0, 0</rotationAxis>
+				<rotationSpeed>0</rotationSpeed>
+				<color>1, 1, 1, 1</color>
+				<material>
+					<noise>
+						<displacement>
+							<velocity>0, 0, 0</velocity>
+							<scale>1, 1, 1</scale>
+							<amount>0, 0, 0</amount>
+						</displacement>
+						<light>
+							<velocity>0, 0, 0</velocity>
+							<scale>10000</scale>
+							<amount>0</amount>
+							<angle>0, 1, 0</angle>
+						</light>
+						<texture>
+							<velocity>0, 0, 0</velocity>
+							<scale>1.6666, 1.6666, 1.6666</scale>
+							<amount>-0.025</amount>
+						</texture>
+					</noise>
+				</material>
+			</cluster>
+			<crystal>
+				<seed>2</seed>
+				<size>250</size>
+				<origin>0, 0, 0</origin>
+				<rotationAxis>0, 0, 0</rotationAxis>
+				<rotationSpeed>0</rotationSpeed>
+				<color>1, 1, 1, 1</color>
+				<material>
+					<noise>
+						<displacement>
+							<velocity>0, 0, 0</velocity>
+							<scale>1, 1, 1</scale>
+							<amount>0, 0, 0</amount>
+						</displacement>
+						<light>
+							<velocity>0, 0, 0</velocity>
+							<scale>10000</scale>
+							<amount>0</amount>
+							<angle>0, 1, 0</angle>
+						</light>
+						<texture>
+							<velocity>0, 0, 0</velocity>
+							<scale>1.6666, 1.6666, 1.6666</scale>
+							<amount>-0.025</amount>
+						</texture>
+					</noise>
+				</material>
+			</crystal>
 		</Crystal>
+	<roomScene>
+			<enabled>0</enabled>
+			<add_to_qlab>0</add_to_qlab>
+			<floor>
+				<color>255, 255, 255, 255</color>
+				<light>255, 255, 255, 255</light>
+				<material>
+					<noise>
+						<displacement>
+							<velocity>0, 0, 0</velocity>
+							<scale>1, 1, 1</scale>
+							<amount>0, 0, 0</amount>
+						</displacement>
+						<light>
+							<velocity>0, 0, 0</velocity>
+							<scale>10000</scale>
+							<amount>0</amount>
+							<angle>0, 1, 0</angle>
+						</light>
+						<texture>
+							<velocity>0, 0, 0</velocity>
+							<scale>1.6666, 1.6666, 1.6666</scale>
+							<amount>-0.05</amount>
+						</texture>
+					</noise>
+				</material>
+			</floor>
+			<wall>
+				<color>255, 255, 255, 255</color>
+				<light>255, 255, 255, 255</light>
+				<material>
+					<noise>
+						<displacement>
+							<velocity>0, 0, 0</velocity>
+							<scale>1, 1, 1</scale>
+							<amount>0, 0, 0</amount>
+						</displacement>
+						<light>
+							<velocity>0, 0, 0</velocity>
+							<scale>10000</scale>
+							<amount>0</amount>
+							<angle>0, 1, 0</angle>
+						</light>
+						<texture>
+							<velocity>0, 0, 0</velocity>
+							<scale>1.6666, 1.6666, 1.6666</scale>
+							<amount>-0.05</amount>
+						</texture>
+					</noise>
+				</material>
+			</wall>
+		</roomScene>
 	</scenes>
 <stageSize>804, 402, 800</stageSize>
 	<Projector_Calibration>0</Projector_Calibration>
