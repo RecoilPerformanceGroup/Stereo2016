@@ -22,32 +22,20 @@ public:
 
     ofParameterGroup params {"sketch",
         enabled,
-        sketch};
+        sketch
+    
+    };
     
     
     SketchScene() {
         ofxStereoscopy::Scene::params = params;
-
     }
 
     void draw();
-    void drawGui();
     void update();
     void setup();
     void onStageSize(ofVec3f& vec);
     
-    ofLight directionalLight1;
-    ofLight directionalLight2;
-    
-    ofLight pointlight;
-    ofLight spotlight;
-    
-    vector<VoroNode *> voroNodes;
-    
-    ofxPanel panel;
-    
-    ofMaterial mat;
-    ofTexture tex;
     
 };
 

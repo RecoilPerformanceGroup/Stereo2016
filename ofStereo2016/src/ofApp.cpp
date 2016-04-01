@@ -14,7 +14,7 @@ ofxJSONElement paramUpdate;
 //--------------------------------------------------------------
 void ofApp::setup(){
 
-    ofSetLogLevel(OF_LOG_ERROR);
+    ofSetLogLevel(OF_LOG_NOTICE);
 
     ofSetSmoothLighting(true);
 
@@ -30,7 +30,6 @@ void ofApp::setup(){
     ofAddListener(globalParams.parameterChangedE(), this, &ofApp::paramsChanged);
     
     //globalParams.getParameter().addListener(this,&ofApp::paramChanged);
-    
     
     fadeManager = make_shared<ParameterFadeManager>();
     
@@ -91,6 +90,7 @@ void ofApp::setup(){
     
     loadAllParameters();
     
+#ifdef WEBPARAMS
     //setup sync for GUI
     paramSync.setupFromParamGroup(globalParams);
     
@@ -104,15 +104,17 @@ void ofApp::setup(){
     options.documentRoot = ofToDataPath("web"); // that is the default anyway but so you know how to change it :)
     server.setup( options );
     server.addListener(this);
-
+#endif /* WEBPARAMS */
 }
 
+#ifdef WEBPARAMS
 //--------------------------------------------------------------
 void ofApp::parameterChanged( std::string & paramAsJsonString ){
     //	ofLogVerbose("ofDatGuiApp::parameterChanged");
     if(!onUpdate)
         server.send( paramAsJsonString );
 }
+#endif /* WEBPARAMS */
 
 void ofApp::receiveOscParameter(ofxOscMessage & msg, ofAbstractParameter * _p) {
     
@@ -389,6 +391,8 @@ void ofApp::update(){
         // custom osc hooks here
     }
     
+#ifdef WEBPARAMS
+    
     //webUi
     if(eInitRequest){
         eInitRequest = false;
@@ -401,6 +405,7 @@ void ofApp::update(){
         paramSync.updateParamFromJson(paramUpdate);
         onUpdate = false;
     }
+#endif /* WEBPARAMS */
 
     if(gui->getDropdown("Model View")->getSelected()->getLabel() == "CAMERA MODEL VIEW"){
         worldModelCam.setPosition(world.physical_camera_pos_cm);
@@ -425,11 +430,19 @@ void ofApp::draw(){
     } else if (calibrate_camera){
         world.renderCameraCalibrations(stage_size_cm.get());
     } else {
+        // render scenes
         ofEnableLighting();
+        
+        ofFloatColor background_color_alpha_as_brightness(background_color.get());
+        background_color_alpha_as_brightness.r *= background_color_alpha_as_brightness.a;
+        background_color_alpha_as_brightness.g *= background_color_alpha_as_brightness.a;
+        background_color_alpha_as_brightness.b *= background_color_alpha_as_brightness.a;
+        background_color_alpha_as_brightness.a = 1.0;
+        
         for(std::pair<string, shared_ptr<ofxStereoscopy::Plane>> p : world.planes){
             
             p.second->beginLeft();
-            ofClear(background_color);
+            ofClear(background_color_alpha_as_brightness);
             
             for(auto s : scenes) {
                 s->drawScene();
@@ -438,7 +451,7 @@ void ofApp::draw(){
             p.second->endLeft();
             
             p.second->beginRight();
-            ofClear(background_color);
+            ofClear(background_color_alpha_as_brightness);
             
             for(auto s : scenes) {
                 s->drawScene();
@@ -575,6 +588,8 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
     
 }
 
+#ifdef WEBPARAMS
+
 //--------------------------------------------------------------
 void ofApp::launchBrowser(){
         string url = "http";
@@ -589,7 +604,7 @@ void ofApp::launchBrowser(){
 void ofApp::onMessage( ofxLibwebsockets::Event& args ){
     // trace out string messages or JSON messages!
     if ( !args.json.isNull() ){
-        ofLogVerbose("ofDatGuiApp::onMessage") << "json message: " << args.json.toStyledString() << " from " << args.conn.getClientName();
+        ofLogNotice("ofDatGuiApp::onMessage") << "json message: " << args.json.toStyledString() << " from " << args.conn.getClientName();
         
         if(args.json["type"]=="initRequest"){
             eInitRequest = true;
@@ -599,6 +614,8 @@ void ofApp::onMessage( ofxLibwebsockets::Event& args ){
         }
     }
 }
+
+#endif /* WEBPARAMS */
 
 //--------------------------------------------------------------
 #pragma mark GUI
@@ -790,9 +807,12 @@ void ofApp::onButtonEvent(ofxDatGuiButtonEvent e){
         
     } else if(e.target->getLabel() == "LOAD SETTINGS") {
         loadAllParameters();
-    } else if (e.target->getLabel() == "WEB INTERFACE") {
+    }
+#ifdef WEBPARAMS
+    else if (e.target->getLabel() == "WEB INTERFACE") {
         launchBrowser();
     }
+#endif /* WEBPARAMS */
     
     ofxDatGuiFolder * projectorCalibrationFolder = gui->getFolder("Projector Calibration");
 

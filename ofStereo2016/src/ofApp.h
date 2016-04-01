@@ -1,5 +1,7 @@
 #pragma once
 
+//#define WEBPARAMS 1
+
 #include <iostream>
 #include <memory>
 #include <vector>
@@ -11,9 +13,10 @@
 #include "ofxDatGuiParameterBindings.hpp"
 #include "ofxGui.h"
 #include "qLabController.hpp"
+#ifdef WEBPARAMS
 #include "ofxSyncedParams.h"
 #include "ofxLibwebsockets.h"
-
+#endif /* WEBPARAMS */
 
 // scenes
 
@@ -197,6 +200,7 @@ public:
     void loadAllParameters();
     void saveAllParameters();
     
+#ifdef WEBPARAMS
     void parameterChanged( std::string & );
     void launchBrowser();
     ofxSyncedParams paramSync;
@@ -209,7 +213,7 @@ public:
     void onClose( ofxLibwebsockets::Event& args ){}
     void onIdle( ofxLibwebsockets::Event& args ){}
     void onBroadcast( ofxLibwebsockets::Event& args ){}
-
+#endif /* WEBPARAMS */
     
     shared_ptr<ofAppBaseWindow> guiWindow;
     shared_ptr<ofAppBaseWindow> mainWindow;

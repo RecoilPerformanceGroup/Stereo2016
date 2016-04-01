@@ -1059,7 +1059,6 @@ namespace ofxStereoscopy {
             ofPlanePrimitive::restoreTransformGL();
             camLeft.setFarClip(camLeft.getGlobalPosition().length()+farClip);
             fboLeft.begin();
-            ofClear(255,0);
             camLeft.begin();
         }
         
@@ -1101,7 +1100,6 @@ namespace ofxStereoscopy {
             ofPlanePrimitive::restoreTransformGL();
             camRight.setFarClip(camRight.getGlobalPosition().length()+farClip);
             fboRight.begin();
-            ofClear(255,0);
             camRight.begin();
         }
         
@@ -1152,6 +1150,7 @@ namespace ofxStereoscopy {
         ofFbo fboLeft, fboRight;
         ofColor leftColor {255,255,0};
         ofColor rightColor {0,255,255};
+        ofColor clearColor {0,255};
         ofTexture textureLeft, textureRight;
         World * world;
         Quad quadLeft, quadRight;

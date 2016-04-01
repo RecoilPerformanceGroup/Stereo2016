@@ -21,6 +21,6 @@ void SketchScene::draw(){
 
 }
 
-void SketchScene::drawGui(){
-    ofSetColor(255);//FIXME: Why? should we not always push/pop styles? Or do this in the superclass or caller?
+void onStageSize(ofVec3f& vec){
+
 }

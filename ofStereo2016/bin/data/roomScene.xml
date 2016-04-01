@@ -1,5 +1,5 @@
 <roomScene>
-	<enabled>1</enabled>
+	<enabled>0</enabled>
 	<add_to_qlab>0</add_to_qlab>
 	<floor>
 		<color>255, 255, 255, 255</color>
@@ -49,4 +49,5 @@
 			</noise>
 		</material>
 	</wall>
+<roomScene/>
 </roomScene>
