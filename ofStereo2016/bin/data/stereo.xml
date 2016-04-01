@@ -1,5 +1,5 @@
 <stereo>
-	<Background_Color>237, 234, 234, 255</Background_Color>
+	<Background_Color>237, 234, 234, 0</Background_Color>
 	<Second_Screen_Model>0</Second_Screen_Model>
 	<world>
 		<camera>

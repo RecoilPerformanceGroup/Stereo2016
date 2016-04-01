@@ -18,30 +18,35 @@ class SketchScene : public ofxStereoscopy::Scene {
 
 public:
 
-    ofParameter<int> sketch {"Sketch", 0, 0, 10};
+    ofParameter<float> speed {"speed", 1.0, 0.0, 2.0};
 
     ofParameterGroup params {"sketch",
         enabled,
-        sketch
-    
+        speed
     };
     
     SketchScene() {
         ofxStereoscopy::Scene::params = params;
     }
-
-    vector <ofFbo> leftFbos;
-    vector <ofFbo> rightFbos;
-    vector <string> planeNames;
     
-    
+    ofPath path;
+    vector<ofVec3f> points;
+    ofVec3f noisePos;
     void draw();
     void update();
     void setup();
     void onStageSize(ofVec3f& vec);
-    void allocateFbos();
+    
+    ofShader wideLines;
+
+    void drawModel();
+    
+private:
+    static string vertexShader;
+    static string fragmentShader;
+    static string geometryShader;
+    
     
 };
-
 
 #endif /* SketchScene_hpp */

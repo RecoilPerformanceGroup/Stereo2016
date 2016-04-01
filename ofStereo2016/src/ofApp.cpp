@@ -650,7 +650,7 @@ void ofApp::setupGui(shared_ptr<ofAppBaseWindow> gW,shared_ptr<ofAppBaseWindow> 
     
     vector<string> views = {"Perspective Model View", "Camera Model View", "Free Model View"};
     ofxDatGuiDropdown * viewDropdown = gui->addDropdown("Model View", views);
-    viewDropdown->select(1);
+    viewDropdown->select(0);
     viewDropdown->onDropdownEvent(this, &ofApp::onDropdownEvent);
     gui->addBreak();
     
@@ -692,10 +692,12 @@ void ofApp::setupGui(shared_ptr<ofAppBaseWindow> gW,shared_ptr<ofAppBaseWindow> 
     ofxDatGuiButton * loadButton = gui->addButton("load settings");
     loadButton->onButtonEvent(this,&ofApp::onButtonEvent);
     
+#ifdef WEBPARAMS
     ofxDatGuiButton * launchBrowserButton = gui->addButton("web interface");
     
     launchBrowserButton->onButtonEvent(this,&ofApp::onButtonEvent);
-    
+#endif /* WEBPARAMS */
+
     // adding the optional header allows you to drag the gui around //
     gui->addHeader(":: World Calibration ::");
     gui->addFooter()->setLabelWhenCollapsed("Expand: World Calibration");
@@ -721,7 +723,7 @@ void ofApp::setupGui(shared_ptr<ofAppBaseWindow> gW,shared_ptr<ofAppBaseWindow> 
 void ofApp::drawGui(ofEventArgs &args) {
     
     if(ofGetFrameNum() == 2){
-        worldModelCam.setPosition(world.physical_camera_pos_cm);
+        worldModelCam.setPosition(ofVec3f(700, 600, 1500));
         worldModelCam.lookAt(ofVec3f(0,0,0));
         worldModelCam.setNearClip(20);
         worldModelCam.setFarClip(WORLD_DIMENSION_MAX);
