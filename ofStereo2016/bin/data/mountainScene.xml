@@ -1,5 +1,5 @@
 <mountainScene>
-	<enabled>1</enabled>
+	<enabled>0</enabled>
 	<anaglyphAmount>0</anaglyphAmount>
 	<anaglyphColorLeft>0, 255, 255, 255</anaglyphColorLeft>
 	<anaglyphColorRight>255, 0, 0, 255</anaglyphColorRight>

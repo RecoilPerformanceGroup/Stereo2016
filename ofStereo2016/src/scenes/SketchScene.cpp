@@ -29,32 +29,55 @@ void SketchScene::setup(){
 }
 
 void SketchScene::update(){
-    ofVec3f size(600.0, 100.0, 600.0);
-    ofVec3f position(0, 200, 0);
+    ofVec3f size(150, 100.0, 1000);
+    ofVec3f position(0, 250, 600);
     
     noisePos.x += ofGetLastFrameTime() * speed;
     noisePos.y += ofGetLastFrameTime() * speed;
     noisePos.z += ofGetLastFrameTime() * speed;
     
-    points.push_back(ofVec3f(ofSignedNoise(noisePos.x),
-                             ofSignedNoise(noisePos.y),
-                             ofSignedNoise(noisePos.z))*size+position);
     
-    if(points.size()%3==0){
+    ofVec3f currentPoint(ofSignedNoise(noisePos.x),
+                         ofSignedNoise(noisePos.y),
+                         ofSignedNoise(noisePos.z));
+    
+    ofVec3f extraMove(ofSignedNoise((0.1*ofGetElapsedTimef())+234.9),
+                         ofSignedNoise((0.1*ofGetElapsedTimef())+23.9),
+                         ofSignedNoise((0.1*ofGetElapsedTimef())+24.2));
+    
+    points.push_back((currentPoint*size+position)+(extraMove*-20));
+    
+    
+    
+/*    if(points.size()%3==0){
         ofVec3f & c1 = points[points.size()-3];
         ofVec3f & c2 = points[points.size()-2];
         ofVec3f & p = points[points.size()-1];
         path.quadBezierTo(c1, c2, p);
     }
-
+    
+    path.rotate(0.1, ofVec3f(0,1,0));
+*/
+    
 }
 
 void SketchScene::draw(){
     
     ofSetColor(255,255);
     //wideLines.begin();
-    path.draw();
+    //path.draw();
     //wideLines.end();
+    
+    mat.begin();
+    ofDrawSphere(points[points.size()-1], 10);
+    mat.end();
+    /*
+    ofPushMatrix();
+    ofTranslate(points[points.size()-1]*ofVec3f(1,0,1));
+
+    ofPopMatrix();
+    */
+
 }
 
 void SketchScene::onStageSize(ofVec3f& vec){

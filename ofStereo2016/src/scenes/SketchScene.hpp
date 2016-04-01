@@ -18,7 +18,8 @@ class SketchScene : public ofxStereoscopy::Scene {
 
 public:
 
-    ofParameter<float> speed {"speed", 1.0, 0.0, 2.0};
+    ofParameter<float> speed {"speed", 0.01, 0.0, 2.0};
+    ofParameter<ofVec3f> position {"position", ofVec3f(0, 250, 400),ofVec3f(0, 250, 400),ofVec3f(0, 250, 400)};
 
     ofParameterGroup params {"sketch",
         enabled,
@@ -32,6 +33,7 @@ public:
     ofPath path;
     vector<ofVec3f> points;
     ofVec3f noisePos;
+    ofVec3f spherePos;
     void draw();
     void update();
     void setup();
@@ -39,6 +41,8 @@ public:
     
     ofShader wideLines;
 
+    OrganicMaterial mat;
+    
     void drawModel();
     
 private:

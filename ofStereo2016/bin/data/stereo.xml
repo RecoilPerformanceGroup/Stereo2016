@@ -11,7 +11,7 @@
 			<eyeSeparation>6.5</eyeSeparation>
 			<focusDistance>200</focusDistance>
 			<cameraNearClip>20</cameraNearClip>
-		<position>60.937, 250, 1300</position>
+		<position>0, 250, 1300</position>
 			<nearClip>20</nearClip>
 		</camera>
 		<pixels_pr__cm>2</pixels_pr__cm>
@@ -29,10 +29,10 @@
 			</Left_Quad>
 			<Right_Quad>
 				<Output_Points>
-					<Top_Left>0.226171, 0.0655886, 0</Top_Left>
-					<Top_Right>0.746585, 0.067927, 0</Top_Right>
-					<Bottom_Right>0.742031, 0.412194, 0</Bottom_Right>
-					<Bottom_Left>0.229495, 0.404969, 0</Bottom_Left>
+					<Top_Left>0.226171, 0.0633386, 0</Top_Left>
+					<Top_Right>0.747335, 0.067677, 0</Top_Right>
+					<Bottom_Right>0.742031, 0.415194, 0</Bottom_Right>
+					<Bottom_Left>0.228245, 0.404969, 0</Bottom_Left>
 				</Output_Points>
 			</Right_Quad>
 		</WALL>
@@ -50,19 +50,19 @@
 			</Left_Quad>
 			<Right_Quad>
 				<Output_Points>
-					<Top_Left>0.229495, 0.406469, 0</Top_Left>
-					<Top_Right>0.742031, 0.412194, 0</Top_Right>
+					<Top_Left>0.228245, 0.404969, 0</Top_Left>
+					<Top_Right>0.742031, 0.413694, 0</Top_Right>
 					<Bottom_Right>1.09116, 0.901549, 0</Bottom_Right>
 					<Bottom_Left>-0.187697, 0.875608, 0</Bottom_Left>
 				</Output_Points>
 			</Right_Quad>
 		</FLOOR>
-	<pixelsCm>0.9441</pixelsCm>
+	<pixelsCm>0.6294</pixelsCm>
 	</world>
 <stereo/>
 <scenes>
 		<mountainScene>
-			<enabled>1</enabled>
+			<enabled>0</enabled>
 			<anaglyphAmount>0</anaglyphAmount>
 			<anaglyphColorLeft>0, 255, 255, 255</anaglyphColorLeft>
 			<anaglyphColorRight>255, 0, 0, 255</anaglyphColorRight>
@@ -322,6 +322,11 @@
 				</material>
 			</wall>
 		</roomScene>
+	<sketch>
+			<enabled>1</enabled>
+			<Sketch>0</Sketch>
+		<speed>1.02</speed>
+		</sketch>
 	</scenes>
 <stageSize>804, 402, 800</stageSize>
 	<Projector_Calibration>0</Projector_Calibration>
