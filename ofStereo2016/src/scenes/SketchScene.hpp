@@ -26,16 +26,20 @@ public:
     
     };
     
-    
     SketchScene() {
         ofxStereoscopy::Scene::params = params;
     }
 
+    vector <ofFbo> leftFbos;
+    vector <ofFbo> rightFbos;
+    vector <string> planeNames;
+    
+    
     void draw();
     void update();
     void setup();
     void onStageSize(ofVec3f& vec);
-    
+    void allocateFbos();
     
 };
 

@@ -709,7 +709,7 @@ void ofApp::setupGui(shared_ptr<ofAppBaseWindow> gW,shared_ptr<ofAppBaseWindow> 
         
         ofxPanel * p = new ofxPanel();
         p->setup(s->params);
-        p->setPosition(gW->getWidth()-(p->getWidth()*sI), 0);
+        p->setPosition(gW->getWidth()-(p->getWidth()*sI), gW->getHeight()-60);
         
         scenePanels.push_back(p);
         sI++;

@@ -106,7 +106,7 @@
 		<add_to_qlab>0</add_to_qlab>
 		</mountainScene>
 		<Lights>
-			<enabled>1</enabled>
+			<enabled>0</enabled>
 			<directionalLight>
 				<diffuseColor>0, 0, 0, 255</diffuseColor>
 				<ambientColor>0, 0, 0, 255</ambientColor>
@@ -175,7 +175,7 @@
 			</Plateau>
 		</PlateauScene>
 	<Crystal>
-			<enabled>1</enabled>
+			<enabled>0</enabled>
 			<rebuild>0</rebuild>
 			<origin>0, -900, 0</origin>
 			<Cells>63</Cells>
@@ -322,6 +322,10 @@
 				</material>
 			</wall>
 		</roomScene>
+	<sketch>
+			<enabled>1</enabled>
+			<Sketch>0</Sketch>
+		</sketch>
 	</scenes>
 <stageSize>804, 402, 800</stageSize>
 	<Projector_Calibration>0</Projector_Calibration>
