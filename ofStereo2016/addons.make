@@ -2,6 +2,8 @@ ofxDatGui
 ofxEasing
 ofxGui
 ofxJSON
+ofxLibwebsockets
 ofxOsc
+ofxSyncedParams
 ofxVoro
 ofxXmlSettings

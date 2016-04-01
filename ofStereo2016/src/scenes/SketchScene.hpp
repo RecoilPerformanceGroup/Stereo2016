@@ -18,38 +18,35 @@ class SketchScene : public ofxStereoscopy::Scene {
 
 public:
 
-    ofParameter<int> sketch {"Sketch", 0, 0, 10};
+    ofParameter<float> speed {"speed", 1.0, 0.0, 2.0};
 
     ofParameterGroup params {"sketch",
         enabled,
-        sketch};
-    
+        speed
+    };
     
     SketchScene() {
         ofxStereoscopy::Scene::params = params;
-
     }
-
+    
+    ofPath path;
+    vector<ofVec3f> points;
+    ofVec3f noisePos;
     void draw();
-    void drawGui();
     void update();
     void setup();
     void onStageSize(ofVec3f& vec);
     
-    ofLight directionalLight1;
-    ofLight directionalLight2;
+    ofShader wideLines;
+
+    void drawModel();
     
-    ofLight pointlight;
-    ofLight spotlight;
+private:
+    static string vertexShader;
+    static string fragmentShader;
+    static string geometryShader;
     
-    vector<VoroNode *> voroNodes;
-    
-    ofxPanel panel;
-    
-    ofMaterial mat;
-    ofTexture tex;
     
 };
-
 
 #endif /* SketchScene_hpp */

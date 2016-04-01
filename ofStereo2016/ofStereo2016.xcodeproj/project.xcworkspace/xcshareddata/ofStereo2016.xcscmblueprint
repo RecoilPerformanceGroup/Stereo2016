@@ -4,19 +4,23 @@
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "FB950DA91696DB40601A43AFF1A56B2E39217374" : 0,
     "86145F1292B789AB93966AE12565F1D778504ABC" : 0,
-    "9233F0F4A2BE011BD468E5177A5AD6623263B23D" : 0,
-    "2204A9F914F6C3C85F7A96073C7376834AF2FCA2" : 0,
     "C75356AAE162B156DEBAB12E906B72422A9A501B" : 0,
-    "5DB7C332A3A89035E93556A2A38BF414005BA671" : 0
+    "5DB7C332A3A89035E93556A2A38BF414005BA671" : 0,
+    "D114DAD45B7655488468EAC36418C27884EA94B2" : 0,
+    "2204A9F914F6C3C85F7A96073C7376834AF2FCA2" : 0,
+    "9233F0F4A2BE011BD468E5177A5AD6623263B23D" : 0
   },
-  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "D44B982D-3352-4AF5-9D69-7FE6DA77285F",
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "5F975E9A-A050-4B5A-89B6-9D08414D66E1",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "FB950DA91696DB40601A43AFF1A56B2E39217374" : "..\/addons\/ofxLibwebsockets",
     "86145F1292B789AB93966AE12565F1D778504ABC" : "..\/addons\/ofxEasing",
-    "9233F0F4A2BE011BD468E5177A5AD6623263B23D" : "..\/addons\/ofxDatGui",
-    "2204A9F914F6C3C85F7A96073C7376834AF2FCA2" : "Stereo2016\/",
     "C75356AAE162B156DEBAB12E906B72422A9A501B" : "..\/addons\/ofxVoro",
-    "5DB7C332A3A89035E93556A2A38BF414005BA671" : "..\/addons\/ofxJSON"
+    "5DB7C332A3A89035E93556A2A38BF414005BA671" : "..\/addons\/ofxJSON",
+    "D114DAD45B7655488468EAC36418C27884EA94B2" : "..\/addons\/ofxSyncedParams",
+    "2204A9F914F6C3C85F7A96073C7376834AF2FCA2" : "Stereo2016\/",
+    "9233F0F4A2BE011BD468E5177A5AD6623263B23D" : "..\/addons\/ofxDatGui"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "ofStereo2016",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
@@ -38,7 +42,7 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "86145F1292B789AB93966AE12565F1D778504ABC"
     },
     {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/braitsch\/ofxDatGui.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/mrbichel\/ofxDatGui.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "9233F0F4A2BE011BD468E5177A5AD6623263B23D"
     },
@@ -46,6 +50,16 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/mrbichel\/ofxVoro.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C75356AAE162B156DEBAB12E906B72422A9A501B"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/fx-lange\/ofxSyncedParams.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "D114DAD45B7655488468EAC36418C27884EA94B2"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/robotconscience\/ofxLibwebsockets.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "FB950DA91696DB40601A43AFF1A56B2E39217374"
     }
   ]
 }

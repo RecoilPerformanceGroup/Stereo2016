@@ -1,5 +1,7 @@
 #pragma once
 
+//#define WEBPARAMS 1
+
 #include <iostream>
 #include <memory>
 #include <vector>
@@ -11,6 +13,10 @@
 #include "ofxDatGuiParameterBindings.hpp"
 #include "ofxGui.h"
 #include "qLabController.hpp"
+#ifdef WEBPARAMS
+#include "ofxSyncedParams.h"
+#include "ofxLibwebsockets.h"
+#endif /* WEBPARAMS */
 
 // scenes
 
@@ -19,6 +25,7 @@
 #include "PlateauScene.hpp"
 #include "CrystalScene.hpp"
 #include "RoomScene.hpp"
+#include "SketchScene.hpp"
 
 class ofApp : public ofBaseApp{
     
@@ -32,6 +39,7 @@ public:
         scenes.push_back(make_shared<LightScene>());
         scenes.push_back(make_shared<PlateauScene>());
         scenes.push_back(make_shared<CrystalScene>());
+        scenes.push_back(make_shared<SketchScene>());
 
         
         for( auto s : scenes) {
@@ -193,6 +201,21 @@ public:
     void loadParameters(ofParameterGroup & params);
     void loadAllParameters();
     void saveAllParameters();
+    
+#ifdef WEBPARAMS
+    void parameterChanged( std::string & );
+    void launchBrowser();
+    ofxSyncedParams paramSync;
+    ofxLibwebsockets::Server server;
+    
+    // websocket methods
+    void onMessage( ofxLibwebsockets::Event& args );
+    void onConnect( ofxLibwebsockets::Event& args ){}
+    void onOpen( ofxLibwebsockets::Event& args ){}
+    void onClose( ofxLibwebsockets::Event& args ){}
+    void onIdle( ofxLibwebsockets::Event& args ){}
+    void onBroadcast( ofxLibwebsockets::Event& args ){}
+#endif /* WEBPARAMS */
     
     shared_ptr<ofAppBaseWindow> guiWindow;
     shared_ptr<ofAppBaseWindow> mainWindow;

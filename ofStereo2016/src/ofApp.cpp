@@ -1,10 +1,21 @@
 #include "ofApp.h"
 
+#pragma mark GLOBALS
+
+string jsonString = "";
+
+bool onUpdate = false;
+bool eInitRequest = false;
+
+ofxJSONElement paramUpdate;
+
 #pragma mark APP
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    
+
+    ofSetLogLevel(OF_LOG_NOTICE);
+
     ofSetSmoothLighting(true);
 
     oscSender.setup("localhost", 53000);
@@ -19,7 +30,6 @@ void ofApp::setup(){
     ofAddListener(globalParams.parameterChangedE(), this, &ofApp::paramsChanged);
     
     //globalParams.getParameter().addListener(this,&ofApp::paramChanged);
-    
     
     fadeManager = make_shared<ParameterFadeManager>();
     
@@ -80,7 +90,31 @@ void ofApp::setup(){
     
     loadAllParameters();
     
+#ifdef WEBPARAMS
+    //setup sync for GUI
+    paramSync.setupFromParamGroup(globalParams);
+    
+    //listen to parameter changes from ofxSynchedParams
+    ofAddListener(paramSync.paramChangedE,this,&ofApp::parameterChanged);
+    
+    //setup web socket server
+    ofxLibwebsockets::ServerOptions options = ofxLibwebsockets::defaultServerOptions();
+    options.port = 9092;
+    options.bUseSSL = false; // you'll have to manually accept this self-signed cert if 'true'!
+    options.documentRoot = ofToDataPath("web"); // that is the default anyway but so you know how to change it :)
+    server.setup( options );
+    server.addListener(this);
+#endif /* WEBPARAMS */
 }
+
+#ifdef WEBPARAMS
+//--------------------------------------------------------------
+void ofApp::parameterChanged( std::string & paramAsJsonString ){
+    //	ofLogVerbose("ofDatGuiApp::parameterChanged");
+    if(!onUpdate)
+        server.send( paramAsJsonString );
+}
+#endif /* WEBPARAMS */
 
 void ofApp::receiveOscParameter(ofxOscMessage & msg, ofAbstractParameter * _p) {
     
@@ -357,6 +391,22 @@ void ofApp::update(){
         // custom osc hooks here
     }
     
+#ifdef WEBPARAMS
+    
+    //webUi
+    if(eInitRequest){
+        eInitRequest = false;
+        jsonString = paramSync.parseParamsToJson();
+        ofLogVerbose("ofDatGuiApp::update") << "parsed json string:" << jsonString;
+        server.send(jsonString);
+    }
+    
+    if(onUpdate){
+        paramSync.updateParamFromJson(paramUpdate);
+        onUpdate = false;
+    }
+#endif /* WEBPARAMS */
+
     if(gui->getDropdown("Model View")->getSelected()->getLabel() == "CAMERA MODEL VIEW"){
         worldModelCam.setPosition(world.physical_camera_pos_cm);
         worldModelCam.lookAt(ofVec3f(0,0,0));
@@ -380,11 +430,19 @@ void ofApp::draw(){
     } else if (calibrate_camera){
         world.renderCameraCalibrations(stage_size_cm.get());
     } else {
+        // render scenes
         ofEnableLighting();
+        
+        ofFloatColor background_color_alpha_as_brightness(background_color.get());
+        background_color_alpha_as_brightness.r *= background_color_alpha_as_brightness.a;
+        background_color_alpha_as_brightness.g *= background_color_alpha_as_brightness.a;
+        background_color_alpha_as_brightness.b *= background_color_alpha_as_brightness.a;
+        background_color_alpha_as_brightness.a = 1.0;
+        
         for(std::pair<string, shared_ptr<ofxStereoscopy::Plane>> p : world.planes){
             
             p.second->beginLeft();
-            ofClear(background_color);
+            ofClear(background_color_alpha_as_brightness);
             
             for(auto s : scenes) {
                 s->drawScene();
@@ -393,7 +451,7 @@ void ofApp::draw(){
             p.second->endLeft();
             
             p.second->beginRight();
-            ofClear(background_color);
+            ofClear(background_color_alpha_as_brightness);
             
             for(auto s : scenes) {
                 s->drawScene();
@@ -530,6 +588,34 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
     
 }
 
+#ifdef WEBPARAMS
+
+//--------------------------------------------------------------
+void ofApp::launchBrowser(){
+        string url = "http";
+        if ( server.usingSSL() ){
+            url += "s";
+        }
+        url += "://localhost:" + ofToString( server.getPort() );
+        ofLaunchBrowser(url);
+}
+
+//--------------------------------------------------------------
+void ofApp::onMessage( ofxLibwebsockets::Event& args ){
+    // trace out string messages or JSON messages!
+    if ( !args.json.isNull() ){
+        ofLogNotice("ofDatGuiApp::onMessage") << "json message: " << args.json.toStyledString() << " from " << args.conn.getClientName();
+        
+        if(args.json["type"]=="initRequest"){
+            eInitRequest = true;
+        }else if(!onUpdate){
+            paramUpdate = args.json;
+            onUpdate = true;
+        }
+    }
+}
+
+#endif /* WEBPARAMS */
 
 //--------------------------------------------------------------
 #pragma mark GUI
@@ -564,7 +650,7 @@ void ofApp::setupGui(shared_ptr<ofAppBaseWindow> gW,shared_ptr<ofAppBaseWindow> 
     
     vector<string> views = {"Perspective Model View", "Camera Model View", "Free Model View"};
     ofxDatGuiDropdown * viewDropdown = gui->addDropdown("Model View", views);
-    viewDropdown->select(1);
+    viewDropdown->select(0);
     viewDropdown->onDropdownEvent(this, &ofApp::onDropdownEvent);
     gui->addBreak();
     
@@ -606,6 +692,12 @@ void ofApp::setupGui(shared_ptr<ofAppBaseWindow> gW,shared_ptr<ofAppBaseWindow> 
     ofxDatGuiButton * loadButton = gui->addButton("load settings");
     loadButton->onButtonEvent(this,&ofApp::onButtonEvent);
     
+#ifdef WEBPARAMS
+    ofxDatGuiButton * launchBrowserButton = gui->addButton("web interface");
+    
+    launchBrowserButton->onButtonEvent(this,&ofApp::onButtonEvent);
+#endif /* WEBPARAMS */
+
     // adding the optional header allows you to drag the gui around //
     gui->addHeader(":: World Calibration ::");
     gui->addFooter()->setLabelWhenCollapsed("Expand: World Calibration");
@@ -619,7 +711,7 @@ void ofApp::setupGui(shared_ptr<ofAppBaseWindow> gW,shared_ptr<ofAppBaseWindow> 
         
         ofxPanel * p = new ofxPanel();
         p->setup(s->params);
-        p->setPosition(gW->getWidth()-(p->getWidth()*sI), 0);
+        p->setPosition(gW->getWidth()-(p->getWidth()*sI), gW->getHeight()-60);
         
         scenePanels.push_back(p);
         sI++;
@@ -631,7 +723,7 @@ void ofApp::setupGui(shared_ptr<ofAppBaseWindow> gW,shared_ptr<ofAppBaseWindow> 
 void ofApp::drawGui(ofEventArgs &args) {
     
     if(ofGetFrameNum() == 2){
-        worldModelCam.setPosition(world.physical_camera_pos_cm);
+        worldModelCam.setPosition(ofVec3f(700, 600, 1500));
         worldModelCam.lookAt(ofVec3f(0,0,0));
         worldModelCam.setNearClip(20);
         worldModelCam.setFarClip(WORLD_DIMENSION_MAX);
@@ -718,6 +810,11 @@ void ofApp::onButtonEvent(ofxDatGuiButtonEvent e){
     } else if(e.target->getLabel() == "LOAD SETTINGS") {
         loadAllParameters();
     }
+#ifdef WEBPARAMS
+    else if (e.target->getLabel() == "WEB INTERFACE") {
+        launchBrowser();
+    }
+#endif /* WEBPARAMS */
     
     ofxDatGuiFolder * projectorCalibrationFolder = gui->getFolder("Projector Calibration");
 

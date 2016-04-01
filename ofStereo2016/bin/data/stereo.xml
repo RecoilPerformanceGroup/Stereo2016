@@ -106,7 +106,7 @@
 		<add_to_qlab>0</add_to_qlab>
 		</mountainScene>
 		<Lights>
-			<enabled>1</enabled>
+			<enabled>0</enabled>
 			<directionalLight>
 				<diffuseColor>83, 176, 249, 255</diffuseColor>
 				<ambientColor>0, 0, 0, 255</ambientColor>
