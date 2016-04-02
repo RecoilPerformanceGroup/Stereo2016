@@ -90,6 +90,11 @@ void SketchScene::draw(){
         path.draw();
         ofPopMatrix();
     }
+    
+    ofPushMatrix();
+    ofTranslate(points[points.size()-1]);
+    world->font.drawString("Hello people", -200, 0);
+    ofPopMatrix();
 
 }
 

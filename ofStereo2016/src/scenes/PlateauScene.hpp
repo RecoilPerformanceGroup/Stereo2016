@@ -30,9 +30,8 @@ public:
     ofParameter<ofVec3f> plateauRotation {"rotation", ofVec3f(0,0,0), ofVec3f(-360,-360,-360), ofVec3f(360,360,360) };
     
     ofParameter<ofColor> plateauColor {"color", ofColor::white, ofColor::black, ofColor::white };
-
-    ofParameter<ofVec2f> plateauZeroPosition {"zeroPosition", ofVec2f(0,0), ofVec2f(-1000,-1000), ofVec2f(1000,1000) };
-
+    
+    
     ofParameter<ofVec3f> selectPosition {"selectPosition", ofVec3f(0,-100000,-50000), ofVec3f(-10000,-10000,-100000), ofVec3f(10000,10000,100000) };
     ofParameter<float> selectRadius {"selectRadius", 2,0,2000};
     
@@ -43,7 +42,6 @@ public:
         plateauCellCount,
         plateauSize,
         plateauPosition,
-        plateauZeroPosition,
         plateauRotation,
         plateauColor,
         selectRadius,

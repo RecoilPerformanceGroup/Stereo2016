@@ -36,14 +36,8 @@ void PlateauScene::setup(){
 void PlateauScene::update(){
     matFloor.updateParameters();
     matPlateau.updateParameters();
-    ofVec3f zeroVector(plateauZeroPosition->x, 0, plateauZeroPosition->y);
-    plateau.setGlobalPosition(plateauPosition.get());
-    plateau.move(0,plateau.boundingBox.getHeight(),0);
-    plateau.lookAt(zeroVector, ofVec3f(1,0,0));
-    plateau.tilt(90);
-    plateau.pan(90);
-//    plateau.move(zeroVector.x, 0, zeroVector.z);
-    plateau.move(0,-plateau.boundingBox.getHeight(),0);
+    plateau.setGlobalPosition(plateauPosition);
+    plateau.setOrientation(plateauRotation);
 }
 
 void PlateauScene::draw(){
