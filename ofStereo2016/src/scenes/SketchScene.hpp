@@ -18,21 +18,26 @@ class SketchScene : public ofxStereoscopy::Scene {
 
 public:
 
-    ofParameter<float> speed {"speed", 0.01, 0.0, 20.0};
+    ofParameter<float> speed {"speed", 0.01, 0.0, 10};
     ofParameter<float> radius {"radius", 20, 0.0, 800};
     ofParameter<ofVec3f> origin {"origin", ofVec3f(0, 250, 400),ofVec3f(-1000, -1000, -1000),ofVec3f(1000,1000,1000)};
     ofParameter<ofVec3f> space {"space", ofVec3f(200, 200, 200),ofVec3f(0,0,0),ofVec3f(1000,1000,1000)};
     ofParameter<float> pivotRadius {"pivotRadius", 20, 0.0, 800};
-    ofParameter<float> pivotSpeed {"pivotSpeed", 0.02, 0.0, 20.0};
-
+    ofParameter<float> pivotSpeed {"pivotSpeed", 0.02, 0.0, 100.0};
+    ofParameter<float> positionTowardsCamera {"positionTowardsCamera", 0, 0.0, 1.0};
+    ofParameter<bool> reset {"reset", true};
+    
     ofParameterGroup params {"sketch",
         enabled,
+        qlab,
         speed,
         radius,
         origin,
         space,
         pivotRadius,
-        pivotSpeed
+        pivotSpeed,
+        positionTowardsCamera,
+        reset
     };
     
     SketchScene() {

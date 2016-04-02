@@ -11,8 +11,8 @@
 		<randomSeed>0</randomSeed>
 		<cellCount>520</cellCount>
 		<size>420.656, 420.656, 264.471</size>
-		<position>-101, -201, 524.779</position>
-		<rotation>20, 0, 10</rotation>
+		<position>420.656, 316.533, -2286.55</position>
+		<rotation>0, 0, 0</rotation>
 		<color>255, 255, 255, 255</color>
 		<selectRadius>0</selectRadius>
 		<selectPosition>0, 3648.48, -15576.9</selectPosition>
@@ -37,6 +37,7 @@
 				</texture>
 			</noise>
 		</material>
+	<zeroPosition>0, 0</zeroPosition>
 	</Plateau>
 <PlateauScene/>
 </PlateauScene>

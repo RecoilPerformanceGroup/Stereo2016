@@ -1,5 +1,5 @@
 <stereo>
-	<Background_Color>255, 255, 255, 0</Background_Color>
+	<Background_Color>0, 0, 0, 0</Background_Color>
 	<Second_Screen_Model>0</Second_Screen_Model>
 	<world>
 		<camera>
@@ -8,10 +8,10 @@
 			<focus_distance>200</focus_distance>
 			<camera_near_clip>20</camera_near_clip>
 		<cameraPosition>0, 250, 1200</cameraPosition>
-			<eyeSeparation>6.5</eyeSeparation>
+			<eyeSeparation>7</eyeSeparation>
 			<focusDistance>200</focusDistance>
 			<cameraNearClip>20</cameraNearClip>
-		<position>0, 250, 1300</position>
+		<position>0, 250, 1200</position>
 			<nearClip>20</nearClip>
 		</camera>
 		<pixels_pr__cm>2</pixels_pr__cm>
@@ -21,17 +21,17 @@
 			<size>804, 402</size>
 			<Left_Quad>
 				<Output_Points>
-					<Top_Left>0.22582, 0.00843623, 0</Top_Left>
-					<Top_Right>0.751659, -0.000567782, 0</Top_Right>
-					<Bottom_Right>0.749624, 0.348787, 0</Bottom_Right>
+					<Top_Left>0.22582, 0.00943623, 0</Top_Left>
+					<Top_Right>0.750909, -0.000317782, 0</Top_Right>
+					<Bottom_Right>0.747374, 0.346287, 0</Bottom_Right>
 					<Bottom_Left>0.232718, 0.352114, 0</Bottom_Left>
 				</Output_Points>
 			</Left_Quad>
 			<Right_Quad>
 				<Output_Points>
 					<Top_Left>0.226171, 0.0633386, 0</Top_Left>
-					<Top_Right>0.747335, 0.067677, 0</Top_Right>
-					<Bottom_Right>0.742031, 0.415194, 0</Bottom_Right>
+					<Top_Right>0.746085, 0.069677, 0</Top_Right>
+					<Bottom_Right>0.738282, 0.412194, 0</Bottom_Right>
 					<Bottom_Left>0.228245, 0.404969, 0</Bottom_Left>
 				</Output_Points>
 			</Right_Quad>
@@ -43,7 +43,7 @@
 			<Left_Quad>
 				<Output_Points>
 					<Top_Left>0.232718, 0.352114, 0</Top_Left>
-					<Top_Right>0.747374, 0.347787, 0</Top_Right>
+					<Top_Right>0.747374, 0.346287, 0</Top_Right>
 					<Bottom_Right>1.16241, 0.839782, 0</Bottom_Right>
 					<Bottom_Left>-0.127408, 0.827138, 0</Bottom_Left>
 				</Output_Points>
@@ -51,9 +51,9 @@
 			<Right_Quad>
 				<Output_Points>
 					<Top_Left>0.228245, 0.404969, 0</Top_Left>
-					<Top_Right>0.742031, 0.413694, 0</Top_Right>
-					<Bottom_Right>1.09116, 0.901549, 0</Bottom_Right>
-					<Bottom_Left>-0.187697, 0.875608, 0</Bottom_Left>
+					<Top_Right>0.738282, 0.412194, 0</Top_Right>
+					<Bottom_Right>1.08806, 0.904549, 0</Bottom_Right>
+					<Bottom_Left>-0.189447, 0.874926, 0</Bottom_Left>
 				</Output_Points>
 			</Right_Quad>
 		</FLOOR>
@@ -106,21 +106,21 @@
 		<add_to_qlab>0</add_to_qlab>
 		</mountainScene>
 		<Lights>
-			<enabled>0</enabled>
+			<enabled>1</enabled>
 			<directionalLight>
-				<diffuseColor>83, 176, 249, 255</diffuseColor>
+				<diffuseColor>126, 140, 152, 255</diffuseColor>
 				<ambientColor>0, 0, 0, 255</ambientColor>
 				<specularColor>0, 0, 0, 255</specularColor>
 				<position>1149.52, 212.409, 3856.72</position>
 				<lookAt>4.16309, 4.16309, 420.656</lookAt>
 			</directionalLight>
 			<spotLight>
-				<diffuseColor>71, 70, 70, 255</diffuseColor>
+				<diffuseColor>255, 255, 255, 255</diffuseColor>
 				<ambientColor>0, 0, 0, 255</ambientColor>
 				<specularColor>0, 0, 0, 255</specularColor>
-				<position>4.16309, -3744.28, 2399</position>
+				<position>1045.4, 3336.11, 1357.77</position>
 				<lookAt>4.16309, 4.16309, 628.903</lookAt>
-				<spotConcentration>25</spotConcentration>
+				<spotConcentration>42.8571</spotConcentration>
 			</spotLight>
 			<areaLight>
 				<diffuseColor>167, 167, 167, 255</diffuseColor>
@@ -146,8 +146,8 @@
 				<randomSeed>0</randomSeed>
 				<cellCount>520</cellCount>
 				<size>420.656, 420.656, 264.471</size>
-				<position>-101, -201, 524.779</position>
-				<rotation>20, 0, 10</rotation>
+				<position>420.656, 316.533, -2286.55</position>
+				<rotation>0, 0, 0</rotation>
 				<color>255, 255, 255, 255</color>
 				<selectRadius>0</selectRadius>
 				<selectPosition>0, 3648.48, -15576.9</selectPosition>
@@ -172,6 +172,7 @@
 						</texture>
 					</noise>
 				</material>
+			<zeroPosition>0, 0</zeroPosition>
 			</Plateau>
 		</PlateauScene>
 	<Crystal>
@@ -325,15 +326,18 @@
 	<sketch>
 			<enabled>1</enabled>
 			<Sketch>0</Sketch>
-		<speed>20</speed>
-		<radius>0</radius>
-			<origin>0, 250, 400</origin>
-			<space>200, 200, 974.49</space>
-			<pivotRadius>40</pivotRadius>
-			<pivotSpeed>20</pivotSpeed>
+		<speed>0.5</speed>
+		<radius>24</radius>
+			<origin>0, 244.898, 400</origin>
+			<space>382.653, 20, 448.98</space>
+			<pivotRadius>10</pivotRadius>
+			<pivotSpeed>6</pivotSpeed>
+		<positionTowardsCamera>0</positionTowardsCamera>
+		<reset>0</reset>
+		<add_to_qlab>0</add_to_qlab>
 		</sketch>
 	</scenes>
 <stageSize>804, 402, 800</stageSize>
-	<Projector_Calibration>0</Projector_Calibration>
+	<Projector_Calibration>1</Projector_Calibration>
 	<Camera_Calibration>0</Camera_Calibration>
 </stereo>
