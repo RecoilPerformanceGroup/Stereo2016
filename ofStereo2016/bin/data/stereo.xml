@@ -325,7 +325,12 @@
 	<sketch>
 			<enabled>1</enabled>
 			<Sketch>0</Sketch>
-		<speed>1.02</speed>
+		<speed>20</speed>
+		<radius>0</radius>
+			<origin>0, 250, 400</origin>
+			<space>200, 200, 974.49</space>
+			<pivotRadius>40</pivotRadius>
+			<pivotSpeed>20</pivotSpeed>
 		</sketch>
 	</scenes>
 <stageSize>804, 402, 800</stageSize>

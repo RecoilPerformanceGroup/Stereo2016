@@ -29,35 +29,37 @@ void SketchScene::setup(){
 }
 
 void SketchScene::update(){
-    ofVec3f size(150, 100.0, 1000);
-    ofVec3f position(0, 250, 600);
     
-    noisePos.x += ofGetLastFrameTime() * speed;
-    noisePos.y += ofGetLastFrameTime() * speed;
-    noisePos.z += ofGetLastFrameTime() * speed;
-    
+    noisePos.x += ofGetLastFrameTime() * speed / space->x;
+    noisePos.y += ofGetLastFrameTime() * speed / space->y;
+    noisePos.z += ofGetLastFrameTime() * speed / space->z;
+
+    pivotNoisePos.x += ofGetLastFrameTime() * pivotSpeed / pivotRadius;
+    pivotNoisePos.y += ofGetLastFrameTime() * pivotSpeed /pivotRadius;
+    pivotNoisePos.z += ofGetLastFrameTime() * pivotSpeed / pivotRadius;
+
     
     ofVec3f currentPoint(ofSignedNoise(noisePos.x),
                          ofSignedNoise(noisePos.y),
                          ofSignedNoise(noisePos.z));
     
-    ofVec3f extraMove(ofSignedNoise((0.1*ofGetElapsedTimef())+234.9),
-                         ofSignedNoise((0.1*ofGetElapsedTimef())+23.9),
-                         ofSignedNoise((0.1*ofGetElapsedTimef())+24.2));
-    
-    points.push_back((currentPoint*size+position)+(extraMove*-20));
+    ofVec3f currentPivot(ofSignedNoise(pivotNoisePos.x),
+                         ofSignedNoise(pivotNoisePos.y),
+                         ofSignedNoise(pivotNoisePos.z));
     
     
+    points.push_back((currentPoint*space+origin)+(currentPivot*pivotRadius));
     
-/*    if(points.size()%3==0){
+    
+    
+    if(points.size()%3==0){
         ofVec3f & c1 = points[points.size()-3];
         ofVec3f & c2 = points[points.size()-2];
         ofVec3f & p = points[points.size()-1];
         path.quadBezierTo(c1, c2, p);
     }
     
-    path.rotate(0.1, ofVec3f(0,1,0));
-*/
+//    path.rotate(0.1, ofVec3f(0,1,0));
     
 }
 
