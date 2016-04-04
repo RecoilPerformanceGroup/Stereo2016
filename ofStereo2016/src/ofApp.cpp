@@ -648,7 +648,7 @@ void ofApp::setupGui(shared_ptr<ofAppBaseWindow> gW,shared_ptr<ofAppBaseWindow> 
     
     // Model
     
-    vector<string> views = {"Perspective Model View", "Camera Model View", "Free Model View"};
+    vector<string> views = {"Perspective Model View", "Camera Model View"};
     ofxDatGuiDropdown * viewDropdown = gui->addDropdown("Model View", views);
     viewDropdown->select(0);
     viewDropdown->onDropdownEvent(this, &ofApp::onDropdownEvent);
@@ -841,19 +841,11 @@ void ofApp::onDropdownEvent(ofxDatGuiDropdownEvent e){
         worldModelCam.setPosition(ofVec3f(700, 600, 1500));
         worldModelCam.lookAt(ofVec3f(0,0,0));
         worldModelCam.setNearClip(20);
-        worldModelCam.disableMouseInput();
     }
     if(e.target->getLabel() == "CAMERA MODEL VIEW"){
         worldModelCam.setPosition(world.physical_camera_pos_cm);
         worldModelCam.lookAt(ofVec3f(0,0,0));
         worldModelCam.setNearClip(20);
-        worldModelCam.disableMouseInput();
-    }
-    if(e.target->getLabel() == "FREE MODEL VIEW"){
-//        worldModelCam.setPosition(ofVec3f(700, 600, 1500));
-//        worldModelCam.lookAt(ofVec3f(-600,50,0));
-//        worldModelCam.setNearClip(20);
-        worldModelCam.enableMouseInput();
     }
     gui->getDropdown("MODEL VIEW")->collapse();
 }
@@ -900,6 +892,9 @@ void ofApp::keyPressedGui(int key){
             }
         }
     }
+    if (key == ' ') {
+        worldModelCam.enableMouseInput();
+    }
     
     if(calibrate_projector){
         world.calibrator.keyPressed(key);
@@ -909,6 +904,9 @@ void ofApp::keyPressedGui(int key){
 void ofApp::keyReleasedGui(int key){
     if(calibrate_projector){
         world.calibrator.keyReleased(key);
+    }
+    if (key == ' ') {
+        worldModelCam.disableMouseInput();
     }
 }
 

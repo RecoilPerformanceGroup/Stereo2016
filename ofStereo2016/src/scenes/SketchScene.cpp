@@ -11,31 +11,37 @@
 
 void SketchScene::setup(){
 
-    noisePos.set(2.123, 4.46, 32.9);
-    
     globalParams->getVec3f("stage_size_cm").addListener(this, &SketchScene::onStageSize);
     
     path.setFilled(false);
     path.setStrokeColor(ofColor::white);
     path.setStrokeWidth(100);
-    
+    /*
     wideLines.setupShaderFromSource(GL_VERTEX_SHADER,vertexShader);
     wideLines.setupShaderFromSource(GL_FRAGMENT_SHADER,fragmentShader);
     wideLines.setupShaderFromSource(GL_GEOMETRY_SHADER,geometryShader);
     wideLines.bindDefaults();
     wideLines.linkProgram();
-
+*/
+    reset.set(true);
     
 }
 
 void SketchScene::update(){
+    if (reset) {
+        noisePos.set(2.123, 4.46, 32.9);
+        pivotNoisePos.set(0.945, -7.777, 0);
+        points.clear();
+        path.clear();
+        reset.set(false);
+    }
     
-    noisePos.x += ofGetLastFrameTime() * speed / space->x;
-    noisePos.y += ofGetLastFrameTime() * speed / space->y;
-    noisePos.z += ofGetLastFrameTime() * speed / space->z;
+    noisePos.x += ofGetLastFrameTime() * speed;
+    noisePos.y += ofGetLastFrameTime() * speed;
+    noisePos.z += ofGetLastFrameTime() * speed;
 
     pivotNoisePos.x += ofGetLastFrameTime() * pivotSpeed / pivotRadius;
-    pivotNoisePos.y += ofGetLastFrameTime() * pivotSpeed /pivotRadius;
+    pivotNoisePos.y += ofGetLastFrameTime() * pivotSpeed / pivotRadius;
     pivotNoisePos.z += ofGetLastFrameTime() * pivotSpeed / pivotRadius;
 
     
@@ -47,10 +53,10 @@ void SketchScene::update(){
                          ofSignedNoise(pivotNoisePos.y),
                          ofSignedNoise(pivotNoisePos.z));
     
-    
-    points.push_back((currentPoint*space+origin)+(currentPivot*pivotRadius));
-    
-    
+    currentPoint*=space;
+    currentPoint+=origin;
+    currentPoint.interpolate(world->physical_camera_pos_cm, positionTowardsCamera);
+    points.push_back((currentPoint)+(currentPivot*pivotRadius));
     
     if(points.size()%3==0){
         ofVec3f & c1 = points[points.size()-3];
@@ -70,15 +76,25 @@ void SketchScene::draw(){
     //path.draw();
     //wideLines.end();
     
-    mat.begin();
-    ofDrawSphere(points[points.size()-1], 10);
-    mat.end();
-    /*
+    if(points.size() > 2){
+        mat.begin();
+        ofDrawSphere(points[points.size()-1], radius);
+        mat.end();
+        ofPushMatrix();
+        ofTranslate(points[points.size()-1]*ofVec3f(1,0,1));
+        ofRotate(90, 1,0,0);
+        ofDrawEllipse(0,0,radius, radius);
+        ofPopMatrix();
+        ofPushMatrix();
+        ofScale(1,0.0,1);
+        path.draw();
+        ofPopMatrix();
+    }
+    
     ofPushMatrix();
-    ofTranslate(points[points.size()-1]*ofVec3f(1,0,1));
-
+    ofTranslate(points[points.size()-1]);
+    world->font.drawString("Hello people", -200, 0);
     ofPopMatrix();
-    */
 
 }
 
