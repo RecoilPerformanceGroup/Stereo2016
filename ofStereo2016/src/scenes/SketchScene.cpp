@@ -87,7 +87,7 @@ void SketchScene::onStageSize(ofVec3f& vec){
 }
 
 void SketchScene::drawModel(){
-    path.draw();
+    // path.draw();
 }
 
 string SketchScene::vertexShader = R"(

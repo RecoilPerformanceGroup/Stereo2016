@@ -38,6 +38,7 @@ void PlateauScene::update(){
     matPlateau.updateParameters();
     plateau.setGlobalPosition(plateauPosition);
     plateau.setOrientation(plateauRotation);
+    
 }
 
 void PlateauScene::draw(){
