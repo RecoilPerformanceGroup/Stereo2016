@@ -103,7 +103,10 @@ void SketchScene::onStageSize(ofVec3f& vec){
 }
 
 void SketchScene::drawModel(){
-    // path.draw();
+    path.draw();
+    if(points.size()>2){
+        ofDrawSphere(points[points.size()-1], radius);
+    }
 }
 
 string SketchScene::vertexShader = R"(
