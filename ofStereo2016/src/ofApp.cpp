@@ -13,7 +13,7 @@ ofxJSONElement paramUpdate;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-
+    
     ofSetLogLevel(OF_LOG_NOTICE);
 
     ofSetSmoothLighting(true);

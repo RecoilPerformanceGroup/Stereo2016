@@ -13,6 +13,7 @@
 #include "VoroNode.hpp"
 #include "ofxGui.h"
 #include "OrganicMaterial.hpp"
+#include "ofxCSG.h"
 
 class CrystalScene : public ofxStereoscopy::Scene {
     
@@ -97,6 +98,10 @@ public:
     VoroNode cluster;
     VoroNode crystal;
     VoroNode * crystalBoulder;
+    
+    ofMesh intersect;
+    ofMesh outMesh;
+    
     
     ofVec3f clusterRotation;
     ofVec3f crystalRotation;

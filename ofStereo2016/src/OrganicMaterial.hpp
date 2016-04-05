@@ -39,11 +39,9 @@ public:
         ofVec3f(0,0,0),
         ofVec3f(10000,10000,10000)};*/
     
-    
     // Rewrite to GLSL
     /*ofVec3f rotateAround = cube->getPosition();
      for(auto c : cube->getChildren()) {
-     
      
      ofMesh m = c->mesh;
      for(int i=0; i<  m.getNumVertices(); i++) {
@@ -94,6 +92,7 @@ public:
         noiseDisplacementAmount
         };
     
+    /*
     // Parameters for light noise
     
     ofVec3f noiseLightTime {0,0,0};
@@ -121,6 +120,7 @@ public:
         noiseLightAmount,
         noiseLightAngle
     };
+    */
     
     // Parameters for texture noise
     
@@ -148,7 +148,7 @@ public:
     ofParameterGroup noiseParams {
         "noise",
         noiseDisplacementParams,
-        noiseLightParams,
+        //noiseLightParams,
         noiseTextureParams
     };
     

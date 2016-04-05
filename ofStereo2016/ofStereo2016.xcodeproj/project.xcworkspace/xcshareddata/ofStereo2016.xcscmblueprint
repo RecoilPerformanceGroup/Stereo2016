@@ -4,28 +4,35 @@
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "9233F0F4A2BE011BD468E5177A5AD6623263B23D" : 0,
     "FB950DA91696DB40601A43AFF1A56B2E39217374" : 0,
     "86145F1292B789AB93966AE12565F1D778504ABC" : 0,
     "C75356AAE162B156DEBAB12E906B72422A9A501B" : 0,
     "5DB7C332A3A89035E93556A2A38BF414005BA671" : 0,
     "D114DAD45B7655488468EAC36418C27884EA94B2" : 0,
     "2204A9F914F6C3C85F7A96073C7376834AF2FCA2" : 0,
-    "9233F0F4A2BE011BD468E5177A5AD6623263B23D" : 0
+    "0B4E6AD6B26818A33F82E9CC97C1D7F2BB2D1FE6" : 0
   },
-  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "5F975E9A-A050-4B5A-89B6-9D08414D66E1",
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "D44B982D-3352-4AF5-9D69-7FE6DA77285F",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "9233F0F4A2BE011BD468E5177A5AD6623263B23D" : "..\/addons\/ofxDatGui",
     "FB950DA91696DB40601A43AFF1A56B2E39217374" : "..\/addons\/ofxLibwebsockets",
     "86145F1292B789AB93966AE12565F1D778504ABC" : "..\/addons\/ofxEasing",
     "C75356AAE162B156DEBAB12E906B72422A9A501B" : "..\/addons\/ofxVoro",
     "5DB7C332A3A89035E93556A2A38BF414005BA671" : "..\/addons\/ofxJSON",
     "D114DAD45B7655488468EAC36418C27884EA94B2" : "..\/addons\/ofxSyncedParams",
     "2204A9F914F6C3C85F7A96073C7376834AF2FCA2" : "Stereo2016\/",
-    "9233F0F4A2BE011BD468E5177A5AD6623263B23D" : "..\/addons\/ofxDatGui"
+    "0B4E6AD6B26818A33F82E9CC97C1D7F2BB2D1FE6" : "..\/addons\/ofxCSG"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "ofStereo2016",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
   "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "ofStereo2016\/ofStereo2016.xcodeproj",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/larsberg\/ofxCSG.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "0B4E6AD6B26818A33F82E9CC97C1D7F2BB2D1FE6"
+    },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/RecoilPerformanceGroup\/Stereo2016.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
@@ -42,7 +49,7 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "86145F1292B789AB93966AE12565F1D778504ABC"
     },
     {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/mrbichel\/ofxDatGui.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/braitsch\/ofxDatGui.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "9233F0F4A2BE011BD468E5177A5AD6623263B23D"
     },
@@ -52,7 +59,7 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C75356AAE162B156DEBAB12E906B72422A9A501B"
     },
     {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/fx-lange\/ofxSyncedParams.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:RecoilPerformanceGroup\/ofxSyncedParams.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "D114DAD45B7655488468EAC36418C27884EA94B2"
     },
