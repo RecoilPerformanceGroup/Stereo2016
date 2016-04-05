@@ -83,17 +83,31 @@ void CrystalScene::reconstructCluster(){
     
     // intersect with a mesh - recursively for children
     
-    for (auto c : cluster.getChildren()) {
+    /*for (auto c : cluster.getChildren()) {
         intersect = ofSpherePrimitive(60, 10).getMesh();
-        
-        /*for(auto & v : intersect.getVertices()) {
-            v += c->mesh.getCentroid().getMiddle(c->mesh.getVertex(0));
-        }*/
         
         //ofxCSG::meshDifference(<#ofMesh &a#>, <#ofMesh &b#>, <#ofMesh &outMesh#>)
         ofxCSG::meshDifference(c->mesh, intersect, c->mesh);
 
-    }
+    }*/
+
+// global
+    
+     intersect = ofSpherePrimitive(140, 10).getMesh();
+    
+    for (auto c : cluster.getChildren()) {
+        
+        ofMesh translated;
+        translated = c->mesh;
+        
+        for (auto & v : translated.getVertices()) {
+            ofVec3f p = v * c->getGlobalTransformMatrix();
+            v.set( p );
+        }
+         
+         ofxCSG::meshDifference(translated, intersect, c->mesh );
+     
+     }
 
 }
 
