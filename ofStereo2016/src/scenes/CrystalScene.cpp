@@ -80,13 +80,42 @@ void CrystalScene::reconstructCluster(){
     ofSeedRandom();
     cluster.setupFromBoundingBox(200,200,200,clusterNumCells, true, true, true);
     cluster.setGlobalPosition(clusterOrigin);
+    
+    // intersect with a mesh - recursively for children
+    
+    /*for (auto c : cluster.getChildren()) {
+        intersect = ofSpherePrimitive(60, 10).getMesh();
+        
+        //ofxCSG::meshDifference(<#ofMesh &a#>, <#ofMesh &b#>, <#ofMesh &outMesh#>)
+        ofxCSG::meshDifference(c->mesh, intersect, c->mesh);
+
+    }*/
+
+// global
+    
+     intersect = ofSpherePrimitive(140, 10).getMesh();
+    
+    for (auto c : cluster.getChildren()) {
+        
+        ofMesh translated;
+        translated = c->mesh;
+        
+        for (auto & v : translated.getVertices()) {
+            ofVec3f p = v * c->getGlobalTransformMatrix();
+            v.set( p );
+        }
+         
+         ofxCSG::meshDifference(translated, intersect, c->mesh );
+     
+     }
+
 }
 
 void CrystalScene::reconstructCrystal(){
     //TODO: Fix inconsistent random
     ofSeedRandom(crystalSeed);
     crystal.setupFromBoundingBox(crystalSize*3, crystalSize*3, crystalSize*3, 15, true, true, true);
-
+    
 /*    for (auto c : crystal.getChildren()) {
         crystalBoulder = c;
         break;
