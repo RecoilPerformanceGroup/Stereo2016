@@ -104,7 +104,7 @@ void SketchScene::resetLine(){
 
 void SketchScene::drawModel(){
     wideLines.begin();
-    wideLines.setUniform2f("_line_width", lineWidth.get(),lineWidth.get()/10.0);
+    wideLines.setUniform2f("_line_width", lineWidth.get()/2.0,lineWidth.get());
     wideLines.setUniform4f("_line_color", 1.0, 1.0, 0.0, 1.0);
     wideLines.setUniform4f("_viewport", 0.0,0.0, ofGetViewportWidth(), ofGetViewportHeight());
     path.draw();
