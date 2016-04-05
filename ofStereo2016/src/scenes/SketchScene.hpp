@@ -26,10 +26,12 @@ public:
     ofParameter<float> pivotSpeed {"pivotSpeed", 0.02, 0.0, 100.0};
     ofParameter<float> positionTowardsCamera {"positionTowardsCamera", 0, 0.0, 1.0};
     ofParameter<bool> reset {"reset", true};
-    
+    ofParameter<float> lineWidth {"lineWidth", 10.0, 0.0, 100.0};
+
     ofParameterGroup params {"sketch",
         enabled,
         qlab,
+        lineWidth,
         speed,
         radius,
         origin,
@@ -45,6 +47,7 @@ public:
     }
     
     ofPath path;
+    ofVbo vbo;
     vector<ofVec3f> points;
     ofVec3f noisePos;
     ofVec3f pivotNoisePos;
@@ -53,6 +56,7 @@ public:
     void update();
     void setup();
     void onStageSize(ofVec3f& vec);
+    void resetLine();
     
     ofShader wideLines;
 

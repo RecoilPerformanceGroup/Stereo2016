@@ -161,7 +161,7 @@ const ofShader & OrganicMaterial::getShader(int textureTarget, ofGLProgrammableR
 
 void OrganicMaterial::updateParameters() {
     noiseDisplacementTime += noiseDisplacementVelocity.get() * ofGetLastFrameTime();
-    noiseLightTime += noiseLightVelocity.get() * ofGetLastFrameTime();
+    //noiseLightTime += noiseLightVelocity.get() * ofGetLastFrameTime();
     noiseTextureTime += noiseTextureVelocity.get() * ofGetLastFrameTime();
 }
 
@@ -185,12 +185,12 @@ void OrganicMaterial::updateMaterial(const ofShader & shader,ofGLProgrammableRen
     shader.setUniform3f("noiseDisplacementScale", noiseDisplacementScale);
     shader.setUniform3f("noiseDisplacementAmount", noiseDisplacementAmount);
 
-    // noise light uniforms
+/*    // noise light uniforms
     shader.setUniform3f("noiseLightTime", noiseLightTime);
     shader.setUniform1f("noiseLightScale", noiseLightScale);
     shader.setUniform1f("noiseLightAmount", noiseLightAmount);
     shader.setUniform3f("noiseLightAngle", noiseLightAngle);
-    
+*/
     // noise texture uniforms
     shader.setUniform3f("noiseTextureTime", noiseTextureTime);
     shader.setUniform3f("noiseTextureScale", noiseTextureScale);
@@ -464,11 +464,11 @@ uniform float time;
 uniform mat4 worldMatrix;
 
 // noise light
-uniform vec3 noiseLightTime;
+/*uniform vec3 noiseLightTime;
 uniform float noiseLightScale;
 uniform float noiseLightAmount;
 uniform vec3 noiseLightAngle;
-
+*/
 // noise texture
 uniform vec3 noiseTextureTime;
 uniform vec3 noiseTextureScale;
@@ -765,10 +765,10 @@ void main (void){
 */
     float textureNoise = (0.5+snoise(((worldPositionBeforeNoise.xyz-noiseTextureTime)/noiseTextureScale))*0.5)*noiseTextureAmount;
     
-    float lightNoise = 1.0+(noiseLightAmount*snoise(((worldPosition.xyz * noiseLightAngle)-noiseLightTime)/noiseLightScale));
+    //float lightNoise = 1.0+(noiseLightAmount*snoise(((worldPosition.xyz * noiseLightAngle)-noiseLightTime)/noiseLightScale));
     
     localColor.rgb += textureNoise;
-    localColor.rgb *= lightNoise;
+    //localColor.rgb *= lightNoise;
  //   localColor.rgb *= 1.0+(0.25*snoise(vec3(worldPosition.xzz/10000.0)+vec3(noiseDisplacementTime.x,noiseDisplacementTime.y,noiseDisplacementTime.z)));
     
     //localColor.rgb = (mod((worldPosition.z)+(snoise(vec3(time, 0, 0)))*300, 200) > 180.0)?vec3(0,0,0):transformedNormal;

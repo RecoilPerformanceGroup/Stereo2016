@@ -338,6 +338,6 @@
 		</sketch>
 	</scenes>
 <stageSize>804, 402, 800</stageSize>
-	<Projector_Calibration>1</Projector_Calibration>
+	<Projector_Calibration>0</Projector_Calibration>
 	<Camera_Calibration>0</Camera_Calibration>
 </stereo>
