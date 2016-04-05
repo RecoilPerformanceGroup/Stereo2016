@@ -57,6 +57,7 @@ public:
     void setup();
     void onStageSize(ofVec3f& vec);
     void resetLine();
+    void drawLine();
     
     ofShader wideLines;
 

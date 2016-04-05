@@ -21,6 +21,10 @@ void SketchScene::setup(){
     wideLines.setupShaderFromSource(GL_VERTEX_SHADER,vertexShader);
     wideLines.setupShaderFromSource(GL_GEOMETRY_SHADER,geometryShader);
     wideLines.setupShaderFromSource(GL_FRAGMENT_SHADER,fragmentShader);
+    wideLines.setGeometryInputType(GL_LINES); // type: GL_POINTS, GL_LINES, GL_LINES_ADJACENCY_EXT, GL_TRIANGLES, GL_TRIANGLES_ADJACENCY_EXT
+    wideLines.setGeometryOutputType(GL_TRIANGLE_STRIP); // type: GL_POINTS, GL_LINE_STRIP or GL_TRIANGLE_STRIP
+    wideLines.setGeometryOutputCount(6);	// set number of output vertices
+    
     wideLines.bindDefaults();
     wideLines.linkProgram();
 
@@ -71,8 +75,7 @@ void SketchScene::update(){
 void SketchScene::draw(){
     
     ofSetColor(255,255);
-    path.draw();
-    
+    drawLine();
     
     if(points.size() > 2){
         mat.begin();
@@ -103,23 +106,24 @@ void SketchScene::resetLine(){
 }
 
 void SketchScene::drawModel(){
-    wideLines.begin();
-    wideLines.setUniform2f("_line_width", lineWidth.get(),lineWidth.get()/10.0);
-    wideLines.setUniform4f("_line_color", 1.0, 1.0, 0.0, 1.0);
-    wideLines.setUniform4f("_viewport", 0.0,0.0, ofGetViewportWidth(), ofGetViewportHeight());
-    path.draw();
-    int i = 0;
-
-    vbo.setVertexData(&path.getOutline()[0].getVertices()[0], path.getOutline()[0].size(), GL_DYNAMIC_DRAW);
-    vbo.draw(GL_TRIANGLE_STRIP, 0, path.getOutline()[0].size());
-
-    //vbo.draw(GL_LINE_STRIP, 0, path.getOutline()[0].size());
-
-    wideLines.end();
+    drawLine();
     if(points.size()>2){
         ofDrawSphere(points[points.size()-1], radius);
     }
 }
+
+void SketchScene::drawLine(){
+    wideLines.begin();
+    wideLines.setUniform2f("_line_width", lineWidth.get(),lineWidth.get());
+    wideLines.setUniform4f("_line_color", 1.0, 1.0, 0.0, 1.0);
+    wideLines.setUniform4f("_viewport", 0.0,0.0, ofGetViewportWidth(), ofGetViewportHeight());
+    vbo.setVertexData(&path.getOutline()[0].getVertices()[0], path.getOutline()[0].size(), GL_DYNAMIC_DRAW);
+    vbo.draw(GL_LINE_STRIP, 0, path.getOutline()[0].size());
+    
+    wideLines.end();
+
+}
+
 
 string SketchScene::vertexShader = R"(
 //  wide_line.vs
