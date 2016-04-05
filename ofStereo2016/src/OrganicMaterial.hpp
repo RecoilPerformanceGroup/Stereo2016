@@ -94,6 +94,7 @@ public:
         noiseDisplacementAmount
         };
     
+    /*
     // Parameters for light noise
     
     ofVec3f noiseLightTime {0,0,0};
@@ -121,6 +122,7 @@ public:
         noiseLightAmount,
         noiseLightAngle
     };
+    */
     
     // Parameters for texture noise
     
@@ -148,7 +150,7 @@ public:
     ofParameterGroup noiseParams {
         "noise",
         noiseDisplacementParams,
-        noiseLightParams,
+        //noiseLightParams,
         noiseTextureParams
     };
     

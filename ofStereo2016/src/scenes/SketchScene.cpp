@@ -15,25 +15,22 @@ void SketchScene::setup(){
     
     path.setFilled(false);
     path.setStrokeColor(ofColor::white);
-    path.setStrokeWidth(100);
-    /*
+    path.setStrokeWidth(1); //otherwise it is not a line, but a shape to of
+    path.setMode(ofPath::POLYLINES);
+    
     wideLines.setupShaderFromSource(GL_VERTEX_SHADER,vertexShader);
-    wideLines.setupShaderFromSource(GL_FRAGMENT_SHADER,fragmentShader);
     wideLines.setupShaderFromSource(GL_GEOMETRY_SHADER,geometryShader);
+    wideLines.setupShaderFromSource(GL_FRAGMENT_SHADER,fragmentShader);
     wideLines.bindDefaults();
     wideLines.linkProgram();
-*/
-    reset.set(true);
-    
+
+    resetLine();
 }
 
 void SketchScene::update(){
     if (reset) {
-        noisePos.set(2.123, 4.46, 32.9);
-        pivotNoisePos.set(0.945, -7.777, 0);
-        points.clear();
-        path.clear();
-        reset.set(false);
+        resetLine();
+        reset = false;
     }
     
     noisePos.x += ofGetLastFrameTime() * speed;
@@ -58,23 +55,24 @@ void SketchScene::update(){
     currentPoint.interpolate(world->physical_camera_pos_cm, positionTowardsCamera);
     points.push_back((currentPoint)+(currentPivot*pivotRadius));
     
+    path.rotate(0.025, ofVec3f(0.5,1,0.33));
+
     if(points.size()%3==0){
         ofVec3f & c1 = points[points.size()-3];
         ofVec3f & c2 = points[points.size()-2];
         ofVec3f & p = points[points.size()-1];
         path.quadBezierTo(c1, c2, p);
     }
+    path.simplify();
     
-//    path.rotate(0.1, ofVec3f(0,1,0));
     
 }
 
 void SketchScene::draw(){
     
     ofSetColor(255,255);
-    //wideLines.begin();
-    //path.draw();
-    //wideLines.end();
+    path.draw();
+    
     
     if(points.size() > 2){
         mat.begin();
@@ -91,19 +89,33 @@ void SketchScene::draw(){
         ofPopMatrix();
     }
     
-    ofPushMatrix();
-    ofTranslate(points[points.size()-1]);
-    world->font.drawString("Hello people", -200, 0);
-    ofPopMatrix();
-
 }
 
 void SketchScene::onStageSize(ofVec3f& vec){
-    
+
+}
+
+void SketchScene::resetLine(){
+    noisePos.set(2.123, 4.46, 32.9);
+    pivotNoisePos.set(0.945, -7.777, 0);
+    points.clear();
+    path.clear();
 }
 
 void SketchScene::drawModel(){
+    wideLines.begin();
+    wideLines.setUniform2f("_line_width", lineWidth.get(),lineWidth.get()/10.0);
+    wideLines.setUniform4f("_line_color", 1.0, 1.0, 0.0, 1.0);
+    wideLines.setUniform4f("_viewport", 0.0,0.0, ofGetViewportWidth(), ofGetViewportHeight());
     path.draw();
+    int i = 0;
+
+    vbo.setVertexData(&path.getOutline()[0].getVertices()[0], path.getOutline()[0].size(), GL_DYNAMIC_DRAW);
+    vbo.draw(GL_TRIANGLE_STRIP, 0, path.getOutline()[0].size());
+
+    //vbo.draw(GL_LINE_STRIP, 0, path.getOutline()[0].size());
+
+    wideLines.end();
     if(points.size()>2){
         ofDrawSphere(points[points.size()-1], radius);
     }
@@ -114,17 +126,25 @@ string SketchScene::vertexShader = R"(
 
 #version 330
 
-in vec3 _position;
-in vec4 _color;
+in vec4 position;
+in vec4 normal;
+in vec2 texcoord;
+in vec4 color;
+
+// these are passed in from OF programmable renderer
+uniform mat4 modelViewMatrix;
+uniform mat4 projectionMatrix;
+uniform mat4 textureMatrix;
+uniform mat4 modelViewProjectionMatrix;
+uniform mat4 normalMatrix;
 
 out vec4 vs_color;
 
-uniform mat4 _model_to_clip_matrix;
-
 void main()
 {
-    gl_Position = _model_to_clip_matrix * vec4(_position, 1.0);
-    vs_color    = _color;
+    gl_Position = modelViewProjectionMatrix * position;
+    vs_color    = vec4(1.0,1.0,1.0,1.0); //color;
+    gl_PointSize = 1.0;
 }
 
 )";
@@ -150,7 +170,7 @@ string SketchScene::geometryShader = R"(
 layout(lines) in;
 
 #if SHOW_DEBUG_LINES || PASSTHROUGH_BASIC_LINES
-layout(line_strip, max_vertices = 10) out;
+layout(line_strip, max_vertices = 20) out;
 #else
 layout(triangle_strip, max_vertices = 6) out;
 #endif
@@ -158,7 +178,7 @@ layout(triangle_strip, max_vertices = 6) out;
 uniform vec4 _viewport;
 uniform vec2 _line_width;
 
-in vec3 _position[];
+in vec4 position[];
 in vec4 vs_color[];
 
 out vec2    v_start;
@@ -233,12 +253,12 @@ void main(void)
     v_l2    = dot(v_line, v_line);
     
 #if SHOW_DEBUG_LINES
-    gl_Position = gl_in[0].gl_Position; v_color = _color[0]; EmitVertex();
-    gl_Position = gl_in[1].gl_Position; v_color = _color[1]; EmitVertex();
+    gl_Position = gl_in[0].gl_Position; v_color = vs_color[0]; EmitVertex();
+    gl_Position = gl_in[1].gl_Position; v_color = vs_color[1]; EmitVertex();
     EndPrimitive();
     
-    gl_Position = a; v_color = vs_color[0]; EmitVertex();
-    gl_Position = b; v_color = vs_color[1]; EmitVertex();
+    gl_Position = a; v_color = vs_color[1]; EmitVertex();
+    gl_Position = b; v_color = vs_color[0]; EmitVertex();
     EndPrimitive();
     
     gl_Position = b; v_color = vs_color[1]; EmitVertex();
@@ -252,7 +272,7 @@ void main(void)
     gl_Position = d; v_color = vs_color[0]; EmitVertex();
     gl_Position = a; v_color = vs_color[0]; EmitVertex();
     EndPrimitive();
-    
+
 #else
     
 #if STRIP
@@ -313,11 +333,11 @@ void main(void)
     vec2    projection  = v_start + clamp(t, 0.0, 1.0) * v_line;
     vec2    delta       = gl_FragCoord.xy - projection;
     float   d2          = dot(delta, delta);
-    float   k           = clamp(_line_width.y - d2, 0.0, 1.0);      //k = pow(k, 0.416666666);
+    float   k           = clamp(_line_width.y - d2, 0.0, 1.0);
     float   endWeight   = step(abs(t * 2.0 - 1.0), 1);
     float   alpha       = mix(k, 1.0, endWeight);
     
-    //out_color = vec4(_line_color.rgb, alpha);
+    //out_color = vec4(_line_color.rgb, 1.0);
     out_color = vec4(v_color.rgb, alpha);
 }
 
