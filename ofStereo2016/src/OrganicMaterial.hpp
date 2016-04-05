@@ -39,11 +39,9 @@ public:
         ofVec3f(0,0,0),
         ofVec3f(10000,10000,10000)};*/
     
-    
     // Rewrite to GLSL
     /*ofVec3f rotateAround = cube->getPosition();
      for(auto c : cube->getChildren()) {
-     
      
      ofMesh m = c->mesh;
      for(int i=0; i<  m.getNumVertices(); i++) {

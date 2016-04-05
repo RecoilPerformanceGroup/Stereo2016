@@ -140,7 +140,6 @@ void OrganicMaterial::initShaders(ofGLProgrammableRenderer & renderer) const{
         shaderTextureRect.bindDefaults();
         shaderTextureRect.linkProgram();
 #endif
-        
         shadersInitialized = true;
     }
 }
@@ -229,10 +228,10 @@ void OrganicMaterial::updateLights(const ofShader & shader,ofGLProgrammableRende
             shader.setUniform1f("lights["+idx+"].spotExponent", light->exponent);
             shader.setUniform1f("lights["+idx+"].spotCutoff", light->spotCutOff);
             shader.setUniform1f("lights["+idx+"].spotCosCutoff", cos(ofDegToRad(light->spotCutOff)));
-        }else if(light->lightType==OF_LIGHT_DIRECTIONAL){
+        } else if(light->lightType==OF_LIGHT_DIRECTIONAL){
             ofVec3f halfVector = (ofVec3f(0,0,1) + lightEyePosition).getNormalized();
             shader.setUniform3f("lights["+idx+"].halfVector", halfVector);
-        }else if(light->lightType==OF_LIGHT_AREA){
+        } else if(light->lightType==OF_LIGHT_AREA){
             shader.setUniform1f("lights["+idx+"].width", light->width);
             shader.setUniform1f("lights["+idx+"].height", light->height);
             ofVec3f direction = light->position + light->direction;
