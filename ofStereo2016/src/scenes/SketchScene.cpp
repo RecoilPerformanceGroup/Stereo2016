@@ -75,8 +75,9 @@ void SketchScene::update(){
 void SketchScene::draw(){
     
     ofSetColor(255,255);
+    //ofDisableDepthTest();
     drawLine();
-    
+    //ofEnableDepthTest();
     if(points.size() > 2){
         mat.begin();
         ofDrawSphere(points[points.size()-1], radius);
@@ -129,24 +130,13 @@ void SketchScene::resetLine(){
 }
 
 void SketchScene::drawModel(){
+    ofEnableDepthTest();
     drawLine();
+    ofDisableDepthTest();
     if(points.size()>2){
         ofDrawSphere(points[points.size()-1], radius);
     }
 }
-
-void SketchScene::drawLine(){
-    wideLines.begin();
-    wideLines.setUniform2f("_line_width", lineWidth.get(),lineWidth.get());
-    wideLines.setUniform4f("_line_color", 1.0, 1.0, 0.0, 1.0);
-    wideLines.setUniform4f("_viewport", 0.0,0.0, ofGetViewportWidth(), ofGetViewportHeight());
-    vbo.setVertexData(&path.getOutline()[0].getVertices()[0], path.getOutline()[0].size(), GL_DYNAMIC_DRAW);
-    vbo.draw(GL_LINE_STRIP, 0, path.getOutline()[0].size());
-    
-    wideLines.end();
-
-}
-
 
 string SketchScene::vertexShader = R"(
 //  wide_line.vs
