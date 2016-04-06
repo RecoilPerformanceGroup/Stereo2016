@@ -32,10 +32,19 @@ public:
         wallColor,
         wallLightColor
     };
+
+    ofParameter<ofVec3f> dancer1Position {"1", ofVec3f(0.0,0.0,0.0), ofVec3f(-1.0,0.0,0.0), ofVec3f(1.0,1.0,1.0) };
+    ofParameter<ofVec3f> dancer2Position {"2", ofVec3f(0.0,0.0,0.0), ofVec3f(-1.0,0.0,0.0), ofVec3f(1.0,1.0,1.0) };
+    
+    ofParameterGroup dancerParams {"dancers",
+        dancer1Position,
+        dancer2Position
+    };
     
     ofParameterGroup params {"roomScene",
         enabled,
-        qlab
+        qlab,
+        dancerParams
     };
     
     RoomScene() {
@@ -52,6 +61,9 @@ public:
     void drawModel();
     void onStageSize(ofVec3f& vec);
     
+    ofVec3f getDancerPositionInWorldCoordinates(int number);
+    ofVec3f getDancerPositionNormalised(int number);
+    
     ofBoxPrimitive floor;
     ofBoxPrimitive wall;
     
@@ -60,6 +72,8 @@ public:
 
     ofLight floorLight;
     ofLight wallLight;
+    
+    ofParameterGroup & getParamGroupInGroup(ofParameterGroup g, string n);
     
     float floorHeight;
     float wallThickness;

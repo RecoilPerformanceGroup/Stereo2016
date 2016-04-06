@@ -47,6 +47,7 @@ void CrystalScene::update() {
     
     crystalBoulder->setOrientation(crystalRotation);
     crystalBoulder->setScale(crystalSize/crystalBoulder->boundingBox.getWidth());
+    //crystalOrigin = (dp(1)+dp(2))/2.0;
     crystalBoulder->setGlobalPosition(crystalOrigin);
     
     clusterRotation += ofGetLastFrameTime() * 60.0 * ofVec3f(

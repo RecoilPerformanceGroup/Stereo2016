@@ -26,7 +26,8 @@ public:
     ofParameter<float> pivotSpeed {"pivotSpeed", 0.02, 0.0, 100.0};
     ofParameter<float> positionTowardsCamera {"positionTowardsCamera", 0, 0.0, 1.0};
     ofParameter<bool> reset {"reset", true};
-    ofParameter<float> lineWidth {"lineWidth", 10.0, 0.0, 100.0};
+    //ofParameter<float> lineWidth {"lineWidth", 10.0, 0.0, 100.0};
+    ofParameter<ofVec2f> lineWidth {"lineWidth", ofVec2f(10.0,10.0), ofVec2f(-100,-100), ofVec2f(100,100)};
 
     ofParameterGroup params {"sketch",
         enabled,
@@ -48,6 +49,7 @@ public:
     
     ofPath path;
     ofVbo vbo;
+    ofFloatColor * colors;
     vector<ofVec3f> points;
     ofVec3f noisePos;
     ofVec3f pivotNoisePos;
@@ -57,6 +59,7 @@ public:
     void setup();
     void onStageSize(ofVec3f& vec);
     void resetLine();
+    void drawLine();
     
     ofShader wideLines;
 

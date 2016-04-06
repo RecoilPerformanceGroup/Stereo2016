@@ -8,7 +8,6 @@
 
 #include "RoomScene.hpp"
 
-
 void RoomScene::setup() {
 
     ofSetSmoothLighting(true);
@@ -53,7 +52,7 @@ void RoomScene::update() {
 }
 
 void RoomScene::draw() {
-
+    
     floorLight.enable();
     matFloor.begin();
     matFloor.setAmbientColor(floorColor.get().getLerped(ofColor::black, 0.9))  ;
@@ -76,6 +75,11 @@ void RoomScene::draw() {
 }
 
 void RoomScene::drawModel(){
+    ofParameter<ofVec3f> &stage_size = globalParams->getVec3f("stage_size_cm");
+    ofSetColor(255,0,0,127);
+    ofDrawSphere(getDancerPositionInWorldCoordinates(1), 20);
+    ofSetColor(0,255,255,127);
+    ofDrawSphere(getDancerPositionInWorldCoordinates(2), 20);
     ofSetColor(255,64);
     floor.drawWireframe();
     wall.drawWireframe();
@@ -105,8 +109,16 @@ void RoomScene::onStageSize(ofVec3f& stage_size){
     floorLight.transformGL();
     ofDrawArrow(ofVec3f(0,0,0),ofVec3f(0,0,(floorLight.getGlobalPosition()-floor.getGlobalPosition()).length()-5), 5);
     floorLight.restoreTransformGL();
+    
+    
+}
 
-    
-    
+ofVec3f RoomScene::getDancerPositionInWorldCoordinates(int number){
+    return getDancerPositionNormalised(number) *
+    globalParams->getVec3f("stage_size_cm");
+}
+
+ofVec3f RoomScene::getDancerPositionNormalised(int number){
+    return dancerParams.getVec3f(ofToString(number));
 }
 
