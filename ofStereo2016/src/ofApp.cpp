@@ -88,7 +88,7 @@ void ofApp::setup(){
 
     stage_size_cm.addListener(this, &ofApp::stageResized);
     
-    //loadAllParameters();
+    loadAllParameters();
     
 #ifdef WEBPARAMS
     //setup sync for GUI
