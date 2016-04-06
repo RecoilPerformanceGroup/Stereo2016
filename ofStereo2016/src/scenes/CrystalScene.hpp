@@ -33,7 +33,15 @@ public:
 
     ofParameter<float> clusterScale {"scale", 0, 0, 10};
     ofParameter<float> clusterScaleCells {"scaleCells", 0,0,0.999};
-
+    
+    ofParameter<ofVec3f> clusterPivotAxis {"pivotAxis", ofVec3f(0,0,0),
+        ofVec3f(-1,-1,-1),
+        ofVec3f(1,1,1)};
+    
+    ofParameter<ofVec3f> pivotOffset {"pivot", ofVec3f(0,0,0),
+        ofVec3f(-100,-100,-100),
+        ofVec3f(100,100,100)};
+    
     ofParameterGroup clusterParams {"cluster",
         clusterNumCells,
         clusterOrigin,
@@ -41,7 +49,10 @@ public:
         clusterScaleCells,
         clusterRotationAxis,
         clusterRotationSpeed,
-        clusterColor
+        clusterColor,
+        clusterPivotAxis,
+        pivotOffset
+        
     };
 
     ofParameter<int> crystalSeed {"seed", 2, 0, 255};
@@ -102,12 +113,14 @@ public:
     ofMesh intersect;
     ofMesh outMesh;
     
-    
     ofVec3f clusterRotation;
     ofVec3f crystalRotation;
     
     OrganicMaterial matCrystal;
     OrganicMaterial matCluster;
+    
+    
+    ofBoxPrimitive box;
 };
 
 
