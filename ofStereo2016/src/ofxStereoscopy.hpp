@@ -1204,6 +1204,7 @@ namespace ofxStereoscopy {
             enabled.addListener(this, &ofxStereoscopy::Scene::enableToggled);
             //ofAddListener(enabled.parameterChangedE(), this, &ofxStereoscopy::Scene::enableToggled);
             setup();
+            isSetup = true;
         };
         
         void enableToggled(bool & e) {
@@ -1216,7 +1217,7 @@ namespace ofxStereoscopy {
         
         void updateScene() {
             
-            if(enabled) {
+            if(enabled && isSetup) {
                 update();
             }
             
@@ -1224,7 +1225,7 @@ namespace ofxStereoscopy {
         
         void drawScene() {
             
-            if(enabled) {
+            if(enabled && isSetup) {
                 glPushMatrix();ofPushMatrix();ofPushStyle();
                 draw();
                 ofPopStyle();ofPopMatrix();glPopMatrix();
@@ -1236,6 +1237,14 @@ namespace ofxStereoscopy {
             return params;
         }
         
+        ofVec3f getDancerPositionNormalised(int dancer){
+            return globalParams->getGroup("scenes").getGroup("roomScene").getGroup("dancers").getVec3f(ofToString(dancer));
+        }
+        
+        ofVec3f dp(int dancer){
+            return getDancerPositionNormalised(dancer) * globalParams->getVec3f("stage_size_cm");
+        }
+
         virtual void drawGui() {};
         virtual void setupGui() {};
         
@@ -1243,9 +1252,11 @@ namespace ofxStereoscopy {
         World * world;
         
     private:
+        
         virtual void setup(){};
         virtual void update(){};
         virtual void draw(){};
+        bool isSetup = false;
         
     };
     

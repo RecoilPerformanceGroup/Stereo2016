@@ -17,6 +17,8 @@ void CrystalScene::setup() {
     reconstructCrystal();
     reconstructCluster();
     
+    
+    
 }
 
 void CrystalScene::draw() {
@@ -30,6 +32,33 @@ void CrystalScene::draw() {
     crystalBoulder->draw(&matCrystal);
     matCrystal.end();
     
+    
+    
+    
+    ofPushMatrix();
+    
+    ofPoint anchor = box.getPosition() + ofVec3f(0, box.getHeight()/2, 0) + pivotOffset;
+    
+    ofDrawSphere(anchor + pivotOffset, 10);
+    
+    ofTranslate(anchor + pivotOffset);
+    
+    ofRotate(ofMap(pivotOffset.get().x, 100, -100, -45, 45), 0, 0, 1);
+    ofRotate(ofMap(pivotOffset.get().z, -100, 100, -45, 45), 1, 0, 0);
+    
+    ofTranslate(-(anchor + pivotOffset));
+    
+    
+    //ofMatrix4x4 m = ofGetCurrentNormalMatrix();
+    //ofMatrix4x4 m = ofGetCurrentNormalMatrix();
+    
+    box.draw();
+
+    
+    ofPopMatrix();
+    
+    
+
 }
 
 void CrystalScene::update() {
@@ -47,18 +76,23 @@ void CrystalScene::update() {
     
     crystalBoulder->setOrientation(crystalRotation);
     crystalBoulder->setScale(crystalSize/crystalBoulder->boundingBox.getWidth());
+    //crystalOrigin = (dp(1)+dp(2))/2.0;
     crystalBoulder->setGlobalPosition(crystalOrigin);
     
-    clusterRotation += ofGetLastFrameTime() * 60.0 * ofVec3f(
+    /*clusterRotation += ofGetLastFrameTime() * 60.0 * ofVec3f(
                                                       clusterRotationAxis.get().x*
                                                       clusterRotationSpeed.get(),
                                                       clusterRotationAxis.get().y*
                                                       clusterRotationSpeed.get(),
                                                       clusterRotationAxis.get().z
                                                       *clusterRotationSpeed.get());
+    */
+    //cluster.setOrientation(clusterRotation);
     
-    cluster.setOrientation(clusterRotation);
     cluster.setGlobalPosition(clusterOrigin);
+    //
+    //cluster.rotateAround(<#float degrees#>, <#const ofVec3f &axis#>, <#const ofVec3f &point#>)
+    
     cluster.setScale(clusterScale.get());
     
     for(auto c : cluster.getChildren()) {
@@ -71,9 +105,31 @@ void CrystalScene::update() {
         }
     }
     
+    //cluster.rotateAround(sin(ofGetElapsedTimef()/100.0)*180, ofVec3f(0,0,1), pivotAround);
+    
+    //cluster.lookAt(pivotAround, ofVec3f(0,0,1));
+
+    
+    
     matCrystal.setDiffuseColor(crystalColor.get());
     matCluster.setDiffuseColor(clusterColor.get());
     matCrystal.setAmbientColor(ofFloatColor(0,0,0,0));
+    
+    box.setScale(2,1,2);
+    box.setPosition(clusterOrigin);
+    
+    ofVec3f p = box.getPosition();
+    //box.setPosition(pivotAround);
+    
+    //box.setOrientation(ofVec3f(0,0,45));
+    
+    box.setPosition(p);
+    
+    //box.setTransformMatrix(<#const ofMatrix4x4 &m44#>)
+    
+    //box.rotateAround(sin(ofGetElapsedTimef())*45, pivotAround, box.getPosition()+ofVec3f(0, box.getHeight() /2, 0));
+    
+    
 }
 
 void CrystalScene::reconstructCluster(){
@@ -95,7 +151,7 @@ void CrystalScene::reconstructCluster(){
     
      intersect = ofSpherePrimitive(140, 10).getMesh();
     
-    for (auto c : cluster.getChildren()) {
+    /*for (auto c : cluster.getChildren()) {
         
         ofMesh translated;
         translated = c->mesh;
@@ -107,7 +163,7 @@ void CrystalScene::reconstructCluster(){
          
          ofxCSG::meshDifference(translated, intersect, c->mesh );
      
-     }
+     }*/
 
 }
 
@@ -128,6 +184,13 @@ void CrystalScene::drawModel() {
     ofSetColor(255,75);
     crystalBoulder->draw();
     cluster.draw();
+    
+    
+
+    
+    box.draw();
+    
+    
 }
 
 

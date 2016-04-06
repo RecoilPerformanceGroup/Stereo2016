@@ -1,3 +1,4 @@
+ofxCSG
 ofxDatGui
 ofxEasing
 ofxGui

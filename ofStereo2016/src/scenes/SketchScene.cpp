@@ -98,9 +98,32 @@ void SketchScene::onStageSize(ofVec3f& vec){
 
 }
 
+void SketchScene::drawLine() {
+    wideLines.begin();
+    wideLines.setUniform2f("_line_width", lineWidth.get().x,lineWidth.get().y);
+    wideLines.setUniform4f("_line_color", 1.0, 1.0, 0.0, 1.0);
+    wideLines.setUniform4f("_viewport", ofGetCurrentViewport().x,ofGetCurrentViewport().y, ofGetViewportWidth(), ofGetViewportHeight());
+    
+    vbo.setVertexData(&path.getOutline()[0].getVertices()[0], path.getOutline()[0].size(), GL_DYNAMIC_DRAW);
+    
+    delete colors;
+    
+    colors = new ofFloatColor[path.getOutline()[0].size()];
+    
+    for(int i = 0; i < path.getOutline()[0].size(); i++){
+        colors[i].setHsb(ofNoise(0.01*i), 1.0, 1.0);
+    }
+
+    vbo.setColorData(colors, path.getOutline()[0].size(), GL_DYNAMIC_DRAW);
+    vbo.draw(GL_LINE_STRIP, 0, path.getOutline()[0].size());
+    
+    wideLines.end();
+}
+
 void SketchScene::resetLine(){
     noisePos.set(2.123, 4.46, 32.9);
     pivotNoisePos.set(0.945, -7.777, 0);
+    colors = new ofFloatColor[1];
     points.clear();
     path.clear();
 }
@@ -147,8 +170,7 @@ out vec4 vs_color;
 void main()
 {
     gl_Position = modelViewProjectionMatrix * position;
-    vs_color    = vec4(1.0,1.0,1.0,1.0); //color;
-    gl_PointSize = 1.0;
+    vs_color    = color;
 }
 
 )";
@@ -341,8 +363,10 @@ void main(void)
     float   endWeight   = step(abs(t * 2.0 - 1.0), 1);
     float   alpha       = mix(k, 1.0, endWeight);
     
+    //if(k < 0.01) discard;
+    
     //out_color = vec4(_line_color.rgb, 1.0);
-    out_color = vec4(v_color.rgb, alpha);
+    out_color = vec4(v_color.rgb, (k*v_color.a*0.8)+0.2);
 }
 
 )";

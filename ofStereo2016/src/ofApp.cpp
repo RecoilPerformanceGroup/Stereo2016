@@ -21,11 +21,11 @@ void ofApp::setup(){
     oscSender.setup("localhost", 53000);
     qlab.setup();
     
+    globalParams.add(world.params);
+    
     for( auto s : scenes) {
         s->setupScene(&globalParams, &world);
     }
-    
-    globalParams.add(world.params);
     
     ofAddListener(globalParams.parameterChangedE(), this, &ofApp::paramsChanged);
     

@@ -41,11 +41,11 @@ public:
         scenes.push_back(make_shared<CrystalScene>());
         scenes.push_back(make_shared<SketchScene>());
 
-        
         for( auto s : scenes) {
             sceneParams.add(s->getParameters());
         }
         
+        globalParams.add(sceneParams);
         
     }
     
@@ -57,8 +57,6 @@ public:
     
     ofParameter<bool> swap_left_right{"swapLeftRight", true};
     
-    
-    
     ofParameterGroup sceneParams;
     
     ofParameterGroup globalParams{
@@ -67,8 +65,7 @@ public:
         calibrate_projector,
         calibrate_camera,
         background_color,
-        show_model_on_second_screen,
-        sceneParams
+        show_model_on_second_screen
     };
     
     vector<ofxPanel *> scenePanels;
