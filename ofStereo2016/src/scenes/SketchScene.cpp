@@ -353,10 +353,10 @@ void main(void)
     float   endWeight   = step(abs(t * 2.0 - 1.0), 1);
     float   alpha       = mix(k, 1.0, endWeight);
     
-    //if(k < 0.01) discard;
+    if(k < 0.01) discard;
     
     //out_color = vec4(_line_color.rgb, 1.0);
-    out_color = vec4(v_color.rgb, (k*v_color.a*0.8)+0.2);
+    out_color = vec4(v_color.rgb, k*v_color.a);
 }
 
 )";
