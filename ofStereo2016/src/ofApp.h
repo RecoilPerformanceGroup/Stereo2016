@@ -26,6 +26,7 @@
 #include "CrystalScene.hpp"
 #include "RoomScene.hpp"
 #include "SketchScene.hpp"
+#include "VoroScenes.hpp"
 
 class ofApp : public ofBaseApp{
     
@@ -34,11 +35,12 @@ public:
     ofApp() {
         
         sceneParams.setName("scenes");
+        scenes.push_back(make_shared<VoroScenes>());
         scenes.push_back(make_shared<RoomScene>());
-        scenes.push_back(make_shared<MountainScene>());
+        //scenes.push_back(make_shared<MountainScene>());
         scenes.push_back(make_shared<LightScene>());
         scenes.push_back(make_shared<PlateauScene>());
-        scenes.push_back(make_shared<CrystalScene>());
+        //scenes.push_back(make_shared<CrystalScene>());
         scenes.push_back(make_shared<SketchScene>());
 
         for( auto s : scenes) {
