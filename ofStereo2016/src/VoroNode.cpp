@@ -244,13 +244,24 @@ VoroNode & VoroNode::detachNodes(set<VoroNode *> nodes) {
 }
 
 
+ofVboMesh & VoroNode::getBakedMesh() {
+    
+    bakedMesh.clear();
+    // todo cache if node didn't change
+    for(auto v : mesh.getVertices()) {
+        bakedMesh.addVertex(v*getGlobalTransformMatrix());
+    }
+    
+    return bakedMesh;
+}
+
 // global flag ?
 set<VoroNode *> VoroNode::getChildrenInSphere(ofPoint point, float radius, bool recursive) {
     
     set<VoroNode *> select;
     
     for(auto n : voroChildren) {
-        if(n->getPosition().distance(point) < radius) {
+        if(n->getGlobalPosition().distance(point) < radius) {
             select.insert(n);
         }
         
