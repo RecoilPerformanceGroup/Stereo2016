@@ -937,17 +937,15 @@ void ofApp::mouseExitedGui(int x, int y){
 }
 
 void ofApp::mouseScrolledGui(int x, int y, int scrollX, int scrollY){
-
 }
 
 void ofApp::windowResizedGui(int w, int h){
-
 }
+
 void ofApp::dragEventGui(ofDragInfo dragInfo){
-
 }
-void ofApp::gotMessageGui(ofMessage msg){
 
+void ofApp::gotMessageGui(ofMessage msg){
 }
 
 // TODO check if it worked
@@ -957,7 +955,6 @@ void ofApp::saveAllParameters() {
     for( auto s : scenes) {
         saveParameters(s->params);
     }
-
 }
 
 void ofApp::loadAllParameters() {
