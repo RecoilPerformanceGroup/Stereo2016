@@ -41,47 +41,36 @@ void VoroEnd::draw() {
     
     ofEnableAlphaBlending();
     ofSetColor(255);
-     mat.begin();
-     wall.draw(&mat);
-     ocean.draw(&mat);
-     mat.end();
-    
-    ofEnableLighting();
-    
     mat.begin();
-    mat.setWorldMatrix(ofMatrix4x4::newIdentityMatrix());
+    wall.draw(&mat);
+    ocean.draw(&mat);
     mat.end();
+    
 }
 
 void VoroEnd::update() {
-    
     mat.setDiffuseColor(matcolor.get());
     mat.setAmbientColor(ofFloatColor(1.0,0,0,1.0));
     mat.updateParameters();
     
     wall.setPosition(wallOrigin.get());
     ocean.setPosition(oceanOrigin.get());
-    
 }
 
 void VoroEnd::reconstructWall(){
-    
     ofVec3f _s = globalParams->getVec3f("stage_size_cm").get();
     
     ofSeedRandom(wallSeed.get());
     wall.setupFromBoundingBox(_s.x, _s.y, 10, wallNumCells, true,true,false);
     wall.setParent(wallCenter);
-    
 }
 
 void VoroEnd::reconstructOcean(){
-    
     ofVec3f _s = globalParams->getVec3f("stage_size_cm").get();
     
     ofSeedRandom(oceanSeed.get());
     ocean.setupFromBoundingBox(_s.y, 10, _s.z, oceanNumCells, true,false,true);
     ocean.setParent(floorCenter);
-    
 }
 
 void VoroEnd::drawModel() {
