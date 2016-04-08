@@ -49,6 +49,7 @@ public:
     bool bDraw;
     int level;
     ofVboMesh mesh;
+    ofVboMesh bakedMesh;
     int nCells;
     
     std::set<VoroNode*> voroChildren;
@@ -88,5 +89,18 @@ public:
     
     VoroNode & detachNodes(set<VoroNode *> nodes);
     
-   
+    ofVboMesh & getBakedMesh();
+    
+    template<typename meshType>
+    static meshType bakeMesh(meshType _m, const ofNode & _node) {
+        
+        // todo cache if node didn't change
+        for(auto & v : _m.getVertices()) {
+            v.set(v * _node.getGlobalTransformMatrix());
+        }
+        
+        return _m;
+    }
+    
+    
 };
