@@ -13,10 +13,13 @@ void VoroScenes::setup() {
     seed.addListener(this, &VoroScenes::reconstruct<int>);
     numCells.addListener(this, &VoroScenes::reconstruct<int>);
     
+    
     reconstruct();
+    
 }
 
 void VoroScenes::draw() {
+
     
     ofEnableAlphaBlending();
     ofSetColor(255);
@@ -25,7 +28,10 @@ void VoroScenes::draw() {
     mat.begin();
     yClipped.draw(&mat);
     mat.end();*/
-
+    
+    
+    ofDrawSphere(subtractOffset, 10);
+    
     ofPushMatrix();
     
     //ofPoint anchor = box.getPosition() + ofVec3f(0, box.getHeight()/2, 0) + pivotOffset;
@@ -38,11 +44,9 @@ void VoroScenes::draw() {
     ofRotate(ofMap(pivotOffset.get().z, -100, 100, -45, 45), 1, 0, 0);
     
     ofTranslate(-(anchor + pivotOffset));*/
-    
     //box.draw();
     
     ofPopMatrix();
-    
     
    /* of3dPrimitive newBox = box;
     
@@ -50,17 +54,34 @@ void VoroScenes::draw() {
         ofxCSG::meshDifference(newBox.getMesh(), c->getBakedMesh(), newBox.getMesh());
         //c->draw();
     }
+    */
+    ofEnableLighting();
     
     mat.begin();
+    mat.setWorldMatrix(ofMatrix4x4::newIdentityMatrix());
     newBox.draw();
     mat.end();
-    */
+    
 }
 
 void VoroScenes::update() {
     
+    mat.setDiffuseColor(clusterColor.get());
+    mat.setAmbientColor(ofFloatColor(1.0,0,0,1.0));
     mat.updateParameters();
     
+    
+    yClipped.setPosition(subtractOffset);
+    
+    
+    newBox = VoroNode::bakeMesh(box.getMesh(), box);
+    for(auto c : yClipped.getNearestChildren(dp(0)+subtractOffset.get(), 2)) {
+        ofxCSG::meshDifferencePostFlipB(newBox, c->getBakedMesh(), newBox);
+        newBox.setupIndicesAuto();
+        //c->draw();
+    }
+    //ofMesh::
+        
     //crystalBoulder->setOrientation(crystalRotation);
     //cluster->setScale(crystalSize/crystalBoulder->boundingBox.getWidth());
     //crystalOrigin = (dp(1)+dp(2))/2.0;
@@ -115,7 +136,7 @@ void VoroScenes::reconstruct(){
     
     box.setParent(world->origin);
     
-    box.set(_s.x, _s.y*0.4, _s.z, 2, 2, 2);
+    box.set(_s.x, _s.y*0.4, _s.z, 4,4,4);
     box.setScale(1,1,1);
     box.setPosition( ofVec3f(0, -box.getHeight()/2, box.getDepth()/2) );
     
@@ -145,19 +166,8 @@ void VoroScenes::drawModel() {
     
     //of3dPrimitive newBox = box;
     
-    ofMesh newBox = VoroNode::bakeMesh(box.getMesh(), box);
-    
-    for(auto c : unClipped.getChildrenInSphere(dp(0), 80)) {
-        
-        ofxCSG::meshDifference(newBox, c->getBakedMesh(), newBox);
-        
-        ofSetColor(255,0,0,60);
-        //c->draw();
-    }
-    
     ofSetColor(255,75);
     newBox.drawWireframe();
-    
     
 }
 

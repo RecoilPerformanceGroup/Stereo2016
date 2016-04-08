@@ -34,10 +34,17 @@ public:
     ofParameter<float> scale {"scale", 0, 0, 10};
     ofParameter<float> scaleCells {"scaleCells", 0,0,0.999};
     
+    ofParameter<ofVec3f> subtractOffset {"subtractOffset", ofVec3f(0,0,0),
+        ofVec3f(-100,-100,-100),
+        ofVec3f(100,100,100)};
+
+    
+    
     ofParameterGroup voroNodeParams {"cluster",
         numCells,
         seed,
         origin,
+        subtractOffset,
         scale,
         scaleCells,
         clusterColor,
@@ -81,6 +88,7 @@ public:
     OrganicMaterial mat;
     
     
+    ofMesh newBox;
 
     
 };
