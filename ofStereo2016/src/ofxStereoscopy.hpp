@@ -1241,8 +1241,13 @@ namespace ofxStereoscopy {
             return globalParams->getGroup("scenes").getGroup("roomScene").getGroup("dancers").getVec3f(ofToString(dancer));
         }
         
-        ofVec3f dp(int dancer){
-            return getDancerPositionNormalised(dancer) * globalParams->getVec3f("stage_size_cm");
+        ofVec3f dp(int dancer = 0){
+            if(dancer > 0){
+                return getDancerPositionNormalised(dancer) * globalParams->getVec3f("stage_size_cm");
+            } else {
+                return (dp(1)+dp(2))/2.0;
+            }
+            
         }
 
         virtual void drawGui() {};

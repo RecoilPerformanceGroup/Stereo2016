@@ -17,7 +17,7 @@ void PlateauScene::setup(){
     plateauRandomSeed.addListener(this, &PlateauScene::reconstructPlateau<int>);
     plateauCellCount.addListener(this, &PlateauScene::reconstructPlateau<int>);
     plateauSize.addListener(this, &PlateauScene::reconstructPlateau<ofVec3f>);
-    
+    /*
     float floorHeight = 10.0;
     float floorSize = WORLD_DIMENSION_MAX*2;
     
@@ -29,21 +29,35 @@ void PlateauScene::setup(){
     matPlateau.noiseDisplacementVelocity = ofVec3f(0.1,0.0,0.25);
     matFloor.setShininess(0.2);
     matFloor.setSpecularColor(ofColor::white);
-    
+    */
     reconstructPlateau();
 }
 
 void PlateauScene::update(){
-    matFloor.updateParameters();
+    //matFloor.updateParameters();
     matPlateau.updateParameters();
-    plateau.setGlobalPosition(plateauPosition);
-    plateau.setOrientation(plateauRotation);
     
+
+    ofVec3f floorAlignedPlateauPosition(plateauPosition);
+    floorAlignedPlateauPosition.y = -plateauSize->y / 2.0;
+
+    ofQuaternion q;
+    q.makeRotate(
+                 ofVec3f(plateauPosition->x, ofSignedNoise(ofGetElapsedTimef())*10.0, plateauPosition->z) - plateauPivotOrigin,
+                 dp(1) - plateauPivotOrigin
+                 );
+    pivotMatrix.makeIdentityMatrix();
+    pivotMatrix.translate(floorAlignedPlateauPosition);
+    pivotMatrix.translate(-dp(1));
+    pivotMatrix.rotate(q);
+    pivotMatrix.translate(dp(1));
+    plateau.setTransformMatrix(pivotMatrix);
+    plateau.pan(plateauRotation->y);
 }
 
 void PlateauScene::draw(){
     
-    ofColor eyeColor;
+    ofFloatColor eyeColor;
     
     if(world->bIsDrawingLeft)
         eyeColor = anaglyphColorLeft;
@@ -52,22 +66,48 @@ void PlateauScene::draw(){
     
     ofParameter<ofVec3f> &stage_size = globalParams->getVec3f("stage_size_cm");
     
-    ofSetColor(255);
+    ofSetColor(1.0,1.0);
     
     ofEnableLighting();
     
     // compensate for nonlinear transition to eyecolor
-    ofFloatColor plateauColor = floorColor->getLerped(ofColor::black, 0.1*(1.0-anaglyphAmount));
+    ofFloatColor plateauAnaColor = plateauColor->getLerped(ofFloatColor::black, 0.1*(1.0-anaglyphAmount));
     // transition to eyeColor
-    plateauColor = plateauColor.getLerped(eyeColor, anaglyphAmount);
+    plateauAnaColor = plateauAnaColor.getLerped(eyeColor , anaglyphAmount);
     
     matPlateau.begin();
-    matPlateau.setAmbientColor(plateauColor.getLerped(ofColor::black, 0.9))  ;
-    matPlateau.setWorldMatrix(floor.getGlobalTransformMatrix());
+    matPlateau.setAmbientColor(plateauAnaColor.getLerped(ofFloatColor::black, 0.9))  ;
+    matPlateau.setWorldMatrix(plateau.getGlobalTransformMatrix());
     //floor.drawFaces();
-    matPlateau.setDiffuseColor(plateauColor);
+    matPlateau.setDiffuseColor(plateauAnaColor);
     
-    plateau.draw(&matPlateau);
+    ofMatrix4x4 m;
+    /*
+    m.translate(<#float tx#>, <#float ty#>, <#float tz#>)
+    
+    ofPushMatrix();
+    
+    ofPoint anchor = plateau.getPosition() + ofVec3f(0, plateau.getHeight()/2, 0) + pivotOffset;
+    
+    ofDrawSphere(anchor + pivotOffset, 10);
+    
+    ofTranslate(anchor + pivotOffset);
+    
+    ofRotate(ofMap(pivotOffset.get().x, 100, -100, -45, 45), 0, 0, 1);
+    ofRotate(ofMap(pivotOffset.get().z, -100, 100, -45, 45), 1, 0, 0);
+    
+    ofTranslate(-(anchor + pivotOffset));
+    
+    m = ofGetCurrentViewMatrix();
+    
+    ofPopMatrix();
+
+    plateau.setTransformMatrix(m);
+    */
+     plateau.draw(&matPlateau);
+
+    
+    
     
     
     // split in a way where we get a new node hirearchy, doesnt work with shader stuff otherwise
@@ -101,6 +141,11 @@ void PlateauScene::reconstructPlateau(){
     plateau.setupFromBoundingBox(plateauSize->x, plateauSize->y, plateauSize->z, plateauCellCount, true,false,true);
     
     plateau.setParent(world->origin);
+
+    ofSeedRandom(plateauRandomSeed);
+
+    plateauPivotOrigin.set(ofVec3f(0,-globalParams->getVec3f("stage_size_cm")->z, globalParams->getVec3f("stage_size_cm")->z/2.0));
+
 }
 
 void PlateauScene::onStageSize(ofVec3f& stageSize){
@@ -108,8 +153,14 @@ void PlateauScene::onStageSize(ofVec3f& stageSize){
 }
 
 void PlateauScene::drawModel(){
-    ofSetColor(255,64);
-    ofNoFill();
+    ofSetColor(255,255,0,16);
     plateau.draw();
-    floor.drawWireframe();
+    ofSetColor(255,255,0,255);
+    ofDrawSphere(plateau.getGlobalPosition(), 5);
+
+    ofSetColor(255,0,255,255);
+    ofDrawSphere(plateauPivotOrigin, 20);
+    ofDrawArrow(plateauPivotOrigin, dp(1), 5);
+    
+    // floor.drawWireframe();
 }

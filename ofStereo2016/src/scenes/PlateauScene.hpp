@@ -29,9 +29,10 @@ public:
     ofParameter<ofVec3f> plateauPosition {"position", ofVec3f(0,-10000,-50000), ofVec3f(-10000,-10000,-10000), ofVec3f(10000,10000,10000) };
     ofParameter<ofVec3f> plateauRotation {"rotation", ofVec3f(0,0,0), ofVec3f(-360,-360,-360), ofVec3f(360,360,360) };
     
-    ofParameter<ofColor> plateauColor {"color", ofColor::white, ofColor::black, ofColor::white };
+    ofParameter<ofFloatColor> plateauColor {"color", ofFloatColor(1.0,1.0,1.0,1.0), ofFloatColor(0.0,0.0,0.0,0.0), ofFloatColor(1.0,1.0,1.0,1.0) };
     
-    
+    ofParameter<ofVec3f> plateauPivotOrigin {"plateauPivotOrigin", ofVec3f(0,0,0), ofVec3f(-1000,-10000,-1000), ofVec3f(1000,1000,1000) };
+
     ofParameter<ofVec3f> selectPosition {"selectPosition", ofVec3f(0,-100000,-50000), ofVec3f(-10000,-10000,-100000), ofVec3f(10000,10000,100000) };
     ofParameter<float> selectRadius {"selectRadius", 2,0,2000};
     
@@ -41,6 +42,7 @@ public:
         plateauRandomSeed,
         plateauCellCount,
         plateauSize,
+        plateauPivotOrigin,
         plateauPosition,
         plateauRotation,
         plateauColor,
@@ -49,20 +51,20 @@ public:
         plateauSplit
     };
     
-    // floor
+/*    // floor
     
-    ofParameter<ofColor> floorColor {"color", ofColor::white, ofColor::black, ofColor::white };
+    ofParameter<ofFloatColor> floorColor {"color", ofFloatColor::white, ofFloatColor::black, ofFloatColor::white };
     
     ofParameterGroup floorParams {"floor",
         floorColor
     };
     
     ofBoxPrimitive floor;
-    
+*/
     // scene
     
-    ofParameter<ofColor> anaglyphColorLeft {"anaglyphColorLeft", ofColor::cyan, ofColor::black, ofColor::white };
-    ofParameter<ofColor> anaglyphColorRight {"anaglyphColorRight", ofColor::red, ofColor::black, ofColor::white };
+    ofParameter<ofFloatColor> anaglyphColorLeft {"anaglyphColorLeft", ofFloatColor::cyan, ofFloatColor(ofFloatColor::black, 0.0), ofFloatColor(ofFloatColor::white, 1.0) };
+    ofParameter<ofFloatColor> anaglyphColorRight {"anaglyphColorRight", ofFloatColor::red, ofFloatColor(ofFloatColor::black, 0.0), ofFloatColor(ofFloatColor::white, 1.0) };
     
     ofParameter<float> anaglyphAmount {"anaglyphAmount", 0.0, 0.0, 1.0 };
     
@@ -71,8 +73,8 @@ public:
         qlab,
         anaglyphAmount,
         anaglyphColorLeft,
-        anaglyphColorRight,
-        floorParams
+        anaglyphColorRight
+        //,floorParams
     };
     
     
@@ -93,13 +95,13 @@ public:
     }
     void reconstructPlateau();
     
-    ofxPanel panel;
-    
     OrganicMaterial matPlateau;
-    OrganicMaterial matFloor;
+    //OrganicMaterial matFloor;
     OrganicMaterial matAnaglyphRight;
     OrganicMaterial matAnaglyphLeft;
     
+    ofMatrix4x4 pivotMatrix;
+
 };
 
 #endif /* PlateauScene_hpp */

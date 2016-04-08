@@ -1,19 +1,19 @@
 <PlateauScene>
-	<enabled>0</enabled>
+	<enabled>1</enabled>
 	<add_to_qlab>0</add_to_qlab>
 	<anaglyphAmount>0</anaglyphAmount>
-	<anaglyphColorLeft>0, 255, 255, 255</anaglyphColorLeft>
-	<anaglyphColorRight>255, 0, 0, 255</anaglyphColorRight>
+	<anaglyphColorLeft>0, 1, 1, 1</anaglyphColorLeft>
+	<anaglyphColorRight>1, 0, 0, 1</anaglyphColorRight>
 	<floor>
 		<color>255, 255, 255, 255</color>
 	</floor>
 	<Plateau>
 		<randomSeed>0</randomSeed>
 		<cellCount>520</cellCount>
-		<size>420.656, 420.656, 264.471</size>
-		<position>420.656, 316.533, -2286.55</position>
+		<size>500.656, 400, 300</size>
+		<position>0, 0, 400</position>
 		<rotation>0, 0, 0</rotation>
-		<color>255, 255, 255, 255</color>
+		<color>1, 1, 1, 1</color>
 		<selectRadius>0</selectRadius>
 		<selectPosition>0, 3648.48, -15576.9</selectPosition>
 		<split>1683.67</split>
@@ -38,6 +38,8 @@
 			</noise>
 		</material>
 	<zeroPosition>0, 0</zeroPosition>
+	<pivotPosition>-157.934, 0, 504.29</pivotPosition>
+	<plateauPivotOrigin>0, -3810.5, 400</plateauPivotOrigin>
 	</Plateau>
 <PlateauScene/>
 </PlateauScene>
