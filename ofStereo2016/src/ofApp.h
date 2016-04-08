@@ -27,6 +27,7 @@
 #include "RoomScene.hpp"
 #include "SketchScene.hpp"
 #include "VoroScenes.hpp"
+#include "VoroEnd.hpp"
 
 class ofApp : public ofBaseApp{
     
@@ -42,6 +43,7 @@ public:
         scenes.push_back(make_shared<PlateauScene>());
         //scenes.push_back(make_shared<CrystalScene>());
         scenes.push_back(make_shared<SketchScene>());
+        scenes.push_back(make_shared<VoroEnd>());
 
         for( auto s : scenes) {
             sceneParams.add(s->getParameters());
