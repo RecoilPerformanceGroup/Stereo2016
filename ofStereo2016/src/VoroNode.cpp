@@ -246,13 +246,37 @@ VoroNode & VoroNode::detachNodes(set<VoroNode *> nodes) {
 
 ofVboMesh & VoroNode::getBakedMesh() {
     
-    bakedMesh.clear();
+    bakedMesh = mesh;
     // todo cache if node didn't change
+    int iv = 0;
     for(auto v : mesh.getVertices()) {
-        bakedMesh.addVertex(v*getGlobalTransformMatrix());
+        bakedMesh.setVertex(iv++, v*getGlobalTransformMatrix());
     }
     
     return bakedMesh;
+}
+
+
+vector<VoroNode *> VoroNode::getNearestChildren(ofPoint point, int maxNum, bool recursive) {
+    
+    vector<VoroNode *> sortme;
+    
+    for(auto n : voroChildren) {
+        sortme.push_back(n);
+        
+        /*if(recursive) {
+            for(auto nn : n->getChildren()) {
+                sortme.push_back(nn);
+            }
+            sortme.insert(n->getChildren().begin(), n->getChildren().end());
+        }*/
+    }
+    
+    std::sort(sortme.begin(), sortme.end(), [point](VoroNode * x, VoroNode * y){ return x->getGlobalPosition().distance(point) < y->getGlobalPosition().distance(point); });
+    
+    vector<VoroNode *> select(sortme.begin(), sortme.begin()+maxNum);
+    
+    return select;
 }
 
 // global flag ?
