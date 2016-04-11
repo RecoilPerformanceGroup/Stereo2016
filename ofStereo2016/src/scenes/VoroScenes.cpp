@@ -73,13 +73,14 @@ void VoroScenes::update() {
     
     yClipped.setPosition(subtractOffset);
     
-    
+    /*
     newBox = VoroNode::bakeMesh(box.getMesh(), box);
     for(auto c : yClipped.getNearestChildren(dp(0)+subtractOffset.get(), 2)) {
         ofxCSG::meshDifferencePostFlipB(newBox, c->getBakedMesh(), newBox);
         newBox.setupIndicesAuto();
         //c->draw();
     }
+     */
     //ofMesh::
         
     //crystalBoulder->setOrientation(crystalRotation);

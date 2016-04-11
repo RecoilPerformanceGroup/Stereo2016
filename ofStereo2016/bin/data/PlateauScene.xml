@@ -1,5 +1,5 @@
 <PlateauScene>
-	<enabled>1</enabled>
+	<enabled>0</enabled>
 	<add_to_qlab>0</add_to_qlab>
 	<anaglyphAmount>0</anaglyphAmount>
 	<anaglyphColorLeft>0, 1, 1, 1</anaglyphColorLeft>
@@ -39,7 +39,9 @@
 		</material>
 	<zeroPosition>0, 0</zeroPosition>
 	<pivotPosition>-157.934, 0, 504.29</pivotPosition>
-	<plateauPivotOrigin>0, -546.231, 0.41626</plateauPivotOrigin>
+	<plateauPivotOrigin>0, -4898.59, 0.41626</plateauPivotOrigin>
+	<plateauPivotNoiseAmount>0</plateauPivotNoiseAmount>
+		<plateauPivotNoiseSpeed>0</plateauPivotNoiseSpeed>
 	</Plateau>
 <PlateauScene/>
 </PlateauScene>

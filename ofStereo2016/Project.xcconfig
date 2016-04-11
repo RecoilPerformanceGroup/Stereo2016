@@ -5,6 +5,13 @@ OF_PATH = ../../..
 //THIS HAS ALL THE HEADER AND LIBS FOR OF CORE
 #include "../../../libs/openFrameworksCompiled/project/osx/CoreOF.xcconfig"
 
+
+HEADER_BOOST = "/usr/local/include"
+LIB_BOOST_SYSTEM = "/usr/local/lib/libboost_system.a"
+LIB_BOOST_FS = "/usr/local/lib/libboost_filesystem.a"
+
+MACOSX_DEPLOYMENT_TARGET = 10.11// libstdc++ is only available in 10.7+
+
 //ICONS - NEW IN 0072 
 ICON_NAME_DEBUG = icon-debug.icns
 ICON_NAME_RELEASE = icon.icns
