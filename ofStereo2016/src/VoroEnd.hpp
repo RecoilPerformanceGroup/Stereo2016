@@ -93,12 +93,12 @@ public:
     
     template<typename type>
     void reconstructWall(type & t) {
-        reconstructOcean();
+        reconstructWall();
     }
     
     template<typename type>
     void reconstructOcean(type & t) {
-        reconstructWall();
+        reconstructOcean();
     }
     
     void reconstructWall();

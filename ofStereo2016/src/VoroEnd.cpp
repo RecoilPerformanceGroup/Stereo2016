@@ -18,7 +18,7 @@ void VoroEnd::setup() {
     
     wallCenter.setPosition(0, _s.y/2, 0);
     
-    floorCenter.setPosition(0, 0, -_s.z/2);
+    floorCenter.setPosition(0, 0, _s.z/2);
     
     
     oceanSeed.addListener(this, &VoroEnd::reconstructOcean<int>);
@@ -61,7 +61,7 @@ void VoroEnd::reconstructWall(){
     ofVec3f _s = globalParams->getVec3f("stage_size_cm").get();
     
     ofSeedRandom(wallSeed.get());
-    wall.setupFromBoundingBox(_s.x, _s.y, 10, wallNumCells, true,true,false);
+    wall.setupFromBoundingBox(_s.x, _s.y, 10, wallNumCells, false,false,false);
     wall.setParent(wallCenter);
 }
 
@@ -69,7 +69,7 @@ void VoroEnd::reconstructOcean(){
     ofVec3f _s = globalParams->getVec3f("stage_size_cm").get();
     
     ofSeedRandom(oceanSeed.get());
-    ocean.setupFromBoundingBox(_s.y, 10, _s.z, oceanNumCells, true,false,true);
+    ocean.setupFromBoundingBox(_s.x, 10, _s.z, oceanNumCells, false,false,false);
     ocean.setParent(floorCenter);
 }
 
