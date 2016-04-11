@@ -1,5 +1,5 @@
 <sketch>
-	<enabled>1</enabled>
+	<enabled>0</enabled>
 	<speed>0.5</speed>
 <sketch/>
 <radius>24</radius>
@@ -10,4 +10,5 @@
 <positionTowardsCamera>0</positionTowardsCamera>
 <reset>0</reset>
 <add_to_qlab>0</add_to_qlab>
+<lineWidth>10, 10</lineWidth>
 </sketch>
