@@ -1,9 +1,9 @@
 <roomScene>
-	<enabled>1</enabled>
+	<enabled>0</enabled>
 	<add_to_qlab>0</add_to_qlab>
 	<dancers>
-		<1>0, 0, 0.515827</1>
-		<2>0, 0, 0</2>
+		<1>-0.2, 0, 0.5</1>
+		<2>0.2, 0, 0.5</2>
 	</dancers>
 	<floor>
 		<color>0, 0, 0, 0</color>

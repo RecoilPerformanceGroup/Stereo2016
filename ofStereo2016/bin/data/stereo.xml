@@ -2,16 +2,17 @@
 	<stageSize>800, 500, 800</stageSize>
 	<Projector_Calibration>0</Projector_Calibration>
 	<Camera_Calibration>0</Camera_Calibration>
-	<Background_Color>255, 255, 255, 255</Background_Color>
+	<Background_Color>255, 255, 255, 0</Background_Color>
 	<Second_Screen_Model>0</Second_Screen_Model>
 	<scenes>
 		<VoroScenes>
-			<enabled>1</enabled>
+			<enabled>0</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<cluster>
 				<cells>2</cells>
 				<seed>2</seed>
 				<origin>0, 0, 0</origin>
+				<subtractOffset>0, 0, 0</subtractOffset>
 				<scale>1</scale>
 				<scaleCells>0</scaleCells>
 				<color>1, 1, 1, 1</color>
@@ -32,11 +33,11 @@
 			</cluster>
 		</VoroScenes>
 		<roomScene>
-			<enabled>1</enabled>
+			<enabled>0</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<dancers>
-				<1>0, 0, 0.515827</1>
-				<2>0, 0, 0</2>
+				<1>-0.2, 0, 0.5</1>
+				<2>0.2, 0, 0.5</2>
 			</dancers>
 			<floor>
 				<color>0, 0, 0, 0</color>
@@ -104,7 +105,7 @@
 			</areaLight>
 		</Lights>
 		<PlateauScene>
-			<enabled>1</enabled>
+			<enabled>0</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<anaglyphAmount>0</anaglyphAmount>
 			<anaglyphColorLeft>0, 1, 1, 1</anaglyphColorLeft>
@@ -113,7 +114,9 @@
 				<randomSeed>0</randomSeed>
 				<cellCount>520</cellCount>
 				<size>500.656, 400, 300</size>
-				<plateauPivotOrigin>0, -546.231, 0.41626</plateauPivotOrigin>
+				<plateauPivotOrigin>0, -4898.59, 0.41626</plateauPivotOrigin>
+				<plateauPivotNoiseAmount>0</plateauPivotNoiseAmount>
+				<plateauPivotNoiseSpeed>0</plateauPivotNoiseSpeed>
 				<position>0, 0, 400</position>
 				<rotation>0, 0, 0</rotation>
 				<color>1, 1, 1, 1</color>
@@ -136,6 +139,22 @@
 				</material>
 			</Plateau>
 		</PlateauScene>
+		<openingScene>
+			<enabled>1</enabled>
+			<add_to_qlab>0</add_to_qlab>
+			<speed>1.75</speed>
+			<radius>20</radius>
+			<length>800</length>
+			<color1>1, 1, 1, 1</color1>
+			<color2>1, 1, 1, 1</color2>
+			<space>200, 200, 200</space>
+			<pivotRadius>20</pivotRadius>
+			<pivotSpeed>0.02</pivotSpeed>
+			<lineWidth>3.06123, 100</lineWidth>
+			<positionTowardsCamera>0</positionTowardsCamera>
+			<reset>0</reset>
+			<titleTrigger>0</titleTrigger>
+		</openingScene>
 		<sketch>
 			<enabled>0</enabled>
 			<add_to_qlab>0</add_to_qlab>
@@ -149,6 +168,39 @@
 			<positionTowardsCamera>0</positionTowardsCamera>
 			<reset>0</reset>
 		</sketch>
+		<VoroEnd>
+			<enabled>0</enabled>
+			<add_to_qlab>0</add_to_qlab>
+			<material>
+				<noise>
+					<displacement>
+						<velocity>0, 0, 0</velocity>
+						<scale>1, 1, 1</scale>
+						<amount>0, 0, 0</amount>
+					</displacement>
+					<texture>
+						<velocity>0, 0, 0</velocity>
+						<scale>1.6666, 1.6666, 1.6666</scale>
+						<amount>-0.025</amount>
+					</texture>
+				</noise>
+			</material>
+			<wall>
+				<cells>2</cells>
+				<seed>2</seed>
+				<origin>0, 0, 0</origin>
+				<wall_rotation>0, 0, 0</wall_rotation>
+				<noise_speed>0</noise_speed>
+				<noise_amount>0</noise_amount>
+			</wall>
+			<ocean>
+				<cells>2</cells>
+				<seed>2</seed>
+				<origin>0, 0, 0</origin>
+				<noise_speed>0</noise_speed>
+				<noise_amount>0</noise_amount>
+			</ocean>
+		</VoroEnd>
 	</scenes>
 	<world>
 		<camera>

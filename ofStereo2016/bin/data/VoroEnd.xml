@@ -1,0 +1,34 @@
+<VoroEnd>
+	<enabled>0</enabled>
+	<add_to_qlab>0</add_to_qlab>
+	<material>
+		<noise>
+			<displacement>
+				<velocity>0, 0, 0</velocity>
+				<scale>1, 1, 1</scale>
+				<amount>0, 0, 0</amount>
+			</displacement>
+			<texture>
+				<velocity>0, 0, 0</velocity>
+				<scale>1.6666, 1.6666, 1.6666</scale>
+				<amount>-0.025</amount>
+			</texture>
+		</noise>
+	</material>
+	<wall>
+		<cells>2</cells>
+		<seed>2</seed>
+		<origin>0, 0, 0</origin>
+		<wall_rotation>0, 0, 0</wall_rotation>
+		<noise_speed>0</noise_speed>
+		<noise_amount>0</noise_amount>
+	</wall>
+	<ocean>
+		<cells>2</cells>
+		<seed>2</seed>
+		<origin>0, 0, 0</origin>
+		<noise_speed>0</noise_speed>
+		<noise_amount>0</noise_amount>
+	</ocean>
+<VoroEnd/>
+</VoroEnd>
