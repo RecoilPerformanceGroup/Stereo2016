@@ -11,6 +11,7 @@
 #include "ofMain.h"
 #include "ofxStereoscopy.hpp"
 #include "VoroNode.hpp"
+#include "ofxSvg.h"
 
 class OpeningScene : public ofxStereoscopy::Scene {
     
@@ -70,6 +71,8 @@ public:
     OrganicMaterial mat;
     
     void drawModel();
+    
+    ofxSVG logo;
     
 private:
     static string vertexShader;

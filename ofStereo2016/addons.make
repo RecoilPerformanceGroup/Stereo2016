@@ -1,4 +1,3 @@
-ofxCSG
 ofxDatGui
 ofxEasing
 ofxGui
@@ -8,3 +7,5 @@ ofxOsc
 ofxSyncedParams
 ofxVoro
 ofxXmlSettings
+ofxSVG
+ofxCGAL
