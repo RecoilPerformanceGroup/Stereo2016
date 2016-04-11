@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		54421C77CC8CEF52E9F9E4B7 /* ofxCGALStreamlines.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 14AC6F27D50CE03F378BE1C5 /* ofxCGALStreamlines.cpp */; };
 		5EFAF95572DABD8D1455D917 /* ofxCGALBooleanOp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EF96A160F3089B5FA390890D /* ofxCGALBooleanOp.cpp */; };
-		B46143491CBB9B2000A1F988 /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B46143431CBB9B1F00A1F988 /* libboost_filesystem.a */; };
-		B461434A1CBB9B2000A1F988 /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B46143441CBB9B2000A1F988 /* libboost_system.a */; };
 		B461434B1CBB9B2000A1F988 /* libboost_thread-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B46143451CBB9B2000A1F988 /* libboost_thread-mt.dylib */; };
 		B461434D1CBB9B2000A1F988 /* libgmp.10.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B46143471CBB9B2000A1F988 /* libgmp.10.dylib */; };
 		B461434E1CBB9B2000A1F988 /* libmpfr.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B46143481CBB9B2000A1F988 /* libmpfr.4.dylib */; };
@@ -60,8 +58,6 @@
 		6A6139946B6A75A72653158E /* ofxCGALBooleanOp.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxCGALBooleanOp.h; path = ../../../addons/ofxCGAL/src/ofxCGALBooleanOp.h; sourceTree = SOURCE_ROOT; };
 		6C000ADD99E51D762FD5B663 /* ofBooleanUnionApp.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofBooleanUnionApp.h; path = src/ofBooleanUnionApp.h; sourceTree = SOURCE_ROOT; };
 		B34F15206C5BF178DB9910D5 /* ofxCGAL.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxCGAL.cpp; path = ../../../addons/ofxCGAL/src/ofxCGAL.cpp; sourceTree = SOURCE_ROOT; };
-		B46143431CBB9B1F00A1F988 /* libboost_filesystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_filesystem.a; path = ../../../../../usr/local/Cellar/boost/1.60.0_1/lib/libboost_filesystem.a; sourceTree = "<group>"; };
-		B46143441CBB9B2000A1F988 /* libboost_system.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_system.a; path = ../../../../../usr/local/Cellar/boost/1.60.0_1/lib/libboost_system.a; sourceTree = "<group>"; };
 		B46143451CBB9B2000A1F988 /* libboost_thread-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_thread-mt.dylib"; path = "../../../../../usr/local/Cellar/boost/1.60.0_1/lib/libboost_thread-mt.dylib"; sourceTree = "<group>"; };
 		B46143461CBB9B2000A1F988 /* libCGAL_Core.11.0.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libCGAL_Core.11.0.1.dylib; path = ../../../../../usr/local/Cellar/cgal/4.7/lib/libCGAL_Core.11.0.1.dylib; sourceTree = "<group>"; };
 		B46143471CBB9B2000A1F988 /* libgmp.10.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libgmp.10.dylib; path = ../../../../../usr/local/Cellar/gmp/6.1.0/lib/libgmp.10.dylib; sourceTree = "<group>"; };
@@ -88,8 +84,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B46143491CBB9B2000A1F988 /* libboost_filesystem.a in Frameworks */,
-				B461434A1CBB9B2000A1F988 /* libboost_system.a in Frameworks */,
 				B461434B1CBB9B2000A1F988 /* libboost_thread-mt.dylib in Frameworks */,
 				B46143501CBB9EA900A1F988 /* libCGAL.11.0.1.dylib in Frameworks */,
 				B461434D1CBB9B2000A1F988 /* libgmp.10.dylib in Frameworks */,
@@ -194,8 +188,6 @@
 		E4B69B4A0A3A1720003C02F2 = {
 			isa = PBXGroup;
 			children = (
-				B46143431CBB9B1F00A1F988 /* libboost_filesystem.a */,
-				B46143441CBB9B2000A1F988 /* libboost_system.a */,
 				B461434F1CBB9EA900A1F988 /* libCGAL.11.0.1.dylib */,
 				B46143451CBB9B2000A1F988 /* libboost_thread-mt.dylib */,
 				B46143461CBB9B2000A1F988 /* libCGAL_Core.11.0.1.dylib */,
