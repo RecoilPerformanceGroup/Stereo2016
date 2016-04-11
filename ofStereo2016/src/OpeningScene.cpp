@@ -125,6 +125,8 @@ void OpeningScene::drawModel(){
     ofEnableDepthTest();
     drawLines();
     ofDisableDepthTest();
+    logo.draw();
+
 }
 
 string OpeningScene::vertexShader = R"(
