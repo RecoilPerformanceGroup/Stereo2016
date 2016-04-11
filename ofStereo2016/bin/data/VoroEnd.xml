@@ -1,5 +1,5 @@
 <VoroEnd>
-	<enabled>0</enabled>
+	<enabled>1</enabled>
 	<add_to_qlab>0</add_to_qlab>
 	<material>
 		<noise>
@@ -16,19 +16,19 @@
 		</noise>
 	</material>
 	<wall>
-		<cells>2</cells>
-		<seed>2</seed>
+		<cells>67</cells>
+		<seed>48</seed>
 		<origin>0, 0, 0</origin>
-		<wall_rotation>0, 0, 0</wall_rotation>
+		<wall_rotation>131.345, 0, 0</wall_rotation>
 		<noise_speed>0</noise_speed>
 		<noise_amount>0</noise_amount>
 	</wall>
 	<ocean>
-		<cells>2</cells>
-		<seed>2</seed>
-		<origin>0, 0, 0</origin>
-		<noise_speed>0</noise_speed>
-		<noise_amount>0</noise_amount>
+		<cells>10</cells>
+		<seed>69</seed>
+		<origin>0.417603, -9.99481, 0.417603</origin>
+		<noise_speed>1</noise_speed>
+		<noise_amount>193.878</noise_amount>
 	</ocean>
 <VoroEnd/>
 </VoroEnd>

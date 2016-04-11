@@ -12,6 +12,7 @@ void OpeningScene::setup(){
     
     globalParams->getVec3f("stage_size_cm").addListener(this, &OpeningScene::onStageSize);
     
+    logo.load("STEREO-logo.svg");
     
     for (int i = 0; i < 2; i++) {
         path[i].setFilled(false);
@@ -86,6 +87,7 @@ void OpeningScene::draw(){
     //ofDisableDepthTest();
     drawLines();
     //ofEnableDepthTest();
+    logo.draw();
     
 }
 

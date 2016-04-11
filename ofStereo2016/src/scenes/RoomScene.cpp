@@ -84,19 +84,7 @@ void RoomScene::drawModel(){
     ofSetColor(255,16);
     floor.drawWireframe();
     wall.drawWireframe();
-}
-
-void RoomScene::onStageSize(ofVec3f& stage_size){
-    floor.set(stage_size.x, floorHeight, stage_size.z, stage_size.x/resolution, 2, stage_size.z/resolution);
-    floor.setGlobalPosition(0,-floorHeight/2.0, stage_size.z/2.0);
-    floorLight.setGlobalPosition(0, stage_size.y, stage_size.z/2.0);
-    floorLight.lookAt(-(floor.getGlobalPosition()-(2.0*floorLight.getGlobalPosition())), ofVec3f(0.0,1.0,0.0));
-
-    wall.set(stage_size.x, stage_size.y, wallThickness, stage_size.x/resolution, stage_size.y/resolution, 2);
-    wall.setGlobalPosition(0,stage_size.y/2.0, -wallThickness/2.0);
-    wallLight.setGlobalPosition(0, stage_size.y/2.0, stage_size.z);
-    wallLight.lookAt(-(wall.getGlobalPosition()-(2.0*wallLight.getGlobalPosition())), ofVec3f(0.0,1.0,0.0));
-   
+    
     ofPushStyle();
     ofEnableDepthTest();
     ofEnableLighting();
@@ -110,8 +98,20 @@ void RoomScene::onStageSize(ofVec3f& stage_size){
     floorLight.transformGL();
     ofDrawArrow(ofVec3f(0,0,0),ofVec3f(0,0,(floorLight.getGlobalPosition()-floor.getGlobalPosition()).length()-5), 5);
     floorLight.restoreTransformGL();
-    
-    
+}
+
+void RoomScene::onStageSize(ofVec3f& stage_size){
+    floor.set(stage_size.x, floorHeight, stage_size.z, stage_size.x/resolution, 2, stage_size.z/resolution);
+    floor.setParent(world->origin);
+    floor.setGlobalPosition(0,-floorHeight/2.0, stage_size.z/2.0);
+    floorLight.setGlobalPosition(0, stage_size.y, stage_size.z/2.0);
+    floorLight.lookAt(-(floor.getGlobalPosition()-(2.0*floorLight.getGlobalPosition())), ofVec3f(0.0,1.0,0.0));
+
+    wall.set(stage_size.x, stage_size.y, wallThickness, stage_size.x/resolution, stage_size.y/resolution, 2);
+    wall.setParent(world->origin);
+    wall.setGlobalPosition(0,stage_size.y/2.0, -wallThickness/2.0);
+    wallLight.setGlobalPosition(0, stage_size.y/2.0, stage_size.z);
+    wallLight.lookAt(-(wall.getGlobalPosition()-(2.0*wallLight.getGlobalPosition())), ofVec3f(0.0,1.0,0.0));
 }
 
 ofVec3f RoomScene::getDancerPositionInWorldCoordinates(int number){

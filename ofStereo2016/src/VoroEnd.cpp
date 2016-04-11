@@ -56,14 +56,30 @@ void VoroEnd::update() {
     // dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
     
     
-    oceanNoiseTime += oceanNoiseDisplaceSpeed/100.0;
+    auto applyNoise = [](VoroNode & node, float & time, float speed, ofVec3f amount) {
     
-    
-    for( auto c : ocean.getChildren()) {
         
-        ofVec3f nP(0, ofSignedNoise((c->getPosition().x + (oceanNoiseTime)))*oceanNoiseDisplaceAmount.get(), 0 );
-        c->renderPosOffset = nP;
-    }
+        time += speed/100.0;
+        
+        for( auto c : node.getChildren()) {
+            
+            
+            float n = ofSignedNoise((c->getPosition().x + (time)));
+            
+            ofVec3f nP(n, n, n);
+            nP *= amount;
+            c->renderPosOffset = nP;
+        }
+        
+        
+    };
+    
+    
+    applyNoise(ocean, oceanNoiseTime, oceanNoiseDisplaceSpeed, ofVec3f(0, oceanNoiseDisplaceAmount, 0));
+    
+    applyNoise(wall, wallNoiseTime, wallNoiseDisplaceSpeed, ofVec3f(0, 0, wallNoiseDisplaceAmount));
+
+   
     
 }
 

@@ -1226,9 +1226,9 @@ namespace ofxStereoscopy {
         void drawScene() {
             
             if(enabled && isSetup) {
-                glPushMatrix();ofPushMatrix();ofPushStyle();
+                ofPushMatrix();ofPushView();ofPushStyle();
                 draw();
-                ofPopStyle();ofPopMatrix();glPopMatrix();
+                ofPopStyle();ofPopView();ofPopMatrix();
             }
             
         };
