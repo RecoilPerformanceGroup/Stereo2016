@@ -42,9 +42,9 @@ void OpeningScene::update(){
     noisePos.x += ofGetLastFrameTime() * speed;
     noisePos.y += ofGetLastFrameTime() * speed;
     noisePos.z += ofGetLastFrameTime() * speed;
-    pivotNoisePos.x += ofGetLastFrameTime() * pivotSpeed / pivotRadius;
-    pivotNoisePos.y += ofGetLastFrameTime() * pivotSpeed / pivotRadius;
-    pivotNoisePos.z += ofGetLastFrameTime() * pivotSpeed / pivotRadius;
+    pivotNoisePos.x += ofGetLastFrameTime() * pivotSpeed;
+    pivotNoisePos.y += ofGetLastFrameTime() * pivotSpeed;
+    pivotNoisePos.z += ofGetLastFrameTime() * pivotSpeed;
     
     for (int i = 0; i < 2; i++) {
         
@@ -61,7 +61,9 @@ void OpeningScene::update(){
         currentPoint+=ofVec3f(0,height,0);
         currentPoint.interpolate(world->physical_camera_pos_cm, positionTowardsCamera);
         
-        while(points[i].size() > length){
+        while(points[i].size() > length+3){
+            points[i].pop_front();
+            points[i].pop_front();
             points[i].pop_front();
         }
 
@@ -75,9 +77,6 @@ void OpeningScene::update(){
             ofVec3f & pnt = points[i][p];
             path[i].quadBezierTo(c1, c2, pnt);
         }
-
-        path[i].simplify();
-        
     }
 }
 

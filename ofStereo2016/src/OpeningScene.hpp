@@ -24,7 +24,7 @@ public:
     ofParameter<ofFloatColor> color1 {"color1", ofFloatColor(1.0,1.0,1.0,1.0),ofFloatColor(0.0,0.0,0.0,0.0),ofFloatColor(1.0,1.0,1.0,1.0)};
     ofParameter<ofFloatColor> color2 {"color2", ofFloatColor(1.0,1.0,1.0,1.0),ofFloatColor(0.0,0.0,0.0,0.0),ofFloatColor(1.0,1.0,1.0,1.0)};
     ofParameter<float> pivotRadius {"pivotRadius", 20, 0.0, 800};
-    ofParameter<float> pivotSpeed {"pivotSpeed", 0.02, 0.0, 100.0};
+    ofParameter<float> pivotSpeed {"pivotSpeed", 0.02, 0.0, 10.0};
     ofParameter<float> positionTowardsCamera {"positionTowardsCamera", 0, 0.0, 1.0};
     ofParameter<bool> reset {"reset", true};
     ofParameter<bool> titleTrigger {"titleTrigger", false};

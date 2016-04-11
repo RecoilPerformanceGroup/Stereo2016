@@ -2,7 +2,7 @@
 	<stageSize>800, 500, 800</stageSize>
 	<Projector_Calibration>0</Projector_Calibration>
 	<Camera_Calibration>0</Camera_Calibration>
-	<Background_Color>255, 255, 255, 0</Background_Color>
+	<Background_Color>255, 255, 255, 255</Background_Color>
 	<Second_Screen_Model>0</Second_Screen_Model>
 	<scenes>
 		<VoroScenes>
@@ -33,7 +33,7 @@
 			</cluster>
 		</VoroScenes>
 		<roomScene>
-			<enabled>0</enabled>
+			<enabled>1</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<dancers>
 				<1>-0.2, 0, 0.5</1>
@@ -142,14 +142,15 @@
 		<openingScene>
 			<enabled>1</enabled>
 			<add_to_qlab>0</add_to_qlab>
-			<speed>1.75</speed>
+			<speed>0.5</speed>
 			<radius>20</radius>
-			<length>800</length>
+			<length>204</length>
+			<height>100</height>
 			<color1>1, 1, 1, 1</color1>
 			<color2>1, 1, 1, 1</color2>
 			<space>200, 200, 200</space>
-			<pivotRadius>20</pivotRadius>
-			<pivotSpeed>0.02</pivotSpeed>
+			<pivotRadius>28</pivotRadius>
+			<pivotSpeed>100</pivotSpeed>
 			<lineWidth>3.06123, 100</lineWidth>
 			<positionTowardsCamera>0</positionTowardsCamera>
 			<reset>0</reset>
@@ -209,7 +210,7 @@
 			<focusDistance>200</focusDistance>
 			<nearClip>20</nearClip>
 		</camera>
-		<pixelsCm>2</pixelsCm>
+		<pixelsCm>1.8462</pixelsCm>
 		<WALL>
 			<UnknownName>1</UnknownName>
 			<position>0, 0, 0</position>
