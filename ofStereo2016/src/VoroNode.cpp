@@ -18,6 +18,17 @@ VoroNode::VoroNode() {
     clearParent();
 };
 
+/*VoroNode::VoroNode(const VoroNode& o) : ofNode(o) {
+    counter = o.counter;
+    isSplit = o.isSplit;
+    minBounds = o.minBounds;
+    maxBounds = o.maxBounds;
+    level = o.level;
+    bDraw = o.bDraw;
+    mesh = o.mesh;
+    nCells = o.nCells;
+};*/
+
 VoroNode::VoroNode(ofVboMesh _mesh) {
     counter++;
     isSplit = false;
@@ -226,8 +237,8 @@ void VoroNode::clearChildren(){
     voroChildren.clear();
 }
 
-set<VoroNode *> VoroNode::getChildren() {
-    return voroChildren;
+vector<VoroNode *> VoroNode::getChildren() {
+    return vector<VoroNode *> (voroChildren.begin(), voroChildren.end());
 };
 
 
@@ -264,6 +275,7 @@ vector<VoroNode *> VoroNode::getNearestChildren(ofPoint point, int maxNum, bool 
     for(auto n : voroChildren) {
         sortme.push_back(n);
         
+        // Todo: make recursive
         /*if(recursive) {
             for(auto nn : n->getChildren()) {
                 sortme.push_back(nn);
@@ -385,7 +397,17 @@ void VoroNode::setupFromBoundingBox(float _w, float _h, float _d, int _c, bool o
 
 
 void VoroNode::customDraw() {
-    if(bDraw) mesh.drawFaces();
+    if(bDraw) {
+        
+        ofPushMatrix();
+        
+        ofTranslate(renderPosOffset);
+        
+        mesh.drawFaces();
+        
+        ofPopMatrix();
+        
+    }
 }
 
 void VoroNode::draw(OrganicMaterial * m) {
