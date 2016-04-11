@@ -32,7 +32,9 @@ public:
     ofParameter<ofFloatColor> plateauColor {"color", ofFloatColor(1.0,1.0,1.0,1.0), ofFloatColor(0.0,0.0,0.0,0.0), ofFloatColor(1.0,1.0,1.0,1.0) };
     
     ofParameter<ofVec3f> plateauPivotOrigin {"plateauPivotOrigin", ofVec3f(0,0,0), ofVec3f(-1000,-10000,-1000), ofVec3f(1000,1000,1000) };
-
+    ofParameter<float> plateauPivotNoiseAmount {"plateauPivotNoiseAmount", 0, 0, 1000 };
+    ofParameter<float> plateauPivotNoiseAmount {"plateauPivotNoiseAmount", 0, 0, 1000 };
+    
     ofParameter<ofVec3f> selectPosition {"selectPosition", ofVec3f(0,-100000,-50000), ofVec3f(-10000,-10000,-100000), ofVec3f(10000,10000,100000) };
     ofParameter<float> selectRadius {"selectRadius", 2,0,2000};
     

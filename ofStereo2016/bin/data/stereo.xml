@@ -5,11 +5,37 @@
 	<Background_Color>255, 255, 255, 255</Background_Color>
 	<Second_Screen_Model>0</Second_Screen_Model>
 	<scenes>
+		<VoroScenes>
+			<enabled>1</enabled>
+			<add_to_qlab>0</add_to_qlab>
+			<cluster>
+				<cells>2</cells>
+				<seed>2</seed>
+				<origin>0, 0, 0</origin>
+				<scale>1</scale>
+				<scaleCells>0</scaleCells>
+				<color>1, 1, 1, 1</color>
+				<material>
+					<noise>
+						<displacement>
+							<velocity>0, 0, 0</velocity>
+							<scale>1, 1, 1</scale>
+							<amount>0, 0, 0</amount>
+						</displacement>
+						<texture>
+							<velocity>0, 0, 0</velocity>
+							<scale>1.6666, 1.6666, 1.6666</scale>
+							<amount>-0.025</amount>
+						</texture>
+					</noise>
+				</material>
+			</cluster>
+		</VoroScenes>
 		<roomScene>
 			<enabled>1</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<dancers>
-				<1>-0.197418, 0, 0.630362</1>
+				<1>0, 0, 0.515827</1>
 				<2>0, 0, 0</2>
 			</dancers>
 			<floor>
@@ -49,38 +75,6 @@
 				</material>
 			</wall>
 		</roomScene>
-		<mountainScene>
-			<enabled>0</enabled>
-			<add_to_qlab>0</add_to_qlab>
-			<anaglyphAmount>0</anaglyphAmount>
-			<anaglyphColorLeft>0, 255, 255, 255</anaglyphColorLeft>
-			<anaglyphColorRight>255, 0, 0, 255</anaglyphColorRight>
-			<mountain>
-				<randomSeed>1887</randomSeed>
-				<cellCount>31</cellCount>
-				<size>500, 200, 200</size>
-				<position>0, -60, 600</position>
-				<rotation>-7.34702, 3.89832, -3.59857</rotation>
-				<color>255, 255, 255, 255</color>
-				<selectRadius>2</selectRadius>
-				<selectPosition>0, -100000, -50000</selectPosition>
-				<split>0</split>
-				<material>
-					<noise>
-						<displacement>
-							<velocity>0.15, 0.15, 0.75</velocity>
-							<scale>1540.06, 20, 400</scale>
-							<amount>0, 0, 0</amount>
-						</displacement>
-						<texture>
-							<velocity>0, 0, 0</velocity>
-							<scale>1, 1, 1</scale>
-							<amount>0.00256753</amount>
-						</texture>
-					</noise>
-				</material>
-			</mountain>
-		</mountainScene>
 		<Lights>
 			<enabled>1</enabled>
 			<add_to_qlab>0</add_to_qlab>
@@ -119,8 +113,7 @@
 				<randomSeed>0</randomSeed>
 				<cellCount>520</cellCount>
 				<size>500.656, 400, 300</size>
-				<pivotPosition>-157.934, 0, 504.29</pivotPosition>
-				<plateauPivotOrigin>0, -3810.5, 400</plateauPivotOrigin>
+				<plateauPivotOrigin>0, -546.231, 0.41626</plateauPivotOrigin>
 				<position>0, 0, 400</position>
 				<rotation>0, 0, 0</rotation>
 				<color>1, 1, 1, 1</color>
@@ -143,55 +136,6 @@
 				</material>
 			</Plateau>
 		</PlateauScene>
-		<Crystal>
-			<enabled>0</enabled>
-			<add_to_qlab>0</add_to_qlab>
-			<cluster>
-				<cells>20</cells>
-				<origin>0.417603, -51.6442, 302.375</origin>
-				<scale>0</scale>
-				<scaleCells>0.999</scaleCells>
-				<rotationAxis>0, 0, 0</rotationAxis>
-				<rotationSpeed>0</rotationSpeed>
-				<color>1, 1, 1, 1</color>
-				<material>
-					<noise>
-						<displacement>
-							<velocity>0, 0, 0</velocity>
-							<scale>1, 1, 1</scale>
-							<amount>0, 0, 0</amount>
-						</displacement>
-						<texture>
-							<velocity>0, 0, 0</velocity>
-							<scale>1.6666, 1.6666, 1.6666</scale>
-							<amount>-0.025</amount>
-						</texture>
-					</noise>
-				</material>
-			</cluster>
-			<crystal>
-				<seed>2</seed>
-				<size>0</size>
-				<origin>0, 0, 0</origin>
-				<rotationAxis>0, 0, 0</rotationAxis>
-				<rotationSpeed>0</rotationSpeed>
-				<color>1, 1, 1, 1</color>
-				<material>
-					<noise>
-						<displacement>
-							<velocity>0, 0, 0</velocity>
-							<scale>1, 1, 1</scale>
-							<amount>0, 0, 0</amount>
-						</displacement>
-						<texture>
-							<velocity>0, 0, 0</velocity>
-							<scale>1.6666, 1.6666, 1.6666</scale>
-							<amount>-0.025</amount>
-						</texture>
-					</noise>
-				</material>
-			</crystal>
-		</Crystal>
 		<sketch>
 			<enabled>0</enabled>
 			<add_to_qlab>0</add_to_qlab>

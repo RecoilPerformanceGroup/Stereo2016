@@ -37,14 +37,17 @@ void PlateauScene::update(){
     //matFloor.updateParameters();
     matPlateau.updateParameters();
     
-
     ofVec3f floorAlignedPlateauPosition(plateauPosition);
-    floorAlignedPlateauPosition.y = -plateauSize->y / 2.0;
+    floorAlignedPlateauPosition.y += -plateauSize->y / 2.0;
+
+    plateauPivotOrigin.set(ofVec3f(ofSignedNoise(ofGetElapsedTimef())*100.0, plateauPivotOrigin->y, ofSignedNoise(ofGetElapsedTimef()+0.33235)*100.0));
+    
+    ofVec3f plateauPivotOriginTranslated = plateauPivotOrigin.get() + plateauPosition.get();
 
     ofQuaternion q;
     q.makeRotate(
-                 ofVec3f(plateauPosition->x, ofSignedNoise(ofGetElapsedTimef())*10.0, plateauPosition->z) - plateauPivotOrigin,
-                 dp(1) - plateauPivotOrigin
+                 ofVec3f(plateauPosition.get() + ofVec3f(plateauPivotOrigin->x, 0, plateauPivotOrigin->z)) - plateauPivotOriginTranslated,
+                 dp(1) - plateauPivotOriginTranslated
                  );
     pivotMatrix.makeIdentityMatrix();
     pivotMatrix.translate(floorAlignedPlateauPosition);
@@ -52,7 +55,7 @@ void PlateauScene::update(){
     pivotMatrix.rotate(q);
     pivotMatrix.translate(dp(1));
     plateau.setTransformMatrix(pivotMatrix);
-    plateau.pan(plateauRotation->y);
+//    plateau.pan(plateauRotation->y);
 }
 
 void PlateauScene::draw(){
@@ -158,9 +161,17 @@ void PlateauScene::drawModel(){
     ofSetColor(255,255,0,255);
     ofDrawSphere(plateau.getGlobalPosition(), 5);
 
+    ofVec3f plateauPivotOriginTranslated = plateauPivotOrigin.get() + plateauPosition.get();
+
     ofSetColor(255,0,255,255);
-    ofDrawSphere(plateauPivotOrigin, 20);
-    ofDrawArrow(plateauPivotOrigin, dp(1), 5);
+    ofDrawSphere(plateauPivotOriginTranslated, 20);
+    ofDrawArrow(plateauPivotOriginTranslated, dp(1), 5);
+
+    ofPushMatrix();
+    ofMultMatrix(pivotMatrix);
+    ofDrawAxis(20);
+    ofPopMatrix();
+  
     
     // floor.drawWireframe();
 }
