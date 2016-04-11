@@ -27,13 +27,8 @@ void VoroEnd::setup() {
     wallSeed.addListener(this, &VoroEnd::reconstructWall<int>);
     wallNumCells.addListener(this, &VoroEnd::reconstructWall<int>);
     
-    
-    
-    
     reconstructWall();
     reconstructOcean();
-    
-    
     
 }
 
@@ -55,6 +50,21 @@ void VoroEnd::update() {
     
     wall.setPosition(wallOrigin.get());
     ocean.setPosition(oceanOrigin.get());
+    
+    
+    // apply noise -
+    // dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+    
+    
+    oceanNoiseTime += oceanNoiseDisplaceSpeed/100.0;
+    
+    
+    for( auto c : ocean.getChildren()) {
+        
+        ofVec3f nP(0, ofSignedNoise((c->getPosition().x + (oceanNoiseTime)))*oceanNoiseDisplaceAmount.get(), 0 );
+        c->renderPosOffset = nP;
+    }
+    
 }
 
 void VoroEnd::reconstructWall(){
@@ -63,6 +73,7 @@ void VoroEnd::reconstructWall(){
     ofSeedRandom(wallSeed.get());
     wall.setupFromBoundingBox(_s.x, _s.y, 10, wallNumCells, false,false,false);
     wall.setParent(wallCenter);
+    
 }
 
 void VoroEnd::reconstructOcean(){
@@ -71,19 +82,14 @@ void VoroEnd::reconstructOcean(){
     ofSeedRandom(oceanSeed.get());
     ocean.setupFromBoundingBox(_s.x, 10, _s.z, oceanNumCells, false,false,false);
     ocean.setParent(floorCenter);
+    
+    
 }
 
 void VoroEnd::drawModel() {
-    
-    //box.draw();
-    //unClipped.draw();
-    //yClipped.draw();
-    //yClippedCopy.draw();
-    
-    //of3dPrimitive newBox = box;
-    
     ofSetColor(255,75);
-    newBox.drawWireframe();
+    
+    ocean.draw();
     
 }
 

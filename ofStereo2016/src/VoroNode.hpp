@@ -15,7 +15,6 @@
 
 class VoroNode : public ofNode {
     
-    
 public:
     
     static int counter;
@@ -23,6 +22,9 @@ public:
     VoroNode();
     VoroNode(ofVboMesh _mesh);
     VoroNode(ofVboMesh _mesh, VoroNode& vnParent);
+    
+    //VoroNode(const VoroNode& other);
+    
     ~VoroNode();
     
     template<class T>
@@ -41,7 +43,6 @@ public:
         return del_fun_t<T>(); 
     }
     
-
     ofVec3f minBounds;
     ofVec3f maxBounds;
     ofBoxPrimitive boundingBox;
@@ -51,6 +52,10 @@ public:
     ofVboMesh mesh;
     ofVboMesh bakedMesh;
     int nCells;
+    
+    ofVec3f renderPosOffset;
+    
+    //int seed;
     
     std::set<VoroNode*> voroChildren;
     
@@ -71,7 +76,7 @@ public:
     
     void clearChildren();
     
-    set<VoroNode *> getChildren();
+    vector<VoroNode *> getChildren();
     
     set<VoroNode *> getChildrenInSphere(ofPoint point, float radius, bool recursive = false);
 

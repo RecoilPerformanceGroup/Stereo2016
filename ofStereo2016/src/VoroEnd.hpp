@@ -30,6 +30,9 @@ public:
     ofParameter<float> oceanNoiseDisplaceSpeed {"noise speed", 0, 0, 1};
     ofParameter<float> oceanNoiseDisplaceAmount {"noise amount", 0, 0, 1000};
     
+    float oceanNoiseTime = 0;
+    float wallNoiseTime = 0;
+    
     ofParameter<int> oceanNumCells {"cells", 2, 0, 200};
     ofParameter<int> oceanSeed {"seed", 2, 0, 200};
     
@@ -115,10 +118,10 @@ public:
     
     OrganicMaterial mat;
     
-    ofMesh newBox;
-    
     ofNode wallCenter;
     ofNode floorCenter;
+    
+    //void applyNoise(VoroNode & node, );
     
 };
 
