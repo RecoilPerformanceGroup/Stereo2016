@@ -1,22 +1,24 @@
 //
-//  SketchScene.cpp
+//  OpeningScene.cpp
 //  ofStereo2016
 //
-//  Created by Ole Kristensen on 10/03/2016.
+//  Created by Stereo on 11/04/16.
 //
 //
 
-#include "SketchScene.hpp"
+#include "OpeningScene.hpp"
 
-
-void SketchScene::setup(){
-
-    globalParams->getVec3f("stage_size_cm").addListener(this, &SketchScene::onStageSize);
+void OpeningScene::setup(){
     
-    path.setFilled(false);
-    path.setStrokeColor(ofColor::white);
-    path.setStrokeWidth(1); //otherwise it is not a line, but a shape to of
-    path.setMode(ofPath::POLYLINES);
+    globalParams->getVec3f("stage_size_cm").addListener(this, &OpeningScene::onStageSize);
+    
+    
+    for (int i = 0; i < 2; i++) {
+        path[i].setFilled(false);
+        path[i].setStrokeColor(ofColor::white);
+        path[i].setStrokeWidth(1); //otherwise it is not a line, but a shape to of
+        path[i].setMode(ofPath::POLYLINES);
+    }
     
     wideLines.setupShaderFromSource(GL_VERTEX_SHADER,vertexShader);
     wideLines.setupShaderFromSource(GL_GEOMETRY_SHADER,geometryShader);
@@ -27,118 +29,103 @@ void SketchScene::setup(){
     
     wideLines.bindDefaults();
     wideLines.linkProgram();
-
-    resetLine();
+    
+    resetLines();
 }
 
-void SketchScene::update(){
+void OpeningScene::update(){
     if (reset) {
-        resetLine();
+        resetLines();
         reset = false;
     }
     
     noisePos.x += ofGetLastFrameTime() * speed;
     noisePos.y += ofGetLastFrameTime() * speed;
     noisePos.z += ofGetLastFrameTime() * speed;
-
     pivotNoisePos.x += ofGetLastFrameTime() * pivotSpeed / pivotRadius;
     pivotNoisePos.y += ofGetLastFrameTime() * pivotSpeed / pivotRadius;
     pivotNoisePos.z += ofGetLastFrameTime() * pivotSpeed / pivotRadius;
+    
+    for (int i = 0; i < 2; i++) {
+        
+        ofVec3f currentPoint(ofSignedNoise(noisePos.x+(i*13.3324)),
+                             ofSignedNoise(noisePos.y+(i*32.7647)),
+                             ofSignedNoise(noisePos.z+(i*13.7647)));
+        
+        ofVec3f currentPivot(ofSignedNoise(pivotNoisePos.x+(i*5.836)),
+                             ofSignedNoise(pivotNoisePos.y+(i*57.45623)),
+                             ofSignedNoise(pivotNoisePos.z+(i*2.5720)));
+        
+        currentPoint*=space;
+        currentPoint+=dp(i+1);
+        currentPoint+=ofVec3f(0,height,0);
+        currentPoint.interpolate(world->physical_camera_pos_cm, positionTowardsCamera);
+        
+        while(points[i].size() > length){
+            points[i].pop_front();
+        }
 
-    
-    ofVec3f currentPoint(ofSignedNoise(noisePos.x),
-                         ofSignedNoise(noisePos.y),
-                         ofSignedNoise(noisePos.z));
-    
-    ofVec3f currentPivot(ofSignedNoise(pivotNoisePos.x),
-                         ofSignedNoise(pivotNoisePos.y),
-                         ofSignedNoise(pivotNoisePos.z));
-    
-    currentPoint*=space;
-    currentPoint+=origin;
-    currentPoint.interpolate(world->physical_camera_pos_cm, positionTowardsCamera);
-    points.push_back((currentPoint)+(currentPivot*pivotRadius));
-    
-    //path.rotate(0.025, ofVec3f(0.5,1,0.33));
+        points[i].push_back((currentPoint)+(currentPivot*pivotRadius));
 
-    if(points.size()%3==0){
-        ofVec3f & c1 = points[points.size()-3];
-        ofVec3f & c2 = points[points.size()-2];
-        ofVec3f & p = points[points.size()-1];
-        path.quadBezierTo(c1, c2, p);
+        path[i].clear();
+        
+        for (int p = 2; p < points[i].size(); p+=3) {
+            ofVec3f & c1 = points[i][p-2];
+            ofVec3f & c2 = points[i][p-1];
+            ofVec3f & pnt = points[i][p];
+            path[i].quadBezierTo(c1, c2, pnt);
+        }
+
+        path[i].simplify();
+        
     }
-    path.simplify();
-    
-    
 }
 
-void SketchScene::draw(){
+void OpeningScene::draw(){
     
     ofSetColor(255,255);
     //ofDisableDepthTest();
-    drawLine();
+    drawLines();
     //ofEnableDepthTest();
-    if(points.size() > 2){
-        mat.begin();
-        ofDrawSphere(points[points.size()-1], radius);
-        mat.end();
-        ofPushMatrix();
-        ofTranslate(points[points.size()-1]*ofVec3f(1,0,1));
-        ofRotate(90, 1,0,0);
-        ofDrawEllipse(0,0,radius, radius);
-        ofPopMatrix();
-        ofPushMatrix();
-        ofScale(1,0.0,1);
-        path.draw();
-        ofPopMatrix();
+    
+}
+
+void OpeningScene::onStageSize(ofVec3f& vec){
+    
+}
+
+void OpeningScene::drawLines() {
+    
+    for (int i = 0; i < 2; i++) {
+        wideLines.begin();
+        wideLines.setUniform2f("_line_width", lineWidth.get().x,lineWidth.get().y);
+        wideLines.setUniform4f("_line_color", (i==0)?color1:color2);
+        wideLines.setUniform4f("_viewport", ofGetCurrentViewport().x,ofGetCurrentViewport().y, ofGetViewportWidth(), ofGetViewportHeight());
+        
+        vbo[i].setVertexData(&path[i].getOutline()[0].getVertices()[0], path[i].getOutline()[0].size(), GL_DYNAMIC_DRAW);
+        
+        vbo[i].draw(GL_LINE_STRIP, 0, path[i].getOutline()[0].size());
+        wideLines.end();
+    }
+}
+
+void OpeningScene::resetLines(){
+    noisePos.set(-22.1425, 7.235, 13.84);
+    pivotNoisePos.set(3.523, 7.777, -24.32);
+    for (int i = 0; i < 2; i++) {
+        points[i].clear();
+        path[i].clear();
     }
     
 }
 
-void SketchScene::onStageSize(ofVec3f& vec){
-
-}
-
-void SketchScene::drawLine() {
-    wideLines.begin();
-    wideLines.setUniform2f("_line_width", lineWidth.get().x,lineWidth.get().y);
-    wideLines.setUniform4f("_line_color", 1.0, 1.0, 0.0, 1.0);
-    wideLines.setUniform4f("_viewport", ofGetCurrentViewport().x,ofGetCurrentViewport().y, ofGetViewportWidth(), ofGetViewportHeight());
-    
-    vbo.setVertexData(&path.getOutline()[0].getVertices()[0], path.getOutline()[0].size(), GL_DYNAMIC_DRAW);
-    
-    delete colors;
-    
-    colors = new ofFloatColor[path.getOutline()[0].size()];
-    
-    for(int i = 0; i < path.getOutline()[0].size(); i++){
-        colors[i].setHsb(ofNoise(0.01*i), 1.0, 1.0);
-    }
-
-    vbo.setColorData(colors, path.getOutline()[0].size(), GL_DYNAMIC_DRAW);
-    vbo.draw(GL_LINE_STRIP, 0, path.getOutline()[0].size());
-    
-    wideLines.end();
-}
-
-void SketchScene::resetLine(){
-    noisePos.set(2.123, 4.46, 32.9);
-    pivotNoisePos.set(0.945, -7.777, 0);
-    colors = new ofFloatColor[1];
-    points.clear();
-    path.clear();
-}
-
-void SketchScene::drawModel(){
+void OpeningScene::drawModel(){
     ofEnableDepthTest();
-    drawLine();
+    drawLines();
     ofDisableDepthTest();
-    if(points.size()>2){
-        ofDrawSphere(points[points.size()-1], radius);
-    }
 }
 
-string SketchScene::vertexShader = R"(
+string OpeningScene::vertexShader = R"(
 //  wide_line.vs
 
 #version 330
@@ -154,18 +141,19 @@ uniform mat4 projectionMatrix;
 uniform mat4 textureMatrix;
 uniform mat4 modelViewProjectionMatrix;
 uniform mat4 normalMatrix;
+uniform vec4 _line_color;
 
 out vec4 vs_color;
 
 void main()
 {
     gl_Position = modelViewProjectionMatrix * position;
-    vs_color    = color;
+    vs_color    = _line_color;
 }
 
 )";
 
-string SketchScene::geometryShader = R"(
+string OpeningScene::geometryShader = R"(
 //  wide_line.gs
 
 //  Geometry shader for rendering wide lines
@@ -288,7 +276,7 @@ void main(void)
     gl_Position = d; v_color = vs_color[0]; EmitVertex();
     gl_Position = a; v_color = vs_color[0]; EmitVertex();
     EndPrimitive();
-
+    
 #else
     
 #if STRIP
@@ -320,7 +308,7 @@ void main(void)
 
 )";
 
-string SketchScene::fragmentShader = R"(
+string OpeningScene::fragmentShader = R"(
 //  wide_line.fs
 
 //  Fragment shader for rendering wide lines

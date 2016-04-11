@@ -1,0 +1,812 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		54421C77CC8CEF52E9F9E4B7 /* ofxCGALStreamlines.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 14AC6F27D50CE03F378BE1C5 /* ofxCGALStreamlines.cpp */; };
+		5EFAF95572DABD8D1455D917 /* ofxCGALBooleanOp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EF96A160F3089B5FA390890D /* ofxCGALBooleanOp.cpp */; };
+		B461434B1CBB9B2000A1F988 /* libboost_thread-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B46143451CBB9B2000A1F988 /* libboost_thread-mt.dylib */; };
+		B461434D1CBB9B2000A1F988 /* libgmp.10.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B46143471CBB9B2000A1F988 /* libgmp.10.dylib */; };
+		B461434E1CBB9B2000A1F988 /* libmpfr.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B46143481CBB9B2000A1F988 /* libmpfr.4.dylib */; };
+		B46143501CBB9EA900A1F988 /* libCGAL.11.0.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B461434F1CBB9EA900A1F988 /* libCGAL.11.0.1.dylib */; };
+		D62955B22DA181CBCA03BB4F /* IO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB9D7A1D5EF540311AD42B63 /* IO.cpp */; };
+		E169580176CB24CE8013EC4F /* ofxCGAL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B34F15206C5BF178DB9910D5 /* ofxCGAL.cpp */; };
+		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
+		E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1D0A3A1BDC003C02F2 /* main.cpp */; };
+		FD1643B7F9A569A4F304A6F7 /* ofxCGALSkinSurface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D3BB9625D0367B86B7B1EC2 /* ofxCGALSkinSurface.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E4328147138ABC890047C5CB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E4B27C1510CBEB8E00536013;
+			remoteInfo = openFrameworks;
+		};
+		E4EEB9AB138B136A00A80321 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = E4B27C1410CBEB8E00536013;
+			remoteInfo = openFrameworks;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E4C2427710CC5ABF004149E2 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		14AC6F27D50CE03F378BE1C5 /* ofxCGALStreamlines.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxCGALStreamlines.cpp; path = ../../../addons/ofxCGAL/src/ofxCGALStreamlines.cpp; sourceTree = SOURCE_ROOT; };
+		1F33F5204BAFE8B6C42FC015 /* IO.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = IO.h; path = ../../../addons/ofxCGAL/libs/ofxCGAL/include/ofxCGAL/IO.h; sourceTree = SOURCE_ROOT; };
+		3E8EDB5DD94CE0F41BB1CEEA /* Utility.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = Utility.h; path = ../../../addons/ofxCGAL/libs/ofxCGAL/include/ofxCGAL/Utility.h; sourceTree = SOURCE_ROOT; };
+		4D3BB9625D0367B86B7B1EC2 /* ofxCGALSkinSurface.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxCGALSkinSurface.cpp; path = ../../../addons/ofxCGAL/src/ofxCGALSkinSurface.cpp; sourceTree = SOURCE_ROOT; };
+		56533014DDE4B54B45B51411 /* ofPoissonSurfaceApp.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofPoissonSurfaceApp.h; path = src/ofPoissonSurfaceApp.h; sourceTree = SOURCE_ROOT; };
+		6A6139946B6A75A72653158E /* ofxCGALBooleanOp.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxCGALBooleanOp.h; path = ../../../addons/ofxCGAL/src/ofxCGALBooleanOp.h; sourceTree = SOURCE_ROOT; };
+		6C000ADD99E51D762FD5B663 /* ofBooleanUnionApp.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofBooleanUnionApp.h; path = src/ofBooleanUnionApp.h; sourceTree = SOURCE_ROOT; };
+		B34F15206C5BF178DB9910D5 /* ofxCGAL.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxCGAL.cpp; path = ../../../addons/ofxCGAL/src/ofxCGAL.cpp; sourceTree = SOURCE_ROOT; };
+		B46143451CBB9B2000A1F988 /* libboost_thread-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_thread-mt.dylib"; path = "../../../../../usr/local/Cellar/boost/1.60.0_1/lib/libboost_thread-mt.dylib"; sourceTree = "<group>"; };
+		B46143461CBB9B2000A1F988 /* libCGAL_Core.11.0.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libCGAL_Core.11.0.1.dylib; path = ../../../../../usr/local/Cellar/cgal/4.7/lib/libCGAL_Core.11.0.1.dylib; sourceTree = "<group>"; };
+		B46143471CBB9B2000A1F988 /* libgmp.10.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libgmp.10.dylib; path = ../../../../../usr/local/Cellar/gmp/6.1.0/lib/libgmp.10.dylib; sourceTree = "<group>"; };
+		B46143481CBB9B2000A1F988 /* libmpfr.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmpfr.4.dylib; path = ../../../../../usr/local/Cellar/mpfr/3.1.3/lib/libmpfr.4.dylib; sourceTree = "<group>"; };
+		B461434F1CBB9EA900A1F988 /* libCGAL.11.0.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libCGAL.11.0.1.dylib; path = ../../../../../usr/local/Cellar/cgal/4.7/lib/libCGAL.11.0.1.dylib; sourceTree = "<group>"; };
+		B7F2E57F7C71B24A0C31E348 /* ofxCGAL.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxCGAL.h; path = ../../../addons/ofxCGAL/src/ofxCGAL.h; sourceTree = SOURCE_ROOT; };
+		BCCC6BE7D4A9C578CD7EAB01 /* Types.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = Types.h; path = ../../../addons/ofxCGAL/libs/ofxCGAL/include/ofxCGAL/Types.h; sourceTree = SOURCE_ROOT; };
+		E0D080DC01A0C1A45F662676 /* ofSkinSurfaceApp.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofSkinSurfaceApp.h; path = src/ofSkinSurfaceApp.h; sourceTree = SOURCE_ROOT; };
+		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E4B69B5B0A3A1756003C02F2 /* exampleDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = exampleDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4B69E1D0A3A1BDC003C02F2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = SOURCE_ROOT; };
+		E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = "openFrameworks-Info.plist"; sourceTree = "<group>"; };
+		E4EB691F138AFCF100A09F29 /* CoreOF.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = CoreOF.xcconfig; path = ../../../libs/openFrameworksCompiled/project/osx/CoreOF.xcconfig; sourceTree = SOURCE_ROOT; };
+		E4EB6923138AFD0F00A09F29 /* Project.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Project.xcconfig; sourceTree = "<group>"; };
+		E7DE848CC9550067D98A39A0 /* ofStreamlinesApp.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofStreamlinesApp.h; path = src/ofStreamlinesApp.h; sourceTree = SOURCE_ROOT; };
+		EB9D7A1D5EF540311AD42B63 /* IO.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = IO.cpp; path = ../../../addons/ofxCGAL/libs/ofxCGAL/src/IO.cpp; sourceTree = SOURCE_ROOT; };
+		ED267D574EBFDFB209E3CFF5 /* ofxCGALStreamlines.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxCGALStreamlines.h; path = ../../../addons/ofxCGAL/src/ofxCGALStreamlines.h; sourceTree = SOURCE_ROOT; };
+		EEC7B4B5EC32195279F2815F /* ofxCGALSkinSurface.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxCGALSkinSurface.h; path = ../../../addons/ofxCGAL/src/ofxCGALSkinSurface.h; sourceTree = SOURCE_ROOT; };
+		EF96A160F3089B5FA390890D /* ofxCGALBooleanOp.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxCGALBooleanOp.cpp; path = ../../../addons/ofxCGAL/src/ofxCGALBooleanOp.cpp; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E4B69B590A3A1756003C02F2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B461434B1CBB9B2000A1F988 /* libboost_thread-mt.dylib in Frameworks */,
+				B46143501CBB9EA900A1F988 /* libCGAL.11.0.1.dylib in Frameworks */,
+				B461434D1CBB9B2000A1F988 /* libgmp.10.dylib in Frameworks */,
+				B461434E1CBB9B2000A1F988 /* libmpfr.4.dylib in Frameworks */,
+				E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		14532B1FB63E10BDBBDF0F1E /* ofxCGAL */ = {
+			isa = PBXGroup;
+			children = (
+				865BF53E3FB981A485AE5274 /* include */,
+				18056E7C4BCE7C7246B01775 /* src */,
+			);
+			name = ofxCGAL;
+			sourceTree = "<group>";
+		};
+		18056E7C4BCE7C7246B01775 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				EB9D7A1D5EF540311AD42B63 /* IO.cpp */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		5038010B175E7D1C67D82E36 /* ofxCGAL */ = {
+			isa = PBXGroup;
+			children = (
+				882D4ADEDEF8ED5156373FEA /* src */,
+				AB438F188DA2E8EEF2FC1E54 /* libs */,
+			);
+			name = ofxCGAL;
+			sourceTree = "<group>";
+		};
+		6948EE371B920CB800B5AC1A /* local_addons */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = local_addons;
+			sourceTree = "<group>";
+		};
+		865BF53E3FB981A485AE5274 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				C7A22BE990F26563A8D37DE8 /* ofxCGAL */,
+			);
+			name = include;
+			sourceTree = "<group>";
+		};
+		882D4ADEDEF8ED5156373FEA /* src */ = {
+			isa = PBXGroup;
+			children = (
+				B34F15206C5BF178DB9910D5 /* ofxCGAL.cpp */,
+				B7F2E57F7C71B24A0C31E348 /* ofxCGAL.h */,
+				EF96A160F3089B5FA390890D /* ofxCGALBooleanOp.cpp */,
+				6A6139946B6A75A72653158E /* ofxCGALBooleanOp.h */,
+				4D3BB9625D0367B86B7B1EC2 /* ofxCGALSkinSurface.cpp */,
+				EEC7B4B5EC32195279F2815F /* ofxCGALSkinSurface.h */,
+				14AC6F27D50CE03F378BE1C5 /* ofxCGALStreamlines.cpp */,
+				ED267D574EBFDFB209E3CFF5 /* ofxCGALStreamlines.h */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		AB438F188DA2E8EEF2FC1E54 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				14532B1FB63E10BDBBDF0F1E /* ofxCGAL */,
+			);
+			name = libs;
+			sourceTree = "<group>";
+		};
+		BB4B014C10F69532006C3DED /* addons */ = {
+			isa = PBXGroup;
+			children = (
+				5038010B175E7D1C67D82E36 /* ofxCGAL */,
+			);
+			name = addons;
+			sourceTree = "<group>";
+		};
+		C7A22BE990F26563A8D37DE8 /* ofxCGAL */ = {
+			isa = PBXGroup;
+			children = (
+				1F33F5204BAFE8B6C42FC015 /* IO.h */,
+				BCCC6BE7D4A9C578CD7EAB01 /* Types.h */,
+				3E8EDB5DD94CE0F41BB1CEEA /* Utility.h */,
+			);
+			name = ofxCGAL;
+			sourceTree = "<group>";
+		};
+		E4328144138ABC890047C5CB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E4328148138ABC890047C5CB /* openFrameworksDebug.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E4B69B4A0A3A1720003C02F2 = {
+			isa = PBXGroup;
+			children = (
+				B461434F1CBB9EA900A1F988 /* libCGAL.11.0.1.dylib */,
+				B46143451CBB9B2000A1F988 /* libboost_thread-mt.dylib */,
+				B46143461CBB9B2000A1F988 /* libCGAL_Core.11.0.1.dylib */,
+				B46143471CBB9B2000A1F988 /* libgmp.10.dylib */,
+				B46143481CBB9B2000A1F988 /* libmpfr.4.dylib */,
+				E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */,
+				E4EB6923138AFD0F00A09F29 /* Project.xcconfig */,
+				E4B69E1C0A3A1BDC003C02F2 /* src */,
+				E4EEC9E9138DF44700A80321 /* openFrameworks */,
+				BB4B014C10F69532006C3DED /* addons */,
+				6948EE371B920CB800B5AC1A /* local_addons */,
+				E4B69B5B0A3A1756003C02F2 /* exampleDebug.app */,
+			);
+			sourceTree = "<group>";
+		};
+		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
+				6C000ADD99E51D762FD5B663 /* ofBooleanUnionApp.h */,
+				56533014DDE4B54B45B51411 /* ofPoissonSurfaceApp.h */,
+				E0D080DC01A0C1A45F662676 /* ofSkinSurfaceApp.h */,
+				E7DE848CC9550067D98A39A0 /* ofStreamlinesApp.h */,
+			);
+			path = src;
+			sourceTree = SOURCE_ROOT;
+		};
+		E4EEC9E9138DF44700A80321 /* openFrameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E4EB691F138AFCF100A09F29 /* CoreOF.xcconfig */,
+				E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */,
+			);
+			name = openFrameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E4B69B5A0A3A1756003C02F2 /* example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "example" */;
+			buildPhases = (
+				E4B69B580A3A1756003C02F2 /* Sources */,
+				E4B69B590A3A1756003C02F2 /* Frameworks */,
+				E4B6FFFD0C3F9AB9008CF71C /* ShellScript */,
+				E4C2427710CC5ABF004149E2 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E4EEB9AC138B136A00A80321 /* PBXTargetDependency */,
+			);
+			name = example;
+			productName = myOFApp;
+			productReference = E4B69B5B0A3A1756003C02F2 /* exampleDebug.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E4B69B4C0A3A1720003C02F2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0600;
+			};
+			buildConfigurationList = E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "example" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = E4B69B4A0A3A1720003C02F2;
+			productRefGroup = E4B69B4A0A3A1720003C02F2;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = E4328144138ABC890047C5CB /* Products */;
+					ProjectRef = E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				E4B69B5A0A3A1756003C02F2 /* example */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		E4328148138ABC890047C5CB /* openFrameworksDebug.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = openFrameworksDebug.a;
+			remoteRef = E4328147138ABC890047C5CB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		E4B6FFFD0C3F9AB9008CF71C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "mkdir -p \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Resources/\"\n# Copy default icon file into App/Resources\nrsync -aved \"$ICON_FILE\" \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Resources/\"\n# Copy libfmod and change install directory for fmod to run\nrsync -aved ../../../libs/fmodex/lib/osx/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Frameworks/\";\ninstall_name_tool -change @executable_path/libfmodex.dylib @executable_path/../Frameworks/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\";\n# Copy GLUT framework (must remove for AppStore submissions)\nrsync -aved ../../../libs/glut/lib/osx/GLUT.framework \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Frameworks/\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E4B69B580A3A1756003C02F2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
+				E169580176CB24CE8013EC4F /* ofxCGAL.cpp in Sources */,
+				5EFAF95572DABD8D1455D917 /* ofxCGALBooleanOp.cpp in Sources */,
+				FD1643B7F9A569A4F304A6F7 /* ofxCGALSkinSurface.cpp in Sources */,
+				54421C77CC8CEF52E9F9E4B7 /* ofxCGALStreamlines.cpp in Sources */,
+				D62955B22DA181CBCA03BB4F /* IO.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E4EEB9AC138B136A00A80321 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = openFrameworks;
+			targetProxy = E4EEB9AB138B136A00A80321 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		E4B69B4E0A3A1720003C02F2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/bin/";
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				GCC_AUTO_VECTORIZATION = YES;
+				GCC_ENABLE_SSE3_EXTENSIONS = YES;
+				GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_UNINITIALIZED_AUTOS = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(OF_CORE_HEADERS)",
+					src,
+					../../../addons/ofxCGAL/libs,
+					../../../addons/ofxCGAL/libs/CGAL,
+					../../../addons/ofxCGAL/libs/CGAL/include,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Algebraic_kernel_d,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Algebraic_kernel_for_circles,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Algebraic_kernel_for_spheres,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Apollonius_graph_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Apollonius_graph_2/uncertain,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Approximate_min_ellipsoid_d,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Arithmetic_kernel,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Arr_geometry_traits,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Arr_point_location,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Arr_rat_arc,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Arr_spherical_gaussian_map_3,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Arr_topology_traits,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Arrangement_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Boolean_set_operations_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Box_intersection_d,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/CORE,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/CORE/geom2d,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/CORE/geom3d,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/CORE/poly,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Cartesian,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Circular_kernel_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Circular_kernel_3,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Circulator,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Convex_decomposition_3,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Convex_hull_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Curved_kernel_via_analysis_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Curved_kernel_via_analysis_2/gfx,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Curved_kernel_via_analysis_2/test,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Envelope_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Envelope_3,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Filtered_bbox_circular_kernel_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Filtered_kernel,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/GMP,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Homogeneous,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/IO,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/IO/pixmaps,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Intersections_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Intersections_3,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Kernel,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Kernel_d,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Kinetic,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Kinetic/IO,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Kinetic/IO/internal,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Kinetic/internal,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Kinetic/internal/Kernel,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Lapack,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Mesh_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Mesh_3,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Meshes,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Min_circle_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Min_ellipse_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Min_sphere_d,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Min_sphere_of_spheres_d,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Minkowski_sum_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Minkowski_sum_3,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Modular_arithmetic,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Nef_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Nef_3,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Nef_S2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Number_types,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/OpenNL,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Optimisation,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Partition_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Polygon_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Polynomial,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Polynomial/internal,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Polynomial/internal/Filtered_kernel,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Polynomial/internal/Filtered_rational,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Polynomial/internal/Kernel,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Polynomial/internal/Rational,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/QP_solver,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Qt,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/RS,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/RS/ugcd,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Segment_Delaunay_graph_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Sqrt_extension,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Straight_skeleton_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Surface_mesh_simplification,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Surface_mesh_simplification/Detail,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Surface_mesh_simplification/Policies,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Surface_mesh_simplification/Policies/Edge_collapse,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Surface_mesh_simplification/Policies/Edge_collapse/Detail,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Surface_mesher,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Sweep_line_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Tools,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Voronoi_diagram_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/auto_link,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/boost,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/boost/graph,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/constructions,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/export,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/internal,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/internal/AABB_tree,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/internal/Intersections_3,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/internal/Mesh_3,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/internal/Operations_on_polyhedra,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/internal/Static_filters,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/internal/boost,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/internal/corefinement,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/predicates,
+					../../../addons/ofxCGAL/libs/CGAL/include/ceres,
+					../../../addons/ofxCGAL/libs/CGAL/include/ceres/internal,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/Cholesky,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/CholmodSupport,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/Core,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/Core/arch,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/Core/arch/AltiVec,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/Core/arch/Default,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/Core/arch/NEON,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/Core/arch/SSE,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/Core/products,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/Core/util,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/Eigen2Support,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/Eigen2Support/Geometry,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/Eigenvalues,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/Geometry,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/Geometry/arch,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/Householder,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/IterativeLinearSolvers,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/Jacobi,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/LU,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/LU/arch,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/OrderingMethods,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/PaStiXSupport,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/PardisoSupport,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/QR,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/SVD,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/SparseCholesky,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/SparseCore,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/StlSupport,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/SuperLUSupport,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/UmfPackSupport,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/misc,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/plugins,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/unsupported,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/unsupported/Eigen,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/unsupported/Eigen/src,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/unsupported/Eigen/src/AutoDiff,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/unsupported/Eigen/src/BVH,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/unsupported/Eigen/src/FFT,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/unsupported/Eigen/src/IterativeSolvers,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/unsupported/Eigen/src/KroneckerProduct,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/unsupported/Eigen/src/MatrixFunctions,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/unsupported/Eigen/src/MoreVectorization,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/unsupported/Eigen/src/NonLinearOptimization,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/unsupported/Eigen/src/NumericalDiff,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/unsupported/Eigen/src/Polynomials,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/unsupported/Eigen/src/Skyline,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/unsupported/Eigen/src/SparseExtra,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/unsupported/Eigen/src/Splines,
+					../../../addons/ofxCGAL/libs/CGAL/include/gflags,
+					../../../addons/ofxCGAL/libs/CGAL/include/glog,
+					../../../addons/ofxCGAL/libs/CGAL/lib,
+					../../../addons/ofxCGAL/libs/CGAL/lib/osx,
+					../../../addons/ofxCGAL/libs/CGAL/lib/osx/CGAL,
+					../../../addons/ofxCGAL/libs/ofxCGAL,
+					../../../addons/ofxCGAL/libs/ofxCGAL/include,
+					../../../addons/ofxCGAL/libs/ofxCGAL/include/ofxCGAL,
+					../../../addons/ofxCGAL/libs/ofxCGAL/src,
+					../../../addons/ofxCGAL/src,
+					/../../../addons/ofxOSXBoost/libs/boost/include,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CPLUSPLUSFLAGS = (
+					"-D__MACOSX_CORE__",
+					"-mtune=native",
+				);
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		E4B69B4F0A3A1720003C02F2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/bin/";
+				COPY_PHASE_STRIP = YES;
+				DEAD_CODE_STRIPPING = YES;
+				GCC_AUTO_VECTORIZATION = YES;
+				GCC_ENABLE_SSE3_EXTENSIONS = YES;
+				GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_UNROLL_LOOPS = YES;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_UNINITIALIZED_AUTOS = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(OF_CORE_HEADERS)",
+					src,
+					../../../addons/ofxCGAL/libs,
+					../../../addons/ofxCGAL/libs/CGAL,
+					../../../addons/ofxCGAL/libs/CGAL/include,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Algebraic_kernel_d,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Algebraic_kernel_for_circles,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Algebraic_kernel_for_spheres,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Apollonius_graph_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Apollonius_graph_2/uncertain,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Approximate_min_ellipsoid_d,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Arithmetic_kernel,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Arr_geometry_traits,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Arr_point_location,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Arr_rat_arc,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Arr_spherical_gaussian_map_3,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Arr_topology_traits,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Arrangement_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Boolean_set_operations_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Box_intersection_d,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/CORE,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/CORE/geom2d,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/CORE/geom3d,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/CORE/poly,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Cartesian,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Circular_kernel_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Circular_kernel_3,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Circulator,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Convex_decomposition_3,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Convex_hull_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Curved_kernel_via_analysis_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Curved_kernel_via_analysis_2/gfx,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Curved_kernel_via_analysis_2/test,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Envelope_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Envelope_3,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Filtered_bbox_circular_kernel_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Filtered_kernel,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/GMP,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Homogeneous,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/IO,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/IO/pixmaps,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Intersections_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Intersections_3,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Kernel,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Kernel_d,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Kinetic,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Kinetic/IO,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Kinetic/IO/internal,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Kinetic/internal,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Kinetic/internal/Kernel,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Lapack,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Mesh_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Mesh_3,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Meshes,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Min_circle_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Min_ellipse_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Min_sphere_d,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Min_sphere_of_spheres_d,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Minkowski_sum_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Minkowski_sum_3,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Modular_arithmetic,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Nef_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Nef_3,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Nef_S2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Number_types,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/OpenNL,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Optimisation,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Partition_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Polygon_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Polynomial,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Polynomial/internal,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Polynomial/internal/Filtered_kernel,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Polynomial/internal/Filtered_rational,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Polynomial/internal/Kernel,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Polynomial/internal/Rational,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/QP_solver,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Qt,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/RS,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/RS/ugcd,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Segment_Delaunay_graph_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Sqrt_extension,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Straight_skeleton_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Surface_mesh_simplification,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Surface_mesh_simplification/Detail,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Surface_mesh_simplification/Policies,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Surface_mesh_simplification/Policies/Edge_collapse,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Surface_mesh_simplification/Policies/Edge_collapse/Detail,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Surface_mesher,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Sweep_line_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Tools,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/Voronoi_diagram_2,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/auto_link,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/boost,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/boost/graph,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/constructions,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/export,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/internal,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/internal/AABB_tree,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/internal/Intersections_3,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/internal/Mesh_3,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/internal/Operations_on_polyhedra,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/internal/Static_filters,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/internal/boost,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/internal/corefinement,
+					../../../addons/ofxCGAL/libs/CGAL/include/CGAL/predicates,
+					../../../addons/ofxCGAL/libs/CGAL/include/ceres,
+					../../../addons/ofxCGAL/libs/CGAL/include/ceres/internal,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/Cholesky,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/CholmodSupport,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/Core,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/Core/arch,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/Core/arch/AltiVec,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/Core/arch/Default,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/Core/arch/NEON,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/Core/arch/SSE,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/Core/products,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/Core/util,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/Eigen2Support,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/Eigen2Support/Geometry,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/Eigenvalues,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/Geometry,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/Geometry/arch,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/Householder,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/IterativeLinearSolvers,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/Jacobi,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/LU,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/LU/arch,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/OrderingMethods,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/PaStiXSupport,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/PardisoSupport,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/QR,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/SVD,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/SparseCholesky,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/SparseCore,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/StlSupport,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/SuperLUSupport,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/UmfPackSupport,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/misc,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/Eigen/src/plugins,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/unsupported,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/unsupported/Eigen,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/unsupported/Eigen/src,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/unsupported/Eigen/src/AutoDiff,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/unsupported/Eigen/src/BVH,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/unsupported/Eigen/src/FFT,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/unsupported/Eigen/src/IterativeSolvers,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/unsupported/Eigen/src/KroneckerProduct,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/unsupported/Eigen/src/MatrixFunctions,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/unsupported/Eigen/src/MoreVectorization,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/unsupported/Eigen/src/NonLinearOptimization,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/unsupported/Eigen/src/NumericalDiff,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/unsupported/Eigen/src/Polynomials,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/unsupported/Eigen/src/Skyline,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/unsupported/Eigen/src/SparseExtra,
+					../../../addons/ofxCGAL/libs/CGAL/include/eigen3/unsupported/Eigen/src/Splines,
+					../../../addons/ofxCGAL/libs/CGAL/include/gflags,
+					../../../addons/ofxCGAL/libs/CGAL/include/glog,
+					../../../addons/ofxCGAL/libs/CGAL/lib,
+					../../../addons/ofxCGAL/libs/CGAL/lib/osx,
+					../../../addons/ofxCGAL/libs/CGAL/lib/osx/CGAL,
+					../../../addons/ofxCGAL/libs/ofxCGAL,
+					../../../addons/ofxCGAL/libs/ofxCGAL/include,
+					../../../addons/ofxCGAL/libs/ofxCGAL/include/ofxCGAL,
+					../../../addons/ofxCGAL/libs/ofxCGAL/src,
+					../../../addons/ofxCGAL/src,
+					/../../../addons/ofxOSXBoost/libs/boost/include,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				OTHER_CPLUSPLUSFLAGS = (
+					"-D__MACOSX_CORE__",
+					"-mtune=native",
+				);
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		E4B69B600A3A1757003C02F2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../libs/glut/lib/osx\"";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = NONE;
+				ICON = "$(ICON_NAME_DEBUG)";
+				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
+				INFOPLIST_FILE = "openFrameworks-Info.plist";
+				INSTALL_PATH = /Applications;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/boost/1.60.0_1/lib,
+					/usr/local/Cellar/cgal/4.7/lib,
+					/usr/local/Cellar/gmp/6.1.0/lib,
+					/usr/local/Cellar/mpfr/3.1.3/lib,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)Debug";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		E4B69B610A3A1757003C02F2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../libs/glut/lib/osx\"";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = NONE;
+				ICON = "$(ICON_NAME_RELEASE)";
+				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
+				INFOPLIST_FILE = "openFrameworks-Info.plist";
+				INSTALL_PATH = /Applications;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/boost/1.60.0_1/lib,
+					/usr/local/Cellar/cgal/4.7/lib,
+					/usr/local/Cellar/gmp/6.1.0/lib,
+					/usr/local/Cellar/mpfr/3.1.3/lib,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+				baseConfigurationReference = E4EB6923138AFD0F00A09F29;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E4B69B4E0A3A1720003C02F2 /* Debug */,
+				E4B69B4F0A3A1720003C02F2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E4B69B600A3A1757003C02F2 /* Debug */,
+				E4B69B610A3A1757003C02F2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E4B69B4C0A3A1720003C02F2 /* Project object */;
+}

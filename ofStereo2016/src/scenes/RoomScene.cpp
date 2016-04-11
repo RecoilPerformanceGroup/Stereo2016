@@ -75,12 +75,13 @@ void RoomScene::draw() {
 }
 
 void RoomScene::drawModel(){
+    ofEnableAlphaBlending();
     ofParameter<ofVec3f> &stage_size = globalParams->getVec3f("stage_size_cm");
     ofSetColor(255,0,0,127);
     ofDrawSphere(getDancerPositionInWorldCoordinates(1), 20);
     ofSetColor(0,255,255,127);
     ofDrawSphere(getDancerPositionInWorldCoordinates(2), 20);
-    ofSetColor(255,64);
+    ofSetColor(255,16);
     floor.drawWireframe();
     wall.drawWireframe();
     

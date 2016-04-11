@@ -761,11 +761,13 @@ void ofApp::drawGui(ofEventArgs &args) {
         worldModelCam.begin();
         ofEnableDepthTest();
         world.drawModel(!(gui->getDropdown("Model View")->getSelected()->getLabel() == "CAMERA MODEL VIEW"));
-        ofEnableDepthTest();
         for(auto s : scenes) {
             if(s->enabled) {
+                ofPushView();ofPushStyle();ofPushMatrix();
+                ofDisableDepthTest();
                 s->drawModel();
-            }   
+                ofPopMatrix();ofPopStyle();ofPopView();
+            }
         }
         worldModelCam.end();
     }
@@ -937,17 +939,15 @@ void ofApp::mouseExitedGui(int x, int y){
 }
 
 void ofApp::mouseScrolledGui(int x, int y, int scrollX, int scrollY){
-
 }
 
 void ofApp::windowResizedGui(int w, int h){
-
 }
+
 void ofApp::dragEventGui(ofDragInfo dragInfo){
-
 }
-void ofApp::gotMessageGui(ofMessage msg){
 
+void ofApp::gotMessageGui(ofMessage msg){
 }
 
 // TODO check if it worked
@@ -957,7 +957,6 @@ void ofApp::saveAllParameters() {
     for( auto s : scenes) {
         saveParameters(s->params);
     }
-
 }
 
 void ofApp::loadAllParameters() {

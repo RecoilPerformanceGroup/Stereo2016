@@ -18,6 +18,17 @@ VoroNode::VoroNode() {
     clearParent();
 };
 
+/*VoroNode::VoroNode(const VoroNode& o) : ofNode(o) {
+    counter = o.counter;
+    isSplit = o.isSplit;
+    minBounds = o.minBounds;
+    maxBounds = o.maxBounds;
+    level = o.level;
+    bDraw = o.bDraw;
+    mesh = o.mesh;
+    nCells = o.nCells;
+};*/
+
 VoroNode::VoroNode(ofVboMesh _mesh) {
     counter++;
     isSplit = false;
@@ -226,8 +237,8 @@ void VoroNode::clearChildren(){
     voroChildren.clear();
 }
 
-set<VoroNode *> VoroNode::getChildren() {
-    return voroChildren;
+vector<VoroNode *> VoroNode::getChildren() {
+    return vector<VoroNode *> (voroChildren.begin(), voroChildren.end());
 };
 
 
@@ -244,13 +255,49 @@ VoroNode & VoroNode::detachNodes(set<VoroNode *> nodes) {
 }
 
 
+ofVboMesh & VoroNode::getBakedMesh() {
+    
+    bakedMesh = mesh;
+    // todo cache if node didn't change
+    int iv = 0;
+    for(auto v : mesh.getVertices()) {
+        bakedMesh.setVertex(iv++, v*getGlobalTransformMatrix());
+    }
+    
+    return bakedMesh;
+}
+
+
+vector<VoroNode *> VoroNode::getNearestChildren(ofPoint point, int maxNum, bool recursive) {
+    
+    vector<VoroNode *> sortme;
+    
+    for(auto n : voroChildren) {
+        sortme.push_back(n);
+        
+        // Todo: make recursive
+        /*if(recursive) {
+            for(auto nn : n->getChildren()) {
+                sortme.push_back(nn);
+            }
+            sortme.insert(n->getChildren().begin(), n->getChildren().end());
+        }*/
+    }
+    
+    std::sort(sortme.begin(), sortme.end(), [point](VoroNode * x, VoroNode * y){ return x->getGlobalPosition().distance(point) < y->getGlobalPosition().distance(point); });
+    
+    vector<VoroNode *> select(sortme.begin(), sortme.begin()+maxNum);
+    
+    return select;
+}
+
 // global flag ?
 set<VoroNode *> VoroNode::getChildrenInSphere(ofPoint point, float radius, bool recursive) {
     
     set<VoroNode *> select;
     
     for(auto n : voroChildren) {
-        if(n->getPosition().distance(point) < radius) {
+        if(n->getGlobalPosition().distance(point) < radius) {
             select.insert(n);
         }
         
@@ -350,7 +397,17 @@ void VoroNode::setupFromBoundingBox(float _w, float _h, float _d, int _c, bool o
 
 
 void VoroNode::customDraw() {
-    if(bDraw) mesh.drawFaces();
+    if(bDraw) {
+        
+        ofPushMatrix();
+        
+        ofTranslate(renderPosOffset);
+        
+        mesh.drawFaces();
+        
+        ofPopMatrix();
+        
+    }
 }
 
 void VoroNode::draw(OrganicMaterial * m) {

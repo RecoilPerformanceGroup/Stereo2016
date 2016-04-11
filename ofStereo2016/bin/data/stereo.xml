@@ -1,154 +1,125 @@
 <stereo>
-	<Background_Color>0, 0, 0, 0</Background_Color>
+	<stageSize>800, 500, 800</stageSize>
+	<Projector_Calibration>0</Projector_Calibration>
+	<Camera_Calibration>0</Camera_Calibration>
+	<Background_Color>255, 255, 255, 0</Background_Color>
 	<Second_Screen_Model>0</Second_Screen_Model>
-	<world>
-		<camera>
-			<camera_position>0, 200, 1200</camera_position>
-			<eye_separation>145.455</eye_separation>
-			<focus_distance>200</focus_distance>
-			<camera_near_clip>20</camera_near_clip>
-		<cameraPosition>0, 250, 1200</cameraPosition>
-			<eyeSeparation>7</eyeSeparation>
-			<focusDistance>200</focusDistance>
-			<cameraNearClip>20</cameraNearClip>
-		<position>0, 250, 1200</position>
-			<nearClip>20</nearClip>
-		</camera>
-		<pixels_pr__cm>2</pixels_pr__cm>
-		<WALL>
-			<UnknownName>1</UnknownName>
-			<position>0, 0, 0</position>
-			<size>804, 402</size>
-			<Left_Quad>
-				<Output_Points>
-					<Top_Left>0.22582, 0.00943623, 0</Top_Left>
-					<Top_Right>0.750909, -0.000317782, 0</Top_Right>
-					<Bottom_Right>0.747374, 0.346287, 0</Bottom_Right>
-					<Bottom_Left>0.232718, 0.352114, 0</Bottom_Left>
-				</Output_Points>
-			</Left_Quad>
-			<Right_Quad>
-				<Output_Points>
-					<Top_Left>0.226171, 0.0633386, 0</Top_Left>
-					<Top_Right>0.746085, 0.069677, 0</Top_Right>
-					<Bottom_Right>0.738282, 0.412194, 0</Bottom_Right>
-					<Bottom_Left>0.228245, 0.404969, 0</Bottom_Left>
-				</Output_Points>
-			</Right_Quad>
-		</WALL>
-		<FLOOR>
-			<UnknownName>1</UnknownName>
-			<position>0, 0, 0</position>
-			<size>804, 800</size>
-			<Left_Quad>
-				<Output_Points>
-					<Top_Left>0.232718, 0.352114, 0</Top_Left>
-					<Top_Right>0.747374, 0.346287, 0</Top_Right>
-					<Bottom_Right>1.16241, 0.839782, 0</Bottom_Right>
-					<Bottom_Left>-0.127408, 0.827138, 0</Bottom_Left>
-				</Output_Points>
-			</Left_Quad>
-			<Right_Quad>
-				<Output_Points>
-					<Top_Left>0.228245, 0.404969, 0</Top_Left>
-					<Top_Right>0.738282, 0.412194, 0</Top_Right>
-					<Bottom_Right>1.08806, 0.904549, 0</Bottom_Right>
-					<Bottom_Left>-0.189447, 0.874926, 0</Bottom_Left>
-				</Output_Points>
-			</Right_Quad>
-		</FLOOR>
-	<pixelsCm>0.6294</pixelsCm>
-	</world>
-<stereo/>
-<scenes>
-		<mountainScene>
+	<scenes>
+		<VoroScenes>
 			<enabled>0</enabled>
-			<anaglyphAmount>0</anaglyphAmount>
-			<anaglyphColorLeft>0, 255, 255, 255</anaglyphColorLeft>
-			<anaglyphColorRight>255, 0, 0, 255</anaglyphColorRight>
-			<mountain>
-				<randomSeed>1887</randomSeed>
-				<cellCount>31</cellCount>
-				<size>500, 200, 200</size>
-				<position>0, -60, 600</position>
-				<rotation>-7.34702, 3.89832, -3.59857</rotation>
-			<color>255, 255, 255, 255</color>
+			<add_to_qlab>0</add_to_qlab>
+			<cluster>
+				<cells>2</cells>
+				<seed>2</seed>
+				<origin>0, 0, 0</origin>
+				<subtractOffset>0, 0, 0</subtractOffset>
+				<scale>1</scale>
+				<scaleCells>0</scaleCells>
+				<color>1, 1, 1, 1</color>
 				<material>
 					<noise>
 						<displacement>
-							<velocity>0.15, 0.15, 0.75</velocity>
-							<scale>1540.06, 20, 400</scale>
-							<amount>0, 0, 0</amount>
-						</displacement>
-						<light>
-							<velocity>4357.91, 43.377, 264.635</velocity>
-							<scale>30613.4</scale>
-							<amount>0</amount>
-							<angle>1, -0.00672525, 1</angle>
-						</light>
-						<texture>
 							<velocity>0, 0, 0</velocity>
 							<scale>1, 1, 1</scale>
-							<amount>0.00256753</amount>
+							<amount>0, 0, 0</amount>
+						</displacement>
+						<texture>
+							<velocity>0, 0, 0</velocity>
+							<scale>1.6666, 1.6666, 1.6666</scale>
+							<amount>-0.025</amount>
 						</texture>
 					</noise>
 				</material>
-			<selectRadius>2</selectRadius>
-				<selectPosition>0, -100000, -50000</selectPosition>
-				<split>0</split>
-			</mountain>
+			</cluster>
+		</VoroScenes>
+		<roomScene>
+			<enabled>0</enabled>
+			<add_to_qlab>0</add_to_qlab>
+			<dancers>
+				<1>-0.2, 0, 0.5</1>
+				<2>0.2, 0, 0.5</2>
+			</dancers>
 			<floor>
-				<color>255, 255, 255, 255</color>
+				<color>0, 0, 0, 0</color>
+				<light>255, 255, 255, 255</light>
+				<material>
+					<noise>
+						<displacement>
+							<velocity>0, 0, 0</velocity>
+							<scale>1, 1, 1</scale>
+							<amount>0, 0, 0</amount>
+						</displacement>
+						<texture>
+							<velocity>0, 0, 0</velocity>
+							<scale>1.6666, 1.6666, 1.6666</scale>
+							<amount>-0.025</amount>
+						</texture>
+					</noise>
+				</material>
 			</floor>
 			<wall>
-				<color>255, 255, 255, 255</color>
+				<color>0, 0, 0, 0</color>
+				<light>255, 255, 255, 255</light>
+				<material>
+					<noise>
+						<displacement>
+							<velocity>0, 0, 0</velocity>
+							<scale>1, 1, 1</scale>
+							<amount>0, 0, 0</amount>
+						</displacement>
+						<texture>
+							<velocity>0, 0, 0</velocity>
+							<scale>1.6666, 1.6666, 1.6666</scale>
+							<amount>-0.025</amount>
+						</texture>
+					</noise>
+				</material>
 			</wall>
-		<add_to_qlab>0</add_to_qlab>
-		</mountainScene>
+		</roomScene>
 		<Lights>
 			<enabled>1</enabled>
+			<add_to_qlab>0</add_to_qlab>
 			<directionalLight>
-				<diffuseColor>126, 140, 152, 255</diffuseColor>
+				<diffuseColor>79, 79, 79, 255</diffuseColor>
 				<ambientColor>0, 0, 0, 255</ambientColor>
 				<specularColor>0, 0, 0, 255</specularColor>
-				<position>1149.52, 212.409, 3856.72</position>
-				<lookAt>4.16309, 4.16309, 420.656</lookAt>
+				<position>-620.577, 1149.52, 1982.5</position>
+				<lookAt>4.16309, 4.16309, 212.409</lookAt>
 			</directionalLight>
 			<spotLight>
-				<diffuseColor>255, 255, 255, 255</diffuseColor>
+				<diffuseColor>53, 51, 51, 255</diffuseColor>
 				<ambientColor>0, 0, 0, 255</ambientColor>
 				<specularColor>0, 0, 0, 255</specularColor>
-				<position>1045.4, 3336.11, 1357.77</position>
+				<position>1045.4, 3336.11, 1774.26</position>
 				<lookAt>4.16309, 4.16309, 628.903</lookAt>
 				<spotConcentration>42.8571</spotConcentration>
 			</spotLight>
 			<areaLight>
-				<diffuseColor>167, 167, 167, 255</diffuseColor>
+				<diffuseColor>95, 93, 93, 255</diffuseColor>
 				<ambientColor>0, 0, 0, 255</ambientColor>
 				<specularColor>0, 0, 0, 255</specularColor>
-				<position>-3223.66, -2807.17, 420.656</position>
+				<position>-828.824, 1149.52, 420.656</position>
 				<lookAt>4.16309, 4.16309, 524.779</lookAt>
 				<width>6887.76</width>
 				<height>6785.71</height>
 			</areaLight>
-		<add_to_qlab>0</add_to_qlab>
 		</Lights>
-	<PlateauScene>
+		<PlateauScene>
 			<enabled>0</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<anaglyphAmount>0</anaglyphAmount>
-			<anaglyphColorLeft>0, 255, 255, 255</anaglyphColorLeft>
-			<anaglyphColorRight>255, 0, 0, 255</anaglyphColorRight>
-			<floor>
-				<color>255, 255, 255, 255</color>
-			</floor>
+			<anaglyphColorLeft>0, 1, 1, 1</anaglyphColorLeft>
+			<anaglyphColorRight>1, 0, 0, 1</anaglyphColorRight>
 			<Plateau>
 				<randomSeed>0</randomSeed>
 				<cellCount>520</cellCount>
-				<size>420.656, 420.656, 264.471</size>
-				<position>420.656, 316.533, -2286.55</position>
+				<size>500.656, 400, 300</size>
+				<plateauPivotOrigin>0, -4898.59, 0.41626</plateauPivotOrigin>
+				<plateauPivotNoiseAmount>0</plateauPivotNoiseAmount>
+				<plateauPivotNoiseSpeed>0</plateauPivotNoiseSpeed>
+				<position>0, 0, 400</position>
 				<rotation>0, 0, 0</rotation>
-				<color>255, 255, 255, 255</color>
+				<color>1, 1, 1, 1</color>
 				<selectRadius>0</selectRadius>
 				<selectPosition>0, 3648.48, -15576.9</selectPosition>
 				<split>1683.67</split>
@@ -159,12 +130,6 @@
 							<scale>0, 0, 1</scale>
 							<amount>0, 0, 0</amount>
 						</displacement>
-						<light>
-							<velocity>0, 0, 0</velocity>
-							<scale>10000</scale>
-							<amount>0</amount>
-							<angle>0, 1, 0</angle>
-						</light>
 						<texture>
 							<velocity>0, 0, 0</velocity>
 							<scale>1.6666, 1.6666, 1.6666</scale>
@@ -172,172 +137,120 @@
 						</texture>
 					</noise>
 				</material>
-			<zeroPosition>0, 0</zeroPosition>
 			</Plateau>
 		</PlateauScene>
-	<Crystal>
-			<enabled>0</enabled>
-			<rebuild>0</rebuild>
-			<origin>0, -900, 0</origin>
-			<Cells>63</Cells>
-			<Automatic_rotation>0.204082, 0.377551, -0.153061</Automatic_rotation>
-			<rot_speed>0.31</rot_speed>
-			<Crystal_color>1, 1, 1, 0</Crystal_color>
-			<spotlightPosition>61.2244, 0, 0</spotlightPosition>
-			<scale>10</scale>
-			<scaleCells>0.41958</scaleCells>
-			<Debug_draw>0</Debug_draw>
-			<displacement>
-				<velocity>0.941273, 0.941273, 0.941273</velocity>
-				<scale>0, 0, 0</scale>
-				<amount>0, 0, 0</amount>
-			</displacement>
-		<material>
-				<noise>
-					<displacement>
-						<velocity>0, 0, 0</velocity>
-						<scale>3509.25, 1, 1</scale>
-						<amount>0, 0, 0</amount>
-					</displacement>
-					<light>
-						<velocity>-6587.74, 0, 0</velocity>
-						<scale>30407.4</scale>
-						<amount>0</amount>
-						<angle>0, 1, 0</angle>
-					</light>
-					<texture>
-						<velocity>0, 0, 0</velocity>
-						<scale>3657.63, 3820.26, 3603.42</scale>
-						<amount>-0.221855</amount>
-					</texture>
-				</noise>
-			</material>
-		<add_to_qlab>0</add_to_qlab>
-		<cluster>
-				<cells>2</cells>
-				<origin>0, 0, 0</origin>
-				<scale>0</scale>
-				<scaleCells>0</scaleCells>
-				<rotationAxis>0, 0, 0</rotationAxis>
-				<rotationSpeed>0</rotationSpeed>
-				<color>1, 1, 1, 1</color>
-				<material>
-					<noise>
-						<displacement>
-							<velocity>0, 0, 0</velocity>
-							<scale>1, 1, 1</scale>
-							<amount>0, 0, 0</amount>
-						</displacement>
-						<light>
-							<velocity>0, 0, 0</velocity>
-							<scale>10000</scale>
-							<amount>0</amount>
-							<angle>0, 1, 0</angle>
-						</light>
-						<texture>
-							<velocity>0, 0, 0</velocity>
-							<scale>1.6666, 1.6666, 1.6666</scale>
-							<amount>-0.025</amount>
-						</texture>
-					</noise>
-				</material>
-			</cluster>
-			<crystal>
-				<seed>2</seed>
-				<size>250</size>
-				<origin>0, 0, 0</origin>
-				<rotationAxis>0, 0, 0</rotationAxis>
-				<rotationSpeed>0</rotationSpeed>
-				<color>1, 1, 1, 1</color>
-				<material>
-					<noise>
-						<displacement>
-							<velocity>0, 0, 0</velocity>
-							<scale>1, 1, 1</scale>
-							<amount>0, 0, 0</amount>
-						</displacement>
-						<light>
-							<velocity>0, 0, 0</velocity>
-							<scale>10000</scale>
-							<amount>0</amount>
-							<angle>0, 1, 0</angle>
-						</light>
-						<texture>
-							<velocity>0, 0, 0</velocity>
-							<scale>1.6666, 1.6666, 1.6666</scale>
-							<amount>-0.025</amount>
-						</texture>
-					</noise>
-				</material>
-			</crystal>
-		</Crystal>
-	<roomScene>
+		<openingScene>
+			<enabled>1</enabled>
+			<add_to_qlab>0</add_to_qlab>
+			<speed>1.75</speed>
+			<radius>20</radius>
+			<length>800</length>
+			<color1>1, 1, 1, 1</color1>
+			<color2>1, 1, 1, 1</color2>
+			<space>200, 200, 200</space>
+			<pivotRadius>20</pivotRadius>
+			<pivotSpeed>0.02</pivotSpeed>
+			<lineWidth>3.06123, 100</lineWidth>
+			<positionTowardsCamera>0</positionTowardsCamera>
+			<reset>0</reset>
+			<titleTrigger>0</titleTrigger>
+		</openingScene>
+		<sketch>
 			<enabled>0</enabled>
 			<add_to_qlab>0</add_to_qlab>
-			<floor>
-				<color>255, 255, 255, 255</color>
-				<light>255, 255, 255, 255</light>
-				<material>
-					<noise>
-						<displacement>
-							<velocity>0, 0, 0</velocity>
-							<scale>1, 1, 1</scale>
-							<amount>0, 0, 0</amount>
-						</displacement>
-						<light>
-							<velocity>0, 0, 0</velocity>
-							<scale>10000</scale>
-							<amount>0</amount>
-							<angle>0, 1, 0</angle>
-						</light>
-						<texture>
-							<velocity>0, 0, 0</velocity>
-							<scale>1.6666, 1.6666, 1.6666</scale>
-							<amount>-0.05</amount>
-						</texture>
-					</noise>
-				</material>
-			</floor>
-			<wall>
-				<color>255, 255, 255, 255</color>
-				<light>255, 255, 255, 255</light>
-				<material>
-					<noise>
-						<displacement>
-							<velocity>0, 0, 0</velocity>
-							<scale>1, 1, 1</scale>
-							<amount>0, 0, 0</amount>
-						</displacement>
-						<light>
-							<velocity>0, 0, 0</velocity>
-							<scale>10000</scale>
-							<amount>0</amount>
-							<angle>0, 1, 0</angle>
-						</light>
-						<texture>
-							<velocity>0, 0, 0</velocity>
-							<scale>1.6666, 1.6666, 1.6666</scale>
-							<amount>-0.05</amount>
-						</texture>
-					</noise>
-				</material>
-			</wall>
-		</roomScene>
-	<sketch>
-			<enabled>1</enabled>
-			<Sketch>0</Sketch>
-		<speed>0.5</speed>
-		<radius>24</radius>
+			<lineWidth>10, 10</lineWidth>
+			<speed>0.5</speed>
+			<radius>24</radius>
 			<origin>0, 244.898, 400</origin>
 			<space>382.653, 20, 448.98</space>
 			<pivotRadius>10</pivotRadius>
 			<pivotSpeed>6</pivotSpeed>
-		<positionTowardsCamera>0</positionTowardsCamera>
-		<reset>0</reset>
-		<add_to_qlab>0</add_to_qlab>
+			<positionTowardsCamera>0</positionTowardsCamera>
+			<reset>0</reset>
 		</sketch>
+		<VoroEnd>
+			<enabled>0</enabled>
+			<add_to_qlab>0</add_to_qlab>
+			<material>
+				<noise>
+					<displacement>
+						<velocity>0, 0, 0</velocity>
+						<scale>1, 1, 1</scale>
+						<amount>0, 0, 0</amount>
+					</displacement>
+					<texture>
+						<velocity>0, 0, 0</velocity>
+						<scale>1.6666, 1.6666, 1.6666</scale>
+						<amount>-0.025</amount>
+					</texture>
+				</noise>
+			</material>
+			<wall>
+				<cells>2</cells>
+				<seed>2</seed>
+				<origin>0, 0, 0</origin>
+				<wall_rotation>0, 0, 0</wall_rotation>
+				<noise_speed>0</noise_speed>
+				<noise_amount>0</noise_amount>
+			</wall>
+			<ocean>
+				<cells>2</cells>
+				<seed>2</seed>
+				<origin>0, 0, 0</origin>
+				<noise_speed>0</noise_speed>
+				<noise_amount>0</noise_amount>
+			</ocean>
+		</VoroEnd>
 	</scenes>
-<stageSize>804, 402, 800</stageSize>
-	<Projector_Calibration>0</Projector_Calibration>
-	<Camera_Calibration>0</Camera_Calibration>
+	<world>
+		<camera>
+			<position>0, 250, 1200</position>
+			<eyeSeparation>6.5</eyeSeparation>
+			<focusDistance>200</focusDistance>
+			<nearClip>20</nearClip>
+		</camera>
+		<pixelsCm>2</pixelsCm>
+		<WALL>
+			<UnknownName>1</UnknownName>
+			<position>0, 0, 0</position>
+			<size>800, 500</size>
+			<Left_Quad>
+				<Output_Points>
+					<Top_Left>0, 0, 0</Top_Left>
+					<Top_Right>1, 0, 0</Top_Right>
+					<Bottom_Right>1, 1, 0</Bottom_Right>
+					<Bottom_Left>0, 1, 0</Bottom_Left>
+				</Output_Points>
+			</Left_Quad>
+			<Right_Quad>
+				<Output_Points>
+					<Top_Left>0, 0, 0</Top_Left>
+					<Top_Right>1, 0, 0</Top_Right>
+					<Bottom_Right>1, 1, 0</Bottom_Right>
+					<Bottom_Left>0, 1, 0</Bottom_Left>
+				</Output_Points>
+			</Right_Quad>
+		</WALL>
+		<FLOOR>
+			<UnknownName>1</UnknownName>
+			<position>0, 0, 0</position>
+			<size>800, 800</size>
+			<Left_Quad>
+				<Output_Points>
+					<Top_Left>0, 0, 0</Top_Left>
+					<Top_Right>1, 0, 0</Top_Right>
+					<Bottom_Right>1, 1, 0</Bottom_Right>
+					<Bottom_Left>0, 1, 0</Bottom_Left>
+				</Output_Points>
+			</Left_Quad>
+			<Right_Quad>
+				<Output_Points>
+					<Top_Left>0, 0, 0</Top_Left>
+					<Top_Right>1, 0, 0</Top_Right>
+					<Bottom_Right>1, 1, 0</Bottom_Right>
+					<Bottom_Left>0, 1, 0</Bottom_Left>
+				</Output_Points>
+			</Right_Quad>
+		</FLOOR>
+	</world>
 </stereo>

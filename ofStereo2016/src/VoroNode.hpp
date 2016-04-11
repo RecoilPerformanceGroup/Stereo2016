@@ -15,7 +15,6 @@
 
 class VoroNode : public ofNode {
     
-    
 public:
     
     static int counter;
@@ -23,6 +22,9 @@ public:
     VoroNode();
     VoroNode(ofVboMesh _mesh);
     VoroNode(ofVboMesh _mesh, VoroNode& vnParent);
+    
+    //VoroNode(const VoroNode& other);
+    
     ~VoroNode();
     
     template<class T>
@@ -41,7 +43,6 @@ public:
         return del_fun_t<T>(); 
     }
     
-
     ofVec3f minBounds;
     ofVec3f maxBounds;
     ofBoxPrimitive boundingBox;
@@ -49,7 +50,12 @@ public:
     bool bDraw;
     int level;
     ofVboMesh mesh;
+    ofVboMesh bakedMesh;
     int nCells;
+    
+    ofVec3f renderPosOffset;
+    
+    //int seed;
     
     std::set<VoroNode*> voroChildren;
     
@@ -70,9 +76,11 @@ public:
     
     void clearChildren();
     
-    set<VoroNode *> getChildren();
+    vector<VoroNode *> getChildren();
     
     set<VoroNode *> getChildrenInSphere(ofPoint point, float radius, bool recursive = false);
+
+    vector<VoroNode *> getNearestChildren(ofPoint point, int maxNum=1, bool recursive = false);
     //set<VoroNode *> getChildrenInBoundingBox( corners or plane + dir + dist);
     
     void split(int _nCells=3, bool overFlowX = false, bool overFlowY = false, bool overFlowZ = false);;
@@ -88,5 +96,18 @@ public:
     
     VoroNode & detachNodes(set<VoroNode *> nodes);
     
-   
+    ofVboMesh & getBakedMesh();
+    
+    template<typename meshType>
+    static meshType bakeMesh(meshType _m, const ofNode & _node) {
+        
+        // todo cache if node didn't change
+        for(auto & v : _m.getVertices()) {
+            v.set(v * _node.getGlobalTransformMatrix());
+        }
+        
+        return _m;
+    }
+    
+    
 };

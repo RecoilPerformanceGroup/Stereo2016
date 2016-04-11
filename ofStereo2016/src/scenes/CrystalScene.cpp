@@ -17,8 +17,6 @@ void CrystalScene::setup() {
     reconstructCrystal();
     reconstructCluster();
     
-    
-    
 }
 
 void CrystalScene::draw() {
@@ -31,34 +29,6 @@ void CrystalScene::draw() {
     matCrystal.begin();
     crystalBoulder->draw(&matCrystal);
     matCrystal.end();
-    
-    
-    
-    
-    ofPushMatrix();
-    
-    ofPoint anchor = box.getPosition() + ofVec3f(0, box.getHeight()/2, 0) + pivotOffset;
-    
-    ofDrawSphere(anchor + pivotOffset, 10);
-    
-    ofTranslate(anchor + pivotOffset);
-    
-    ofRotate(ofMap(pivotOffset.get().x, 100, -100, -45, 45), 0, 0, 1);
-    ofRotate(ofMap(pivotOffset.get().z, -100, 100, -45, 45), 1, 0, 0);
-    
-    ofTranslate(-(anchor + pivotOffset));
-    
-    
-    //ofMatrix4x4 m = ofGetCurrentNormalMatrix();
-    //ofMatrix4x4 m = ofGetCurrentNormalMatrix();
-    
-    box.draw();
-
-    
-    ofPopMatrix();
-    
-    
-
 }
 
 void CrystalScene::update() {
@@ -105,29 +75,10 @@ void CrystalScene::update() {
         }
     }
     
-    //cluster.rotateAround(sin(ofGetElapsedTimef()/100.0)*180, ofVec3f(0,0,1), pivotAround);
-    
-    //cluster.lookAt(pivotAround, ofVec3f(0,0,1));
-
-    
     
     matCrystal.setDiffuseColor(crystalColor.get());
     matCluster.setDiffuseColor(clusterColor.get());
     matCrystal.setAmbientColor(ofFloatColor(0,0,0,0));
-    
-    box.setScale(2,1,2);
-    box.setPosition(clusterOrigin);
-    
-    ofVec3f p = box.getPosition();
-    //box.setPosition(pivotAround);
-    
-    //box.setOrientation(ofVec3f(0,0,45));
-    
-    box.setPosition(p);
-    
-    //box.setTransformMatrix(<#const ofMatrix4x4 &m44#>)
-    
-    //box.rotateAround(sin(ofGetElapsedTimef())*45, pivotAround, box.getPosition()+ofVec3f(0, box.getHeight() /2, 0));
     
     
 }
@@ -184,12 +135,6 @@ void CrystalScene::drawModel() {
     ofSetColor(255,75);
     crystalBoulder->draw();
     cluster.draw();
-    
-    
-
-    
-    box.draw();
-    
     
 }
 
