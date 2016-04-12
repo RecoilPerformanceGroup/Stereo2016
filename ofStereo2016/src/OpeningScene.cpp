@@ -12,6 +12,7 @@ void OpeningScene::setup(){
     
     globalParams->getVec3f("stage_size_cm").addListener(this, &OpeningScene::onStageSize);
     
+    title.load("STEREO-logo.svg");
     
     for (int i = 0; i < 2; i++) {
         path[i].setFilled(false);
@@ -36,6 +37,7 @@ void OpeningScene::setup(){
 void OpeningScene::update(){
     if (reset) {
         resetLines();
+        title.load("STEREO-logo.svg");
         reset = false;
     }
     
@@ -61,7 +63,9 @@ void OpeningScene::update(){
         currentPoint+=ofVec3f(0,height,0);
         currentPoint.interpolate(world->physical_camera_pos_cm, positionTowardsCamera);
         
-        while(points[i].size() > length){
+        while(points[i].size() > length+2){
+            points[i].pop_front();
+            points[i].pop_front();
             points[i].pop_front();
         }
 
@@ -94,6 +98,17 @@ void OpeningScene::onStageSize(ofVec3f& vec){
     
 }
 
+void OpeningScene::drawTitle() {
+    ofPushMatrix();
+    float titleHeight = (title.getHeight()/title.getWidth())*titleWidth;
+    
+    ofTranslate(titlePosition);
+    ofTranslate(-titleWidth/2.0, -titleHeight/2.0);
+    ofScale(titleWidth/title.getWidth(),titleWidth/title.getWidth());
+    title.draw();
+    ofPopMatrix();
+}
+
 void OpeningScene::drawLines() {
     
     for (int i = 0; i < 2; i++) {
@@ -122,7 +137,10 @@ void OpeningScene::resetLines(){
 void OpeningScene::drawModel(){
     ofEnableDepthTest();
     drawLines();
+    drawTitle();
     ofDisableDepthTest();
+    title.draw();
+
 }
 
 string OpeningScene::vertexShader = R"(

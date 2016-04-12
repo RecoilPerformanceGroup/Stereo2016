@@ -6,6 +6,7 @@ Addons:
 - ofxOSC (core)
 - ofxGui (core)
 - ofxSmlSettings (core)
+- ofxSvg (core)
 - [ofxDatGui](https://github.com/mrbichel/ofxDatGui)
 - [ofxEasing](https://github.com/arturoc/ofxEasing)
 - [ofxVoro](https://github.com/mrbichel/ofxVoro)
