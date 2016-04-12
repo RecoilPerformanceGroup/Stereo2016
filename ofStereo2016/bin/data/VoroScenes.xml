@@ -1,10 +1,10 @@
 <VoroScenes>
-	<enabled>0</enabled>
+	<enabled>1</enabled>
 	<add_to_qlab>0</add_to_qlab>
 	<cluster>
 		<cells>156</cells>
-		<seed>13</seed>
-		<origin>0, 0, 0</origin>
+		<seed>55</seed>
+		<origin>0, -200, 400.699</origin>
 		<scale>1</scale>
 		<scaleCells>0</scaleCells>
 		<color>1, 1, 1, 1</color>

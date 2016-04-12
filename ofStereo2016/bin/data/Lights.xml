@@ -1,5 +1,5 @@
 <Lights>
-	<enabled>0</enabled>
+	<enabled>1</enabled>
 	<directionalLight>
 		<diffuseColor>79, 79, 79, 255</diffuseColor>
 		<ambientColor>0, 0, 0, 255</ambientColor>

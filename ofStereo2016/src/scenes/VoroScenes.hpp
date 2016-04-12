@@ -12,9 +12,7 @@
 #include "ofMain.h"
 #include "ofxStereoscopy.hpp"
 #include "VoroNode.hpp"
-#include "ofxGui.h"
 #include "OrganicMaterial.hpp"
-#include "ofxCSG.h"
 
 class VoroScenes : public ofxStereoscopy::Scene {
     
@@ -27,26 +25,12 @@ public:
         ofVec3f(-1000,-1000,-1000),
         ofVec3f(1000,1000,1000)};
     
-    //ofParameter<ofVec3f> size {"size", ofVec3f(1000,1000,1000), ofVec3f(0,0,0), ofVec3f(10000,10000,10000) };
-    
     ofParameter<ofFloatColor> clusterColor {"color", ofFloatColor(1,1,1,1), ofFloatColor(0,0,0,0), ofFloatColor(1,1,1,1)};
-    
-    ofParameter<float> scale {"scale", 0, 0, 10};
-    ofParameter<float> scaleCells {"scaleCells", 0,0,0.999};
-    
-    ofParameter<ofVec3f> subtractOffset {"subtractOffset", ofVec3f(0,0,0),
-        ofVec3f(-100,-100,-100),
-        ofVec3f(100,100,100)};
-
-    
     
     ofParameterGroup voroNodeParams {"cluster",
         numCells,
         seed,
         origin,
-        subtractOffset,
-        scale,
-        scaleCells,
         clusterColor,
     };
     
@@ -69,17 +53,15 @@ public:
     
     template<typename type>
     void reconstruct(type & t) {
-        reconstruct();
+        doReconstruct = true;
     }
-    
     void reconstruct();
+    bool doReconstruct = false;
+    
     
     ofBoxPrimitive box;
     
-    
-    VoroNode unClipped;
-    VoroNode yClipped;
-    VoroNode yClippedCopy;
+    VoroNode mainNode;
     
     //ofMesh intersect;
     //ofMesh outMesh;
@@ -87,9 +69,6 @@ public:
     
     OrganicMaterial mat;
     
-    
-    ofMesh newBox;
-
     
 };
 

@@ -17,6 +17,7 @@ class VoroNode : public ofNode {
     
 public:
     
+    static VoroNode * theNode;
     static int counter;
     
     VoroNode();

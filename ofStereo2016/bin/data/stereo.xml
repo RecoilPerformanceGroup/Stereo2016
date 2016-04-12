@@ -1,20 +1,17 @@
 <stereo>
-	<stageSize>800, 500, 800</stageSize>
+	<stageSize>800, 500, 801.399</stageSize>
 	<Projector_Calibration>0</Projector_Calibration>
 	<Camera_Calibration>0</Camera_Calibration>
-	<Background_Color>255, 255, 255, 255</Background_Color>
+	<Background_Color>21, 21, 21, 255</Background_Color>
 	<Second_Screen_Model>0</Second_Screen_Model>
 	<scenes>
 		<VoroScenes>
-			<enabled>0</enabled>
+			<enabled>1</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<cluster>
 				<cells>156</cells>
-				<seed>13</seed>
-				<origin>0, 0, 0</origin>
-				<subtractOffset>0, 17.7426, 0</subtractOffset>
-				<scale>1</scale>
-				<scaleCells>0</scaleCells>
+				<seed>55</seed>
+				<origin>0, -200, 400.699</origin>
 				<color>1, 1, 1, 1</color>
 				<material>
 					<noise>
@@ -33,7 +30,7 @@
 			</cluster>
 		</VoroScenes>
 		<roomScene>
-			<enabled>1</enabled>
+			<enabled>0</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<dancers>
 				<1>-0.2, 0, 0.5</1>
@@ -77,7 +74,7 @@
 			</wall>
 		</roomScene>
 		<Lights>
-			<enabled>0</enabled>
+			<enabled>1</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<directionalLight>
 				<diffuseColor>79, 79, 79, 255</diffuseColor>
@@ -140,21 +137,27 @@
 			</Plateau>
 		</PlateauScene>
 		<openingScene>
-			<enabled>1</enabled>
+			<enabled>0</enabled>
 			<add_to_qlab>0</add_to_qlab>
-			<speed>0.5</speed>
-			<radius>20</radius>
-			<length>204</length>
-			<height>100</height>
-			<color1>1, 1, 1, 1</color1>
-			<color2>1, 1, 1, 1</color2>
-			<space>200, 200, 200</space>
-			<pivotRadius>28</pivotRadius>
-			<pivotSpeed>100</pivotSpeed>
-			<lineWidth>3.06123, 100</lineWidth>
-			<positionTowardsCamera>0</positionTowardsCamera>
-			<reset>0</reset>
-			<titleTrigger>0</titleTrigger>
+			<lines>
+				<speed>0.01</speed>
+				<radius>20</radius>
+				<length>20</length>
+				<height>100</height>
+				<color1>1, 1, 1, 1</color1>
+				<color2>1, 1, 1, 1</color2>
+				<space>200, 200, 200</space>
+				<pivotRadius>20</pivotRadius>
+				<pivotSpeed>0.02</pivotSpeed>
+				<lineWidth>10, 10</lineWidth>
+				<positionTowardsCamera>0</positionTowardsCamera>
+				<reset>0</reset>
+			</lines>
+			<title>
+				<position>0, 250, 400</position>
+				<width>400</width>
+				<color>1, 1, 1, 1</color>
+			</title>
 		</openingScene>
 		<sketch>
 			<enabled>0</enabled>
@@ -169,6 +172,16 @@
 			<positionTowardsCamera>0</positionTowardsCamera>
 			<reset>0</reset>
 		</sketch>
+		<TextScene>
+			<enabled>0</enabled>
+			<add_to_qlab>0</add_to_qlab>
+			<text>
+				<position>0, 250, 400</position>
+				<size>30</size>
+				<string/>
+				<color>1, 1, 1, 1</color>
+			</text>
+		</TextScene>
 		<VoroEnd>
 			<enabled>0</enabled>
 			<add_to_qlab>0</add_to_qlab>
@@ -193,6 +206,7 @@
 				<wall_rotation>131.345, 0, 0</wall_rotation>
 				<noise_speed>0</noise_speed>
 				<noise_amount>0</noise_amount>
+				<open>0</open>
 			</wall>
 			<ocean>
 				<cells>10</cells>
@@ -210,7 +224,7 @@
 			<focusDistance>200</focusDistance>
 			<nearClip>20</nearClip>
 		</camera>
-		<pixelsCm>1.8462</pixelsCm>
+		<pixelsCm>2</pixelsCm>
 		<WALL>
 			<UnknownName>1</UnknownName>
 			<position>0, 0, 0</position>
@@ -235,7 +249,7 @@
 		<FLOOR>
 			<UnknownName>1</UnknownName>
 			<position>0, 0, 0</position>
-			<size>800, 800</size>
+			<size>800, 801.399</size>
 			<Left_Quad>
 				<Output_Points>
 					<Top_Left>0, 0, 0</Top_Left>

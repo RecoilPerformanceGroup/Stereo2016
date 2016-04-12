@@ -152,7 +152,6 @@ void PlateauScene::reconstructPlateau(){
     ofSeedRandom(plateauRandomSeed);
 
     plateauPivotOrigin.set(ofVec3f(0,-globalParams->getVec3f("stage_size_cm")->z, globalParams->getVec3f("stage_size_cm")->z/2.0));
-
 }
 
 void PlateauScene::onStageSize(ofVec3f& stageSize){

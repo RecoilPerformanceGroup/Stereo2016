@@ -9,6 +9,7 @@
 #include "VoroNode.hpp"
 
 int VoroNode::counter = 0;
+VoroNode * VoroNode::theNode = nullptr;
 
 VoroNode::VoroNode() {
     counter++;

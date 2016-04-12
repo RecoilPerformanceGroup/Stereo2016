@@ -22,6 +22,7 @@
 		<wall_rotation>131.345, 0, 0</wall_rotation>
 		<noise_speed>0</noise_speed>
 		<noise_amount>0</noise_amount>
+	<open>0</open>
 	</wall>
 	<ocean>
 		<cells>10</cells>

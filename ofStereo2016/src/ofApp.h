@@ -29,6 +29,7 @@
 #include "VoroScenes.hpp"
 #include "OpeningScene.hpp"
 #include "VoroEnd.hpp"
+#include "TextScene.hpp"
 
 class ofApp : public ofBaseApp{
     
@@ -44,6 +45,7 @@ public:
         scenes.push_back(make_shared<PlateauScene>());
         scenes.push_back(make_shared<OpeningScene>());
         scenes.push_back(make_shared<SketchScene>());
+        scenes.push_back(make_shared<TextScene>());
         scenes.push_back(make_shared<VoroEnd>());
 
         for( auto s : scenes) {

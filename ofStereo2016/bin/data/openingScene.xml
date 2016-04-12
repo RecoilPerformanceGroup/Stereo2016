@@ -1,5 +1,5 @@
 <openingScene>
-	<enabled>1</enabled>
+	<enabled>0</enabled>
 	<add_to_qlab>0</add_to_qlab>
 	<speed>0.5</speed>
 	<radius>20</radius>
@@ -15,4 +15,23 @@
 	<titleTrigger>0</titleTrigger>
 <openingScene/>
 <height>100</height>
+<lines>
+		<speed>0.01</speed>
+		<radius>20</radius>
+		<length>20</length>
+		<height>100</height>
+		<color1>1, 1, 1, 1</color1>
+		<color2>1, 1, 1, 1</color2>
+		<space>200, 200, 200</space>
+		<pivotRadius>20</pivotRadius>
+		<pivotSpeed>0.02</pivotSpeed>
+		<lineWidth>10, 10</lineWidth>
+		<positionTowardsCamera>0</positionTowardsCamera>
+		<reset>0</reset>
+	</lines>
+	<title>
+		<position>0, 250, 400</position>
+		<width>400</width>
+		<color>1, 1, 1, 1</color>
+	</title>
 </openingScene>
