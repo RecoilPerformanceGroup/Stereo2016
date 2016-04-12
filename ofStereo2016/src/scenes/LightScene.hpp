@@ -10,9 +10,9 @@
 
 #define makeLight(NAME, ...) \
     ofLight NAME; \
-    ofParameter<ofColor> NAME ## DiffuseColor{"diffuseColor", ofColor::white, ofColor::black, ofColor::white}; \
-    ofParameter<ofColor> NAME ## AmbientColor{"ambientColor", ofColor::black, ofColor::black, ofColor::white}; \
-    ofParameter<ofColor> NAME ## SpecularColor{"specularColor", ofColor::white, ofColor::black, ofColor::white}; \
+    ofParameter<ofFloatColor> NAME ## DiffuseColor{"diffuseColor", ofFloatColor::white, ofFloatColor(0,0,0,0), ofFloatColor(1,1,1,1)}; \
+    ofParameter<ofFloatColor> NAME ## AmbientColor{"ambientColor", ofFloatColor::black, ofFloatColor(0,0,0,0), ofFloatColor(1,1,1,1)}; \
+    ofParameter<ofFloatColor> NAME ## SpecularColor{"specularColor", ofFloatColor::white, ofFloatColor(0,0,0,0), ofFloatColor(1,1,1,1)}; \
     ofParameter<ofVec3f> NAME ## Position {"position", ofVec3f(0,700,0), ofVec3f(-10000,-10000,-10000),ofVec3f(10000,10000,10000) }; \
     ofParameter<ofVec3f> NAME ## LookAt {"lookAt", ofVec3f(0,0,0), ofVec3f(-10000,-10000,-10000),ofVec3f(10000,10000,10000) }; \
     ofParameterGroup NAME ## Params{#NAME, \
@@ -54,13 +54,15 @@ public:
     void enable() {
         spotLight.enable();
         areaLight.enable();
-        directionalLight.enable();
+        directionalLight1.enable();
+        directionalLight2.enable();
     }
     
     void disable() {
         spotLight.disable();
         areaLight.disable();
-        directionalLight.disable();
+        directionalLight1.disable();
+        directionalLight2.disable();
     }
     
     LightScene() {
@@ -76,12 +78,14 @@ public:
 
     makeLight(areaLight, areaLightWidth, areaLightHeight);
     
-    makeLight(directionalLight);
+    makeLight(directionalLight1);
+    makeLight(directionalLight2);
     
     ofParameterGroup params {"Lights",
         enabled,
         qlab,
-        directionalLightParams,
+        directionalLight1Params,
+        directionalLight2Params,
         spotLightParams,
         areaLightParams
     };
