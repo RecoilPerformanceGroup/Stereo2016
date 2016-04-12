@@ -16,10 +16,9 @@ void VoroEnd::setup() {
     wallCenter.setParent(world->origin);
     floorCenter.setParent(world->origin);
     
-    wallCenter.setPosition(0, _s.y/2, 0);
+    wallCenter.setPosition(0, _s.y, 0);
     
     floorCenter.setPosition(0, 0, _s.z/2);
-    
     
     oceanSeed.addListener(this, &VoroEnd::reconstructOcean<int>);
     oceanNumCells.addListener(this, &VoroEnd::reconstructOcean<int>);
@@ -29,15 +28,28 @@ void VoroEnd::setup() {
     
     reconstructWall();
     reconstructOcean();
-    
 }
 
 void VoroEnd::draw() {
     
+    ofVec3f _s = globalParams->getVec3f("stage_size_cm").get();
+
+    
     ofEnableAlphaBlending();
     ofSetColor(255);
     mat.begin();
+    
+    ofPushMatrix();
+    ofTranslate(0, -_s.y/2, 0);
+    ofRotateX(openWall.get());
+    ofTranslate(0, _s.y/2, 0);
+    
     wall.draw(&mat);
+    
+    
+    ofPopMatrix();
+    
+    
     ocean.draw(&mat);
     mat.end();
     
@@ -57,12 +69,10 @@ void VoroEnd::update() {
     
     
     auto applyNoise = [](VoroNode & node, float & time, float speed, ofVec3f amount) {
-    
         
         time += speed/100.0;
         
         for( auto c : node.getChildren()) {
-            
             
             float n = ofSignedNoise((c->getPosition().x + (time)));
             
@@ -71,16 +81,11 @@ void VoroEnd::update() {
             c->renderPosOffset = nP;
         }
         
-        
     };
     
-    
     applyNoise(ocean, oceanNoiseTime, oceanNoiseDisplaceSpeed, ofVec3f(0, oceanNoiseDisplaceAmount, 0));
-    
     applyNoise(wall, wallNoiseTime, wallNoiseDisplaceSpeed, ofVec3f(0, 0, wallNoiseDisplaceAmount));
-
    
-    
 }
 
 void VoroEnd::reconstructWall(){
@@ -89,7 +94,6 @@ void VoroEnd::reconstructWall(){
     ofSeedRandom(wallSeed.get());
     wall.setupFromBoundingBox(_s.x, _s.y, 10, wallNumCells, false,false,false);
     wall.setParent(wallCenter);
-    
 }
 
 void VoroEnd::reconstructOcean(){
@@ -98,7 +102,6 @@ void VoroEnd::reconstructOcean(){
     ofSeedRandom(oceanSeed.get());
     ocean.setupFromBoundingBox(_s.x, 10, _s.z, oceanNumCells, false,false,false);
     ocean.setParent(floorCenter);
-    
     
 }
 

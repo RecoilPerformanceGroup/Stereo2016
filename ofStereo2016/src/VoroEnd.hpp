@@ -50,6 +50,8 @@ public:
     ofParameter<int> wallNumCells {"cells", 2, 0, 200};
     ofParameter<int> wallSeed {"seed", 2, 0, 200};
 
+    ofParameter<float> openWall {"open", 0, 0, 90};
+    
     ofParameter<ofVec3f> wallRotation {"wall rotation", ofVec3f(0,0,0),
         ofVec3f(0,0,0),
         ofVec3f(360,360,360)};
@@ -58,7 +60,6 @@ public:
     
     ofParameter<ofFloatColor> matcolor {"color", ofFloatColor(1,1,1,1), ofFloatColor(0,0,0,0), ofFloatColor(1,1,1,1)};
     
-    
     ofParameterGroup wallParams {"wall",
         wallNumCells,
         wallSeed,
@@ -66,6 +67,7 @@ public:
         wallRotation,
         wallNoiseDisplaceSpeed,
         wallNoiseDisplaceAmount,
+        openWall,
     };
     
     ofParameterGroup oceanParams {"ocean",
