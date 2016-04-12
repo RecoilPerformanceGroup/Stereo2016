@@ -16,7 +16,7 @@ void VoroEnd::setup() {
     wallCenter.setParent(world->origin);
     floorCenter.setParent(world->origin);
     
-    wallCenter.setPosition(0, _s.y, 0);
+    wallCenter.setPosition(0, _s.y/2, 0);
     
     floorCenter.setPosition(0, 0, _s.z/2);
     
@@ -40,9 +40,9 @@ void VoroEnd::draw() {
     mat.begin();
     
     ofPushMatrix();
-    ofTranslate(0, -_s.y/2, 0);
+    ofTranslate(0, _s.y, 0);
     ofRotateX(openWall.get());
-    ofTranslate(0, _s.y/2, 0);
+    ofTranslate(0, -_s.y, 0);
     
     wall.draw(&mat);
     
