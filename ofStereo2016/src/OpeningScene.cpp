@@ -12,7 +12,7 @@ void OpeningScene::setup(){
     
     globalParams->getVec3f("stage_size_cm").addListener(this, &OpeningScene::onStageSize);
     
-    logo.load("STEREO-logo.svg");
+    title.load("STEREO-logo.svg");
     
     for (int i = 0; i < 2; i++) {
         path[i].setFilled(false);
@@ -37,6 +37,7 @@ void OpeningScene::setup(){
 void OpeningScene::update(){
     if (reset) {
         resetLines();
+        title.load("STEREO-logo.svg");
         reset = false;
     }
     
@@ -87,12 +88,22 @@ void OpeningScene::draw(){
     //ofDisableDepthTest();
     drawLines();
     //ofEnableDepthTest();
-    logo.draw();
     
 }
 
 void OpeningScene::onStageSize(ofVec3f& vec){
     
+}
+
+void OpeningScene::drawTitle() {
+    ofPushMatrix();
+    float titleHeight = (title.getHeight()/title.getWidth())*titleWidth;
+    
+    ofTranslate(titlePosition);
+    ofTranslate(-titleWidth/2.0, -titleHeight/2.0);
+    ofScale(titleWidth/title.getWidth(),titleWidth/title.getWidth());
+    title.draw();
+    ofPopMatrix();
 }
 
 void OpeningScene::drawLines() {
@@ -123,7 +134,10 @@ void OpeningScene::resetLines(){
 void OpeningScene::drawModel(){
     ofEnableDepthTest();
     drawLines();
+    drawTitle();
     ofDisableDepthTest();
+    title.draw();
+
 }
 
 string OpeningScene::vertexShader = R"(

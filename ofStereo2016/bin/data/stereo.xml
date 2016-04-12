@@ -9,10 +9,10 @@
 			<enabled>0</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<cluster>
-				<cells>2</cells>
-				<seed>2</seed>
+				<cells>156</cells>
+				<seed>13</seed>
 				<origin>0, 0, 0</origin>
-				<subtractOffset>0, 0, 0</subtractOffset>
+				<subtractOffset>0, 17.7426, 0</subtractOffset>
 				<scale>1</scale>
 				<scaleCells>0</scaleCells>
 				<color>1, 1, 1, 1</color>
@@ -77,7 +77,7 @@
 			</wall>
 		</roomScene>
 		<Lights>
-			<enabled>1</enabled>
+			<enabled>0</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<directionalLight>
 				<diffuseColor>79, 79, 79, 255</diffuseColor>
@@ -187,19 +187,19 @@
 				</noise>
 			</material>
 			<wall>
-				<cells>2</cells>
-				<seed>2</seed>
+				<cells>67</cells>
+				<seed>48</seed>
 				<origin>0, 0, 0</origin>
-				<wall_rotation>0, 0, 0</wall_rotation>
+				<wall_rotation>131.345, 0, 0</wall_rotation>
 				<noise_speed>0</noise_speed>
 				<noise_amount>0</noise_amount>
 			</wall>
 			<ocean>
-				<cells>2</cells>
-				<seed>2</seed>
-				<origin>0, 0, 0</origin>
-				<noise_speed>0</noise_speed>
-				<noise_amount>0</noise_amount>
+				<cells>10</cells>
+				<seed>69</seed>
+				<origin>0.417603, -9.99481, 0.417603</origin>
+				<noise_speed>1</noise_speed>
+				<noise_amount>193.878</noise_amount>
 			</ocean>
 		</VoroEnd>
 	</scenes>
