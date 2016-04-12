@@ -18,31 +18,31 @@ class VoroScenes : public ofxStereoscopy::Scene {
     
 public:
     
-    ofParameter<int> numCells {"cells", 2, 0, 200};
-    ofParameter<int> seed {"seed", 2, 0, 200};
+    ofParameter<int> voroNumCells {"cells", 2, 0, 200};
+    ofParameter<int> voroSeed {"seed", 2, 0, 200};
+    ofParameter<ofFloatColor> voroColor {"color", ofFloatColor(1,1,1,1), ofFloatColor(0,0,0,0), ofFloatColor(1,1,1,1)};
     
-    ofParameter<ofVec3f> origin {"origin", ofVec3f(0,0,0),
-        ofVec3f(-1000,-1000,-1000),
-        ofVec3f(1000,1000,1000)};
+    ofParameterGroup voroParams {"nodes",
+        voroNumCells,
+        voroSeed,
+        voroColor,
+    };
+
+    ofParameter<float> animationsWallDown {"wallDown", 0, 0, 1};
     
-    ofParameter<ofFloatColor> clusterColor {"color", ofFloatColor(1,1,1,1), ofFloatColor(0,0,0,0), ofFloatColor(1,1,1,1)};
-    
-    ofParameterGroup voroNodeParams {"cluster",
-        numCells,
-        seed,
-        origin,
-        clusterColor,
+    ofParameterGroup animations { "animations",
+        animationsWallDown
     };
     
     ofParameterGroup params {"VoroScenes",
         enabled,
-        qlab
+        qlab,
+        animations
     };
     
     VoroScenes() {
-        voroNodeParams.add(mat.params);
-        params.add(voroNodeParams);
-        
+        voroParams.add(voroMat.params);
+        params.add(voroParams);
         ofxStereoscopy::Scene::params = params;
     }
     
@@ -58,16 +58,19 @@ public:
     void reconstruct();
     bool doReconstruct = false;
     
+    ofBoxPrimitive floorBox;
+    ofBoxPrimitive wallBox;
     
-    ofBoxPrimitive box;
-    
-    VoroNode mainNode;
+    VoroNode floorNode;
+    VoroNode wallNode;
+
+    vector<ofNode> wallNodeOriginal;
     
     //ofMesh intersect;
     //ofMesh outMesh;
     ofVec3f clusterRotation;
     
-    OrganicMaterial mat;
+    OrganicMaterial voroMat;
     
     
 };

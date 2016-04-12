@@ -57,7 +57,7 @@ void VoroEnd::draw() {
 
 void VoroEnd::update() {
     mat.setDiffuseColor(matcolor.get());
-    mat.setAmbientColor(ofFloatColor(1.0,0,0,1.0));
+    mat.setAmbientColor(matcolor.get()*0.5);
     mat.updateParameters();
     
     wall.setPosition(wallOrigin.get());

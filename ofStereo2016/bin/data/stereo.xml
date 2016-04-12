@@ -1,23 +1,25 @@
 <stereo>
-	<stageSize>800, 500, 801.399</stageSize>
+	<stageSize>800, 500, 800</stageSize>
 	<Projector_Calibration>0</Projector_Calibration>
 	<Camera_Calibration>0</Camera_Calibration>
-	<Background_Color>21, 21, 21, 255</Background_Color>
+	<Background_Color>49, 49, 49, 0</Background_Color>
 	<Second_Screen_Model>0</Second_Screen_Model>
 	<scenes>
 		<VoroScenes>
 			<enabled>1</enabled>
 			<add_to_qlab>0</add_to_qlab>
-			<cluster>
-				<cells>156</cells>
-				<seed>55</seed>
-				<origin>0, -200, 400.699</origin>
-				<color>1, 1, 1, 1</color>
+			<animations>
+				<wallDown>0.357143</wallDown>
+			</animations>
+			<nodes>
+				<cells>55</cells>
+				<seed>43</seed>
+				<color>0.312786, 1, 1, 1</color>
 				<material>
 					<noise>
 						<displacement>
-							<velocity>0, 0, 0</velocity>
-							<scale>1, 1, 1</scale>
+							<velocity>0.154005, -0.288511, 0.154005</velocity>
+							<scale>789.805, 817.462, 828.525</scale>
 							<amount>0, 0, 0</amount>
 						</displacement>
 						<texture>
@@ -27,7 +29,7 @@
 						</texture>
 					</noise>
 				</material>
-			</cluster>
+			</nodes>
 		</VoroScenes>
 		<roomScene>
 			<enabled>0</enabled>
@@ -249,7 +251,7 @@
 		<FLOOR>
 			<UnknownName>1</UnknownName>
 			<position>0, 0, 0</position>
-			<size>800, 801.399</size>
+			<size>800, 800</size>
 			<Left_Quad>
 				<Output_Points>
 					<Top_Left>0, 0, 0</Top_Left>
