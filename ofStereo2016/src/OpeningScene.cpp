@@ -13,7 +13,7 @@ void OpeningScene::setup(){
     globalParams->getVec3f("stage_size_cm").addListener(this, &OpeningScene::onStageSize);
     
     title.load("STEREO-logo.svg");
-    
+
     for (int i = 0; i < 2; i++) {
         path[i].setFilled(false);
         path[i].setStrokeColor(ofColor::white);
@@ -37,7 +37,6 @@ void OpeningScene::setup(){
 void OpeningScene::update(){
     if (reset) {
         resetLines();
-        title.load("STEREO-logo.svg");
         reset = false;
     }
     
@@ -80,6 +79,11 @@ void OpeningScene::update(){
             path[i].quadBezierTo(c1, c2, pnt);
         }
     }
+    
+    for(int i = 0; i < title.getNumPath(); i++){
+        title.getPathAt(i).setFillColor(titleColor.get());
+    }
+    
 }
 
 void OpeningScene::draw(){
@@ -88,6 +92,7 @@ void OpeningScene::draw(){
     //ofDisableDepthTest();
     drawLines();
     //ofEnableDepthTest();
+    drawTitle();
     
 }
 
@@ -98,9 +103,8 @@ void OpeningScene::onStageSize(ofVec3f& vec){
 void OpeningScene::drawTitle() {
     ofPushMatrix();
     float titleHeight = (title.getHeight()/title.getWidth())*titleWidth;
-    
-    ofTranslate(titlePosition);
-    ofTranslate(-titleWidth/2.0, -titleHeight/2.0);
+    ofTranslate(world->zInCam(titlePosition.get()));
+    ofTranslate(-titleWidth/2.0, titleHeight/2.0);
     ofScale(titleWidth/title.getWidth(),titleWidth/title.getWidth());
     title.draw();
     ofPopMatrix();
@@ -136,8 +140,6 @@ void OpeningScene::drawModel(){
     drawLines();
     drawTitle();
     ofDisableDepthTest();
-    title.draw();
-
 }
 
 string OpeningScene::vertexShader = R"(

@@ -46,14 +46,14 @@ public:
     };
     
 
-    ofParameter<ofVec3f> titlePosition {"position", ofVec3f(0, 250, 400),ofVec3f(-1000,-1000,-1000),ofVec3f(1000,1000,1000)};
+    ofParameter<ofVec3f> titlePosition {"position", ofVec3f(0, 250, 400),ofVec3f(-2000,-2000,-2000),ofVec3f(2000,2000,2000)};
     ofParameter<float> titleWidth {"width", 400.0, 0.0, 1000};
-    ofParameter<bool> titleTrigger {"titleTrigger", false};
+    ofParameter<ofFloatColor> titleColor {"color", ofFloatColor(1.0,1.0,1.0,1.0),ofFloatColor(0.0,0.0,0.0,0.0),ofFloatColor(1.0,1.0,1.0,1.0)};
     
     ofParameterGroup titleParams {"title",
         titlePosition,
         titleWidth,
-        titleTrigger
+        titleColor
     };
     
     ofParameterGroup params {"openingScene",

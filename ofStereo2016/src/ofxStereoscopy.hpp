@@ -375,6 +375,11 @@ namespace ofxStereoscopy {
             currentPlane = plane;
         }
         
+        ofVec3f zInCam(const ofVec3f & v){
+            return (ofVec3f(v.x, v.y, 0)).getInterpolated(physical_camera_pos_cm.get(), 1.0-((physical_camera_pos_cm->z - v.z)/physical_camera_pos_cm->z));
+        
+        }
+        
         bool bIsDrawingLeft;
         bool bIsDrawingRight;
         
