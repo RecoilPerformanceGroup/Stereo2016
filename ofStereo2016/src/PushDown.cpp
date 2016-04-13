@@ -46,22 +46,34 @@ void PushDown::update() {
     
     // push section down
     
+    
+    
+    
     for( auto & n : mainNode.getChildren()) {
         
         ofVec3f pos = n->getGlobalPosition() * ofVec3f(1,0,1);
         
+        
+        
         // gradual push
-        n->renderPosOffset.y = ofxeasing::map_clamp(pushRadius-(pos.distance(dp()*ofVec3f(1,0,1))), 0, pushRadius, 0, pushDown, ofxeasing::linear::easeOut);
+        float push = ofxeasing::map_clamp(pushRadius-(pos.distance(pushPos.get()*ofVec3f(1,0,1))), 0, pushRadius, 0, pushDown, ofxeasing::linear::easeOut);
+        
+        // gradual pull
+        float pull = ofxeasing::map_clamp(pullRadius-(pos.distance(pullPos.get()*ofVec3f(1,0,1))), 0, pullRadius, 0, pullUp, ofxeasing::linear::easeOut);
         
         
-        // binary push
-        //n->renderPosOffset.y = (pos.distance(dp() + pushOffset.get()) / pushRadius);
+        n->renderPosOffset.y = push + pull;
         
-        /*
-        if(pos.distance(dp() + pushOffset.get()) < pushRadius) {
-            n->renderPosOffset.y = pushDown.get();
-        }*/
         
+    }
+    
+    
+    
+    for( auto & n : mainNode.getChildren()) {
+        
+        ofVec3f pos = n->getGlobalPosition() * ofVec3f(1,0,1);
+        
+
         
     }
     
@@ -87,9 +99,9 @@ void PushDown::reconstruct(){
 void PushDown::drawModel() {
     
     ofSetColor(255,75);
-    box.drawWireframe();
+    //box.drawWireframe();
     ofSetColor(255,20);
-    mainNode.draw();
+    //mainNode.draw();
     
 }
 

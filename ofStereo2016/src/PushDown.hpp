@@ -27,9 +27,18 @@ public:
     
     ofParameter<float> pushDown {"push", 2, 0, -800};
 
-    ofParameter<float> pushRadius {"radius", 2, 0, 350};
+    ofParameter<float> pushRadius {"pushradius", 2, 0, 350};
 
-    ofParameter<ofVec3f> pushOffset {"origin", ofVec3f(0,0,0),
+    ofParameter<ofVec3f> pushPos {"pushpos", ofVec3f(0,0,0),
+        ofVec3f(-1000,-1000,-1000),
+        ofVec3f(1000,1000,1000)};
+    
+    
+    ofParameter<float> pullUp {"pull", 2, 0, 800};
+    
+    ofParameter<float> pullRadius {"pullradius", 2, 0, 350};
+    
+    ofParameter<ofVec3f> pullPos {"pullpos", ofVec3f(0,0,0),
         ofVec3f(-1000,-1000,-1000),
         ofVec3f(1000,1000,1000)};
     
@@ -51,7 +60,10 @@ public:
         clusterColor,
         pushDown,
         pushRadius,
-        pushOffset,
+        pushPos,
+        pullUp,
+        pullRadius,
+        pullPos
         
     };
     
