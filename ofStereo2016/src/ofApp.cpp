@@ -682,9 +682,10 @@ void ofApp::setupGui(shared_ptr<ofAppBaseWindow> gW,shared_ptr<ofAppBaseWindow> 
 
     // General
 
+    /*
     guiBindings.push_back(make_shared<ColorPickerWithAlpha>(background_color, gui));
     gui->addBreak();
-
+*/
     // Settings
     
     ofxDatGuiButton * saveButton = gui->addButton("save settings");

@@ -2,19 +2,19 @@
 	<stageSize>800, 500, 800</stageSize>
 	<Projector_Calibration>0</Projector_Calibration>
 	<Camera_Calibration>0</Camera_Calibration>
-	<Background_Color>49, 49, 49, 0</Background_Color>
+	<Background_Color>255, 255, 255, 0</Background_Color>
 	<Second_Screen_Model>0</Second_Screen_Model>
 	<scenes>
 		<VoroScenes>
 			<enabled>1</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<animations>
-				<wallDown>0.357143</wallDown>
+				<wallDown>0</wallDown>
 			</animations>
 			<nodes>
-				<cells>55</cells>
-				<seed>43</seed>
-				<color>0.312786, 1, 1, 1</color>
+				<cells>138</cells>
+				<seed>71</seed>
+				<color>1, 1, 1, 1</color>
 				<material>
 					<noise>
 						<displacement>
@@ -78,25 +78,32 @@
 		<Lights>
 			<enabled>1</enabled>
 			<add_to_qlab>0</add_to_qlab>
-			<directionalLight>
-				<diffuseColor>79, 79, 79, 255</diffuseColor>
-				<ambientColor>0, 0, 0, 255</ambientColor>
-				<specularColor>0, 0, 0, 255</specularColor>
-				<position>-620.577, 1149.52, 1982.5</position>
-				<lookAt>4.16309, 4.16309, 212.409</lookAt>
-			</directionalLight>
+			<directionalLight1>
+				<diffuseColor>1, 1, 1, 1</diffuseColor>
+				<ambientColor>0, 0, 0, 1</ambientColor>
+				<specularColor>1, 1, 1, 1</specularColor>
+				<position>0, 700, 0</position>
+				<lookAt>0, 0, 0</lookAt>
+			</directionalLight1>
+			<directionalLight2>
+				<diffuseColor>1, 1, 1, 1</diffuseColor>
+				<ambientColor>0, 0, 0, 1</ambientColor>
+				<specularColor>1, 1, 1, 1</specularColor>
+				<position>0, 700, 0</position>
+				<lookAt>0, 0, 0</lookAt>
+			</directionalLight2>
 			<spotLight>
-				<diffuseColor>53, 51, 51, 255</diffuseColor>
-				<ambientColor>0, 0, 0, 255</ambientColor>
-				<specularColor>0, 0, 0, 255</specularColor>
+				<diffuseColor>0, 0, 0, 0</diffuseColor>
+				<ambientColor>0, 0, 0, 0</ambientColor>
+				<specularColor>0, 0, 0, 0</specularColor>
 				<position>1045.4, 3336.11, 1774.26</position>
 				<lookAt>4.16309, 4.16309, 628.903</lookAt>
 				<spotConcentration>42.8571</spotConcentration>
 			</spotLight>
 			<areaLight>
-				<diffuseColor>95, 93, 93, 255</diffuseColor>
-				<ambientColor>0, 0, 0, 255</ambientColor>
-				<specularColor>0, 0, 0, 255</specularColor>
+				<diffuseColor>0, 0, 0, 0</diffuseColor>
+				<ambientColor>0, 0, 0, 0</ambientColor>
+				<specularColor>0, 0, 0, 0</specularColor>
 				<position>-828.824, 1149.52, 420.656</position>
 				<lookAt>4.16309, 4.16309, 524.779</lookAt>
 				<width>6887.76</width>

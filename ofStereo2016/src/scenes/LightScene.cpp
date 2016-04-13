@@ -13,9 +13,13 @@ void LightScene::setup() {
     lightModelMaterial.setShininess(0.8);
     lightModelMaterial.setColors(ofColor::white, ofColor::darkGray, ofColor::white, ofColor::black);
     
-    directionalLight.enable();
-    directionalLight.setParent(world->origin);
-    directionalLight.setDirectional();
+    directionalLight1.enable();
+    directionalLight1.setParent(world->origin);
+    directionalLight1.setDirectional();
+
+    directionalLight2.enable();
+    directionalLight2.setParent(world->origin);
+    directionalLight2.setDirectional();
 
     spotLight.enable();
     spotLight.setParent(world->origin);
@@ -26,7 +30,8 @@ void LightScene::setup() {
 }
 
 void LightScene::update() {
-    updateLight(directionalLight);
+    updateLight(directionalLight1);
+    updateLight(directionalLight2);
     updateLight(spotLight);
     spotLight.setSpotConcentration(spotLightSpotConcentration);
     updateLight(areaLight);
@@ -51,7 +56,7 @@ void LightScene::drawModel(){
     lightModelMaterial.end();
     ofPopStyle();
     ofDisableDepthTest();
-    ofSetColor(spotLightDiffuseColor,63);
+    ofSetColor(spotLightDiffuseColor.get(),63);
     spotLight.draw();
     spotLight.transformGL();
     ofDrawArrow(ofVec3f(0,0,0),ofVec3f(0,0,-(spotLight.getGlobalPosition()-spotLightLookAt.get()).length()+5), 5);
@@ -61,16 +66,30 @@ void LightScene::drawModel(){
     ofEnableDepthTest();
     ofEnableLighting();
     lightModelMaterial.begin();
-    ofDrawSphere(directionalLightLookAt, 20);
+    ofDrawSphere(directionalLight1LookAt, 20);
     lightModelMaterial.end();
     ofPopStyle();
     ofDisableDepthTest();
-    ofSetColor(directionalLightDiffuseColor, 63);
-    directionalLight.draw();
-    directionalLight.transformGL();
-    ofDrawArrow(ofVec3f(0,0,0),ofVec3f(0,0,(directionalLight.getGlobalPosition()-directionalLightLookAt.get()).length()-5), 5);
-    directionalLight.restoreTransformGL();
-
+    ofSetColor(directionalLight1DiffuseColor.get(), 63);
+    directionalLight1.draw();
+    directionalLight1.transformGL();
+    ofDrawArrow(ofVec3f(0,0,0),ofVec3f(0,0,(directionalLight1.getGlobalPosition()-directionalLight1LookAt.get()).length()-5), 5);
+    directionalLight1.restoreTransformGL();
+    
+    ofPushStyle();
+    ofEnableDepthTest();
+    ofEnableLighting();
+    lightModelMaterial.begin();
+    ofDrawSphere(directionalLight2LookAt, 20);
+    lightModelMaterial.end();
+    ofPopStyle();
+    ofDisableDepthTest();
+    ofSetColor(directionalLight2DiffuseColor.get(), 63);
+    directionalLight2.draw();
+    directionalLight2.transformGL();
+    ofDrawArrow(ofVec3f(0,0,0),ofVec3f(0,0,(directionalLight2.getGlobalPosition()-directionalLight2LookAt.get()).length()-5), 5);
+    directionalLight2.restoreTransformGL();
+    
     ofPushStyle();
     ofEnableDepthTest();
     ofEnableLighting();
@@ -79,7 +98,7 @@ void LightScene::drawModel(){
     lightModelMaterial.end();
     ofPopStyle();
     ofDisableDepthTest();
-    ofSetColor(areaLightDiffuseColor,63);
+    ofSetColor(areaLightDiffuseColor.get(),63);
     areaLight.draw();
     areaLight.transformGL();
     ofDrawArrow(ofVec3f(0,0,0),ofVec3f(0,0,-(areaLight.getGlobalPosition()-areaLightLookAt.get()).length()+5), 5);

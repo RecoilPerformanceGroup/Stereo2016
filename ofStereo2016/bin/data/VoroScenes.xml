@@ -27,12 +27,12 @@
 	</cluster>
 <VoroScenes/>
 <animations>
-		<wallDown>0.357143</wallDown>
+		<wallDown>0</wallDown>
 	</animations>
 	<nodes>
-		<cells>55</cells>
-		<seed>43</seed>
-		<color>0.312786, 1, 1, 1</color>
+		<cells>138</cells>
+		<seed>71</seed>
+		<color>1, 1, 1, 1</color>
 		<material>
 			<noise>
 				<displacement>

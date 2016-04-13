@@ -57,7 +57,7 @@ void VoroScenes::update() {
     mWallRotation.translate(-wallBox.getGlobalPosition());
     wallNode.setTransformMatrix(mWallRotation);
     
-    // break wall
+    // break wall apart
     int i = 0;
     for (auto node : wallNode.getChildren()) {
         ofNode & originalNode = wallNodeOriginal[i++];
@@ -66,7 +66,14 @@ void VoroScenes::update() {
         float breakAmountSq = breakAmount * animationsWallDown;
         
         ofVec3f nodePos = node->getGlobalPosition();
-        node->setPosition(orgNodePos.x*(1.0+(2.0*animationsWallDown*animationsWallDown)), orgNodePos.y - breakAmountSq * 4.0, orgNodePos.z + breakAmount * 3.0);
+        node->setPosition(orgNodePos.x*(1.0+(2.0*animationsWallDown*animationsWallDown)), orgNodePos.y - (breakAmountSq * 5.0), orgNodePos.z + (0.04 * breakAmountSq) + (breakAmountSq * 0.02 * (ofSignedNoise(i*0.1) * 200.0)) - (2000.0 * powf(animationsWallDown, 4.0)));
+        ofQuaternion q = originalNode.getOrientationQuat();
+        float yFactor = originalNode.getGlobalPosition().y/wallBox.getHeight();
+        float xFactor = originalNode.getGlobalPosition().x/wallBox.getHeight();
+        q.slerp(yFactor*3.0, q, qWallRotation);
+        ofQuaternion qYrot;
+        qYrot.makeRotate(animationsWallDown*(xFactor*90), 0.0, 1.0, 0.0 );
+        node->setOrientation(q*qYrot);
     }
 }
 
@@ -111,9 +118,8 @@ void VoroScenes::drawModel() {
     floorNode.draw();
     ofSetColor(voroColor.get(),20);
     wallBox.drawWireframe();
-    ofSetColor(255,0,0,25);
     wallNode.draw();
-    ofSetColor(0,255,255,25);
+    ofSetColor(255,255,0,25);
     for(auto node : wallNodeOriginal){
         ofDrawSphere(node.getGlobalPosition(), 10);
     }
