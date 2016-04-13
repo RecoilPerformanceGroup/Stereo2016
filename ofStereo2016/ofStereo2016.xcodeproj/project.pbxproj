@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04289F6D1CBD2D7100E05DCA /* PushDown.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04289F6B1CBD2D7100E05DCA /* PushDown.cpp */; };
 		04461F011CB67C63004C391A /* VoroScenes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04461EFF1CB67C63004C391A /* VoroScenes.cpp */; };
 		04461F041CB7EEC8004C391A /* VoroEnd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04461F021CB7EEC8004C391A /* VoroEnd.cpp */; };
 		0546D1A38E13BD319CC9755B /* OscReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BF3AA0D4FAA89D0F8A0E545 /* OscReceivedElements.cpp */; };
@@ -116,6 +117,8 @@
 		00D6D32B84B099226431108C /* ofxOsc.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOsc.h; path = ../../../addons/ofxOsc/src/ofxOsc.h; sourceTree = SOURCE_ROOT; };
 		01DCC0911400F9ACF5B65578 /* ofxXmlSettings.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxXmlSettings.h; path = ../../../addons/ofxXmlSettings/src/ofxXmlSettings.h; sourceTree = SOURCE_ROOT; };
 		029684CF678F70F6D3537A29 /* OscOutboundPacketStream.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscOutboundPacketStream.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscOutboundPacketStream.h; sourceTree = SOURCE_ROOT; };
+		04289F6B1CBD2D7100E05DCA /* PushDown.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PushDown.cpp; sourceTree = "<group>"; };
+		04289F6C1CBD2D7100E05DCA /* PushDown.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PushDown.hpp; sourceTree = "<group>"; };
 		04461EFF1CB67C63004C391A /* VoroScenes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VoroScenes.cpp; path = scenes/VoroScenes.cpp; sourceTree = "<group>"; };
 		04461F001CB67C63004C391A /* VoroScenes.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = VoroScenes.hpp; path = scenes/VoroScenes.hpp; sourceTree = "<group>"; };
 		04461F021CB7EEC8004C391A /* VoroEnd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VoroEnd.cpp; sourceTree = "<group>"; };
@@ -424,6 +427,8 @@
 				B46143551CBBB1B000A1F988 /* OpeningScene.hpp */,
 				B46E7B331CBCFA5C00C41635 /* TextScene.cpp */,
 				B46E7B341CBCFA5C00C41635 /* TextScene.hpp */,
+				04289F6B1CBD2D7100E05DCA /* PushDown.cpp */,
+				04289F6C1CBD2D7100E05DCA /* PushDown.hpp */,
 			);
 			name = scenes;
 			sourceTree = "<group>";
@@ -986,6 +991,7 @@
 				BC127D9651A2CA3C09456D8E /* LightScene.cpp in Sources */,
 				43467A1D4226F935F2C9CA3C /* MountainScene.cpp in Sources */,
 				6C180A14611D177486DB4F31 /* PlaneCutScene.cpp in Sources */,
+				04289F6D1CBD2D7100E05DCA /* PushDown.cpp in Sources */,
 				AD5CEB7DA4C7672EEBCD07DD /* PlateauScene.cpp in Sources */,
 				E896A5EA7FB9998EE0E6F916 /* RoomScene.cpp in Sources */,
 				4D2C7CE3795E3A842B36E824 /* SketchScene.cpp in Sources */,
