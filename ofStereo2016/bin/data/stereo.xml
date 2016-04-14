@@ -32,11 +32,11 @@
 			</nodes>
 		</VoroScenes>
 		<roomScene>
-			<enabled>1</enabled>
+			<enabled>0</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<dancers>
-				<one>-0.187006, 0.120158, 0.0420656</one>
-				<two>-0.176593, 0, 0.411703</two>
+				<one>-0.103707, 0, 0</one>
+				<two>-0.0620577, 0, 0</two>
 			</dancers>
 			<floor>
 				<color>0, 0, 0, 0</color>
@@ -146,19 +146,19 @@
 			</Plateau>
 		</PlateauScene>
 		<openingScene>
-			<enabled>0</enabled>
+			<enabled>1</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<lines>
-				<speed>6.42857</speed>
+				<speed>1.78571</speed>
 				<radius>20</radius>
-				<length>61</length>
-				<height>71.9388</height>
+				<length>183</length>
+				<height>0</height>
 				<color1>1, 1, 1, 1</color1>
 				<color2>1, 1, 1, 1</color2>
-				<space>36.8601, 120.159, 42.0662</space>
+				<space>552.27, 547.064, 645.981</space>
 				<pivotRadius>20</pivotRadius>
 				<pivotSpeed>10</pivotSpeed>
-				<lineWidth>2.12421, 100</lineWidth>
+				<lineWidth>4.20659, 100</lineWidth>
 				<positionTowardsCamera>0</positionTowardsCamera>
 				<reset>0</reset>
 			</lines>
@@ -276,11 +276,12 @@ put on your glasses</string>
 			</crystal>
 		</Crystal>
 	<game>
-			<enabled>1</enabled>
+			<enabled>0</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<lineWidth>4.08163, 100</lineWidth>
 			<length>1</length>
 		<lineOffset>0, 20.4081, 10.2041</lineOffset>
+		<distance>100</distance>
 		</game>
 	<PushDown>
 			<enabled>0</enabled>
@@ -326,10 +327,16 @@ put on your glasses</string>
 				<right_right_eye>1, 1, 1, 1</right_right_eye>
 			</box>
 		</boxsplit>
+	<PerspectiveChange>
+			<enabled>1</enabled>
+			<add_to_qlab>0</add_to_qlab>
+			<pos>0, 0, 0</pos>
+			<perspective_seed>0</perspective_seed>
+		</PerspectiveChange>
 	</scenes>
 	<world>
 		<camera>
-			<position>0, 250, 1300.7</position>
+			<position>0, 147.521, 1056.3</position>
 			<eyeSeparation>6.5</eyeSeparation>
 			<focusDistance>200</focusDistance>
 			<nearClip>20</nearClip>

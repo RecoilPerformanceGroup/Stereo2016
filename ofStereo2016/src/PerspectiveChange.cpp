@@ -35,9 +35,8 @@ void PerspectiveChange::setup() {
 
 void PerspectiveChange::draw() {
     
-    ofBackground(ofColor::black);
+    //ofBackground(ofColor::black);
     
-    ofPushStyle();
     
     ofDisableLighting();
     ofEnableAlphaBlending();
@@ -45,11 +44,11 @@ void PerspectiveChange::draw() {
     
     ofSetColor(255);
     
-    
+    /*
     cyl1.draw();
     cyl2.draw();
     cyl3.draw();
-    
+    */
 }
 
 void PerspectiveChange::update() {
@@ -58,15 +57,20 @@ void PerspectiveChange::update() {
     floorCenter.setPosition(cylpos);
     
     
-    if(ofGetFrameNum() % 10 == 0) {
+    if(ofGetFrameNum() % frameInterval == 0) {
         //ofVec3f camPos = ofVec3f(ofRandom(world->audienceBackRight.get), ofRandom(world->audienceFrontLeft), ofRandom(audienc));
         
         
         ofVec3f min = world->audienceFrontLeft;
         ofVec3f max = world->audienceBackRight;
         
-        ofVec3f camPos = ofVec3f(ofRandom(min.x, max.x), ofRandom(min.y, max.y), ofRandom(min.z, max.z));
+        ofVec3f camPos = min.getInterpolated(max, ofRandom(1.0)) * ofVec3f (0,1,1);
         
+//        camPos.x = ofMap(((ofGetFrameNum()/frameInterval) % frameInterval)*1.0/frameInterval, 0.0, 1.0, min.x, max.x);
+  
+        
+        camPos.x = ofRandom( min.x, max.x);
+
         //camPos.map(world->audiencePlane.getGlobalPosition(), world->audiencePlane.getXAxis(), world->audiencePlane.getYAxis(), world->audiencePlane.getZAxis());
         //world->audiencePlane.
         
@@ -85,12 +89,11 @@ void PerspectiveChange::drawModel() {
     
     //box1.draw();
     //box2.draw();
-    
-    
+/*
     cyl1.draw();
     cyl2.draw();
     cyl3.draw();
-
+*/
 }
 
 

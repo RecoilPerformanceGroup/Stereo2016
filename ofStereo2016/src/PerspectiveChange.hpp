@@ -32,11 +32,13 @@ public:
     
     
     ofParameter<int> perspectiveSeed {"perspective seed", 0, 0, 100000};
+    ofParameter<int> frameInterval {"frameInterval", 1, 1, 1000};
     
     ofParameterGroup params {"PerspectiveChange",
         enabled,
         qlab,
         cylpos,
+        frameInterval,
         perspectiveSeed
     };
     
