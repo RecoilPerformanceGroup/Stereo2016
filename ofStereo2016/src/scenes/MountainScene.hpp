@@ -31,7 +31,6 @@ public:
 
     ofParameter<ofColor> mountainColor {"color", ofColor::white, ofColor(0,0,0,0), ofColor(255,255,255,255) };
     
-    
     ofParameter<ofVec3f> selectPosition {"selectPosition", ofVec3f(0,-100000,-50000), ofVec3f(-10000,-10000,-100000), ofVec3f(10000,10000,100000) };
     ofParameter<float> selectRadius {"selectRadius", 2,0,2000};
     

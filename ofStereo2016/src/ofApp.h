@@ -34,6 +34,7 @@
 
 #include "PushDown.hpp"
 #include "BoxSplit.hpp"
+#include "PerspectiveChange.hpp"
 
 class ofApp : public ofBaseApp{
     
@@ -44,15 +45,17 @@ public:
         sceneParams.setName("scenes");
         //scenes.push_back(make_shared<VoroScenes>());
         scenes.push_back(make_shared<RoomScene>());
-        scenes.push_back(make_shared<CrystalScene>());
+        //scenes.push_back(make_shared<CrystalScene>());
         scenes.push_back(make_shared<LightScene>());
         //scenes.push_back(make_shared<PlateauScene>());
         //scenes.push_back(make_shared<OpeningScene>());
-        scenes.push_back(make_shared<SketchScene>());
-        scenes.push_back(make_shared<TextScene>());
-        scenes.push_back(make_shared<VoroEnd>());
+        //scenes.push_back(make_shared<SketchScene>());
+        //scenes.push_back(make_shared<TextScene>());
+        //scenes.push_back(make_shared<VoroEnd>());
         scenes.push_back(make_shared<GameScene>());
         scenes.push_back(make_shared<PushDown>());
+        scenes.push_back(make_shared<PerspectiveChange>());
+        
         scenes.push_back(make_shared<BoxSplit>());
         
         for( auto s : scenes) {
