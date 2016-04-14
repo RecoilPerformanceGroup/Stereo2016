@@ -224,6 +224,9 @@ namespace ofxStereoscopy {
             ofDrawBitmapString("+Y", 0, 100, 0);
             ofDrawBitmapString("+Z", 0, 0, 100);
         }
+        ofDrawSphere(audienceFrontLeft, 10);
+        ofDrawSphere(audienceBackRight, 10);
+        //audiencePlane.draw();
     }
     
 }

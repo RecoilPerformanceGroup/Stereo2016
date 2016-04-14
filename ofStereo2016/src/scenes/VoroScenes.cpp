@@ -74,6 +74,7 @@ void VoroScenes::update() {
         ofQuaternion qYrot;
         qYrot.makeRotate(animationsWallDown*(xFactor*90), 0.0, 1.0, 0.0 );
         node->setOrientation(q*qYrot);
+        node->setScale(1.0-(animationsWallDown*orgNodePos.y/floorBox.getHeight()));
     }
 }
 

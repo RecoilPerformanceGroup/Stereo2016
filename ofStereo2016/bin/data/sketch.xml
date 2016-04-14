@@ -10,5 +10,5 @@
 <positionTowardsCamera>0</positionTowardsCamera>
 <reset>0</reset>
 <add_to_qlab>0</add_to_qlab>
-<lineWidth>10, 10</lineWidth>
+<lineWidth>-100, 10</lineWidth>
 </sketch>

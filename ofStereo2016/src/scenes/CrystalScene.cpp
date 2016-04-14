@@ -49,15 +49,15 @@ void CrystalScene::update() {
     //crystalOrigin = (dp(1)+dp(2))/2.0;
     crystalBoulder->setGlobalPosition(crystalOrigin);
     
-    /*clusterRotation += ofGetLastFrameTime() * 60.0 * ofVec3f(
+    clusterRotation += ofGetLastFrameTime() * 60.0 * ofVec3f(
                                                       clusterRotationAxis.get().x*
                                                       clusterRotationSpeed.get(),
                                                       clusterRotationAxis.get().y*
                                                       clusterRotationSpeed.get(),
                                                       clusterRotationAxis.get().z
                                                       *clusterRotationSpeed.get());
-    */
-    //cluster.setOrientation(clusterRotation);
+        
+    cluster.setOrientation(clusterRotation);
     
     cluster.setGlobalPosition(clusterOrigin);
     //

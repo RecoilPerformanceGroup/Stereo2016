@@ -56,6 +56,7 @@
 		AD5CEB7DA4C7672EEBCD07DD /* PlateauScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 650F041FD82233563F7888D5 /* PlateauScene.cpp */; };
 		ADE367465D2A8EBAD4C7A8D9 /* IpEndpointName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADD194746185E2DA11468377 /* IpEndpointName.cpp */; };
 		B266578FC55D23BFEBC042E7 /* ofxGuiGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECF8674C7975F1063C5E30CA /* ofxGuiGroup.cpp */; };
+		B4376C7A1CBF8C7800401CE9 /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4376C781CBF8C7800401CE9 /* GameScene.cpp */; };
 		B46143561CBBB1B000A1F988 /* OpeningScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B46143541CBBB1B000A1F988 /* OpeningScene.cpp */; };
 		B46E7B351CBCFA5C00C41635 /* TextScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B46E7B331CBCFA5C00C41635 /* TextScene.cpp */; };
 		B56FE57CC35806596D38118C /* ofxSliderGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 802251BAF1B35B1D67B32FD0 /* ofxSliderGroup.cpp */; };
@@ -224,6 +225,8 @@
 		AE335EB4709BFD4671EEAC84 /* MessageMappingOscPacketListener.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = MessageMappingOscPacketListener.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/MessageMappingOscPacketListener.h; sourceTree = SOURCE_ROOT; };
 		B21E7E5F548EEA92F368040B /* tinyxml.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = tinyxml.h; path = ../../../addons/ofxXmlSettings/libs/tinyxml.h; sourceTree = SOURCE_ROOT; };
 		B31C608870ECEB2490A93736 /* ofxOscParameterSync.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOscParameterSync.h; path = ../../../addons/ofxOsc/src/ofxOscParameterSync.h; sourceTree = SOURCE_ROOT; };
+		B4376C781CBF8C7800401CE9 /* GameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameScene.cpp; sourceTree = "<group>"; };
+		B4376C791CBF8C7800401CE9 /* GameScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameScene.hpp; sourceTree = "<group>"; };
 		B46143541CBBB1B000A1F988 /* OpeningScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpeningScene.cpp; sourceTree = "<group>"; };
 		B46143551CBBB1B000A1F988 /* OpeningScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OpeningScene.hpp; sourceTree = "<group>"; };
 		B46E7B331CBCFA5C00C41635 /* TextScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextScene.cpp; sourceTree = "<group>"; };
@@ -424,6 +427,8 @@
 				B46143551CBBB1B000A1F988 /* OpeningScene.hpp */,
 				B46E7B331CBCFA5C00C41635 /* TextScene.cpp */,
 				B46E7B341CBCFA5C00C41635 /* TextScene.hpp */,
+				B4376C781CBF8C7800401CE9 /* GameScene.cpp */,
+				B4376C791CBF8C7800401CE9 /* GameScene.hpp */,
 			);
 			name = scenes;
 			sourceTree = "<group>";
@@ -1045,6 +1050,7 @@
 				C0993D9C98A9E91C1E716814 /* wall.cc in Sources */,
 				63B57AC5BF4EF088491E0317 /* ofxXmlSettings.cpp in Sources */,
 				933A2227713C720CEFF80FD9 /* tinyxml.cpp in Sources */,
+				B4376C7A1CBF8C7800401CE9 /* GameScene.cpp in Sources */,
 				7AE53F421CBBDAE900270AEE /* svgtiny.cpp in Sources */,
 				9D44DC88EF9E7991B4A09951 /* tinyxmlerror.cpp in Sources */,
 				5A4349E9754D6FA14C0F2A3A /* tinyxmlparser.cpp in Sources */,

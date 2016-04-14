@@ -33,8 +33,8 @@ public:
         wallLightColor
     };
 
-    ofParameter<ofVec3f> dancer1Position {"1", ofVec3f(-0.2,0.0,0.5), ofVec3f(-1.0,0.0,0.0), ofVec3f(1.0,1.0,1.0) };
-    ofParameter<ofVec3f> dancer2Position {"2", ofVec3f(0.2,0.0,0.5), ofVec3f(-1.0,0.0,0.0), ofVec3f(1.0,1.0,1.0) };
+    ofParameter<ofVec3f> dancer1Position {"one", ofVec3f(-0.2,0.0,0.5), ofVec3f(-1.0,0.0,0.0), ofVec3f(1.0,1.0,1.0) };
+    ofParameter<ofVec3f> dancer2Position {"two", ofVec3f(0.2,0.0,0.5), ofVec3f(-1.0,0.0,0.0), ofVec3f(1.0,1.0,1.0) };
     
     ofParameterGroup dancerParams {"dancers",
         dancer1Position,

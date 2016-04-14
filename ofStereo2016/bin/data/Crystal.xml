@@ -42,18 +42,18 @@
 	</material>
 <add_to_qlab>0</add_to_qlab>
 <cluster>
-		<cells>20</cells>
-		<origin>0.417603, -51.6442, 302.375</origin>
-		<scale>0</scale>
-		<scaleCells>0.999</scaleCells>
-		<rotationAxis>0, 0, 0</rotationAxis>
-		<rotationSpeed>0</rotationSpeed>
-		<color>1, 1, 1, 1</color>
+		<cells>65</cells>
+		<origin>200, 0.416626, -20.4081</origin>
+		<scale>10</scale>
+		<scaleCells>0.372077</scaleCells>
+		<rotationAxis>0.229488, -0.145356, 0.198251</rotationAxis>
+		<rotationSpeed>-0.5</rotationSpeed>
+		<color>0.3, 0.3, 0.3, 1</color>
 		<material>
 			<noise>
 				<displacement>
-					<velocity>0, 0, 0</velocity>
-					<scale>1, 1, 1</scale>
+					<velocity>0.264635, -0.288511, 0.264635</velocity>
+					<scale>70.7151, 70.7151, 70.7151</scale>
 					<amount>0, 0, 0</amount>
 				</displacement>
 				<light>
@@ -73,12 +73,12 @@
 		<pivot>9.41285, -0.999481, 9.41285</pivot>
 	</cluster>
 	<crystal>
-		<seed>2</seed>
-		<size>0</size>
-		<origin>0, 0, 0</origin>
+		<seed>127</seed>
+		<size>275</size>
+		<origin>0, 73, 60</origin>
 		<rotationAxis>0, 0, 0</rotationAxis>
 		<rotationSpeed>0</rotationSpeed>
-		<color>1, 1, 1, 1</color>
+		<color>0.25, 0.25, 0.25, 1</color>
 		<material>
 			<noise>
 				<displacement>
@@ -95,7 +95,7 @@
 				<texture>
 					<velocity>0, 0, 0</velocity>
 					<scale>1.6666, 1.6666, 1.6666</scale>
-					<amount>-0.025</amount>
+					<amount>0</amount>
 				</texture>
 			</noise>
 		</material>

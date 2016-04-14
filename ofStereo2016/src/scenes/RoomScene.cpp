@@ -120,6 +120,6 @@ ofVec3f RoomScene::getDancerPositionInWorldCoordinates(int number){
 }
 
 ofVec3f RoomScene::getDancerPositionNormalised(int number){
-    return dancerParams.getVec3f(ofToString(number));
+    return dancerParams.getVec3f(number==1?"one":"two");
 }
 

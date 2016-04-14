@@ -16,22 +16,22 @@
 <openingScene/>
 <height>100</height>
 <lines>
-		<speed>0.01</speed>
+		<speed>6.42857</speed>
 		<radius>20</radius>
-		<length>20</length>
-		<height>100</height>
+		<length>61</length>
+		<height>71.9388</height>
 		<color1>1, 1, 1, 1</color1>
 		<color2>1, 1, 1, 1</color2>
-		<space>200, 200, 200</space>
+		<space>36.8601, 120.159, 42.0662</space>
 		<pivotRadius>20</pivotRadius>
-		<pivotSpeed>0.02</pivotSpeed>
-		<lineWidth>10, 10</lineWidth>
+		<pivotSpeed>10</pivotSpeed>
+		<lineWidth>2.12421, 100</lineWidth>
 		<positionTowardsCamera>0</positionTowardsCamera>
 		<reset>0</reset>
 	</lines>
 	<title>
-		<position>0, 250, 400</position>
-		<width>400</width>
-		<color>1, 1, 1, 1</color>
+		<position>0, 290, 660</position>
+		<width>357.143</width>
+		<color>1, 1, 1, 0</color>
 	</title>
 </openingScene>

@@ -313,6 +313,10 @@ namespace ofxStereoscopy {
         ofParameter<float> physical_focus_distance_cm {"focusDistance", 200, 0, WORLD_DIMENSION_MAX};
         ofParameter<float> physical_camera_near_clip {"nearClip", 20, 0, WORLD_DIMENSION_MAX};
         ofParameter<float> pixels_cm {"pixelsCm", 2, 0, 3};
+        ofParameter<ofVec3f> audienceFrontLeft { "audienceFrontLeft", ofVec3f(-300.0, 125.0, 1000), ofVec3f(-1000,0,500), ofVec3f(1000,0, 3000) };
+        ofParameter<ofVec3f> audienceBackRight { "audienceBackRight", ofVec3f(300.0, 125.0+(5*40), 1000+(100*5)), ofVec3f(-1000,0,500), ofVec3f(1000,0, 3000) };
+        ofPlanePrimitive audiencePlane;
+        
         
         ofParameterGroup paramsCamera{
             "camera",
@@ -320,6 +324,8 @@ namespace ofxStereoscopy {
             physical_eye_seperation_cm,
             physical_focus_distance_cm,
             physical_camera_near_clip,
+            audienceFrontLeft,
+            audienceBackRight
         };
         
         ofParameterGroup paramsPlanes;
@@ -333,7 +339,35 @@ namespace ofxStereoscopy {
         World(){
             font.load("ofxbraitsch/fonts/Verdana.ttf", 32, true, true, true);
             logo.load("recoil_logo.png");
+            
+            audienceFrontLeft.addListener(this, &World::updateAudiencePlane<ofVec3f>);
+            audienceBackRight.addListener(this, &World::updateAudiencePlane<ofVec3f>);
+            updateAudiencePlane();
+            
         };
+        
+        template<typename type>
+        void updateAudiencePlane(type & t){
+            updateAudiencePlane();
+        };
+
+        ofVec3f audiencePlaneCenter;
+        
+        void updateAudiencePlane(){
+            audiencePlaneCenter = audienceBackRight->getMiddle(audienceFrontLeft);
+            audiencePlane.setParent(origin);
+            audiencePlane.setGlobalPosition(audiencePlaneCenter);
+            audiencePlane.setWidth((audienceFrontLeft.get()-audienceBackRight.get()).x);
+            float pHeight = ofVec3f(audienceFrontLeft.get()*ofVec3f(1,0,1)).distance(ofVec3f(audienceBackRight.get()*ofVec3f(1,0,1)));
+            audiencePlane.setHeight(pHeight);
+            
+            //TODO: Rotate plane around center to hit corners
+            /*
+            ofQuaternion q;
+            audiencePlane.setGlobalOrientation(q);
+            */
+        };
+
         
         //TODO: Make parameter changes update all planes...
         
@@ -1243,7 +1277,7 @@ namespace ofxStereoscopy {
         }
         
         ofVec3f getDancerPositionNormalised(int dancer){
-            return globalParams->getGroup("scenes").getGroup("roomScene").getGroup("dancers").getVec3f(ofToString(dancer));
+            return globalParams->getGroup("scenes").getGroup("roomScene").getGroup("dancers").getVec3f(dancer==1?"one":"two");
         }
         
         ofVec3f dp(int dancer = 0){
