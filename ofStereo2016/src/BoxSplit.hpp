@@ -33,6 +33,10 @@ public:
     
     ofParameter<float> split {"split", 0, 0, 400};
     ofParameter<float> boxwidth {"width", 0, 0, 2};
+
+    ofParameter<bool> floorOn {"floorOn", true};
+    ofParameter<bool> wallOn {"wallOn", true};
+
     
     ofParameter<ofFloatColor> leftRightColor {"left right eye", ofFloatColor(1,1,1,1), ofFloatColor(0,0,0,0), ofFloatColor(1,1,1,1)};
     
@@ -55,7 +59,9 @@ public:
     
     ofParameterGroup params {"boxsplit",
         enabled,
-        qlab
+        qlab,
+        floorOn,
+        wallOn
     };
     
     BoxSplit() {

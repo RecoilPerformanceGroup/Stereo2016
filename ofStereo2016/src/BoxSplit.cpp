@@ -20,15 +20,15 @@ void BoxSplit::setup() {
     float boxw = 0.01;
     
     wallCenter.setPosition(0, _s.y/2, -boxw/2);
-    floorCenter.setPosition(0, -boxw/2, _s.z/2);
+    floorCenter.setPosition(0, -boxw/2, _s.z/4);
     
     
     boxLeftFloor.setParent(floorCenter);
-    boxLeftFloor.set(_s.x*0.5, boxw, _s.z, 4,2,4);
+    boxLeftFloor.set(_s.x*0.5, boxw, _s.z/2.0, 4,2,4);
  
     
     boxRightFloor.setParent(floorCenter);
-    boxRightFloor.set(_s.x*0.5, boxw, _s.z, 4,2,4);
+    boxRightFloor.set(_s.x*0.5, boxw, _s.z/2.0, 4,2,4);
     
     
     boxLeftWall.setParent(wallCenter);
@@ -49,17 +49,21 @@ void BoxSplit::draw() {
     ofDisableLighting();
     ofEnableAlphaBlending();
     ofDisableDepthTest();
-    ofEnableBlendMode(OF_BLENDMODE_ADD);
     
     ofSetColor(255);
     
     if(world->isDrawingLeft()) {
+        ofEnableBlendMode(OF_BLENDMODE_ADD);
         
         //matLeftLeft.begin();
         
         ofSetColor(leftLeftColor.get());
-            boxLeftFloor.draw();
-            boxLeftWall.draw();
+        
+        if(floorOn)
+        boxLeftFloor.draw();
+
+        if(wallOn)
+        boxLeftWall.draw();
         
         //matLeftLeft.end();
 
@@ -67,18 +71,31 @@ void BoxSplit::draw() {
         //matRightLeft.begin();
         
         ofSetColor(rightLeftColor.get());
+        if(floorOn)
             boxRightFloor.draw();
+        if(wallOn)
             boxRightWall.draw();
         
          //matRightLeft.end();
         
+        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+
+        ofSetColor(0,255);
+        ofDrawEllipse(boxLeftWall.getGlobalPosition().x, boxLeftWall.getGlobalPosition().y, 10, 10);
+        
+        
+        
     } else {
         
+        ofEnableBlendMode(OF_BLENDMODE_ADD);
+
        // matLeftRight.begin();
         
         
         ofSetColor(leftRightColor.get());
+        if(floorOn)
         boxLeftFloor.draw();
+        if(wallOn)
         boxLeftWall.draw();
         
        // matLeftRight.end();
@@ -87,11 +104,18 @@ void BoxSplit::draw() {
         //matRightRight.begin();
         
         ofSetColor(rightRightColor.get());
+        if(floorOn)
         boxRightFloor.draw();
+        if(wallOn)
         boxRightWall.draw();
         
         //matRightRight.end();
-        
+
+        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+
+        ofSetColor(0,255);
+        ofDrawEllipse(boxRightWall.getGlobalPosition().x, boxRightWall.getGlobalPosition().y, 10, 10);
+
     }
     
     ofPopStyle();

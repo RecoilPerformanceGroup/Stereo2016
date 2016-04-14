@@ -1,12 +1,15 @@
 <boxsplit>
-	<enabled>1</enabled>
+	<enabled>0</enabled>
 	<add_to_qlab>0</add_to_qlab>
 	<box>
-		<split>61.2245</split>
-		<width>1.12245</width>
-		<left_left_eye>1, 0, 0, 1</left_left_eye>
-		<left_right_eye>1, 0.2399, 1, 0.442941</left_right_eye>
-		<right_left_eye>0, 0, 1, 1</right_left_eye>
-		<right_right_eye>1, 0.609538, 0.453353, 1</right_right_eye>
+		<split>24</split>
+		<width>0.142857</width>
+		<left_left_eye>1, 1, 1, 1</left_left_eye>
+		<left_right_eye>1, 1, 1, 0</left_right_eye>
+		<right_left_eye>1, 1, 1, 0</right_left_eye>
+		<right_right_eye>1, 1, 1, 1</right_right_eye>
 	</box>
+<boxsplit/>
+	<floorOn>1</floorOn>
+	<wallOn>1</wallOn>
 </boxsplit>

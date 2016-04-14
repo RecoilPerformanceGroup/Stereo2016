@@ -278,9 +278,53 @@ put on your glasses</string>
 	<game>
 			<enabled>1</enabled>
 			<add_to_qlab>0</add_to_qlab>
-			<lineWidth>10, 10</lineWidth>
-			<length>0</length>
+			<lineWidth>4.08163, 100</lineWidth>
+			<length>1</length>
 		</game>
+	<PushDown>
+			<enabled>0</enabled>
+			<add_to_qlab>0</add_to_qlab>
+			<cluster>
+				<cells>2</cells>
+				<seed>2</seed>
+				<origin>0, -200, 400</origin>
+				<color>1, 1, 1, 1</color>
+				<push>2</push>
+				<pushradius>2</pushradius>
+				<pushpos>0, 0, 0</pushpos>
+				<pull>2</pull>
+				<pullradius>2</pullradius>
+				<pullpos>0, 0, 0</pullpos>
+				<material>
+					<noise>
+						<displacement>
+							<velocity>0, 0, 0</velocity>
+							<scale>1, 1, 1</scale>
+							<amount>0, 0, 0</amount>
+						</displacement>
+						<texture>
+							<velocity>0, 0, 0</velocity>
+							<scale>1.6666, 1.6666, 1.6666</scale>
+							<amount>-0.025</amount>
+						</texture>
+					</noise>
+				</material>
+			</cluster>
+		</PushDown>
+		<boxsplit>
+			<enabled>0</enabled>
+			<add_to_qlab>0</add_to_qlab>
+			<floorOn>1</floorOn>
+			<wallOn>1</wallOn>
+			<box>
+				<split>24</split>
+				<width>0.142857</width>
+				<left_left_eye>1, 1, 1, 1</left_left_eye>
+				<left_right_eye>1, 1, 1, 0</left_right_eye>
+				<right_left_eye>1, 1, 1, 0</right_left_eye>
+				<right_right_eye>1, 1, 1, 1</right_right_eye>
+			</box>
+		</boxsplit>
 	</scenes>
 	<world>
 		<camera>

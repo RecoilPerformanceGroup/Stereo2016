@@ -435,6 +435,10 @@
 				B46E7B341CBCFA5C00C41635 /* TextScene.hpp */,
 				B4376C781CBF8C7800401CE9 /* GameScene.cpp */,
 				B4376C791CBF8C7800401CE9 /* GameScene.hpp */,
+				04289F6B1CBD2D7100E05DCA /* PushDown.cpp */,
+				04289F6C1CBD2D7100E05DCA /* PushDown.hpp */,
+				04FDF5521CBF942700DB2461 /* BoxSplit.cpp */,
+				04FDF5531CBF942700DB2461 /* BoxSplit.hpp */,
 			);
 			name = scenes;
 			sourceTree = "<group>";
