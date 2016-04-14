@@ -33,7 +33,6 @@ public:
         ofVec3f(-1000,-1000,-1000),
         ofVec3f(1000,1000,1000)};
     
-    
     ofParameter<float> pullUp {"pull", 2, 0, 800};
     
     ofParameter<float> pullRadius {"pullradius", 2, 0, 350};
@@ -64,7 +63,6 @@ public:
         pullUp,
         pullRadius,
         pullPos
-        
     };
     
     ofParameterGroup params {"PushDown",
@@ -90,7 +88,6 @@ public:
     }
     void reconstruct();
     bool doReconstruct = false;
-    
     
     ofBoxPrimitive box;
     

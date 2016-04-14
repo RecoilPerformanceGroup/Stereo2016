@@ -15,7 +15,6 @@ void PushDown::setup() {
     numCells.addListener(this, &PushDown::reconstruct<int>);
     
     reconstruct();
-    
 }
 
 void PushDown::draw() {
@@ -28,7 +27,6 @@ void PushDown::draw() {
     mat.begin();
     mainNode.draw(&mat);
     mat.end();
-    
 }
 
 void PushDown::update() {
@@ -56,10 +54,10 @@ void PushDown::update() {
         
         
         // gradual push
-        float push = ofxeasing::map_clamp(pushRadius-(pos.distance(pushPos.get()*ofVec3f(1,0,1))), 0, pushRadius, 0, pushDown, ofxeasing::linear::easeOut);
+        float push = ofxeasing::map_clamp(pushRadius-(pos.distance(pushPos.get()*ofVec3f(1,0,1))), 0, pushRadius, 0, pushDown, ofxeasing::exp::easeOut);
         
         // gradual pull
-        float pull = ofxeasing::map_clamp(pullRadius-(pos.distance(pullPos.get()*ofVec3f(1,0,1))), 0, pullRadius, 0, pullUp, ofxeasing::linear::easeOut);
+        float pull = ofxeasing::map_clamp(pullRadius-(pos.distance(pullPos.get()*ofVec3f(1,0,1))), 0, pullRadius, 0, pullUp, ofxeasing::exp::easeOut);
         
         
         n->renderPosOffset.y = push + pull;
@@ -101,7 +99,7 @@ void PushDown::drawModel() {
     ofSetColor(255,75);
     //box.drawWireframe();
     ofSetColor(255,20);
-    //mainNode.draw();
+    mainNode.draw();
     
 }
 
