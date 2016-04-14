@@ -33,7 +33,6 @@ void MountainScene::update(){
 void MountainScene::draw(){
 
     ofColor eyeColor;
-    
     if(world->bIsDrawingLeft)
         eyeColor = anaglyphColorLeft;
     else
