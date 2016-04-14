@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04289F6D1CBD2D7100E05DCA /* PushDown.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04289F6B1CBD2D7100E05DCA /* PushDown.cpp */; };
 		04461F011CB67C63004C391A /* VoroScenes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04461EFF1CB67C63004C391A /* VoroScenes.cpp */; };
 		04461F041CB7EEC8004C391A /* VoroEnd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04461F021CB7EEC8004C391A /* VoroEnd.cpp */; };
+		04FDF5541CBF942700DB2461 /* BoxSplit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04FDF5521CBF942700DB2461 /* BoxSplit.cpp */; };
 		0546D1A38E13BD319CC9755B /* OscReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BF3AA0D4FAA89D0F8A0E545 /* OscReceivedElements.cpp */; };
 		08C23182D394C53F6ECE6CCC /* easing_terms_of_use.html in Sources */ = {isa = PBXBuildFile; fileRef = 528CB0EB22F0A199A5F479D5 /* easing_terms_of_use.html */; };
 		1CD33E884D9E3358252E82A1 /* ofxToggle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 907C5B5E104864A2D3A25745 /* ofxToggle.cpp */; };
@@ -117,11 +119,15 @@
 		00D6D32B84B099226431108C /* ofxOsc.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOsc.h; path = ../../../addons/ofxOsc/src/ofxOsc.h; sourceTree = SOURCE_ROOT; };
 		01DCC0911400F9ACF5B65578 /* ofxXmlSettings.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxXmlSettings.h; path = ../../../addons/ofxXmlSettings/src/ofxXmlSettings.h; sourceTree = SOURCE_ROOT; };
 		029684CF678F70F6D3537A29 /* OscOutboundPacketStream.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscOutboundPacketStream.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscOutboundPacketStream.h; sourceTree = SOURCE_ROOT; };
+		04289F6B1CBD2D7100E05DCA /* PushDown.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PushDown.cpp; sourceTree = "<group>"; };
+		04289F6C1CBD2D7100E05DCA /* PushDown.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PushDown.hpp; sourceTree = "<group>"; };
 		04461EFF1CB67C63004C391A /* VoroScenes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VoroScenes.cpp; path = scenes/VoroScenes.cpp; sourceTree = "<group>"; };
 		04461F001CB67C63004C391A /* VoroScenes.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = VoroScenes.hpp; path = scenes/VoroScenes.hpp; sourceTree = "<group>"; };
 		04461F021CB7EEC8004C391A /* VoroEnd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VoroEnd.cpp; sourceTree = "<group>"; };
 		04461F031CB7EEC8004C391A /* VoroEnd.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VoroEnd.hpp; sourceTree = "<group>"; };
 		04C339FF9ADCF05DF2DA62A3 /* ofxDatGuiTextInputField.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxDatGuiTextInputField.h; path = ../../../addons/ofxDatGui/src/components/ofxDatGuiTextInputField.h; sourceTree = SOURCE_ROOT; };
+		04FDF5521CBF942700DB2461 /* BoxSplit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BoxSplit.cpp; sourceTree = "<group>"; };
+		04FDF5531CBF942700DB2461 /* BoxSplit.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BoxSplit.hpp; sourceTree = "<group>"; };
 		06990387B09CAF1F19CC0095 /* ofxVoro.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxVoro.cpp; path = ../../../addons/ofxVoro/src/ofxVoro.cpp; sourceTree = SOURCE_ROOT; };
 		0A1DAC09F322AE313A40706D /* ofxToggle.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxToggle.h; path = ../../../addons/ofxGui/src/ofxToggle.h; sourceTree = SOURCE_ROOT; };
 		0A42C807BEF3A18E8E105A3B /* ofxDatGuiTimeGraph.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxDatGuiTimeGraph.h; path = ../../../addons/ofxDatGui/src/components/ofxDatGuiTimeGraph.h; sourceTree = SOURCE_ROOT; };
@@ -991,6 +997,7 @@
 				BC127D9651A2CA3C09456D8E /* LightScene.cpp in Sources */,
 				43467A1D4226F935F2C9CA3C /* MountainScene.cpp in Sources */,
 				6C180A14611D177486DB4F31 /* PlaneCutScene.cpp in Sources */,
+				04289F6D1CBD2D7100E05DCA /* PushDown.cpp in Sources */,
 				AD5CEB7DA4C7672EEBCD07DD /* PlateauScene.cpp in Sources */,
 				E896A5EA7FB9998EE0E6F916 /* RoomScene.cpp in Sources */,
 				4D2C7CE3795E3A842B36E824 /* SketchScene.cpp in Sources */,
@@ -1040,6 +1047,7 @@
 				5E69B76917398C5AE95B2E17 /* c_loops.cc in Sources */,
 				D1858240DCC8AF70467F4A02 /* cell.cc in Sources */,
 				D74BF211B75A1C87AD9EFD51 /* common.cc in Sources */,
+				04FDF5541CBF942700DB2461 /* BoxSplit.cpp in Sources */,
 				23F8502AA1FA2B1390FE7A09 /* container.cc in Sources */,
 				59A6F986FCCB12BF4CC1C865 /* container_prd.cc in Sources */,
 				B46E7B351CBCFA5C00C41635 /* TextScene.cpp in Sources */,
