@@ -39,10 +39,9 @@ void GameScene::update(){
     */
     path.clear();
     path.setCurveResolution(200);
-    path.moveTo(world->physical_camera_pos_cm);
-    path.lineTo(world->physical_camera_pos_cm.get().getInterpolated(dp(1), length));
-    cout << path.getOutline()[0].size() << endl;
-
+    ofVec3f startFrom = world->physical_camera_pos_cm.get() + lineOffset.get();
+    path.moveTo(startFrom);
+    path.lineTo(startFrom.getInterpolated(dp(1), length));
     
 }
 
@@ -54,7 +53,7 @@ void GameScene::draw(){
     //ofEnableDepthTest();
     ofPushMatrix();
     ofScale(1,0.0,1);
-    ofDrawLine(dp(1), world->physical_camera_pos_cm);
+    //ofDrawLine(dp(1), world->physical_camera_pos_cm);
     ofPopMatrix();
     
 }
@@ -64,6 +63,7 @@ void GameScene::onStageSize(ofVec3f& vec){
 }
 
 void GameScene::drawLine() {
+    /*
     wideLines.begin();
     wideLines.setUniform2f("_line_width", lineWidth.get().x,lineWidth.get().y);
     wideLines.setUniform4f("_line_color", 1.0, 1.0, 1.0, 1.0);
@@ -84,7 +84,24 @@ void GameScene::drawLine() {
     vbo.setColorData(colors, pathLength, GL_DYNAMIC_DRAW);
     vbo.draw(GL_LINE_STRIP, 0, pathLength);
     
-    wideLines.end();
+    wideLines.end();*/
+    
+    
+    ofVec3f startFrom = world->physical_camera_pos_cm.get() + lineOffset.get();
+
+    /*ofPushMatrix();
+    ofVec3f center = startFrom.getMiddle(dp(1));
+    ofTranslate(center);
+    ofRotate()
+    ofDrawCylinder(of(), float radius, float height)
+    ofPopMatrix();
+    */
+    
+    ofSetColor(255,255);
+    
+    for (float i = startDistance; i < startFrom.distance(dp(1))*length; i += lineWidth.get().x/2.0) {
+        ofDrawEllipse(startFrom.getInterpolated(dp(1), i/startFrom.distance(dp(1))), lineWidth.get().x/2.0, lineWidth.get().x/2.0);
+    }
 }
 
 void GameScene::resetLine(){

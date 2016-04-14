@@ -68,7 +68,7 @@ public:
     ofParameter<ofFloatColor> background_color{"Background Color", ofFloatColor(1,1,1,1),ofFloatColor(0,0,0,0),ofFloatColor(1,1,1,1)};
     ofParameter<bool> show_model_on_second_screen{"Second Screen Model", false, false, true};
     
-    ofParameter<bool> swap_left_right{"swapLeftRight", true};
+    ofParameter<bool> swap_left_right{"swapLeftRight", false};
     
     ofParameterGroup sceneParams;
     

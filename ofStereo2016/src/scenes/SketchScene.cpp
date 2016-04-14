@@ -89,7 +89,8 @@ void SketchScene::draw(){
         ofPopMatrix();
         ofPushMatrix();
         ofScale(1,0.0,1);
-        path.draw();
+        //path.draw();
+        ofDrawLine(dp(1), world->physical_camera_pos_cm);
         ofPopMatrix();
     }
     
@@ -112,7 +113,7 @@ void SketchScene::drawLine() {
     colors = new ofFloatColor[path.getOutline()[0].size()];
     
     for(int i = 0; i < path.getOutline()[0].size(); i++){
-        colors[i].setHsb(ofNoise(0.01*i), 1.0, 1.0);
+        colors[i].setHsb(1.0, 0.0, 1.0);
     }
 
     vbo.setColorData(colors, path.getOutline()[0].size(), GL_DYNAMIC_DRAW);

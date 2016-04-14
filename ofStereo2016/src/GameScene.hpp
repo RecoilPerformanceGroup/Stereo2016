@@ -18,13 +18,17 @@ class GameScene : public ofxStereoscopy::Scene {
 public:
     
     ofParameter<float> length {"length", 0, 0.0, 1.0};
+    ofParameter<float> startDistance {"distance", 100, 0.0, 1000.0};
     ofParameter<ofVec2f> lineWidth {"lineWidth", ofVec2f(10.0,10.0), ofVec2f(-100,-100), ofVec2f(100,100)};
+    ofParameter<ofVec3f> lineOffset {"lineOffset", ofVec3f(0, 30.0, 0), ofVec3f(-1000,-1000,-1000), ofVec3f(1000,1000,1000)};
     
     ofParameterGroup params {"game",
         enabled,
         qlab,
         lineWidth,
-        length
+        length,
+        startDistance,
+        lineOffset
     };
     
     GameScene() {
