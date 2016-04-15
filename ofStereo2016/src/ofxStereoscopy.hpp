@@ -1217,10 +1217,12 @@ namespace ofxStereoscopy {
         Scene() {
         };
         
-        virtual ~Scene() {}
+        virtual ~Scene() {};
         
-        virtual void enable() {}
-        virtual void disable() {}
+        virtual void enable() {};
+        virtual void disable() {};
+        
+        virtual void reconstruct() {};
         
         virtual void drawModel() {};
         virtual void exit(){};
@@ -1241,10 +1243,20 @@ namespace ofxStereoscopy {
             world = w;
             
             enabled.addListener(this, &ofxStereoscopy::Scene::enableToggled);
-            //ofAddListener(enabled.parameterChangedE(), this, &ofxStereoscopy::Scene::enableToggled);
+            
+            globalParams->getVec3f("stage_size_cm").addListener(this, &ofxStereoscopy::Scene::setReconstructFlag<ofVec3f>);
+            
+
             setup();
             isSetup = true;
         };
+        
+        
+        template<typename type>
+        void setReconstructFlag(type & t) {
+            bReconstruct = true;
+        }
+
         
         void enableToggled(bool & e) {
             if(e) {
@@ -1257,6 +1269,12 @@ namespace ofxStereoscopy {
         void updateScene() {
             
             if(enabled && isSetup) {
+                
+                if(bReconstruct) {
+                    reconstruct();
+                    bReconstruct = false;
+                }
+                
                 update();
             }
             
@@ -1286,7 +1304,10 @@ namespace ofxStereoscopy {
             } else {
                 return (dp(1)+dp(2))/2.0;
             }
-            
+        }
+        
+        ofVec3f getWorldSize() {
+            return globalParams->getVec3f("stage_size_cm").get();
         }
 
         virtual void drawGui() {};
@@ -1301,6 +1322,7 @@ namespace ofxStereoscopy {
         virtual void update(){};
         virtual void draw(){};
         bool isSetup = false;
+        bool bReconstruct = true;
         
     };
     

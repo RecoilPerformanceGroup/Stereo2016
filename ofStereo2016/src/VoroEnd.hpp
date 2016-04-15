@@ -36,7 +36,7 @@ public:
     ofParameter<int> oceanNumCells {"cells", 2, 0, 200};
     ofParameter<int> oceanSeed {"seed", 2, 0, 200};
     
-    ofParameter<ofVec3f> oceanOrigin {"origin", ofVec3f(0,0,0),
+    ofParameter<ofVec3f> oceanOrigin {"ocean origin", ofVec3f(0,0,0),
         ofVec3f(-1000,-1000,-1000),
         ofVec3f(1000,1000,1000)};
     
@@ -51,6 +51,7 @@ public:
     ofParameter<int> wallSeed {"seed", 2, 0, 200};
 
     ofParameter<float> openWall {"open", 0, 0, 90};
+    ofParameter<float> fallWall {"fall", 0, 0, 1};
     
     ofParameter<ofVec3f> wallRotation {"wall rotation", ofVec3f(0,0,0),
         ofVec3f(0,0,0),
@@ -68,6 +69,7 @@ public:
         wallNoiseDisplaceSpeed,
         wallNoiseDisplaceAmount,
         openWall,
+        fallWall
     };
     
     ofParameterGroup oceanParams {"ocean",
@@ -96,14 +98,32 @@ public:
     void update();
     void setup();
     
+    void reconstruct() {
+        
+        ofVec3f _s = getWorldSize();
+        
+        wallCenter.setParent(world->origin);
+        floorCenter.setParent(world->origin);
+        
+        wallCenter.setPosition(0, _s.y/2, 0);
+        floorCenter.setPosition(0, 0, _s.z/2);
+        
+        reconstructWall();
+        reconstructOcean();
+    }
+    
     template<typename type>
     void reconstructWall(type & t) {
         reconstructWall();
+        
+        bWallReconstruct = true;
     }
     
     template<typename type>
     void reconstructOcean(type & t) {
-        reconstructOcean();
+        
+        bOceanReconstruct = true;
+        
     }
     
     void reconstructWall();
@@ -123,7 +143,9 @@ public:
     ofNode wallCenter;
     ofNode floorCenter;
     
-    //void applyNoise(VoroNode & node, );
+    bool bOceanReconstruct = false;
+    bool bWallReconstruct = false;
     
+    //void applyNoise(VoroNode & node, );
 };
 
