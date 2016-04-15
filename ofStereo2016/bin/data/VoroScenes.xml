@@ -27,7 +27,7 @@
 	</cluster>
 <VoroScenes/>
 <animations>
-		<wallDown>0</wallDown>
+		<wallDown>1</wallDown>
 	</animations>
 	<nodes>
 		<cells>138</cells>

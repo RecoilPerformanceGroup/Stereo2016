@@ -1,13 +1,13 @@
 <sketch>
-	<enabled>0</enabled>
-	<speed>0.5</speed>
+	<enabled>1</enabled>
+	<speed>0</speed>
 <sketch/>
-<radius>24</radius>
+<radius>0</radius>
 	<origin>0, 244.898, 400</origin>
-	<space>382.653, 20, 448.98</space>
+	<space>350, 150, 500</space>
 	<pivotRadius>10</pivotRadius>
-	<pivotSpeed>6</pivotSpeed>
-<positionTowardsCamera>0</positionTowardsCamera>
+	<pivotSpeed>0.000100136</pivotSpeed>
+<positionTowardsCamera>0.18</positionTowardsCamera>
 <reset>0</reset>
 <add_to_qlab>0</add_to_qlab>
 <lineWidth>-100, 10</lineWidth>
