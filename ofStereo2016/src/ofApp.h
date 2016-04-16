@@ -250,8 +250,6 @@ public:
                 
                 ofParameterGroup g = pBool.getFirstParent();
                 
-                cout << "should save " << g.getName() << endl;
-                
                 qlab.newGroupWithOscCuesFromParameterGroup(g);
                 
                 return;

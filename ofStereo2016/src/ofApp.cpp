@@ -120,7 +120,7 @@ void ofApp::receiveOscParameter(ofxOscMessage & msg, ofAbstractParameter * _p) {
     
     ofAbstractParameter * p = _p;
     
-    cout<<"Received "<<msg.getAddress()<<endl;
+    //cout<<"Received "<<msg.getAddress()<<endl;
     
     vector<string> address = ofSplitString(msg.getAddress(),"/",true);
     // fade
@@ -140,7 +140,7 @@ void ofApp::receiveOscParameter(ofxOscMessage & msg, ofAbstractParameter * _p) {
     // if string from - next argument is the value to start the fade from
     
     for(int i=0; i<msg.getNumArgs(); i++) {
-        cout<<msg.getArgAsString(i)<<endl;
+        //cout<<msg.getArgAsString(i)<<endl;
 
         if(msg.getArgType(i) == OFXOSC_TYPE_STRING) {
             if(msg.getArgAsString(i) == "fade") {
