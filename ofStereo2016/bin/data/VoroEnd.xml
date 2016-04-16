@@ -23,6 +23,7 @@
 		<noise_speed>0</noise_speed>
 		<noise_amount>0</noise_amount>
 	<open>0</open>
+	<fall>0</fall>
 	</wall>
 	<ocean>
 		<cells>10</cells>
@@ -30,6 +31,7 @@
 		<origin>0.417603, -9.99481, 0.417603</origin>
 		<noise_speed>1</noise_speed>
 		<noise_amount>193.878</noise_amount>
+	<ocean_origin>0, 0, 0</ocean_origin>
 	</ocean>
 <VoroEnd/>
 </VoroEnd>

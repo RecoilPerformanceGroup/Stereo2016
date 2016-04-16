@@ -2,7 +2,7 @@
 	<stageSize>800, 422.378, 800</stageSize>
 	<Projector_Calibration>0</Projector_Calibration>
 	<Camera_Calibration>0</Camera_Calibration>
-	<Background_Color>1, 1, 1, 1</Background_Color>
+	<Background_Color>1, 1, 1, 0</Background_Color>
 	<Second_Screen_Model>0</Second_Screen_Model>
 	<scenes>
 		<VoroScenes>
@@ -76,7 +76,7 @@
 			</wall>
 		</roomScene>
 		<Lights>
-			<enabled>1</enabled>
+			<enabled>0</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<directionalLight1>
 				<diffuseColor>255, 255, 255, 255</diffuseColor>
@@ -169,7 +169,7 @@
 			</title>
 		</openingScene>
 		<sketch>
-			<enabled>1</enabled>
+			<enabled>0</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<lineWidth>-100, 10</lineWidth>
 			<speed>0</speed>
@@ -217,6 +217,7 @@ put on your glasses</string>
 				<noise_speed>0</noise_speed>
 				<noise_amount>0</noise_amount>
 				<open>0</open>
+			<fall>0</fall>
 			</wall>
 			<ocean>
 				<cells>10</cells>
@@ -224,10 +225,11 @@ put on your glasses</string>
 				<origin>0.417603, -9.99481, 0.417603</origin>
 				<noise_speed>1</noise_speed>
 				<noise_amount>193.878</noise_amount>
+			<ocean_origin>0, 0, 0</ocean_origin>
 			</ocean>
 		</VoroEnd>
 	<Crystal>
-			<enabled>1</enabled>
+			<enabled>0</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<cluster>
 				<cells>65</cells>
@@ -325,6 +327,8 @@ put on your glasses</string>
 				<left_right_eye>1, 1, 1, 0</left_right_eye>
 				<right_left_eye>1, 1, 1, 0</right_left_eye>
 				<right_right_eye>1, 1, 1, 1</right_right_eye>
+			<dotColor>1, 1, 1, 1</dotColor>
+				<downAnimation>0</downAnimation>
 			</box>
 		</boxsplit>
 	<PerspectiveChange>

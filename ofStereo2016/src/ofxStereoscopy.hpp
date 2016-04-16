@@ -544,9 +544,7 @@ namespace ofxStereoscopy {
             }
             
             ofPushStyle();
-            ofEnableDepthTest();
             ofPlanePrimitive::transformGL();
-            ofSetColor(255,255);
             tEye->draw(-width/2, -height/2, width, height);
             if(showPlaneOutlines){
                 ofSetColor(63, 127);
