@@ -36,7 +36,7 @@ public:
     ofParameter<int> oceanNumCells {"cells", 2, 0, 200};
     ofParameter<int> oceanSeed {"seed", 2, 0, 200};
     
-    ofParameter<ofVec3f> oceanOrigin {"ocean origin", ofVec3f(0,0,0),
+    ofParameter<ofVec3f> oceanOrigin {"origin", ofVec3f(0,0,0),
         ofVec3f(-1000,-1000,-1000),
         ofVec3f(1000,1000,1000)};
     
@@ -53,9 +53,10 @@ public:
     ofParameter<float> openWall {"open", 0, 0, 90};
     ofParameter<float> fallWall {"fall", 0, 0, 1};
     
-    ofParameter<ofVec3f> wallRotation {"wall rotation", ofVec3f(0,0,0),
-        ofVec3f(0,0,0),
-        ofVec3f(360,360,360)};
+    
+    ofParameter<float> stillAtEdge {"stillAtEdge", 0, 0, 1};
+    ofParameter<float> stillAtEdgeDist {"stillAtEdgeDist", 0, 0, 2000};
+
     
     //ofParameter<ofVec3f> size {"size", ofVec3f(1000,1000,1000), ofVec3f(0,0,0), ofVec3f(10000,10000,10000) };
     
@@ -65,7 +66,6 @@ public:
         wallNumCells,
         wallSeed,
         wallOrigin,
-        wallRotation,
         wallNoiseDisplaceSpeed,
         wallNoiseDisplaceAmount,
         openWall,
@@ -82,13 +82,16 @@ public:
     
     ofParameterGroup params {"VoroEnd",
         enabled,
-        qlab
+        qlab,
+        stillAtEdge,
+        stillAtEdgeDist
     };
     
     VoroEnd() {
-        params.add(mat.params);
+        
         params.add(wallParams);
         params.add(oceanParams);
+        params.add(mat.params);
         
         ofxStereoscopy::Scene::params = params;
     }
@@ -105,8 +108,9 @@ public:
         wallCenter.setParent(world->origin);
         floorCenter.setParent(world->origin);
         
-        wallCenter.setPosition(0, _s.y/2, 0);
-        floorCenter.setPosition(0, 0, _s.z/2);
+        wallCenter.setPosition(0, _s.y, 0);
+        
+        floorCenter.setPosition(0, 0, _s.z);
         
         reconstructWall();
         reconstructOcean();
@@ -114,15 +118,15 @@ public:
     
     template<typename type>
     void reconstructWall(type & t) {
-        reconstructWall();
         
-        bWallReconstruct = true;
+        if (t != wall.nCells) bWallReconstruct = true;
     }
     
     template<typename type>
     void reconstructOcean(type & t) {
         
-        bOceanReconstruct = true;
+        
+        if (t != ocean.nCells) bOceanReconstruct = true;
         
     }
     

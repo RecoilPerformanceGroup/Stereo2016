@@ -12,6 +12,7 @@
 #include "ofxStereoscopy.hpp"
 #include "VoroNode.hpp"
 #include "ofxGui.h"
+#include "ofxBiquadFilter.h"
 
 class SketchScene : public ofxStereoscopy::Scene {
 
@@ -27,6 +28,13 @@ public:
     ofParameter<bool> reset {"reset", true};
     //ofParameter<float> lineWidth {"lineWidth", 10.0, 0.0, 100.0};
     ofParameter<ofVec2f> lineWidth {"lineWidth", ofVec2f(10.0,10.0), ofVec2f(-100,-100), ofVec2f(100,100)};
+    
+    
+    ofxBiquadFilter3f posFilter;
+
+    
+    ofParameter<bool> use3dInput {"use3dInput", true};
+
 
     ofParameterGroup params {"sketch",
         enabled,
@@ -39,7 +47,8 @@ public:
         pivotRadius,
         pivotSpeed,
         positionTowardsCamera,
-        reset
+        reset,
+        use3dInput
     };
     
     SketchScene() {

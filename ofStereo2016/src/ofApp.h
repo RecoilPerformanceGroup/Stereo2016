@@ -18,6 +18,7 @@
 #include "ofxLibwebsockets.h"
 #endif /* WEBPARAMS */
 
+
 // scenes
 
 #include "LightScene.hpp"
@@ -73,6 +74,9 @@ public:
     
     ofParameter<bool> swap_left_right{"swapLeftRight", false};
     
+    ofParameter<ofVec3f> input3D {"input3d", ofVec3f{0,0,0}, ofVec3f{-1,-1,-1}, ofVec3f{1,1,1} };
+    
+    
     ofParameterGroup sceneParams;
     
     ofParameterGroup globalParams{
@@ -81,7 +85,8 @@ public:
         calibrate_projector,
         calibrate_camera,
         background_color,
-        show_model_on_second_screen
+        show_model_on_second_screen,
+        input3D
     };
     
     vector<ofxPanel *> scenePanels;

@@ -6,6 +6,7 @@
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
     "9233F0F4A2BE011BD468E5177A5AD6623263B23D" : 0,
     "FB950DA91696DB40601A43AFF1A56B2E39217374" : 0,
+    "3FD0A6B0728805B39B1EC65C31D9BA97C2D2ABC7" : 0,
     "86145F1292B789AB93966AE12565F1D778504ABC" : 0,
     "C75356AAE162B156DEBAB12E906B72422A9A501B" : 0,
     "5DB7C332A3A89035E93556A2A38BF414005BA671" : 0,
@@ -17,6 +18,7 @@
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
     "9233F0F4A2BE011BD468E5177A5AD6623263B23D" : "..\/addons\/ofxDatGui",
     "FB950DA91696DB40601A43AFF1A56B2E39217374" : "..\/addons\/ofxLibwebsockets",
+    "3FD0A6B0728805B39B1EC65C31D9BA97C2D2ABC7" : "..\/addons\/ofxBiquadFilter",
     "86145F1292B789AB93966AE12565F1D778504ABC" : "..\/addons\/ofxEasing",
     "C75356AAE162B156DEBAB12E906B72422A9A501B" : "..\/addons\/ofxVoro",
     "5DB7C332A3A89035E93556A2A38BF414005BA671" : "..\/addons\/ofxJSON",
@@ -37,6 +39,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/RecoilPerformanceGroup\/Stereo2016.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2204A9F914F6C3C85F7A96073C7376834AF2FCA2"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:mrbichel\/ofxBiquadFilter.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "3FD0A6B0728805B39B1EC65C31D9BA97C2D2ABC7"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/jefftimesten\/ofxJSON.git",

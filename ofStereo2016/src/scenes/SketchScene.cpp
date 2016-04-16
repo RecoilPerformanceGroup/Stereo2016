@@ -29,9 +29,15 @@ void SketchScene::setup(){
     wideLines.linkProgram();
 
     resetLine();
+    
+    posFilter.setFc(0.05);
 }
 
 void SketchScene::update(){
+    
+    ofVec3f inputPos = globalParams->getVec3f("input3d").get() * (getWorldSize());
+    
+    
     if (reset) {
         resetLine();
         reset = false;
@@ -44,7 +50,6 @@ void SketchScene::update(){
     pivotNoisePos.x += ofGetLastFrameTime() * pivotSpeed / pivotRadius;
     pivotNoisePos.y += ofGetLastFrameTime() * pivotSpeed / pivotRadius;
     pivotNoisePos.z += ofGetLastFrameTime() * pivotSpeed / pivotRadius;
-
     
     ofVec3f currentPoint(ofSignedNoise(noisePos.x),
                          ofSignedNoise(noisePos.y),
@@ -54,10 +59,17 @@ void SketchScene::update(){
                          ofSignedNoise(pivotNoisePos.y),
                          ofSignedNoise(pivotNoisePos.z));
     
-    currentPoint*=space;
+    currentPoint*=space; // noise point * noise amunt
     currentPoint+=origin;
+    
+    if(use3dInput) currentPoint += inputPos;
+
+    
     currentPoint.interpolate(world->physical_camera_pos_cm, positionTowardsCamera);
-    points.push_back((currentPoint)+(currentPivot*pivotRadius));
+    
+    ofVec3f filteredPoint = posFilter.update((currentPoint)+(currentPivot*pivotRadius));
+    
+    points.push_back(filteredPoint);
     
     //path.rotate(0.025, ofVec3f(0.5,1,0.33));
 
