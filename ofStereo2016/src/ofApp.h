@@ -18,6 +18,7 @@
 #include "ofxLibwebsockets.h"
 #endif /* WEBPARAMS */
 
+
 // scenes
 
 #include "LightScene.hpp"
@@ -45,16 +46,16 @@ public:
         sceneParams.setName("scenes");
         //scenes.push_back(make_shared<VoroScenes>());
         scenes.push_back(make_shared<RoomScene>());
-        scenes.push_back(make_shared<CrystalScene>());
+        //scenes.push_back(make_shared<CrystalScene>());
         scenes.push_back(make_shared<LightScene>());
-        scenes.push_back(make_shared<PlateauScene>());
-        scenes.push_back(make_shared<OpeningScene>());
+        //scenes.push_back(make_shared<PlateauScene>());
+        //scenes.push_back(make_shared<OpeningScene>());
         scenes.push_back(make_shared<SketchScene>());
-        scenes.push_back(make_shared<TextScene>());
-        //scenes.push_back(make_shared<VoroEnd>());
-        scenes.push_back(make_shared<GameScene>());
-        scenes.push_back(make_shared<PushDown>());
-        scenes.push_back(make_shared<PerspectiveChange>());
+        //scenes.push_back(make_shared<TextScene>());
+        scenes.push_back(make_shared<VoroEnd>());
+        //scenes.push_back(make_shared<GameScene>());
+        //scenes.push_back(make_shared<PushDown>());
+        //scenes.push_back(make_shared<PerspectiveChange>());
         
         scenes.push_back(make_shared<BoxSplit>());
         
@@ -73,6 +74,9 @@ public:
     
     ofParameter<bool> swap_left_right{"swapLeftRight", false};
     
+    ofParameter<ofVec3f> input3D {"input3d", ofVec3f{0,0,0}, ofVec3f{-1,-1,-1}, ofVec3f{1,1,1} };
+    
+    
     ofParameterGroup sceneParams;
     
     ofParameterGroup globalParams{
@@ -81,7 +85,8 @@ public:
         calibrate_projector,
         calibrate_camera,
         background_color,
-        show_model_on_second_screen
+        show_model_on_second_screen,
+        input3D
     };
     
     vector<ofxPanel *> scenePanels;
