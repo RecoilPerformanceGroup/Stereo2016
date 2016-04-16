@@ -33,7 +33,8 @@ public:
     
     ofParameter<float> split {"split", 0, 0, 400};
     ofParameter<float> boxwidth {"width", 0, 0, 2};
-
+    ofParameter<float> downAnimation {"downAnimation", 0, 0, 1};
+    
     ofParameter<bool> floorOn {"floorOn", true};
     ofParameter<bool> wallOn {"wallOn", true};
 
@@ -46,15 +47,17 @@ public:
     
     ofParameter<ofFloatColor> rightLeftColor {"right left eye", ofFloatColor(1,1,1,1), ofFloatColor(0,0,0,0), ofFloatColor(1,1,1,1)};
     
-    ofParameter<ofFloatColor> rightColor {"color", ofFloatColor(1,1,1,1), ofFloatColor(0,0,0,0), ofFloatColor(1,1,1,1)};
-    
+    ofParameter<ofFloatColor> dotColor {"dotColor", ofFloatColor(1,1,1,1), ofFloatColor(0,0,0,0), ofFloatColor(1,1,1,1)};
+
     ofParameterGroup boxp {"box",
         split,
         boxwidth,
         leftLeftColor,
         leftRightColor,
         rightLeftColor,
-        rightRightColor
+        rightRightColor,
+        dotColor,
+        downAnimation
     };
     
     ofParameterGroup params {"boxsplit",
@@ -75,6 +78,7 @@ public:
     void drawModel();
     void update();
     void setup();
+    void reconstruct();
     
     ofNode floorCenter, wallCenter;
     

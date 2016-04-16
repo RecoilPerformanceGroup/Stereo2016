@@ -11,38 +11,13 @@
 
 void BoxSplit::setup() {
 
-    
-    ofVec3f _s = globalParams->getVec3f("stage_size_cm").get();
-
-    wallCenter.setParent(world->origin);
-    floorCenter.setParent(world->origin);
-    
-    float boxw = 0.01;
-    
-    wallCenter.setPosition(0, _s.y/2, -boxw/2);
-    floorCenter.setPosition(0, -boxw/2, _s.z/4);
-    
-    
-    boxLeftFloor.setParent(floorCenter);
-    boxLeftFloor.set(_s.x*0.5, boxw, _s.z/2.0, 4,2,4);
- 
-    
-    boxRightFloor.setParent(floorCenter);
-    boxRightFloor.set(_s.x*0.5, boxw, _s.z/2.0, 4,2,4);
-    
-    
-    boxLeftWall.setParent(wallCenter);
-    boxLeftWall.set(_s.x*0.5, _s.y, boxw, 4,2,4);
-    
-    
-    boxRightWall.setParent(wallCenter);
-    boxRightWall.set(_s.x*0.5, _s.y, boxw, 4,2,4);
+    reconstruct();
     
 }
 
 void BoxSplit::draw() {
     
-    ofBackground(ofColor::black);
+    //ofBackground(ofColor::black);
     
     ofPushStyle();
     
@@ -80,8 +55,8 @@ void BoxSplit::draw() {
         
         ofEnableBlendMode(OF_BLENDMODE_ALPHA);
 
-        ofSetColor(0,255);
-        ofDrawEllipse(boxLeftWall.getGlobalPosition().x, boxLeftWall.getGlobalPosition().y, 10, 10);
+        ofSetColor(dotColor.get());
+        ofDrawEllipse(boxLeftWall.getGlobalPosition().x, boxLeftWall.getHeight()*0.5, 10, 10);
         
         
         
@@ -113,8 +88,8 @@ void BoxSplit::draw() {
 
         ofEnableBlendMode(OF_BLENDMODE_ALPHA);
 
-        ofSetColor(0,255);
-        ofDrawEllipse(boxRightWall.getGlobalPosition().x, boxRightWall.getGlobalPosition().y, 10, 10);
+        ofSetColor(dotColor.get());
+        ofDrawEllipse(boxRightWall.getGlobalPosition().x, boxRightWall.getHeight()*0.5, 10, 10);
 
     }
     
@@ -122,64 +97,59 @@ void BoxSplit::draw() {
     
 }
 
+void BoxSplit::reconstruct(){
+    ofVec3f _s = getWorldSize();
+    
+    wallCenter.setParent(world->origin);
+    floorCenter.setParent(world->origin);
+    
+    float boxw = 0.01;
+    
+    floorCenter.setPosition(0, -boxw/2, _s.z/2);
+    
+    boxLeftFloor.setParent(floorCenter);
+    boxLeftFloor.set(_s.x*0.5, boxw, _s.z, 4,2,4);
+    
+    boxRightFloor.setParent(floorCenter);
+    boxRightFloor.set(_s.x*0.5, boxw, _s.z, 4,2,4);
+    
+    
+    wallCenter.setPosition(0, _s.y/2, -boxw/2);
+    
+    boxLeftWall.setParent(wallCenter);
+    boxLeftWall.set(_s.x*0.5, _s.y, boxw, 4,2,4);
+    
+    boxRightWall.setParent(wallCenter);
+    boxRightWall.set(_s.x*0.5, _s.y, boxw, 4,2,4);
+
+}
+
 void BoxSplit::update() {
     
+    reconstruct();
     
-    boxLeftFloor.setScale(boxwidth, 1, 1);
-    boxRightFloor.setScale(boxwidth, 1, 1);
+    float collectiveLength = boxRightWall.getHeight() + boxRightFloor.getDepth();
     
-    boxLeftWall.setScale(boxwidth, 1, 1);
-    boxRightWall.setScale(boxwidth, 1, 1);
+    float currentLength = collectiveLength*downAnimation;
     
+    boxLeftWall.setScale(boxwidth, ofMap(currentLength, 0, boxLeftWall.getHeight(), 0, 1, true), 1);
+    boxLeftFloor.setScale(boxwidth, 1, ofMap(currentLength, boxRightWall.getHeight(), collectiveLength, 0, 1, true));
+
+    boxRightWall.setScale(boxwidth, ofMap(currentLength, 0, boxLeftWall.getHeight(), 0, 1, true), 1);
+    boxRightFloor.setScale(boxwidth, 1, ofMap(currentLength, boxRightWall.getHeight(), collectiveLength, 0, 1, true));
+ 
+    floorCenter.setPosition(0,  floorCenter.getPosition().y, boxLeftFloor.getDepth()*0.5*boxLeftFloor.getScale().z);
+
+    wallCenter.setPosition(0, boxLeftWall.getHeight()*(1.0-(boxLeftWall.getScale().y*0.5)), wallCenter.getPosition().z);
+
     boxLeftFloor.setPosition(-split, 0, 0);
     boxRightFloor.setPosition(split, 0, 0);
-   
+    
     boxLeftWall.setPosition(-split, 0, 0);
     boxRightWall.setPosition(split, 0, 0);
     
     
-    /*matRightRight.setDiffuseColor(rightRightColor);
-    matRightRight.setAmbientColor(rightRightColor);
-    matRightRight.updateParameters();
-    
-    matRightLeft.setDiffuseColor(rightLeftColor);
-    matRightLeft.setAmbientColor(rightLeftColor);
-    matRightLeft.updateParameters();
-    
-    matLeftRight.setDiffuseColor(leftRightColor);
-    matLeftRight.setAmbientColor(leftRightColor);
-    matLeftRight.updateParameters();
-    
-    matLeftLeft.setDiffuseColor(leftLeftColor);
-    matLeftLeft.setAmbientColor(leftLeftColor);
-    matLeftLeft.updateParameters();
-    */
-    
-    
-    
-    // todo: fade color to same as split is 0
-    
-    /*ofColor mix = leftColor.get().getLerped(rightColor, 0.5);
-    
-    ofColor left = leftColor.get().getLerped(mix, (split.getMax()-split) / split.getMax());
-    
-    
-    
-     
-    matLeft.setDiffuseColor(left);
-    matLeft.setAmbientColor(left);
-    matLeft.updateParameters();
-    
-    
-    ofColor right = rightColor.get().getLerped(mix, (split.getMax()-split) / split.getMax());
-
-    matRight.setDiffuseColor(right);
-    matRight.setAmbientColor(right);
-    matRight.updateParameters();*/
-    
-    //box1.setPosition(origin);
-    // push section down
-}
+   }
 
 void BoxSplit::drawModel() {
     
