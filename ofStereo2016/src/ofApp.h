@@ -44,18 +44,18 @@ public:
     ofApp() {
         
         sceneParams.setName("scenes");
-        //scenes.push_back(make_shared<VoroScenes>());
+        scenes.push_back(make_shared<VoroScenes>());
         scenes.push_back(make_shared<RoomScene>());
-        //scenes.push_back(make_shared<CrystalScene>());
+        scenes.push_back(make_shared<CrystalScene>());
         scenes.push_back(make_shared<LightScene>());
-        //scenes.push_back(make_shared<PlateauScene>());
-        //scenes.push_back(make_shared<OpeningScene>());
+        scenes.push_back(make_shared<PlateauScene>());
+        scenes.push_back(make_shared<OpeningScene>());
         scenes.push_back(make_shared<SketchScene>());
-        //scenes.push_back(make_shared<TextScene>());
+        scenes.push_back(make_shared<TextScene>());
         scenes.push_back(make_shared<VoroEnd>());
-        //scenes.push_back(make_shared<GameScene>());
-        //scenes.push_back(make_shared<PushDown>());
-        //scenes.push_back(make_shared<PerspectiveChange>());
+        scenes.push_back(make_shared<GameScene>());
+        scenes.push_back(make_shared<PushDown>());
+        scenes.push_back(make_shared<PerspectiveChange>());
         
         scenes.push_back(make_shared<BoxSplit>());
         
@@ -241,14 +241,15 @@ public:
     ofAbstractParameter * lastChangedParam = nullptr;
     
     vector<vector<string>> indirectParams;
-    
+
     void paramsChanged(ofAbstractParameter & p) {
 
         vector<string> groupHierachy = p.getGroupHierarchyNames();
 
-        // handle qlab save
         if(p.type()==typeid(ofParameter<bool>).name()){
             ofParameter<bool> & pBool = static_cast<ofParameter<bool>&>(p);
+            
+            // handle qlab save
             if(pBool.getName() == "add to qlab" && pBool.get()){
                 pBool.set(false);
                 
@@ -260,6 +261,30 @@ public:
                 
                 return;
             }
+
+            // handle panel placement
+            if(pBool.getName() == "enabled"){
+                
+                ofParameterGroup g = pBool.getFirstParent();
+                
+                int xDisabled = 0;
+                int xEnabled = 0;
+                
+                int wWidth = guiWindow->getWidth();
+                
+                for(auto p : scenePanels){
+                    
+                    if(p->getToggle("enabled")){
+                        xEnabled+=p->getWidth();
+                        p->setPosition(wWidth-xEnabled,0);
+                    } else {
+                        p->setPosition(xDisabled, guiWindow->getHeight()-65);
+                        xDisabled+=p->getWidth()*0.5;
+                    }
+                }
+                
+            }
+        
         }
         
         // skip indirect params
@@ -278,6 +303,7 @@ public:
                 }
             }
         }
+        
         lastChangedParam = &p;
     }
     

@@ -2,14 +2,14 @@
 	<stageSize>800, 422.378, 800</stageSize>
 	<Projector_Calibration>0</Projector_Calibration>
 	<Camera_Calibration>0</Camera_Calibration>
-	<Background_Color>1, 1, 1, 0</Background_Color>
+	<Background_Color>1, 1, 1, 1</Background_Color>
 	<Second_Screen_Model>0</Second_Screen_Model>
 	<scenes>
 		<VoroScenes>
 			<enabled>0</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<animations>
-				<wallDown>0</wallDown>
+				<wallDown>1</wallDown>
 			</animations>
 			<nodes>
 				<cells>138</cells>
@@ -79,31 +79,31 @@
 			<enabled>1</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<directionalLight1>
-				<diffuseColor>1, 1, 1, 1</diffuseColor>
-				<ambientColor>0, 0, 0, 1</ambientColor>
-				<specularColor>0, 0, 0, 1</specularColor>
+				<diffuseColor>255, 255, 255, 255</diffuseColor>
+				<ambientColor>0, 0, 0, 255</ambientColor>
+				<specularColor>0, 0, 0, 255</specularColor>
 				<position>108.286, 420.656, 733.026</position>
 				<lookAt>4.16309, 4.16309, 733.026</lookAt>
 			</directionalLight1>
 			<directionalLight2>
-				<diffuseColor>1, 1, 1, 1</diffuseColor>
+				<diffuseColor>0.765723, 0.760516, 0.760516, 1</diffuseColor>
 				<ambientColor>0, 0, 0, 1</ambientColor>
 				<specularColor>1, 1, 1, 1</specularColor>
-				<position>0, 700, 0</position>
+				<position>628.905, 0, 628.905</position>
 				<lookAt>0, 0, 0</lookAt>
 			</directionalLight2>
 			<spotLight>
-				<diffuseColor>0.4, 0.4, 0.4, 1</diffuseColor>
-				<ambientColor>0, 0, 0, 1</ambientColor>
-				<specularColor>0, 0, 0, 1</specularColor>
+				<diffuseColor>64, 64, 64, 255</diffuseColor>
+				<ambientColor>0, 0, 0, 255</ambientColor>
+				<specularColor>0, 0, 0, 255</specularColor>
 				<position>-1661.81, 733.026, 1149.52</position>
 				<lookAt>4.16309, 4.16309, 4.16309</lookAt>
 				<spotConcentration>0</spotConcentration>
 			</spotLight>
 			<areaLight>
-				<diffuseColor>0, 0, 0, 1</diffuseColor>
-				<ambientColor>0, 0, 0, 1</ambientColor>
-				<specularColor>0, 0, 0, 1</specularColor>
+				<diffuseColor>0, 0, 0, 255</diffuseColor>
+				<ambientColor>0, 0, 0, 255</ambientColor>
+				<specularColor>0, 0, 0, 255</specularColor>
 				<position>-3223.66, -2807.17, 420.656</position>
 				<lookAt>4.16309, 4.16309, 524.779</lookAt>
 				<width>6887.76</width>
@@ -146,39 +146,39 @@
 			</Plateau>
 		</PlateauScene>
 		<openingScene>
-			<enabled>1</enabled>
+			<enabled>0</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<lines>
-				<speed>1.78571</speed>
+				<speed>0</speed>
 				<radius>20</radius>
-				<length>183</length>
-				<height>0</height>
-				<color1>1, 1, 1, 1</color1>
-				<color2>1, 1, 1, 1</color2>
-				<space>552.27, 547.064, 645.981</space>
+				<length>661</length>
+				<height>48.9796</height>
+				<color1>1, 1, 1, 0</color1>
+				<color2>1, 1, 1, 0</color2>
+				<space>146.19, 120.159, 68.097</space>
 				<pivotRadius>20</pivotRadius>
-				<pivotSpeed>10</pivotSpeed>
-				<lineWidth>4.20659, 100</lineWidth>
+				<pivotSpeed>0</pivotSpeed>
+				<lineWidth>1.08299, 100</lineWidth>
 				<positionTowardsCamera>0</positionTowardsCamera>
 				<reset>0</reset>
 			</lines>
 			<title>
-				<position>0, 290, 660</position>
-				<width>357.143</width>
+				<position>0, 300, 0</position>
+				<width>150</width>
 				<color>1, 1, 1, 0</color>
 			</title>
 		</openingScene>
 		<sketch>
-			<enabled>0</enabled>
+			<enabled>1</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<lineWidth>-100, 10</lineWidth>
-			<speed>0.5</speed>
-			<radius>24</radius>
+			<speed>0</speed>
+			<radius>0</radius>
 			<origin>0, 244.898, 400</origin>
-			<space>382.653, 20, 448.98</space>
+			<space>350, 150, 500</space>
 			<pivotRadius>10</pivotRadius>
-			<pivotSpeed>6</pivotSpeed>
-			<positionTowardsCamera>0</positionTowardsCamera>
+			<pivotSpeed>0.000100136</pivotSpeed>
+			<positionTowardsCamera>0.18</positionTowardsCamera>
 			<reset>0</reset>
 		</sketch>
 		<TextScene>
@@ -227,16 +227,16 @@ put on your glasses</string>
 			</ocean>
 		</VoroEnd>
 	<Crystal>
-			<enabled>0</enabled>
+			<enabled>1</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<cluster>
 				<cells>65</cells>
-				<origin>200, 0.416626, -20.4081</origin>
+				<origin>200, -3000, -20.4081</origin>
 				<scale>10</scale>
 				<scaleCells>0.372077</scaleCells>
 				<rotationAxis>0.229488, -0.145356, 0.198251</rotationAxis>
 				<rotationSpeed>-0.5</rotationSpeed>
-				<color>0.3, 0.3, 0.3, 1</color>
+				<color>0.18, 0.18, 0.18, 1</color>
 				<material>
 					<noise>
 						<displacement>
@@ -254,17 +254,17 @@ put on your glasses</string>
 			</cluster>
 			<crystal>
 				<seed>127</seed>
-				<size>275</size>
-				<origin>0, 73, 60</origin>
+				<size>800</size>
+				<origin>0, 125.365, 427.323</origin>
 				<rotationAxis>0, 0, 0</rotationAxis>
 				<rotationSpeed>0</rotationSpeed>
-				<color>0.25, 0.25, 0.25, 1</color>
+				<color>0.2, 0.2, 0.2, 1</color>
 				<material>
 					<noise>
 						<displacement>
-							<velocity>0, 0, 0</velocity>
-							<scale>1, 1, 1</scale>
-							<amount>0, 0, 0</amount>
+							<velocity>0.1, 0.1, 0.1</velocity>
+							<scale>43.0585, 43.0585, 31.9956</scale>
+							<amount>0, 0, 289.805</amount>
 						</displacement>
 						<texture>
 							<velocity>0, 0, 0</velocity>
@@ -328,15 +328,16 @@ put on your glasses</string>
 			</box>
 		</boxsplit>
 	<PerspectiveChange>
-			<enabled>1</enabled>
+			<enabled>0</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<pos>0, 0, 0</pos>
 			<perspective_seed>0</perspective_seed>
+		<frameInterval>1</frameInterval>
 		</PerspectiveChange>
 	</scenes>
 	<world>
 		<camera>
-			<position>0, 147.521, 1056.3</position>
+			<position>0, 250, 1100</position>
 			<eyeSeparation>6.5</eyeSeparation>
 			<focusDistance>200</focusDistance>
 			<nearClip>20</nearClip>
