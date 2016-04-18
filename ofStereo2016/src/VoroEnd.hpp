@@ -62,6 +62,10 @@ public:
     
     ofParameter<ofFloatColor> matcolor {"color", ofFloatColor(1,1,1,1), ofFloatColor(0,0,0,0), ofFloatColor(1,1,1,1)};
     
+    
+    ofParameter<float> fadeOutFlor {"floorFadeOut", 0, 0, 1};
+
+    
     ofParameterGroup wallParams {"wall",
         wallNumCells,
         wallSeed,
@@ -78,6 +82,7 @@ public:
         oceanOrigin,
         oceanNoiseDisplaceSpeed,
         oceanNoiseDisplaceAmount,
+        fadeOutFlor,
     };
     
     ofParameterGroup params {"VoroEnd",

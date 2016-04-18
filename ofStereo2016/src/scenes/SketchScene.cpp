@@ -102,7 +102,7 @@ void SketchScene::draw(){
         ofPushMatrix();
         ofScale(1,0.0,1);
         //path.draw();
-        ofDrawLine(dp(1), world->physical_camera_pos_cm);
+//        ofDrawLine(dp(1), world->physical_camera_pos_cm);
         ofPopMatrix();
     }
     

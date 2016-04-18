@@ -29,6 +29,11 @@ void VoroEnd::draw() {
     
     ocean.draw(&mat);
     mat.end();
+    
+    ofSetColor(0, 0, 0, fadeOutFlor*255);
+    ofTranslate(0, 0, getWorldSize().z/2);
+    ofDrawBox(getWorldSize().x, 10, getWorldSize().z);
+    
 }
 
 void VoroEnd::update() {
@@ -73,13 +78,17 @@ void VoroEnd::update() {
             
             float n = ofSignedNoise((c->getPosition().x + (time)));
             
+            
+            float edgeStill = 1;
+            
+            if(openWall.get() > 45) {
             float edgeAt = 0;
             float fullValueAtDistInCM = stillAtEdgeDist.get();
             float edgeStill =  ofClamp(abs(c->getGlobalPosition().z - edgeAt) / fullValueAtDistInCM, 0, 1);
             
-            
             if(edgeStill < 1) {
-                edgeStill *= (1 - stillAtEdge.get())    ;
+                edgeStill *= (1 - stillAtEdge.get()) ;
+            }
             }
             
             
@@ -114,6 +123,10 @@ void VoroEnd::drawModel() {
     
     ocean.draw();
     wall.draw();
+    
+
+
+    
 }
 
 
