@@ -48,7 +48,7 @@ public:
         scenes.push_back(make_shared<RoomScene>());
         scenes.push_back(make_shared<CrystalScene>());
         scenes.push_back(make_shared<LightScene>());
-        scenes.push_back(make_shared<PlateauScene>());
+        // scenes.push_back(make_shared<PlateauScene>());
         scenes.push_back(make_shared<OpeningScene>());
         scenes.push_back(make_shared<SketchScene>());
         scenes.push_back(make_shared<TextScene>());
@@ -277,9 +277,13 @@ public:
                     if(p->getToggle("enabled")){
                         xEnabled+=p->getWidth();
                         p->setPosition(wWidth-xEnabled,0);
+                        p->maximize();
+                        p->sizeChangedCB();
                     } else {
                         p->setPosition(xDisabled, guiWindow->getHeight()-65);
                         xDisabled+=p->getWidth()*0.5;
+                        p->minimizeAll();
+                        p->sizeChangedCB();
                     }
                 }
                 
