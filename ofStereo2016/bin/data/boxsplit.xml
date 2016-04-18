@@ -8,6 +8,8 @@
 		<left_right_eye>1, 1, 1, 0</left_right_eye>
 		<right_left_eye>1, 1, 1, 0</right_left_eye>
 		<right_right_eye>1, 1, 1, 1</right_right_eye>
+	<dotColor>1, 1, 1, 1</dotColor>
+		<downAnimation>0</downAnimation>
 	</box>
 <boxsplit/>
 	<floorOn>1</floorOn>

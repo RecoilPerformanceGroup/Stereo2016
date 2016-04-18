@@ -209,7 +209,16 @@ namespace ofxStereoscopy {
     void World::drawModel(bool showCameraFrustrums, bool rightEye, bool showOrigin, bool showPlaneOutlines) {
         
         for(std::pair<string, shared_ptr<Plane>> p : planes){
+            ofPushStyle();
+            ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+            ofSetColor(127*0.9, 127, 127*0.9, 255);
+            p.second->drawPlaneModel(!rightEye, false);
+            
+            ofDisableDepthTest();
+            ofSetColor(255, 255*0.9, 255, 127);
+            ofEnableBlendMode(OF_BLENDMODE_ADD);
             p.second->drawPlaneModel(rightEye, showPlaneOutlines);
+            ofPopStyle();
         }
         
         if(showCameraFrustrums){
