@@ -440,16 +440,11 @@
 		36BF1C038F5AEC4D85473FE4 /* scenes */ = {
 			isa = PBXGroup;
 			children = (
+				7A2D09E51CC4CA2800003DBD /* Unused */,
 				FAEEC1DF483CD0A642C5BFC7 /* CrystalScene.cpp */,
 				67C616C7572D9BE7B9AB3606 /* CrystalScene.hpp */,
 				0D34729FD480D67C00B9E35B /* LightScene.cpp */,
 				3811B7042C35F3342BA24E0B /* LightScene.hpp */,
-				926467E3E39AC83B878081D2 /* MountainScene.cpp */,
-				6186D8DA6EFCD2D8AB91FB64 /* MountainScene.hpp */,
-				25A1BC9D9497B6F1ADBF53B9 /* PlaneCutScene.cpp */,
-				F2D565C575BBCAEBDFE4035E /* PlaneCutScene.hpp */,
-				650F041FD82233563F7888D5 /* PlateauScene.cpp */,
-				8BABD03A9C68A724E897C751 /* PlateauScene.hpp */,
 				500658FEFA2D229E12216304 /* RoomScene.cpp */,
 				C0A404396303126E09765AEA /* RoomScene.hpp */,
 				47EA2D084814BBA91864391A /* SketchScene.cpp */,
@@ -599,6 +594,19 @@
 				AB97697EC6F10E7234EFF261 /* ofxLibwebsockets */,
 			);
 			name = libs;
+			sourceTree = "<group>";
+		};
+		7A2D09E51CC4CA2800003DBD /* Unused */ = {
+			isa = PBXGroup;
+			children = (
+				650F041FD82233563F7888D5 /* PlateauScene.cpp */,
+				8BABD03A9C68A724E897C751 /* PlateauScene.hpp */,
+				25A1BC9D9497B6F1ADBF53B9 /* PlaneCutScene.cpp */,
+				F2D565C575BBCAEBDFE4035E /* PlaneCutScene.hpp */,
+				926467E3E39AC83B878081D2 /* MountainScene.cpp */,
+				6186D8DA6EFCD2D8AB91FB64 /* MountainScene.hpp */,
+			);
+			name = Unused;
 			sourceTree = "<group>";
 		};
 		7AE53F341CBBDAE900270AEE /* ofxSvg */ = {
