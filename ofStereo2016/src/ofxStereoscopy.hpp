@@ -11,7 +11,7 @@
 
 #include "ofMain.h"
 
-#define WORLD_DIMENSION_MAX 100*10000.0
+#define WORLD_DIMENSION_MAX 100000.0
 
 namespace ofxStereoscopy {
     
