@@ -57,15 +57,12 @@ public:
     ofParameter<float> stillAtEdge {"stillAtEdge", 0, 0, 1};
     ofParameter<float> stillAtEdgeDist {"stillAtEdgeDist", 0, 0, 2000};
 
-    
     //ofParameter<ofVec3f> size {"size", ofVec3f(1000,1000,1000), ofVec3f(0,0,0), ofVec3f(10000,10000,10000) };
     
     ofParameter<ofFloatColor> matcolor {"color", ofFloatColor(1,1,1,1), ofFloatColor(0,0,0,0), ofFloatColor(1,1,1,1)};
     
-    
     ofParameter<float> fadeOutFlor {"floorFadeOut", 0, 0, 1};
 
-    
     ofParameterGroup wallParams {"wall",
         wallNumCells,
         wallSeed,
@@ -89,7 +86,8 @@ public:
         enabled,
         qlab,
         stillAtEdge,
-        stillAtEdgeDist
+        stillAtEdgeDist,
+        matcolor
     };
     
     VoroEnd() {

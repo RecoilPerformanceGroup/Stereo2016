@@ -24,7 +24,7 @@ void RoomScene::setup() {
     floor.setParent(world->origin);
     floor.setGlobalPosition(0,-floorHeight/2.0, stage_size->z/2.0);
 
-    floorLight.enable();
+    floorLight.disable();
     floorLight.setParent(world->origin);
     floorLight.setDirectional();
     floorLight.setGlobalPosition(0, stage_size->y, stage_size->z/2.0);
@@ -36,7 +36,7 @@ void RoomScene::setup() {
     wall.setParent(world->origin);
     wall.setGlobalPosition(0,stage_size->y/2.0, -wallThickness/2.0);
 
-    wallLight.enable();
+    wallLight.disable();
     wallLight.setParent(world->origin);
     wallLight.setDirectional();
     wallLight.setGlobalPosition(0, stage_size->y/2.0, stage_size->z);

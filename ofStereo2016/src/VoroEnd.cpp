@@ -22,11 +22,11 @@ void VoroEnd::setup() {
 void VoroEnd::draw() {
     
     ofEnableAlphaBlending();
+    ofEnableLighting();
     ofSetColor(255);
+    
     mat.begin();
-    
     wall.draw(&mat);
-    
     ocean.draw(&mat);
     mat.end();
     
@@ -78,19 +78,17 @@ void VoroEnd::update() {
             
             float n = ofSignedNoise((c->getPosition().x + (time)));
             
-            
             float edgeStill = 1;
             
             if(openWall.get() > 45) {
             float edgeAt = 0;
             float fullValueAtDistInCM = stillAtEdgeDist.get();
-            float edgeStill =  ofClamp(abs(c->getGlobalPosition().z - edgeAt) / fullValueAtDistInCM, 0, 1);
+            edgeStill =  ofClamp(abs(c->getGlobalPosition().z - edgeAt) / fullValueAtDistInCM, 0, 1);
             
             if(edgeStill < 1) {
                 edgeStill *= (1 - stillAtEdge.get()) ;
             }
             }
-            
             
             ofVec3f nP(n, n, n);
             nP *= amount * edgeStill;
@@ -106,7 +104,7 @@ void VoroEnd::reconstructWall(){
     ofVec3f _s = getWorldSize();
     
     ofSeedRandom(wallSeed.get());
-    wall.setupFromBoundingBox(_s.x*1.5, _s.y*3, 10, wallNumCells, true,true,false);
+    wall.setupFromBoundingBox(_s.x*1.0, _s.y*1.0, 10, wallNumCells, false,false,false);
     wall.setParent(wallCenter);
 }
 
