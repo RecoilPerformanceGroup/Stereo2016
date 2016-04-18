@@ -1,5 +1,5 @@
 <VoroEnd>
-	<enabled>1</enabled>
+	<enabled>0</enabled>
 	<add_to_qlab>0</add_to_qlab>
 	<material>
 		<noise>
@@ -34,4 +34,6 @@
 	<ocean_origin>0, -322.365, 0</ocean_origin>
 	</ocean>
 <VoroEnd/>
+<stillAtEdge>0</stillAtEdge>
+	<stillAtEdgeDist>0</stillAtEdgeDist>
 </VoroEnd>

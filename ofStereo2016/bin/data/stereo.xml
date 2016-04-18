@@ -76,7 +76,7 @@
 			</wall>
 		</roomScene>
 		<Lights>
-			<enabled>1</enabled>
+			<enabled>0</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<directionalLight1>
 				<diffuseColor>255, 255, 255, 255</diffuseColor>
@@ -146,7 +146,7 @@
 			</Plateau>
 		</PlateauScene>
 		<openingScene>
-			<enabled>0</enabled>
+			<enabled>1</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<lines>
 				<speed>0</speed>
@@ -167,29 +167,41 @@
 				<width>150</width>
 				<color>1, 1, 1, 0</color>
 			</title>
+		<leftTitle>
+				<string>left</string>
+				<position>0, 250, 400</position>
+				<height>400</height>
+				<color>0, 1, 1, 1</color>
+			</leftTitle>
+			<rightTitle>
+				<string>right</string>
+				<position>0, 250, 400</position>
+				<height>400</height>
+				<color>1, 0, 0, 1</color>
+			</rightTitle>
 		</openingScene>
 		<sketch>
-			<enabled>1</enabled>
+			<enabled>0</enabled>
 			<add_to_qlab>0</add_to_qlab>
-			<lineWidth>-100, 10</lineWidth>
-			<speed>0</speed>
-			<radius>0</radius>
-			<origin>0, 244.898, 400</origin>
-			<space>350, 150, 500</space>
-			<pivotRadius>10</pivotRadius>
-			<pivotSpeed>0.000100136</pivotSpeed>
-			<positionTowardsCamera>0.18</positionTowardsCamera>
+			<lineWidth>-73.4694, 10</lineWidth>
+			<speed>0.5</speed>
+			<radius>24</radius>
+			<origin>0, 581.633, 489.796</origin>
+			<space>25.5102, 30.6122, 25.5102</space>
+			<pivotRadius>80</pivotRadius>
+			<pivotSpeed>2.5</pivotSpeed>
+			<positionTowardsCamera>0</positionTowardsCamera>
 			<reset>0</reset>
+		<use3dInput>1</use3dInput>
 		</sketch>
 		<TextScene>
 			<enabled>0</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<text>
-				<position>0, 300, 0</position>
-				<size>15</size>
-				<string>please
-put on your glasses</string>
-				<color>1, 1, 1, 0</color>
+				<position>0, 250, 400</position>
+				<size>30</size>
+				<string/>
+				<color>1, 1, 1, 1</color>
 			</text>
 		</TextScene>
 		<VoroEnd>
@@ -210,24 +222,27 @@ put on your glasses</string>
 				</noise>
 			</material>
 			<wall>
-				<cells>67</cells>
-				<seed>48</seed>
+				<cells>38</cells>
+				<seed>15</seed>
 				<origin>0, 0, 0</origin>
 				<wall_rotation>131.345, 0, 0</wall_rotation>
-				<noise_speed>0</noise_speed>
-				<noise_amount>0</noise_amount>
-				<open>0</open>
+				<noise_speed>0.8</noise_speed>
+				<noise_amount>400</noise_amount>
+				<open>90</open>
+			<fall>1</fall>
 			</wall>
 			<ocean>
-				<cells>10</cells>
+				<cells>29</cells>
 				<seed>69</seed>
 				<origin>0.417603, -9.99481, 0.417603</origin>
-				<noise_speed>1</noise_speed>
-				<noise_amount>193.878</noise_amount>
+				<noise_speed>0</noise_speed>
+				<noise_amount>0</noise_amount>
 			</ocean>
+		<stillAtEdge>0</stillAtEdge>
+			<stillAtEdgeDist>0</stillAtEdgeDist>
 		</VoroEnd>
 	<Crystal>
-			<enabled>1</enabled>
+			<enabled>0</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<cluster>
 				<cells>65</cells>
@@ -389,4 +404,5 @@ put on your glasses</string>
 		</FLOOR>
 	</world>
 <stereo/>
+<input3d>0, 0, 0</input3d>
 </stereo>
