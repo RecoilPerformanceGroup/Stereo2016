@@ -1,0 +1,11 @@
+<TextScene>
+	<enabled>0</enabled>
+	<add_to_qlab>0</add_to_qlab>
+	<text>
+		<position>0, 250, 400</position>
+		<size>30</size>
+		<string/>
+		<color>1, 1, 1, 1</color>
+	</text>
+<TextScene/>
+</TextScene>

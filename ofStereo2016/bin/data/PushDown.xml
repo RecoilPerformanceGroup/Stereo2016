@@ -1,0 +1,31 @@
+<PushDown>
+	<enabled>0</enabled>
+	<add_to_qlab>0</add_to_qlab>
+	<cluster>
+		<cells>2</cells>
+		<seed>2</seed>
+		<origin>0, -200, 400</origin>
+		<color>1, 1, 1, 1</color>
+		<push>2</push>
+		<pushradius>2</pushradius>
+		<pushpos>0, 0, 0</pushpos>
+		<pull>2</pull>
+		<pullradius>2</pullradius>
+		<pullpos>0, 0, 0</pullpos>
+		<material>
+			<noise>
+				<displacement>
+					<velocity>0, 0, 0</velocity>
+					<scale>1, 1, 1</scale>
+					<amount>0, 0, 0</amount>
+				</displacement>
+				<texture>
+					<velocity>0, 0, 0</velocity>
+					<scale>1.6666, 1.6666, 1.6666</scale>
+					<amount>-0.025</amount>
+				</texture>
+			</noise>
+		</material>
+	</cluster>
+<PushDown/>
+</PushDown>

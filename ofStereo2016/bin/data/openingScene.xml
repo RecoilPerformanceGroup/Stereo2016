@@ -1,5 +1,5 @@
 <openingScene>
-	<enabled>1</enabled>
+	<enabled>0</enabled>
 	<add_to_qlab>0</add_to_qlab>
 	<speed>0.5</speed>
 	<radius>20</radius>
