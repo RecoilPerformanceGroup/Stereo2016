@@ -32,10 +32,10 @@
 #include "VoroEnd.hpp"
 #include "TextScene.hpp"
 #include "GameScene.hpp"
-
 #include "PushDown.hpp"
 #include "BoxSplit.hpp"
 #include "PerspectiveChange.hpp"
+#include "SoundField.hpp"
 
 class ofApp : public ofBaseApp{
     
@@ -44,7 +44,7 @@ public:
     ofApp() {
         
         sceneParams.setName("scenes");
-        scenes.push_back(make_shared<VoroScenes>());
+        //scenes.push_back(make_shared<VoroScenes>());
         scenes.push_back(make_shared<RoomScene>());
         scenes.push_back(make_shared<CrystalScene>());
         scenes.push_back(make_shared<LightScene>());
@@ -56,6 +56,7 @@ public:
         scenes.push_back(make_shared<GameScene>());
         scenes.push_back(make_shared<PushDown>());
         scenes.push_back(make_shared<PerspectiveChange>());
+        scenes.push_back(make_shared<SoundField>());
         
         scenes.push_back(make_shared<BoxSplit>());
         

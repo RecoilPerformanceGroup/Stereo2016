@@ -40,6 +40,7 @@
 		6F7DDA580CC59064B60B8FC7 /* ofxVoro.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 06990387B09CAF1F19CC0095 /* ofxVoro.cpp */; };
 		72A929D3561B8232A182ABFC /* ofxOscBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65EEFA3DA3526E9CDD9C21F9 /* ofxOscBundle.cpp */; };
 		77CF44C1E470CEED2784335C /* pre_container.cc in Sources */ = {isa = PBXBuildFile; fileRef = F6BC3F2FE4E1233071671277 /* pre_container.cc */; };
+		7A2D09E81CC55C6A00003DBD /* SoundField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A2D09E61CC55C6A00003DBD /* SoundField.cpp */; };
 		7AE53F411CBBDAE900270AEE /* src_colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7AE53F381CBBDAE900270AEE /* src_colors.cpp */; };
 		7AE53F421CBBDAE900270AEE /* svgtiny.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7AE53F391CBBDAE900270AEE /* svgtiny.cpp */; };
 		7AE53F431CBBDAE900270AEE /* svgtiny_gradient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7AE53F3B1CBBDAE900270AEE /* svgtiny_gradient.cpp */; };
@@ -201,6 +202,8 @@
 		7689F8A0F3D0B7635A8C3104 /* ofxOscArg.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOscArg.h; path = ../../../addons/ofxOsc/src/ofxOscArg.h; sourceTree = SOURCE_ROOT; };
 		787315438BF1DD00C81DF413 /* ofxDatGuiLabel.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxDatGuiLabel.h; path = ../../../addons/ofxDatGui/src/components/ofxDatGuiLabel.h; sourceTree = SOURCE_ROOT; };
 		78D67A00EB899FAC09430597 /* ofxLabel.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxLabel.cpp; path = ../../../addons/ofxGui/src/ofxLabel.cpp; sourceTree = SOURCE_ROOT; };
+		7A2D09E61CC55C6A00003DBD /* SoundField.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundField.cpp; sourceTree = "<group>"; };
+		7A2D09E71CC55C6A00003DBD /* SoundField.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SoundField.hpp; sourceTree = "<group>"; };
 		7AE53F381CBBDAE900270AEE /* src_colors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = src_colors.cpp; sourceTree = "<group>"; };
 		7AE53F391CBBDAE900270AEE /* svgtiny.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = svgtiny.cpp; sourceTree = "<group>"; };
 		7AE53F3A1CBBDAE900270AEE /* svgtiny.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svgtiny.h; sourceTree = "<group>"; };
@@ -465,6 +468,8 @@
 				04FDF5531CBF942700DB2461 /* BoxSplit.hpp */,
 				0437FCC31CBFC74C00DB02C2 /* PerspectiveChange.cpp */,
 				0437FCC41CBFC74C00DB02C2 /* PerspectiveChange.hpp */,
+				7A2D09E61CC55C6A00003DBD /* SoundField.cpp */,
+				7A2D09E71CC55C6A00003DBD /* SoundField.hpp */,
 			);
 			name = scenes;
 			sourceTree = "<group>";
@@ -1106,6 +1111,7 @@
 				63B57AC5BF4EF088491E0317 /* ofxXmlSettings.cpp in Sources */,
 				933A2227713C720CEFF80FD9 /* tinyxml.cpp in Sources */,
 				B4376C7A1CBF8C7800401CE9 /* GameScene.cpp in Sources */,
+				7A2D09E81CC55C6A00003DBD /* SoundField.cpp in Sources */,
 				7AE53F421CBBDAE900270AEE /* svgtiny.cpp in Sources */,
 				9D44DC88EF9E7991B4A09951 /* tinyxmlerror.cpp in Sources */,
 				5A4349E9754D6FA14C0F2A3A /* tinyxmlparser.cpp in Sources */,

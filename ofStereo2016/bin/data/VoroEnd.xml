@@ -1,5 +1,5 @@
 <VoroEnd>
-	<enabled>1</enabled>
+	<enabled>0</enabled>
 	<add_to_qlab>0</add_to_qlab>
 	<material>
 		<noise>
@@ -32,6 +32,10 @@
 		<noise_speed>1</noise_speed>
 		<noise_amount>193.878</noise_amount>
 	<ocean_origin>0, 0, 0</ocean_origin>
+	<floorFadeOut>0</floorFadeOut>
 	</ocean>
 <VoroEnd/>
+<stillAtEdge>0</stillAtEdge>
+	<stillAtEdgeDist>0</stillAtEdgeDist>
+<color>1, 1, 1, 1</color>
 </VoroEnd>

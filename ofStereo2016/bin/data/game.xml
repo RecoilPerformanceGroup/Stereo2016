@@ -3,7 +3,13 @@
 	<add_to_qlab>0</add_to_qlab>
 	<lineWidth>4.08163, 100</lineWidth>
 	<length>1</length>
+<<<<<<< HEAD
 <game/>
 <lineOffset>0, 20.4081, 10.2041</lineOffset>
 <distance>100</distance>
+=======
+	<distance>100</distance>
+	<lineOffset>0, 20.4081, 10.2041</lineOffset>
+<game/>
+>>>>>>> 08bb9e70b571c6a04113251a99d6a7d1da8a108d
 </game>

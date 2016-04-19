@@ -1,0 +1,34 @@
+<SoundField>
+	<enabled>1</enabled>
+	<add_to_qlab>0</add_to_qlab>
+	<soundWaves>
+		<originNormalised>0, 0, 0</originNormalised>
+		<type>0</type>
+		<velocity>0, 0, 0</velocity>
+		<force>1</force>
+		<trigger>0</trigger>
+	</soundWaves>
+	<cluster>
+		<cells>2</cells>
+		<origin>0, 0, 0</origin>
+		<scale>0</scale>
+		<scaleCells>0</scaleCells>
+		<rotationAxis>0, 0, 0</rotationAxis>
+		<rotationSpeed>0</rotationSpeed>
+		<color>1, 1, 1, 1</color>
+		<material>
+			<noise>
+				<displacement>
+					<velocity>0, 0, 0</velocity>
+					<scale>1, 1, 1</scale>
+					<amount>0, 0, 0</amount>
+				</displacement>
+				<texture>
+					<velocity>0, 0, 0</velocity>
+					<scale>1.6666, 1.6666, 1.6666</scale>
+					<amount>-0.025</amount>
+				</texture>
+			</noise>
+		</material>
+	</cluster>
+</SoundField>

@@ -34,4 +34,16 @@
 		<width>150</width>
 		<color>1, 1, 1, 0</color>
 	</title>
+<leftTitle>
+		<string>left</string>
+		<position>0, 250, 400</position>
+		<height>400</height>
+		<color>0, 1, 1, 1</color>
+	</leftTitle>
+	<rightTitle>
+		<string>right</string>
+		<position>0, 250, 400</position>
+		<height>400</height>
+		<color>1, 0, 0, 1</color>
+	</rightTitle>
 </openingScene>
