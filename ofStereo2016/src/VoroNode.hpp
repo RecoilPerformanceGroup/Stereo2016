@@ -55,6 +55,7 @@ public:
     int nCells;
     
     ofVec3f renderPosOffset;
+    ofFloatColor tint {1,1,1,1};
     
     //int seed;
     

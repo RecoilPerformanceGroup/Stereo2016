@@ -400,13 +400,16 @@ void VoroNode::setupFromBoundingBox(float _w, float _h, float _d, int _c, bool o
 void VoroNode::customDraw() {
     if(bDraw) {
         
+        ofPushStyle();
         ofPushMatrix();
         
         ofTranslate(renderPosOffset);
         
+        ofSetColor(tint);
         mesh.drawFaces();
         
         ofPopMatrix();
+        ofPopStyle();
         
     }
 }

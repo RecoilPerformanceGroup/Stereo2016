@@ -22,6 +22,7 @@ void VoroEnd::setup() {
 void VoroEnd::draw() {
     
     ofEnableAlphaBlending();
+    ofEnableDepthTest();
     ofEnableLighting();
     ofSetColor(255);
     
@@ -30,7 +31,7 @@ void VoroEnd::draw() {
     ocean.draw(&mat);
     mat.end();
     
-    ofSetColor(0, 0, 0, fadeOutFlor*255);
+    ofSetColor(0, fadeOutFlor*255.0);
     ofTranslate(0, 0, getWorldSize().z/2);
     ofDrawBox(getWorldSize().x, 10, getWorldSize().z);
     
@@ -57,6 +58,10 @@ void VoroEnd::update() {
     
     ocean.setPosition(oceanOrigin.get() - ofVec3f( 0, 0, ocean.boundingBox.getDepth() /2));
     
+    
+    oceanHorizon.setPosition(horizonOrigin.get() - ofVec3f( 0, 0, oceanHorizon.boundingBox.getDepth()/2 + wall.boundingBox.getHeight()*3
+                                                           ));
+    
     ofMatrix4x4 m;
     m.makeIdentityMatrix();
     ofVec3f rotCenter(0, wall.boundingBox.getHeight()/2/*_s.y/2*/, 0);
@@ -80,7 +85,7 @@ void VoroEnd::update() {
             
             float edgeStill = 1;
             
-            if(openWall.get() > 45) {
+            /*if(openWall.get() > 45) {
             float edgeAt = 0;
             float fullValueAtDistInCM = stillAtEdgeDist.get();
             edgeStill =  ofClamp(abs(c->getGlobalPosition().z - edgeAt) / fullValueAtDistInCM, 0, 1);
@@ -88,42 +93,56 @@ void VoroEnd::update() {
             if(edgeStill < 1) {
                 edgeStill *= (1 - stillAtEdge.get()) ;
             }
-            }
+            }*/
             
             ofVec3f nP(n, n, n);
             nP *= amount * edgeStill;
             c->renderPosOffset = nP;
+            
+            float cc = ofMap(nP.length(), 0, amount.length(), 1.0, 0);
+            
+            c->tint = ofFloatColor(cc,1);
         }
     };
     
     applyNoise(ocean, oceanNoiseTime, oceanNoiseDisplaceSpeed, ofVec3f(0, oceanNoiseDisplaceAmount, 0));
-    applyNoise(wall, wallNoiseTime, wallNoiseDisplaceSpeed, ofVec3f(0, 0, wallNoiseDisplaceAmount));   
+    applyNoise(wall, wallNoiseTime, wallNoiseDisplaceSpeed, ofVec3f(0, 0, wallNoiseDisplaceAmount));
+    
+    applyNoise(oceanHorizon, oceanNoiseTime, oceanNoiseDisplaceSpeed, ofVec3f(0, oceanNoiseDisplaceAmount, 0));
 }
 
 void VoroEnd::reconstructWall(){
     ofVec3f _s = getWorldSize();
     
     ofSeedRandom(wallSeed.get());
-    wall.setupFromBoundingBox(_s.x*1.0, _s.y*1.0, 10, wallNumCells, false,false,false);
+    wall.setupFromBoundingBox(_s.x*1.2, _s.y*1.0, 10, wallNumCells, false,false,false);
     wall.setParent(wallCenter);
+    
 }
 
 void VoroEnd::reconstructOcean(){
     ofVec3f _s = getWorldSize();
     
     ofSeedRandom(oceanSeed.get());
-    ocean.setupFromBoundingBox(_s.x, 10, _s.z-200, oceanNumCells, true,false,true);
+    ocean.setupFromBoundingBox(_s.x*1.1, 10, _s.z-200, oceanNumCells, false,false,false);
     ocean.setParent(floorCenter);
+    
+    
+    oceanHorizon.setupFromBoundingBox(_s.x*4, 10, _s.z*4, oceanNumCells*1.5, true,true,true);
+    oceanHorizon.setParent(floorCenter);
+    
 }
 
 void VoroEnd::drawModel() {
+    
+    
+    ofEnableDepthTest();
     ofSetColor(255,75);
     
     ocean.draw();
     wall.draw();
+    oceanHorizon.draw();
     
-
-
     
 }
 

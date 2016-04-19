@@ -18,14 +18,6 @@ class VoroEnd : public ofxStereoscopy::Scene {
     
 public:
     
-    // Add following parameters
-    
-    // rotate up
-    
-    // translate down
-    
-    // increase subdivision size
-    
     // perlin displacement along depth axis amount
     ofParameter<float> oceanNoiseDisplaceSpeed {"noise speed", 0, 0, 1};
     ofParameter<float> oceanNoiseDisplaceAmount {"noise amount", 0, 0, 1000};
@@ -52,6 +44,11 @@ public:
 
     ofParameter<float> openWall {"open", 0, 0, 90};
     ofParameter<float> fallWall {"fall", 0, 0, 1};
+    
+    
+    ofParameter<ofVec3f> horizonOrigin {"horizonOrigin", ofVec3f(0,0,0),
+        ofVec3f(-1000,-1000,-1000),
+        ofVec3f(1000,1000,1000)};
     
     
     ofParameter<float> stillAtEdge {"stillAtEdge", 0, 0, 1};
@@ -87,6 +84,7 @@ public:
         qlab,
         stillAtEdge,
         stillAtEdgeDist,
+        horizonOrigin,
         matcolor
     };
     
@@ -138,6 +136,7 @@ public:
     
     ofBoxPrimitive box;
     
+    VoroNode oceanHorizon;
     VoroNode ocean;
     VoroNode wall;
     
