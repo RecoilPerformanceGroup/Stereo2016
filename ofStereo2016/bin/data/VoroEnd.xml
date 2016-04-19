@@ -38,4 +38,5 @@
 <stillAtEdge>0</stillAtEdge>
 	<stillAtEdgeDist>0</stillAtEdgeDist>
 <color>1, 1, 1, 1</color>
+<horizonOrigin>0, 0, 0</horizonOrigin>
 </VoroEnd>

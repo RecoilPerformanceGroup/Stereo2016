@@ -2,13 +2,6 @@
 	<enabled>0</enabled>
 	<add_to_qlab>0</add_to_qlab>
 	<pos>0, 0, 0</pos>
-<<<<<<< HEAD
-	<perspective_seed>0</perspective_seed>
-<PerspectiveChange/>
-	<frameInterval>1</frameInterval>
-=======
 	<frameInterval>1</frameInterval>
 	<perspective_seed>0</perspective_seed>
-<PerspectiveChange/>
->>>>>>> 08bb9e70b571c6a04113251a99d6a7d1da8a108d
 </PerspectiveChange>

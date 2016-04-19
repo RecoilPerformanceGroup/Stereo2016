@@ -1,19 +1,11 @@
 <TextScene>
-	<enabled>0</enabled>
+	<enabled>1</enabled>
 	<add_to_qlab>0</add_to_qlab>
 	<text>
-<<<<<<< HEAD
-		<position>0, 300, 0</position>
-		<size>15</size>
+		<position>0, 300, 700</position>
+		<size>12</size>
 		<string>please
-put on your glasses</string>
+put on your glasses now</string>
 		<color>1, 1, 1, 0</color>
-=======
-		<position>0, 250, 400</position>
-		<size>30</size>
-		<string/>
-		<color>1, 1, 1, 1</color>
->>>>>>> 08bb9e70b571c6a04113251a99d6a7d1da8a108d
 	</text>
-<TextScene/>
 </TextScene>

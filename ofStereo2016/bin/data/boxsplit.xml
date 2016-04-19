@@ -1,8 +1,8 @@
 <boxsplit>
-	<enabled>0</enabled>
+	<enabled>1</enabled>
 	<add_to_qlab>0</add_to_qlab>
 	<box>
-		<split>24</split>
+		<split>0</split>
 		<width>0.142857</width>
 		<left_left_eye>1, 1, 1, 1</left_left_eye>
 		<left_right_eye>1, 1, 1, 0</left_right_eye>
@@ -12,6 +12,6 @@
 		<downAnimation>0</downAnimation>
 	</box>
 <boxsplit/>
-	<floorOn>1</floorOn>
-	<wallOn>1</wallOn>
+	<floorOn>0</floorOn>
+	<wallOn>0</wallOn>
 </boxsplit>

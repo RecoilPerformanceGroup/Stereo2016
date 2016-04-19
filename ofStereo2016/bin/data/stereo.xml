@@ -2,7 +2,7 @@
 	<stageSize>800, 422.378, 800</stageSize>
 	<Projector_Calibration>0</Projector_Calibration>
 	<Camera_Calibration>0</Camera_Calibration>
-	<Background_Color>1, 1, 1, 0</Background_Color>
+	<Background_Color>0, 0, 0, 1</Background_Color>
 	<Second_Screen_Model>0</Second_Screen_Model>
 	<scenes>
 		<VoroScenes>
@@ -76,7 +76,7 @@
 			</wall>
 		</roomScene>
 		<Lights>
-			<enabled>1</enabled>
+			<enabled>0</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<directionalLight1>
 				<diffuseColor>1, 1, 1, 255</diffuseColor>
@@ -146,7 +146,7 @@
 			</Plateau>
 		</PlateauScene>
 		<openingScene>
-			<enabled>0</enabled>
+			<enabled>1</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<lines>
 				<speed>0</speed>
@@ -169,15 +169,15 @@
 			</title>
 		<leftTitle>
 				<string>left</string>
-				<position>0, 250, 400</position>
-				<height>400</height>
-				<color>0, 1, 1, 1</color>
+				<position>-160, 250, 701</position>
+				<height>12</height>
+				<color>0, 1, 1, 0</color>
 			</leftTitle>
 			<rightTitle>
 				<string>right</string>
-				<position>0, 250, 400</position>
-				<height>400</height>
-				<color>1, 0, 0, 1</color>
+				<position>160, 250, 701</position>
+				<height>12</height>
+				<color>1, 0, 0, 0</color>
 			</rightTitle>
 		</openingScene>
 		<sketch>
@@ -195,13 +195,14 @@
 		<use3dInput>1</use3dInput>
 		</sketch>
 		<TextScene>
-			<enabled>0</enabled>
+			<enabled>1</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<text>
-				<position>0, 250, 400</position>
-				<size>30</size>
-				<string/>
-				<color>1, 1, 1, 1</color>
+				<position>0, 300, 700</position>
+				<size>12</size>
+				<string>please
+put on your glasses now</string>
+				<color>1, 1, 1, 0</color>
 			</text>
 		</TextScene>
 		<VoroEnd>
@@ -243,6 +244,7 @@
 		<stillAtEdge>0</stillAtEdge>
 			<stillAtEdgeDist>0</stillAtEdgeDist>
 		<color>1, 1, 1, 1</color>
+		<horizonOrigin>0, 0, 0</horizonOrigin>
 		</VoroEnd>
 	<Crystal>
 			<enabled>0</enabled>
@@ -332,12 +334,12 @@
 			</cluster>
 		</PushDown>
 		<boxsplit>
-			<enabled>0</enabled>
+			<enabled>1</enabled>
 			<add_to_qlab>0</add_to_qlab>
-			<floorOn>1</floorOn>
-			<wallOn>1</wallOn>
+			<floorOn>0</floorOn>
+			<wallOn>0</wallOn>
 			<box>
-				<split>24</split>
+				<split>0</split>
 				<width>0.142857</width>
 				<left_left_eye>1, 1, 1, 1</left_left_eye>
 				<left_right_eye>1, 1, 1, 0</left_right_eye>
@@ -355,7 +357,7 @@
 		<frameInterval>1</frameInterval>
 		</PerspectiveChange>
 	<SoundField>
-			<enabled>1</enabled>
+			<enabled>0</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<soundWaves>
 				<originNormalised>-1.39442, 0, 0.563101</originNormalised>
