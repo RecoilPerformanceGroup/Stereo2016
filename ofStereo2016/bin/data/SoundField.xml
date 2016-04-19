@@ -2,17 +2,22 @@
 	<enabled>1</enabled>
 	<add_to_qlab>0</add_to_qlab>
 	<soundWaves>
-		<originNormalised>0, 0, 0</originNormalised>
+		<originNormalised>-1.39442, 0, 0.563101</originNormalised>
 		<type>0</type>
-		<velocity>0, 0, 0</velocity>
+		<velocity>19.3878</velocity>
 		<force>1</force>
 		<trigger>0</trigger>
+	<direction>0.583508, 0, 0.260726</direction>
+		<create>0</create>
+		<clear>0</clear>
+	<affectDistance>500</affectDistance>
+		<globalForce>12.2449</globalForce>
 	</soundWaves>
 	<cluster>
-		<cells>2</cells>
+		<cells>244</cells>
 		<origin>0, 0, 0</origin>
-		<scale>0</scale>
-		<scaleCells>0</scaleCells>
+		<scale>10</scale>
+		<scaleCells>0.142714</scaleCells>
 		<rotationAxis>0, 0, 0</rotationAxis>
 		<rotationSpeed>0</rotationSpeed>
 		<color>1, 1, 1, 1</color>
@@ -31,4 +36,5 @@
 			</noise>
 		</material>
 	</cluster>
+<SoundField/>
 </SoundField>

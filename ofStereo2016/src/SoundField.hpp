@@ -55,6 +55,8 @@ public:
     ofParameter<float> soundWaveForce {"force", 1, -1, 1 };
     ofParameter<bool> soundWaveCreate {"create", false };
     ofParameter<bool> soundWaveClear {"clear", false };
+    ofParameter<float> soundWaveAffectDistance {"affectDistance", 500, 0, 10000 };
+    ofParameter<float> soundWaveGlobalForce {"globalForce", 1, -100, 100 };
 
     ofParameterGroup soundWaveParams {"soundWaves",
         soundWaveOriginNormalised,
@@ -63,7 +65,9 @@ public:
         soundWaveVelocity,
         soundWaveForce,
         soundWaveCreate,
-        soundWaveClear
+        soundWaveClear,
+        soundWaveAffectDistance,
+        soundWaveGlobalForce
     };
     
     ofParameterGroup params {"SoundField",
@@ -103,6 +107,8 @@ public:
     };
     
     vector<soundWave> soundWaves;
+    
+    void applyWaves(VoroNode & vn, bool recursive = false);
 };
 
 

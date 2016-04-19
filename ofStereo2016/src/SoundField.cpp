@@ -7,7 +7,16 @@
 //
 
 #include "SoundField.hpp"
+#include <dispatch/dispatch.h>
 
+float smootherstep(float x, float edge0, float edge1 )
+{
+    float sign = ofSign(x);
+    // Scale, and clamp x to 0..1 range
+    x = ofClamp((fabs(x) - edge0)/(edge1 - edge0), 0.0, 1.0);
+    // Evaluate polynomial
+    return fabs(x*x*x*(x*(x*6 - 15) + 10))*sign;
+}
 
 void SoundField::setup() {
     clusterNumCells.addListener(this, &SoundField::reconstructCluster<int>);
@@ -28,7 +37,7 @@ void SoundField::update() {
         soundWave sw;
         sw.type = soundWaveType;
         sw.position = sw.origin = soundWaveOriginNormalised.get() * getWorldSize();
-        sw.velocity = soundWaveVelocity * soundWaveDirection;
+        sw.velocity = soundWaveVelocity * soundWaveDirection.get().getNormalized();
         sw.force = soundWaveForce;
         soundWaves.push_back(sw);
         soundWaveCreate.set(false);
@@ -37,16 +46,6 @@ void SoundField::update() {
     if(soundWaveClear){
         soundWaves.clear();
         soundWaveClear.set(false);
-    }
-
-    std::vector<soundWave>::iterator iter;
-    for (iter = soundWaves.begin(); iter != soundWaves.end(); ) {
-        iter->position += iter->velocity * ofGetLastFrameTime() * 60.0;
-        if(iter->position.distance(world->origin.getPosition()) > 4000.0){
-            iter = soundWaves.erase(iter);
-        } else {
-            ++iter;
-        }
     }
     
     matCluster.updateParameters();
@@ -62,6 +61,18 @@ void SoundField::update() {
     cluster.setOrientation(clusterRotation);
     cluster.setGlobalPosition(clusterOrigin);
     cluster.setScale(clusterScale.get());
+
+    std::vector<soundWave>::iterator sw;
+    for (sw = soundWaves.begin(); sw != soundWaves.end(); ) {
+        sw->position += sw->velocity * ofGetLastFrameTime() * 60.0;
+        if(sw->position.distance(world->origin.getPosition()) > 4000.0){
+            sw = soundWaves.erase(sw);
+        } else {
+            ++sw;
+        }
+    }
+    
+    applyWaves(cluster);
     
     for(auto c : cluster.getChildren()) {
         c->setScale(clusterScaleCells);
@@ -72,6 +83,45 @@ void SoundField::update() {
     
     matCluster.setDiffuseColor(clusterColor.get());
     
+}
+
+void SoundField::applyWaves(VoroNode & vn, bool recursive){
+    
+    vector<VoroNode *> vnChildren = vn.getChildren();
+    
+    dispatch_apply( vnChildren.size(), dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^(size_t childNumber){
+        VoroNode * n = vnChildren[childNumber];
+        float maxDist = soundWaveAffectDistance;
+        std::vector<soundWave>::iterator sw;
+        for (sw = soundWaves.begin(); sw != soundWaves.end(); ) {
+            ofVec3f normal = sw->velocity.getNormalized();
+            float sphereRadius = 0;
+            if(sw->type == 1){
+                sphereRadius = sw->origin.distance(sw->position);
+            }
+                if(sw->type == 0){
+                    float distToPlane(normal.dot(n->getGlobalPosition() - sw->position));
+                    distToPlane = ofClamp(distToPlane, -maxDist, maxDist);
+                    distToPlane = (maxDist - fabs(distToPlane)) * ofSign(distToPlane);
+                    distToPlane = smootherstep(ofMap(distToPlane, -maxDist, maxDist, -1, 1, true), 0.0, 1.0);
+                    ofVec3f offsetVec(sw->velocity.getNormalized() * sw->force*soundWaveGlobalForce*distToPlane);
+                    n->setGlobalPosition(n->getGlobalPosition()+offsetVec);
+                } else if (sw->type == 1) {
+                    float distToOrigin(sw->origin.distance(n->getGlobalPosition()));
+                    float distToWave = ofClamp(distToOrigin-sphereRadius, -maxDist, maxDist);
+                    distToWave = (maxDist - fabs(distToWave)) * ofSign(distToWave);
+                    distToWave = smootherstep(ofMap(distToWave, -maxDist, maxDist, -1, 1, true), 0.0, 1.0);
+                    ofVec3f offsetVec((n->getGlobalPosition()-sw->origin).getNormalized()*sw->force*soundWaveGlobalForce* distToWave);
+                    n->setGlobalPosition(n->getGlobalPosition()+offsetVec);
+                }
+            sw++;
+        }
+        if(recursive){
+            for(auto nc : n->getChildren()) {
+                applyWaves(*nc, recursive);
+            }
+        }
+    });
 }
 
 void SoundField::reconstructCluster(){
