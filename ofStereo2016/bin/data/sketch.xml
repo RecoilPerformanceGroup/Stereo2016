@@ -1,15 +1,16 @@
 <sketch>
-	<enabled>0</enabled>
-	<speed>0</speed>
+	<enabled>1</enabled>
+	<speed>1.1</speed>
 <sketch/>
 <radius>24</radius>
-	<origin>0, 581.633, 489.796</origin>
-	<space>25.5102, 30.6122, 25.5102</space>
+	<origin>0, 71.4286, 81.6326</origin>
+	<space>494.898, 515.306, 1000</space>
 	<pivotRadius>80</pivotRadius>
 	<pivotSpeed>2.5</pivotSpeed>
 <positionTowardsCamera>0</positionTowardsCamera>
 <reset>0</reset>
 <add_to_qlab>0</add_to_qlab>
-<lineWidth>-73.4694, 10</lineWidth>
+<lineWidth>8.16326, 34.6939</lineWidth>
 <use3dInput>1</use3dInput>
+<fadeDepth>0</fadeDepth>
 </sketch>

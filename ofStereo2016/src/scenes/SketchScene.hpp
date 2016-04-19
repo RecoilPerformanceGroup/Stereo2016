@@ -26,7 +26,7 @@ public:
     ofParameter<float> pivotSpeed {"pivotSpeed", 0.02, 0.0, 100.0};
     ofParameter<float> positionTowardsCamera {"positionTowardsCamera", 0, 0.0, 1.0};
     ofParameter<bool> reset {"reset", true};
-    //ofParameter<float> lineWidth {"lineWidth", 10.0, 0.0, 100.0};
+    ofParameter<float> fadeDepth {"fadeDepth", 0, -1000, 1000};
     ofParameter<ofVec2f> lineWidth {"lineWidth", ofVec2f(10.0,10.0), ofVec2f(-100,-100), ofVec2f(100,100)};
     
     
@@ -40,6 +40,7 @@ public:
         enabled,
         qlab,
         lineWidth,
+        fadeDepth,
         speed,
         radius,
         origin,

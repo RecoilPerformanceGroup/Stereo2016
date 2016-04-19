@@ -125,7 +125,8 @@ void SketchScene::drawLine() {
     colors = new ofFloatColor[path.getOutline()[0].size()];
     
     for(int i = 0; i < path.getOutline()[0].size(); i++){
-        colors[i].setHsb(1.0, 0.0, 1.0);
+        float brightness = ofMap(path.getOutline()[0][i].z, fadeDepth, getWorldSize().z, 0.0, 1.0);
+        colors[i].setHsb(1.0, 0.0, brightness);
     }
 
     vbo.setColorData(colors, path.getOutline()[0].size(), GL_DYNAMIC_DRAW);
@@ -359,17 +360,25 @@ out vec4    out_color;
 void main(void)
 {
     float   t           = dot(gl_FragCoord.xy - v_start, v_line) / v_l2;
+                        // normalised position of this fragment along the line
     vec2    projection  = v_start + clamp(t, 0.0, 1.0) * v_line;
     vec2    delta       = gl_FragCoord.xy - projection;
+                        // distance of this fragment from line center
     float   d2          = dot(delta, delta);
+                        // length of delta squared
     float   k           = clamp(_line_width.y - d2, 0.0, 1.0);
+                        // alpha for width
     float   endWeight   = step(abs(t * 2.0 - 1.0), 1);
+                        // alpha for round ends
     float   alpha       = mix(k, 1.0, endWeight);
+    
     
     if(k < 0.01) discard;
     
     //out_color = vec4(_line_color.rgb, 1.0);
-    out_color = vec4(v_color.rgb, k*v_color.a);
+    //out_color = vec4(v_color.rgb, k*v_color.a);
+    out_color = vec4(v_color.rgb , alpha*v_color.a);
+
 }
 
 )";
