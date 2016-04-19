@@ -1,0 +1,12 @@
+<TextScene>
+	<enabled>0</enabled>
+	<add_to_qlab>0</add_to_qlab>
+	<text>
+		<position>0, 300, 0</position>
+		<size>15</size>
+		<string>please
+put on your glasses</string>
+		<color>1, 1, 1, 0</color>
+	</text>
+<TextScene/>
+</TextScene>
