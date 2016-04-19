@@ -76,24 +76,24 @@
 			</wall>
 		</roomScene>
 		<Lights>
-			<enabled>0</enabled>
+			<enabled>1</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<directionalLight1>
-				<diffuseColor>255, 255, 255, 255</diffuseColor>
+				<diffuseColor>1, 1, 1, 255</diffuseColor>
 				<ambientColor>0, 0, 0, 255</ambientColor>
 				<specularColor>0, 0, 0, 255</specularColor>
 				<position>108.286, 420.656, 733.026</position>
 				<lookAt>4.16309, 4.16309, 733.026</lookAt>
 			</directionalLight1>
 			<directionalLight2>
-				<diffuseColor>0.765723, 0.760516, 0.760516, 1</diffuseColor>
+				<diffuseColor>0.406497, 0.406497, 0.396085, 1</diffuseColor>
 				<ambientColor>0, 0, 0, 1</ambientColor>
 				<specularColor>1, 1, 1, 1</specularColor>
-				<position>628.905, 0, 628.905</position>
+				<position>-1037.07, 524.779, 1670.14</position>
 				<lookAt>0, 0, 0</lookAt>
 			</directionalLight2>
 			<spotLight>
-				<diffuseColor>64, 64, 64, 255</diffuseColor>
+				<diffuseColor>0, 0, 0, 1</diffuseColor>
 				<ambientColor>0, 0, 0, 255</ambientColor>
 				<specularColor>0, 0, 0, 255</specularColor>
 				<position>-1661.81, 733.026, 1149.52</position>
@@ -358,17 +358,22 @@
 			<enabled>1</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<soundWaves>
-				<originNormalised>0, 0, 0</originNormalised>
+				<originNormalised>-1.39442, 0, 0.563101</originNormalised>
 				<type>0</type>
-				<velocity>0, 0, 0</velocity>
+				<velocity>19.3878</velocity>
 				<force>1</force>
 				<trigger>0</trigger>
+			<direction>0.583508, 0, 0.260726</direction>
+				<create>0</create>
+				<clear>0</clear>
+			<affectDistance>500</affectDistance>
+				<globalForce>12.2449</globalForce>
 			</soundWaves>
 			<cluster>
-				<cells>2</cells>
+				<cells>244</cells>
 				<origin>0, 0, 0</origin>
-				<scale>0</scale>
-				<scaleCells>0</scaleCells>
+				<scale>10</scale>
+				<scaleCells>0.142714</scaleCells>
 				<rotationAxis>0, 0, 0</rotationAxis>
 				<rotationSpeed>0</rotationSpeed>
 				<color>1, 1, 1, 1</color>
