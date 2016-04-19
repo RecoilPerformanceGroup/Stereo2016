@@ -110,7 +110,6 @@ public:
         floorCenter.setParent(world->origin);
         
         wallCenter.setPosition(0, _s.y, 0);
-        
         floorCenter.setPosition(0, 0, _s.z);
         
         reconstructWall();

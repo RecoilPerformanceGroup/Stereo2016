@@ -99,7 +99,7 @@ void VoroEnd::update() {
             nP *= amount * edgeStill;
             c->renderPosOffset = nP;
             
-            float cc = ofMap(nP.length(), 0, amount.length(), 1.0, 0);
+            float cc = ofMap(nP.length(), 0, max<float>(amount.length(), 300.0), 1.0, 0);
             
             c->tint = ofFloatColor(cc,1);
         }
@@ -124,7 +124,7 @@ void VoroEnd::reconstructOcean(){
     ofVec3f _s = getWorldSize();
     
     ofSeedRandom(oceanSeed.get());
-    ocean.setupFromBoundingBox(_s.x*1.1, 10, _s.z-200, oceanNumCells, false,false,false);
+    ocean.setupFromBoundingBox(_s.x*1.1, 10, _s.z/*-200*/, oceanNumCells, false,false,false);
     ocean.setParent(floorCenter);
     
     
