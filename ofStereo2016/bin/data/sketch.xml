@@ -1,15 +1,52 @@
 <sketch>
-	<enabled>0</enabled>
-	<speed>0</speed>
+	<enabled>1</enabled>
+	<speed>1.1</speed>
 <sketch/>
 <radius>24</radius>
-	<origin>0, 581.633, 489.796</origin>
-	<space>25.5102, 30.6122, 25.5102</space>
+	<origin>0, 71.4286, 81.6326</origin>
+	<space>494.898, 515.306, 1000</space>
 	<pivotRadius>80</pivotRadius>
 	<pivotSpeed>2.5</pivotSpeed>
 <positionTowardsCamera>0</positionTowardsCamera>
 <reset>0</reset>
 <add_to_qlab>0</add_to_qlab>
-<lineWidth>-73.4694, 10</lineWidth>
+<lineWidth>8.16326, 34.6939</lineWidth>
 <use3dInput>1</use3dInput>
+<fadeDepth>0</fadeDepth>
+<rotationEuler>0, 0, 0</rotationEuler>
+	<rotationCenter>0, 0, 0</rotationCenter>
+	<line>
+		<start>0</start>
+		<end>1</end>
+		<resolution>411</resolution>
+		<width>15.8163</width>
+		<depthFade>510.204</depthFade>
+		<noiseAmplitude>0</noiseAmplitude>
+		<noisePhase>0</noisePhase>
+		<use3dInput>0</use3dInput>
+		<nextPos>0.313203, 0.708871, 0.229904</nextPos>
+		<lineAddPos>0</lineAddPos>
+		<clear>0</clear>
+		<load>0</load>
+		<save>0</save>
+	</line>
+	<shard>
+		<size>20</size>
+		<color>1, 1, 1, 1</color>
+		<material>
+			<noise>
+				<displacement>
+					<velocity>0, 0, 0</velocity>
+					<scale>1, 1, 1</scale>
+					<amount>0, 0, 0</amount>
+				</displacement>
+				<texture>
+					<velocity>0, 0, 0</velocity>
+					<scale>1.6666, 1.6666, 1.6666</scale>
+					<amount>-0.025</amount>
+				</texture>
+			</noise>
+		</material>
+	<position>0</position>
+	</shard>
 </sketch>

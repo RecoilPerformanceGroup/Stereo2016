@@ -41,6 +41,7 @@
 		72A929D3561B8232A182ABFC /* ofxOscBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65EEFA3DA3526E9CDD9C21F9 /* ofxOscBundle.cpp */; };
 		77CF44C1E470CEED2784335C /* pre_container.cc in Sources */ = {isa = PBXBuildFile; fileRef = F6BC3F2FE4E1233071671277 /* pre_container.cc */; };
 		7A2D09E81CC55C6A00003DBD /* SoundField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A2D09E61CC55C6A00003DBD /* SoundField.cpp */; };
+		7AE153E71CC7886C00D025F2 /* MSACoreGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7AE153C61CC7886C00D025F2 /* MSACoreGL.cpp */; };
 		7AE53F411CBBDAE900270AEE /* src_colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7AE53F381CBBDAE900270AEE /* src_colors.cpp */; };
 		7AE53F421CBBDAE900270AEE /* svgtiny.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7AE53F391CBBDAE900270AEE /* svgtiny.cpp */; };
 		7AE53F431CBBDAE900270AEE /* svgtiny_gradient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7AE53F3B1CBBDAE900270AEE /* svgtiny_gradient.cpp */; };
@@ -204,6 +205,19 @@
 		78D67A00EB899FAC09430597 /* ofxLabel.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxLabel.cpp; path = ../../../addons/ofxGui/src/ofxLabel.cpp; sourceTree = SOURCE_ROOT; };
 		7A2D09E61CC55C6A00003DBD /* SoundField.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundField.cpp; sourceTree = "<group>"; };
 		7A2D09E71CC55C6A00003DBD /* SoundField.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SoundField.hpp; sourceTree = "<group>"; };
+		7AE153C21CC7886C00D025F2 /* MSACore-Cinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MSACore-Cinder.h"; sourceTree = "<group>"; };
+		7AE153C31CC7886C00D025F2 /* MSACore-OF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MSACore-OF.h"; sourceTree = "<group>"; };
+		7AE153C41CC7886C00D025F2 /* MSACore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSACore.h; sourceTree = "<group>"; };
+		7AE153C51CC7886C00D025F2 /* MSACoreCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSACoreCommon.h; sourceTree = "<group>"; };
+		7AE153C61CC7886C00D025F2 /* MSACoreGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MSACoreGL.cpp; sourceTree = "<group>"; };
+		7AE153C71CC7886C00D025F2 /* MSACoreGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSACoreGL.h; sourceTree = "<group>"; };
+		7AE153C81CC7886C00D025F2 /* MSACoreMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSACoreMath.h; sourceTree = "<group>"; };
+		7AE153DF1CC7886C00D025F2 /* MSAInterpolationTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSAInterpolationTypes.h; sourceTree = "<group>"; };
+		7AE153E01CC7886C00D025F2 /* MSAInterpolator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSAInterpolator.h; sourceTree = "<group>"; };
+		7AE153E11CC7886C00D025F2 /* MSAInterpolator1D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSAInterpolator1D.h; sourceTree = "<group>"; };
+		7AE153E21CC7886C00D025F2 /* MSAInterpolator2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSAInterpolator2D.h; sourceTree = "<group>"; };
+		7AE153E31CC7886C00D025F2 /* MSAInterpolator3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSAInterpolator3D.h; sourceTree = "<group>"; };
+		7AE153E41CC7886C00D025F2 /* MSAInterpolatorT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSAInterpolatorT.h; sourceTree = "<group>"; };
 		7AE53F381CBBDAE900270AEE /* src_colors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = src_colors.cpp; sourceTree = "<group>"; };
 		7AE53F391CBBDAE900270AEE /* svgtiny.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = svgtiny.cpp; sourceTree = "<group>"; };
 		7AE53F3A1CBBDAE900270AEE /* svgtiny.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svgtiny.h; sourceTree = "<group>"; };
@@ -614,6 +628,51 @@
 			name = Unused;
 			sourceTree = "<group>";
 		};
+		7AE153BD1CC7886C00D025F2 /* ofxMSACore */ = {
+			isa = PBXGroup;
+			children = (
+				7AE153C11CC7886C00D025F2 /* src */,
+			);
+			name = ofxMSACore;
+			path = ../../../addons/ofxMSACore;
+			sourceTree = "<group>";
+		};
+		7AE153C11CC7886C00D025F2 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				7AE153C21CC7886C00D025F2 /* MSACore-Cinder.h */,
+				7AE153C31CC7886C00D025F2 /* MSACore-OF.h */,
+				7AE153C41CC7886C00D025F2 /* MSACore.h */,
+				7AE153C51CC7886C00D025F2 /* MSACoreCommon.h */,
+				7AE153C61CC7886C00D025F2 /* MSACoreGL.cpp */,
+				7AE153C71CC7886C00D025F2 /* MSACoreGL.h */,
+				7AE153C81CC7886C00D025F2 /* MSACoreMath.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		7AE153C91CC7886C00D025F2 /* ofxMSAInterpolator */ = {
+			isa = PBXGroup;
+			children = (
+				7AE153DE1CC7886C00D025F2 /* src */,
+			);
+			name = ofxMSAInterpolator;
+			path = ../../../addons/ofxMSAInterpolator;
+			sourceTree = "<group>";
+		};
+		7AE153DE1CC7886C00D025F2 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				7AE153DF1CC7886C00D025F2 /* MSAInterpolationTypes.h */,
+				7AE153E01CC7886C00D025F2 /* MSAInterpolator.h */,
+				7AE153E11CC7886C00D025F2 /* MSAInterpolator1D.h */,
+				7AE153E21CC7886C00D025F2 /* MSAInterpolator2D.h */,
+				7AE153E31CC7886C00D025F2 /* MSAInterpolator3D.h */,
+				7AE153E41CC7886C00D025F2 /* MSAInterpolatorT.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 		7AE53F341CBBDAE900270AEE /* ofxSvg */ = {
 			isa = PBXGroup;
 			children = (
@@ -772,6 +831,8 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				7AE153BD1CC7886C00D025F2 /* ofxMSACore */,
+				7AE153C91CC7886C00D025F2 /* ofxMSAInterpolator */,
 				7AE53F341CBBDAE900270AEE /* ofxSvg */,
 				D8DD1043C333F6F63C8685E6 /* ofxDatGui */,
 				0D0595A62FF5ED8D37029107 /* ofxEasing */,
@@ -1051,6 +1112,7 @@
 				E896A5EA7FB9998EE0E6F916 /* RoomScene.cpp in Sources */,
 				4D2C7CE3795E3A842B36E824 /* SketchScene.cpp in Sources */,
 				B96B39E410C021D1F0CD6098 /* VoroNode.cpp in Sources */,
+				7AE153E71CC7886C00D025F2 /* MSACoreGL.cpp in Sources */,
 				04461F041CB7EEC8004C391A /* VoroEnd.cpp in Sources */,
 				7AE53F451CBBDAE900270AEE /* ofxSvg.cpp in Sources */,
 				D3C1C48E59CAA2D68C0DD477 /* ofxDatGuiComponent.cpp in Sources */,

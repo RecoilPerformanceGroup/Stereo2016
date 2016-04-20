@@ -8,4 +8,5 @@ ofxSyncedParams
 ofxVoro
 ofxXmlSettings
 ofxSVG
-ofxCGAL
+ofxMSACore
+ofxMSAInterpolator
