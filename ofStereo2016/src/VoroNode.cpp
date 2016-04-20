@@ -406,6 +406,8 @@ void VoroNode::customDraw() {
         ofTranslate(renderPosOffset);
         
         ofSetColor(tint);
+        //ofSetGlobalAmbientColor(tint);
+
         mesh.drawFaces();
         
         ofPopMatrix();
@@ -417,12 +419,32 @@ void VoroNode::customDraw() {
 void VoroNode::draw(OrganicMaterial * m) {
     if(m != nullptr){
         m->setWorldMatrix(getGlobalTransformMatrix());
+        
+        //m->setAmbientColor(tint);
+        m->setDiffuseColor(tint);
+        
+        
+        /*for( auto & c : mesh.getColors()) {
+            c = tint;
+        }*/
+        
+        
+        m->begin();
+        
     }
+    
     ofNode::draw();
+    
+    if(m != nullptr){
+        m->end();
+    }
     
     for(auto c : getChildren()) {
         c->draw(m);
     }
+    
+
+    
 };
 
 VoroNode::~VoroNode() {

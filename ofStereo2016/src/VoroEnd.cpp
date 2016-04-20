@@ -26,10 +26,9 @@ void VoroEnd::draw() {
     ofEnableLighting();
     ofSetColor(255);
     
-    mat.begin();
     wall.draw(&mat);
     ocean.draw(&mat);
-    mat.end();
+    oceanHorizon.draw(&mat);
     
     ofSetColor(0, fadeOutFlor*255.0);
     ofTranslate(0, 0, getWorldSize().z/2);
