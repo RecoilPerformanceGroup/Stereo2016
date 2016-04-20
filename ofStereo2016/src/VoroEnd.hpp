@@ -28,6 +28,14 @@ public:
     ofParameter<int> oceanNumCells {"cells", 2, 0, 200};
     ofParameter<int> oceanSeed {"seed", 2, 0, 200};
     
+    ofParameter<float> minDarkFade {"minDarkFade", 200, 0, 1000};
+    
+    
+    ofParameter<float> fadeOutEdge {"fadeOutEdge", 0, 0, 1};
+    
+    
+    ofParameter<float> oceanFall {"fall", 0, 0, -1000};
+    
     ofParameter<ofVec3f> oceanOrigin {"origin", ofVec3f(0,0,0),
         ofVec3f(-1000,-1000,-1000),
         ofVec3f(1000,1000,1000)};
@@ -50,6 +58,9 @@ public:
         ofVec3f(-1000,-1000,-1000),
         ofVec3f(1000,1000,1000)};
     
+    ofParameter<float> dpPersist {"dpPersist", 0, 0, 1};
+    
+    ofParameter<float> dpPersistRadius {"dpPersistRadius", 0, 0, 1000};
     
     ofParameter<float> stillAtEdge {"stillAtEdge", 0, 0, 1};
     ofParameter<float> stillAtEdgeDist {"stillAtEdgeDist", 0, 0, 2000};
@@ -58,7 +69,7 @@ public:
     
     ofParameter<ofFloatColor> matcolor {"color", ofFloatColor(1,1,1,1), ofFloatColor(0,0,0,0), ofFloatColor(1,1,1,1)};
     
-    ofParameter<float> fadeOutFlor {"floorFadeOut", 0, 0, 1};
+    ofParameter<float> fadeOutFloor {"floorFadeOut", 0, 0, 1};
 
     ofParameterGroup wallParams {"wall",
         wallNumCells,
@@ -76,7 +87,9 @@ public:
         oceanOrigin,
         oceanNoiseDisplaceSpeed,
         oceanNoiseDisplaceAmount,
-        fadeOutFlor,
+        fadeOutFloor,
+        fadeOutEdge,
+        oceanFall,
     };
     
     ofParameterGroup params {"VoroEnd",
@@ -85,6 +98,9 @@ public:
         stillAtEdge,
         stillAtEdgeDist,
         horizonOrigin,
+        dpPersist,
+        dpPersistRadius,
+        minDarkFade,
         matcolor
     };
     
