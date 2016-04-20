@@ -11,145 +11,186 @@
 
 void SketchScene::setup(){
 
-    globalParams->getVec3f("stage_size_cm").addListener(this, &SketchScene::onStageSize);
-    
-    path.setFilled(false);
-    path.setStrokeColor(ofColor::white);
-    path.setStrokeWidth(1); //otherwise it is not a line, but a shape to of
-    path.setMode(ofPath::POLYLINES);
     
     wideLines.setupShaderFromSource(GL_VERTEX_SHADER,vertexShader);
     wideLines.setupShaderFromSource(GL_GEOMETRY_SHADER,geometryShader);
     wideLines.setupShaderFromSource(GL_FRAGMENT_SHADER,fragmentShader);
     wideLines.setGeometryInputType(GL_LINES); // type: GL_POINTS, GL_LINES, GL_LINES_ADJACENCY_EXT, GL_TRIANGLES, GL_TRIANGLES_ADJACENCY_EXT
     wideLines.setGeometryOutputType(GL_TRIANGLE_STRIP); // type: GL_POINTS, GL_LINE_STRIP or GL_TRIANGLE_STRIP
-    wideLines.setGeometryOutputCount(6);	// set number of output vertices
+    wideLines.setGeometryOutputCount(6); // set number of output vertices
     
     wideLines.bindDefaults();
     wideLines.linkProgram();
 
-    resetLine();
+    spline3DCubic.verbose = true;
+    spline3DLinear.verbose = true;
+    
+    spline3DCubic.setInterpolation(msa::kInterpolationCubic);
+    spline3DLinear.setInterpolation(msa::kInterpolationLinear);
+
+    colors = new ofFloatColor[1];
     
     posFilter.setFc(0.05);
+    
+    ofSeedRandom(23.03);
+    shards.setupFromBoundingBox(1.0, 1.0, 1.0, 5, true, true, true);
+    shards.setParent(world->origin);
+    
+    int i = 0;
+    for (auto vn : shards.getChildren()){
+        if(i == 0)
+            shardNode = vn;
+        else
+            vn->bDraw = false;
+        i++;
+    }
+
 }
 
 void SketchScene::update(){
     
-    ofVec3f inputPos = globalParams->getVec3f("input3d").get() * (getWorldSize());
+    ofVec3f inputPos = globalParams->getVec3f("input3d").get();
     
-    
-    if (reset) {
-        resetLine();
-        reset = false;
+    if(lineUse3dInput){
+        lineNextPos.set(inputPos);
     }
     
-    noisePos.x += ofGetLastFrameTime() * speed;
-    noisePos.y += ofGetLastFrameTime() * speed;
-    noisePos.z += ofGetLastFrameTime() * speed;
-
-    pivotNoisePos.x += ofGetLastFrameTime() * pivotSpeed / pivotRadius;
-    pivotNoisePos.y += ofGetLastFrameTime() * pivotSpeed / pivotRadius;
-    pivotNoisePos.z += ofGetLastFrameTime() * pivotSpeed / pivotRadius;
-    
-    ofVec3f currentPoint(ofSignedNoise(noisePos.x),
-                         ofSignedNoise(noisePos.y),
-                         ofSignedNoise(noisePos.z));
-    
-    ofVec3f currentPivot(ofSignedNoise(pivotNoisePos.x),
-                         ofSignedNoise(pivotNoisePos.y),
-                         ofSignedNoise(pivotNoisePos.z));
-    
-    currentPoint*=space; // noise point * noise amunt
-    currentPoint+=origin;
-    
-    if(use3dInput) currentPoint += inputPos;
-
-    
-    currentPoint.interpolate(world->physical_camera_pos_cm, positionTowardsCamera);
-    
-    ofVec3f filteredPoint = posFilter.update((currentPoint)+(currentPivot*pivotRadius));
-    
-    points.push_back(filteredPoint);
-    
-    //path.rotate(0.025, ofVec3f(0.5,1,0.33));
-
-    if(points.size()%3==0){
-        ofVec3f & c1 = points[points.size()-3];
-        ofVec3f & c2 = points[points.size()-2];
-        ofVec3f & p = points[points.size()-1];
-        path.quadBezierTo(c1, c2, p);
+    if (lineAddPos) {
+        spline3DCubic.push_back(lineNextPos);
+        spline3DLinear.push_back(lineNextPos);
+        lineAddPos = false;
     }
-    path.simplify();
     
+    if (lineClear) {
+        spline3DCubic.clear();
+        spline3DCubic.setInterpolation(msa::kInterpolationCubic);
+        spline3DLinear.clear();
+        spline3DLinear.setInterpolation(msa::kInterpolationLinear);
+        colors = new ofFloatColor[1];
+        lineClear = false;
+    }
+    
+    if (lineLoad) {
+        //TODO: load line
+        lineLoad = false;
+    }
+
+    if (lineSave) {
+        //TODO: save line
+        lineSave = false;
+    }
+    
+    if (shardThrow) {
+        int i = 0;
+        for (auto vn : shards.getChildren()){
+            if(!vn->bDraw && vn != shardNode){
+                vn->setGlobalPosition(shardThrowFrom.get()*getWorldSize());
+                vn->velocity = shardThrowVelocity;
+                vn->bDraw = true;
+                shardThrow = false;
+                break;
+            }
+            i++;
+        }
+    }
+    
+    for (auto vn : shards.getChildren()){
+        vn->setScale(2*shardSize);
+        if(vn->bDraw && vn != shardNode){
+            vn->setGlobalPosition(vn->getGlobalPosition()+vn->velocity*ofGetLastFrameTime());
+            if(vn->getGlobalPosition().length() > 3000){
+                vn->bDraw = false;
+            }
+        }
+    }
+
+    
+    
+    verticesCubic.clear();
+    
+    if(spline3DCubic.size() > 2){
+        
+        float spacing = abs(lineStart-lineEnd)*1.0/lineResolution;
+        
+        for(float t=lineStart; t < lineEnd.get(); t += spacing){
+            ofVec3f vSample(spline3DCubic.sampleAt(t));
+            ofVec3f vWorld(vSample*getWorldSize());
+            verticesCubic.push_back(vWorld+ofVec3f(ofSignedNoise((vSample.x+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude, ofSignedNoise((vSample.y+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude, 0.0));
+        }
+        
+        shardNode->setGlobalPosition(spline3DCubic.sampleAt(shardPos)*getWorldSize());
+        
+    }
+    
+    vbo.setVertexData(verticesCubic.data(), verticesCubic.size(), GL_DYNAMIC_DRAW);
+    
+    delete colors;
+    colors = new ofFloatColor[verticesCubic.size()];
+    
+    for(int i = 0; i < verticesCubic.size(); i++){
+        float brightness = ofMap(verticesCubic[i].z, lineDepthFade, getWorldSize().z, 0.0, 1.0);
+        colors[i].setHsb(1.0, 0.0, brightness);
+    }
+    
+    shardMat.setDiffuseColor(shardColor.get());
     
 }
 
 void SketchScene::draw(){
     
     ofSetColor(255,255);
-    //ofDisableDepthTest();
     drawLine();
-    //ofEnableDepthTest();
-    if(points.size() > 2){
-        mat.begin();
-        ofDrawSphere(points[points.size()-1], radius);
-        mat.end();
-        ofPushMatrix();
-        ofTranslate(points[points.size()-1]*ofVec3f(1,0,1));
-        ofRotate(90, 1,0,0);
-        ofDrawEllipse(0,0,radius, radius);
-        ofPopMatrix();
-        ofPushMatrix();
-        ofScale(1,0.0,1);
-        //path.draw();
-//        ofDrawLine(dp(1), world->physical_camera_pos_cm);
-        ofPopMatrix();
-    }
-    
-}
-
-void SketchScene::onStageSize(ofVec3f& vec){
 
 }
 
 void SketchScene::drawLine() {
+    
+    ofVec3f rotationCenterWorld = rotationCenter.get()*getWorldSize();
+    ofPushMatrix();
+    
+    ofTranslate(rotationCenterWorld.x, rotationCenterWorld.y, rotationCenterWorld.z);
+    ofRotateX(rotationEuler->x);
+    ofRotateY(rotationEuler->y);
+    ofRotate(rotationEuler->z);
+    ofTranslate(-rotationCenterWorld.x, -rotationCenterWorld.y, -rotationCenterWorld.z);
+    
+/*    ofSetColor(255, 255, 0, 127);
+    drawInterpolatorRaw(spline3DCubic);
+    ofSetColor(255, 255, 0, 255);
+    drawInterpolatorSmooth(spline3DCubic, lineResolution);
+
+    cout << spline3DCubic.size() << endl;
+    
+    ofSetColor(0, 255, 255, 127);
+    drawInterpolatorRaw(spline3DLinear);
+    ofSetColor(0, 255, 255, 255);
+    drawInterpolatorSmooth(spline3DLinear, lineResolution);
+*/
+    
     wideLines.begin();
-    wideLines.setUniform2f("_line_width", lineWidth.get().x,lineWidth.get().y);
+    wideLines.setUniform2f("_line_width", lineWidth,lineWidth*1.5);
     wideLines.setUniform4f("_line_color", 1.0, 1.0, 0.0, 1.0);
     wideLines.setUniform4f("_viewport", ofGetCurrentViewport().x,ofGetCurrentViewport().y, ofGetViewportWidth(), ofGetViewportHeight());
-    
-    vbo.setVertexData(&path.getOutline()[0].getVertices()[0], path.getOutline()[0].size(), GL_DYNAMIC_DRAW);
-    
-    delete colors;
-    
-    colors = new ofFloatColor[path.getOutline()[0].size()];
-    
-    for(int i = 0; i < path.getOutline()[0].size(); i++){
-        float brightness = ofMap(path.getOutline()[0][i].z, fadeDepth, getWorldSize().z, 0.0, 1.0);
-        colors[i].setHsb(1.0, 0.0, brightness);
-    }
 
-    vbo.setColorData(colors, path.getOutline()[0].size(), GL_DYNAMIC_DRAW);
-    vbo.draw(GL_LINE_STRIP, 0, path.getOutline()[0].size());
+    vbo.setColorData(colors, verticesCubic.size(), GL_DYNAMIC_DRAW);
+    vbo.draw(GL_LINE_STRIP, 0, verticesCubic.size());
     
     wideLines.end();
-}
-
-void SketchScene::resetLine(){
-    noisePos.set(2.123, 4.46, 32.9);
-    pivotNoisePos.set(0.945, -7.777, 0);
-    colors = new ofFloatColor[1];
-    points.clear();
-    path.clear();
+    
+    ofPopMatrix();
+    
+    shardMat.begin();
+    shards.draw();
+    shardMat.end();
+    
 }
 
 void SketchScene::drawModel(){
     ofEnableDepthTest();
     drawLine();
     ofDisableDepthTest();
-    if(points.size()>2){
-        ofDrawSphere(points[points.size()-1], radius);
-    }
+    ofSetColor(255,255,0, 200);
+    ofDrawSphere(lineNextPos.get()*getWorldSize(), 10);
 }
 
 string SketchScene::vertexShader = R"(
@@ -218,6 +259,7 @@ out float   v_l2;
 
 void main(void)
 {
+    
     //  a - - - - - - - - - - - - - - - - b
     //  |      |                   |      |
     //  |      |                   |      |
@@ -260,23 +302,31 @@ void main(void)
     vec2 vpSize         = _viewport.zw;
     
     //  Compute line axis and side vector in screen space
-    vec2 startInNDC     = start.xy / start.w;       //  clip to NDC: homogenize and drop z
-    vec2 endInNDC       = end.xy / end.w;
-    vec2 lineInNDC      = endInNDC - startInNDC;
-    vec2 startInScreen  = (0.5 * startInNDC + vec2(0.5)) * vpSize + _viewport.xy;
-    vec2 endInScreen    = (0.5 * endInNDC   + vec2(0.5)) * vpSize + _viewport.xy;
-    vec2 lineInScreen   = lineInNDC * vpSize;       //  ndc to screen (direction vector)
+    vec3 startInNDC     = start.xyz / start.w;       //  clip to NDC: homogenize and drop z
+    vec3 endInNDC       = end.xyz / end.w;
+    vec3 lineInNDC      = endInNDC - startInNDC;
+    vec2 startInScreen  = (0.5 * startInNDC.xy + vec2(0.5)) * vpSize + _viewport.xy;
+    vec2 endInScreen    = (0.5 * endInNDC.xy   + vec2(0.5)) * vpSize + _viewport.xy;
+    vec2 lineInScreen   = lineInNDC.xy * vpSize;       //  ndc to screen (direction vector)
     vec2 axisInScreen   = normalize(lineInScreen);
     vec2 sideInScreen   = vec2(-axisInScreen.y, axisInScreen.x);    // rotate
     vec2 axisInNDC      = axisInScreen / vpSize;                    // screen to NDC
     vec2 sideInNDC      = sideInScreen / vpSize;
     vec4 axis           = vec4(axisInNDC, 0.0, 0.0) * _line_width.x;  // NDC to clip (delta vector)
     vec4 side           = vec4(sideInNDC, 0.0, 0.0) * _line_width.x;
-    
+
+    /*
     vec4 a = (start + (side - axis) * start.w);
     vec4 b = (end   + (side + axis) * end.w);
     vec4 c = (end   - (side - axis) * end.w);
     vec4 d = (start - (side + axis) * start.w);
+    */
+
+    vec4 a = (start + (side - axis) * start.w);
+    vec4 b = (end   + (side + axis) * end.w);
+    vec4 c = (end   - (side - axis) * end.w);
+    vec4 d = (start - (side + axis) * start.w);
+
     
     v_start = startInScreen;
     v_line  = endInScreen - startInScreen;
@@ -372,12 +422,11 @@ void main(void)
                         // alpha for round ends
     float   alpha       = mix(k, 1.0, endWeight);
     
-    
-    if(k < 0.01) discard;
+    if(k < 1.0) discard;
     
     //out_color = vec4(_line_color.rgb, 1.0);
     //out_color = vec4(v_color.rgb, k*v_color.a);
-    out_color = vec4(v_color.rgb , alpha*v_color.a);
+    out_color = vec4(v_color.rgb , k*v_color.a);
 
 }
 

@@ -55,6 +55,7 @@ public:
     int nCells;
     
     ofVec3f renderPosOffset;
+    ofVec3f velocity;
     
     //int seed;
     

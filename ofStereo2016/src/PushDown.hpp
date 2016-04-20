@@ -99,7 +99,6 @@ public:
     
     OrganicMaterial mat;
     
-    
 };
 
 
