@@ -56,6 +56,7 @@ public:
     
     ofVec3f renderPosOffset;
     ofVec3f velocity;
+    ofFloatColor tint {1,1,1,1};
     
     //int seed;
     
