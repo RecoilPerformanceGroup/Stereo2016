@@ -1236,7 +1236,21 @@ namespace ofxStereoscopy {
          virtual void guiEvent(ofxUIEventArgs &e) {};
          */
         
-        void setupScene(ofParameterGroup * mainP, World  * w) {
+        vector<shared_ptr<ofxStereoscopy::Scene>> * allScenes;
+        
+        shared_ptr<ofxStereoscopy::Scene> getScene(string n) {
+            for(auto s : *allScenes) {
+                //cout<<s->getParameters().getName()<<endl;
+                if(s->getParameters().getName() == n) {
+                    return s;
+                }
+            }
+        }
+        
+        void setupScene(ofParameterGroup * mainP, World  * w, vector<shared_ptr<ofxStereoscopy::Scene>> * _allScenes) {
+            
+            allScenes = _allScenes;
+            
             globalParams = mainP;
             world = w;
             

@@ -46,7 +46,6 @@ void VoroEnd::update() {
     if(bWallReconstruct) {
         reconstructWall();
         bWallReconstruct = false;
-        
     }
     
     ofVec3f _s = getWorldSize();
@@ -168,7 +167,6 @@ void VoroEnd::reconstructWall(){
     ofSeedRandom(wallSeed.get());
     wall.setupFromBoundingBox(_s.x*1, _s.y*1.0, 10, wallNumCells, false,false,false);
     wall.setParent(wallCenter);
-    
 }
 
 void VoroEnd::reconstructOcean(){
@@ -178,10 +176,8 @@ void VoroEnd::reconstructOcean(){
     ocean.setupFromBoundingBox(_s.x*1.1, 10, _s.z/*-200*/, oceanNumCells, false,false,false);
     ocean.setParent(floorCenter);
     
-    
     oceanHorizon.setupFromBoundingBox(_s.x*4, 10, _s.z*4, oceanNumCells*1.5, true,true,true);
     oceanHorizon.setParent(floorCenter);
-    
 }
 
 void VoroEnd::drawModel() {

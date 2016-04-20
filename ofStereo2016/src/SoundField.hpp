@@ -14,6 +14,7 @@
 #include "ofxGui.h"
 #include "OrganicMaterial.hpp"
 #include "ofxCSG.h"
+#include "VoroEnd.hpp"
 
 class SoundField : public ofxStereoscopy::Scene {
     
@@ -58,6 +59,10 @@ public:
     ofParameter<float> soundWaveAffectDistance {"affectDistance", 500, 0, 10000 };
     ofParameter<float> soundWaveGlobalForce {"globalForce", 1, -100, 100 };
 
+    
+    ofParameter<float> fadeIn {"fadeIn", 0, 0, 1};
+
+    
     ofParameterGroup soundWaveParams {"soundWaves",
         soundWaveOriginNormalised,
         soundWaveType,
@@ -73,6 +78,7 @@ public:
     ofParameterGroup params {"SoundField",
         enabled,
         qlab,
+        fadeIn,
         soundWaveParams
     };
     
@@ -108,7 +114,30 @@ public:
     
     vector<soundWave> soundWaves;
     
+    void enable() {
+        
+        
+        for(auto c : voroEnd->wall.getChildren()) {
+            
+            // + c->renderPosOffset) * c->getGlobalTransformMatrix()
+            
+            c->origin = c->getGlobalPosition();
+        }
+        
+        for(auto c : voroEnd->oceanHorizon.getChildren()) {
+            
+            // + c->renderPosOffset) * c->getGlobalTransformMatrix()
+            
+            c->origin = c->getGlobalPosition();
+        }
+        
+        
+    }
+    
     void applyWaves(VoroNode & vn, bool recursive = false);
+    
+    
+    shared_ptr<VoroEnd> voroEnd;
 };
 
 

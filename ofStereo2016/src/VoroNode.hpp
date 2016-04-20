@@ -54,8 +54,14 @@ public:
     ofVboMesh bakedMesh;
     int nCells;
     
+    ofVec3f origin;
+    
+//ofVec3f positionOveride;
+
+    
     ofVec3f renderPosOffset;
     ofVec3f velocity;
+    
     
     ofFloatColor tint {1,1,1,1};
     bool bTintSet = false;

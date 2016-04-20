@@ -21,6 +21,12 @@ float smootherstep(float x, float edge0, float edge1 )
 void SoundField::setup() {
     clusterNumCells.addListener(this, &SoundField::reconstructCluster<int>);
     reconstructCluster();
+    
+    voroEnd = std::static_pointer_cast<VoroEnd>(getScene("VoroEnd"));
+
+    
+
+    
 }
 
 void SoundField::draw() {
@@ -83,6 +89,69 @@ void SoundField::update() {
     
     matCluster.setDiffuseColor(clusterColor.get());
     
+    for(auto c : cluster.getChildren()) {
+        c->setScale(clusterScaleCells);
+        for(auto cc : c->getChildren()) {
+            cc->setScale(clusterScaleCells);
+        }
+    }
+    
+    int nI = 0;
+    int nII = 0;
+    for( auto c : cluster.getChildren() ) {
+        
+        //c->setScale(1-fadeIn);
+        
+        if(nI < voroEnd->wall.getChildren().size()) {
+            
+            // + c->renderPosOffset) * c->getGlobalTransformMatrix()
+            
+            voroEnd->wall.getChildren()[nI]->setGlobalPosition(
+                                        c->getGlobalPosition().getInterpolated(
+                                                voroEnd->wall.getChildren()[nI]->origin, 1-fadeIn) );
+            
+            //voroEnd->wall.getChildren()[nI]->setScale(1-fadeIn);
+            //voroEnd->wall.getChildren()[nI]->setTint(ofFloatColor(1-fadeIn, 0));
+            
+            nI++;
+            
+        } else {
+            
+            if(nII < voroEnd->oceanHorizon.getChildren().size()) {
+                
+                // + c->renderPosOffset) * c->getGlobalTransformMatrix()
+                
+                voroEnd->oceanHorizon.getChildren()[nII]->setGlobalPosition(
+                                                                   c->getGlobalPosition().getInterpolated(
+                                                                                                          voroEnd->oceanHorizon.getChildren()[nII]->origin, 1-fadeIn) );
+
+                nII++;
+        
+            
+            }
+        }
+        
+        
+        
+        
+        
+        
+    }
+    
+    /*
+    for( auto c : voroEnd->oceanHorizon.getChildren() ) {
+        
+        //c->setScale(1-fadeIn);
+        
+        if(nI < cluster.getChildren().size()) {
+            cluster.getChildren()[nI]->setGlobalPosition( (c->getPosition() + c->renderPosOffset) * c->getGlobalTransformMatrix()  );
+        }
+        nI++;
+    
+    }*/
+    
+    
+
 }
 
 void SoundField::applyWaves(VoroNode & vn, bool recursive){
