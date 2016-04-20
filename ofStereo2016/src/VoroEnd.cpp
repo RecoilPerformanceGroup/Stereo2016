@@ -58,7 +58,7 @@ void VoroEnd::update() {
     ocean.setPosition(oceanOrigin.get() - ofVec3f( 0, 0, ocean.boundingBox.getDepth() /2));
     
     
-    oceanHorizon.setOrientation(ofVec3f(90-openWall.get(),0,0));
+    oceanHorizon.setOrientation(ofVec3f(-90+openWall.get(),0,0));
     
     oceanHorizon.setPosition(horizonOrigin.get() - ofVec3f( 0, 0, oceanHorizon.boundingBox.getDepth()/2 + wall.boundingBox.getHeight()*3));
     
@@ -135,7 +135,6 @@ void VoroEnd::update() {
         }
         
         c->renderPosOffset.y += (oceanFall*pers);
-        
         
         c->setTint(c->tint * 1-fadeOutFloor);
         
