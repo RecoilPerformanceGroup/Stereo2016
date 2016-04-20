@@ -24,7 +24,7 @@ void ofApp::setup(){
     globalParams.add(world.params);
     
     for( auto s : scenes) {
-        s->setupScene(&globalParams, &world);
+        s->setupScene(&globalParams, &world, &scenes);
     }
     
     ofAddListener(globalParams.parameterChangedE(), this, &ofApp::paramsChanged);
@@ -368,6 +368,9 @@ void ofApp::receiveOscParameter(ofxOscMessage & msg, ofAbstractParameter * _p) {
     
     
 }
+
+
+
 
 //--------------------------------------------------------------
 void ofApp::update(){

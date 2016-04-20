@@ -67,6 +67,7 @@ public:
         globalParams.add(sceneParams);
     }
     
+    
     ofParameter<ofVec3f> stage_size_cm{"stageSize", ofVec3f{800,500,800}, ofVec3f{600,300,600}, ofVec3f{1000,800,1000}};
     ofParameter<bool> calibrate_projector{"Projector Calibration", false, false, true};
     ofParameter<bool> calibrate_camera{"Camera Calibration", false, false, true};
