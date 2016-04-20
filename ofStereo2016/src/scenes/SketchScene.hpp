@@ -31,11 +31,9 @@ public:
     ofParameter<ofVec3f> lineNextPos {"nextPos", ofVec3f(0, 0, 0),ofVec3f(-2, -2, -2),ofVec3f(2,2,2)};
     ofParameter<bool> lineAddPos {"lineAddPos", true};
     ofParameter<bool> lineClear {"clear", false};
-    ofParameter<bool> lineLoad {"load", true};
-    ofParameter<bool> lineSave {"save", false};
+    ofParameter<bool> lineShowDots {"showDots", true};
     
     ofxBiquadFilter3f posFilter;
-    
 
     ofParameterGroup lineParams { "line",
         lineStart,
@@ -49,8 +47,7 @@ public:
         lineNextPos,
         lineAddPos,
         lineClear,
-        lineLoad,
-        lineSave
+        lineShowDots
     };
 
     ofParameter<float> shardSize {"size", 20, 0.0, 800};
