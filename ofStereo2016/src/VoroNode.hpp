@@ -56,7 +56,14 @@ public:
     
     ofVec3f renderPosOffset;
     ofVec3f velocity;
+    
     ofFloatColor tint {1,1,1,1};
+    bool bTintSet = false;
+    
+    void setTint(ofFloatColor col) {
+        bTintSet = true;
+        tint = col;
+    }
     
     //int seed;
     
