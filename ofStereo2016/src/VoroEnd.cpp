@@ -33,7 +33,6 @@ void VoroEnd::draw() {
     /*ofSetColor(0, fadeOutFloor*255.0);
     ofTranslate(0, 0, getWorldSize().z/2);
     ofDrawBox(getWorldSize().x, 10, getWorldSize().z);*/
-    
 }
 
 void VoroEnd::update() {
@@ -55,7 +54,6 @@ void VoroEnd::update() {
     mat.updateParameters();
     
     ocean.setPosition(oceanOrigin.get() - ofVec3f( 0, 0, ocean.boundingBox.getDepth() /2));
-    
     
     oceanHorizon.setOrientation(ofVec3f(-90+openWall.get(),0,0));
     
@@ -79,6 +77,10 @@ void VoroEnd::update() {
         
         time += speed/100.0;
         for( auto c : node.getChildren()) {
+            
+            
+            c->setScale(scaleCells.get());
+            
             
             float n = ofSignedNoise((c->getPosition().x + (time)));
             
@@ -138,7 +140,6 @@ void VoroEnd::update() {
         c->setTint(c->tint * 1-fadeOutFloor);
         
         /*if(c->getGlobalPosition()) {
-            
         }
             
             float fullValueAtDistInCM = stillAtEdgeDist.get();

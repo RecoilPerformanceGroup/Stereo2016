@@ -22,6 +22,9 @@ public:
     ofParameter<float> oceanNoiseDisplaceSpeed {"noise speed", 0, 0, 1};
     ofParameter<float> oceanNoiseDisplaceAmount {"noise amount", 0, 0, 1000};
     
+    // used when next scene takes over
+    ofParameter<bool> applyNoise {"applyNoise", 1, 0, 2};
+    
     float oceanNoiseTime = 0;
     float wallNoiseTime = 0;
     
@@ -29,7 +32,6 @@ public:
     ofParameter<int> oceanSeed {"seed", 2, 0, 200};
     
     ofParameter<float> minDarkFade {"minDarkFade", 200, 0, 1000};
-    
     
     ofParameter<float> fadeOutEdge {"fadeOutEdge", 0, 0, 1};
     
@@ -53,7 +55,6 @@ public:
     ofParameter<float> openWall {"open", 0, 0, 90};
     ofParameter<float> fallWall {"fall", 0, 0, 1};
     
-    
     ofParameter<ofVec3f> horizonOrigin {"horizonOrigin", ofVec3f(0,0,0),
         ofVec3f(-1000,-1000,-1000),
         ofVec3f(1000,1000,1000)};
@@ -70,7 +71,13 @@ public:
     ofParameter<ofFloatColor> matcolor {"color", ofFloatColor(1,1,1,1), ofFloatColor(0,0,0,0), ofFloatColor(1,1,1,1)};
     
     ofParameter<float> fadeOutFloor {"floorFadeOut", 0, 0, 1};
-
+    
+    
+    ofParameter<ofVec3f> scaleCells {"scaleCells", ofVec3f(1,1,1),
+        ofVec3f(0,0,0),
+        ofVec3f(2,2,2)};
+    
+    
     ofParameterGroup wallParams {"wall",
         wallNumCells,
         wallSeed,
@@ -101,6 +108,8 @@ public:
         dpPersist,
         dpPersistRadius,
         minDarkFade,
+        //sceneDisplaceMod,
+        scaleCells,
         matcolor
     };
     
@@ -117,6 +126,21 @@ public:
     void drawModel();
     void update();
     void setup();
+    
+    void enable() {
+        
+        
+        /*for( auto c : wall.getChildren()) {
+
+            c->bOffsetPositionOveride = false;
+        }
+        
+        for( auto c : oceanHorizon.getChildren()) {
+            
+            c->bOffsetPositionOveride = false;
+        }*/
+
+    }
     
     void reconstruct() {
         
@@ -140,10 +164,7 @@ public:
     
     template<typename type>
     void reconstructOcean(type & t) {
-        
-        
         if (t != ocean.nCells) bOceanReconstruct = true;
-        
     }
     
     void reconstructWall();

@@ -96,61 +96,57 @@ void SoundField::update() {
         }
     }
     
+    // go through all flakes in the room and set a target position to match the position of a crystal
+    // gradually interpolate to this overide position
+    // then scale down and fade out
+    
+    
+    fadeInFromNodes = voroEnd->wall.getChildren();
+    
     int nI = 0;
-    int nII = 0;
     for( auto c : cluster.getChildren() ) {
         
-        //c->setScale(1-fadeIn);
-        
-        if(nI < voroEnd->wall.getChildren().size()) {
-            
-            // + c->renderPosOffset) * c->getGlobalTransformMatrix()
-            
-            voroEnd->wall.getChildren()[nI]->setGlobalPosition(
-                                        c->getGlobalPosition().getInterpolated(
-                                                voroEnd->wall.getChildren()[nI]->origin, 1-fadeIn) );
-            
-            //voroEnd->wall.getChildren()[nI]->setScale(1-fadeIn);
-            //voroEnd->wall.getChildren()[nI]->setTint(ofFloatColor(1-fadeIn, 0));
-            
-            nI++;
-            
-        } else {
-            
-            if(nII < voroEnd->oceanHorizon.getChildren().size()) {
-                
-                // + c->renderPosOffset) * c->getGlobalTransformMatrix()
-                
-                voroEnd->oceanHorizon.getChildren()[nII]->setGlobalPosition(
-                                                                   c->getGlobalPosition().getInterpolated(
-                                                                                                          voroEnd->oceanHorizon.getChildren()[nII]->origin, 1-fadeIn) );
+        if(nI < fadeInFromNodes.size()) {
+            if(c->transitionRef == nullptr) {
+                c->positionOverideTarget = c->getGlobalPosition();
 
-                nII++;
-        
-            
+                c->transitionRef = fadeInFromNodes[nI];
+                nI++;
             }
         }
         
-        
-        
-        
-        
-        
     }
     
-    /*
-    for( auto c : voroEnd->oceanHorizon.getChildren() ) {
+    
+    
+    for( auto c : cluster.getChildren() ) {
         
-        //c->setScale(1-fadeIn);
-        
-        if(nI < cluster.getChildren().size()) {
-            cluster.getChildren()[nI]->setGlobalPosition( (c->getPosition() + c->renderPosOffset) * c->getGlobalTransformMatrix()  );
+        if(c->transitionRef != nullptr) {
+            //ofMatrix4x4 m = c->transitionRef->getGlobalTransformMatrix();
+            //m.translate(c->transitionRef->renderPosOffset);
+            
+            ofVec3f from = ofVec3f(c->transitionRef->getPosition() + c->transitionRef->renderPosOffset) * c->transitionRef->getGlobalTransformMatrix();
+            
+            ofVec3f interp = from.getInterpolated(c->positionOverideTarget, fadeIn);
+            c->setGlobalPosition(interp );
         }
-        nI++;
+        
+    }
+
     
+   // for( auto c : voroEnd->wall.getChildren() ) {
+   //     c->setGlobalPosition(c->positionOverideOrigin.getInterpolated(c->positionOverideTarget, fadeIn) );
+   //     c->renderPosOffset *= 1-fadeIn;
+
+        //c->setScale(1-fadeIn);
+    //}
+    
+    /*for( auto c : voroEnd->oceanHorizon.getChildren() ) {
+        c->setGlobalPosition(c->positionOverideOrigin.getInterpolated(c->positionOverideTarget, fadeIn) );
+        c->renderPosOffset *= 1-fadeIn;
+
+        //c->setScale(1-fadeIn);
     }*/
-    
-    
 
 }
 

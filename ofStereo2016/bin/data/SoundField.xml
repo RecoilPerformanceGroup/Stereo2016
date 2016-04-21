@@ -1,5 +1,5 @@
 <SoundField>
-	<enabled>0</enabled>
+	<enabled>1</enabled>
 	<add_to_qlab>0</add_to_qlab>
 	<soundWaves>
 		<originNormalised>-1.39442, 0, 0.563101</originNormalised>
@@ -14,10 +14,10 @@
 		<globalForce>12.2449</globalForce>
 	</soundWaves>
 	<cluster>
-		<cells>244</cells>
+		<cells>91</cells>
 		<origin>0, 0, 0</origin>
-		<scale>10</scale>
-		<scaleCells>0.142714</scaleCells>
+		<scale>3.21429</scale>
+		<scaleCells>0</scaleCells>
 		<rotationAxis>0, 0, 0</rotationAxis>
 		<rotationSpeed>0</rotationSpeed>
 		<color>1, 1, 1, 1</color>
@@ -37,4 +37,5 @@
 		</material>
 	</cluster>
 <SoundField/>
+<fadeIn>0</fadeIn>
 </SoundField>

@@ -54,14 +54,18 @@ public:
     ofVboMesh bakedMesh;
     int nCells;
     
-    ofVec3f origin;
     
-//ofVec3f positionOveride;
-
+    // useful data structure for transitions
+    ofVec3f positionOverideTarget;
+    float positionOverideAmount = 0;
+    ofVec3f positionOverideOrigin;
+    
+    bool bOffsetPositionOveride = false;
+    VoroNode * transitionRef = nullptr;
+    
     
     ofVec3f renderPosOffset;
     ofVec3f velocity;
-    
     
     ofFloatColor tint {1,1,1,1};
     bool bTintSet = false;

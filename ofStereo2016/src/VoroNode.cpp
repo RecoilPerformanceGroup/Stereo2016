@@ -255,7 +255,6 @@ VoroNode & VoroNode::detachNodes(set<VoroNode *> nodes) {
     return *newNode;
 }
 
-
 ofVboMesh & VoroNode::getBakedMesh() {
     
     bakedMesh = mesh;

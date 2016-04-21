@@ -24,8 +24,6 @@ public:
     
     // float push down amount
     
-    
-    
     ofParameter<ofVec3f> cylpos {"pos", ofVec3f(0,0,0),
         ofVec3f(-1000,-1000,-1000),
         ofVec3f(1000,1000,1000)};

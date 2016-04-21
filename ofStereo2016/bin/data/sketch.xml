@@ -1,5 +1,5 @@
 <sketch>
-	<enabled>1</enabled>
+	<enabled>0</enabled>
 	<speed>1.1</speed>
 <sketch/>
 <radius>24</radius>
@@ -29,6 +29,7 @@
 		<clear>0</clear>
 		<load>0</load>
 		<save>0</save>
+	<showDots>1</showDots>
 	</line>
 	<shard>
 		<size>20</size>
@@ -48,5 +49,8 @@
 			</noise>
 		</material>
 	<position>0</position>
+	<shardThrowFromPos>0, 0, 0</shardThrowFromPos>
+		<shardThrowVelocity>0, 0, 0</shardThrowVelocity>
+		<throw>0</throw>
 	</shard>
 </sketch>

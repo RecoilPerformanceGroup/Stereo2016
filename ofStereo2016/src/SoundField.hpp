@@ -114,22 +114,28 @@ public:
     
     vector<soundWave> soundWaves;
     
+    vector<VoroNode *> fadeInFromNodes;
+
+    
     void enable() {
         
+        // on scene enable
         
-        for(auto c : voroEnd->wall.getChildren()) {
-            
-            // + c->renderPosOffset) * c->getGlobalTransformMatrix()
-            
-            c->origin = c->getGlobalPosition();
-        }
+       
         
-        for(auto c : voroEnd->oceanHorizon.getChildren()) {
-            
+        /*for(auto c : voroEnd->wall.getChildren()) {
             // + c->renderPosOffset) * c->getGlobalTransformMatrix()
-            
-            c->origin = c->getGlobalPosition();
-        }
+            c->move(c->renderPosOffset);
+            c->bOffsetPositionOveride = true;
+            c->positionOverideOrigin = c->getGlobalPosition();
+        }*/
+        
+        /*for(auto c : voroEnd->oceanHorizon.getChildren()) {
+            // + c->renderPosOffset) * c->getGlobalTransformMatrix()
+            c->move(c->renderPosOffset);
+            c->bOffsetPositionOveride = true;
+            c->positionOverideOrigin = c->getGlobalPosition();
+        }*/
         
         
     }

@@ -1,5 +1,5 @@
 <VoroEnd>
-	<enabled>0</enabled>
+	<enabled>1</enabled>
 	<add_to_qlab>0</add_to_qlab>
 	<material>
 		<noise>
@@ -16,13 +16,13 @@
 		</noise>
 	</material>
 	<wall>
-		<cells>38</cells>
+		<cells>94</cells>
 		<seed>15</seed>
-		<origin>0, 0, 0</origin>
+		<origin>0, -207.829, 718.868</origin>
 		<wall_rotation>131.345, 0, 0</wall_rotation>
-		<noise_speed>0</noise_speed>
-		<noise_amount>0</noise_amount>
-	<open>0</open>
+		<noise_speed>0.147959</noise_speed>
+		<noise_amount>571.429</noise_amount>
+	<open>90</open>
 	<fall>0</fall>
 	</wall>
 	<ocean>
@@ -32,11 +32,16 @@
 		<noise_speed>1</noise_speed>
 		<noise_amount>193.878</noise_amount>
 	<ocean_origin>0, 0, 0</ocean_origin>
-	<floorFadeOut>0</floorFadeOut>
+	<floorFadeOut>1</floorFadeOut>
+	<fadeOutEdge>0.326531</fadeOutEdge>
+		<fall>0</fall>
 	</ocean>
 <VoroEnd/>
 <stillAtEdge>0</stillAtEdge>
 	<stillAtEdgeDist>0</stillAtEdgeDist>
 <color>1, 1, 1, 1</color>
-<horizonOrigin>0, 0, 0</horizonOrigin>
+<horizonOrigin>1000, 1000, 0</horizonOrigin>
+<dpPersist>0</dpPersist>
+	<dpPersistRadius>0</dpPersistRadius>
+	<minDarkFade>200</minDarkFade>
 </VoroEnd>
