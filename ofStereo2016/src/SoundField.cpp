@@ -104,6 +104,7 @@ void SoundField::update() {
     
     
     //if(voroEnd->enabled.get()) {
+
     
         fadeInFromNodes = voroEnd->wall.getChildren();
         
@@ -126,7 +127,14 @@ void SoundField::update() {
         }
         
         if(fadeIn < 1) {
-            for( auto c : cluster.getChildren() ) {
+            
+            
+            dispatch_apply( cluster.getChildren().size(), dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^(size_t childNumber){
+                
+                VoroNode * c = cluster.getChildren()[childNumber];
+                
+                
+                //for( auto c : cluster.getChildren() ) {
                 
                 // TODO: theese null nullptr checks doesn't work
                 // fidn a way to invalidate transitionRef and check for it
@@ -136,17 +144,15 @@ void SoundField::update() {
                     
                     ofVec3f from = ofVec3f(c->transitionRef->getPosition() + ofVec3f(c->transitionRef->renderPosOffset * c->transitionRef->getLocalTransformMatrix().getInverse() ) ) * c->transitionRef->getGlobalTransformMatrix();
                     
-                    
-                    
-                    //ofVec3f toDiff = c->positionOverideTarget - c->getGlobalPosition();
-                    
                     ofVec3f interp = from.getInterpolated(c->positionOverideTarget * cluster.getGlobalTransformMatrix() , fadeIn);
                     
                     c->setGlobalPosition(interp);
                 }
                 
-            }
+                //}
+            });
         }
+    
     //}
 
     
