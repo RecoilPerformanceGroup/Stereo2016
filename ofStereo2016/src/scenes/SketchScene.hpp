@@ -29,8 +29,10 @@ public:
     ofParameter<float> lineNoisePhase {"noisePhase", 0.00, 0.0, 100.0};
     ofParameter<bool> lineUse3dInput {"use3dInput", true};
     ofParameter<ofVec3f> lineNextPos {"nextPos", ofVec3f(0, 0, 0),ofVec3f(-2, -2, -2),ofVec3f(2,2,2)};
-    ofParameter<bool> lineAddPos {"lineAddPos", true};
+    ofParameter<bool> lineAddPos {"lineAddPos", false};
+    ofParameter<bool> lineAddRandomPos {"lineAddRandomPos", false};
     ofParameter<bool> lineClear {"clear", false};
+    ofParameter<bool> lineZinCam {"lineZinCam", true};
     ofParameter<bool> lineShowDots {"showDots", true};
     
     ofxBiquadFilter3f posFilter;
@@ -39,6 +41,7 @@ public:
         lineStart,
         lineEnd,
         lineResolution,
+        lineZinCam,
         lineWidth,
         lineDepthFade,
         lineNoiseAmplitude,
@@ -46,6 +49,7 @@ public:
         lineUse3dInput,
         lineNextPos,
         lineAddPos,
+        lineAddRandomPos,
         lineClear,
         lineShowDots
     };
@@ -66,7 +70,7 @@ public:
         shardThrow
     };
 
-    ofParameter<ofVec3f> rotationCenter {"rotationCenter", ofVec3f(0, 0, 0),ofVec3f(-2, -2, -2),ofVec3f(2,2,2)};
+    ofParameter<ofVec3f> rotationCenter {"rotationCenter", ofVec3f(0, 0.5, 0.5),ofVec3f(-2, -2, -2),ofVec3f(2,2,2)};
     ofParameter<ofVec3f> rotationEuler {"rotationEuler", ofVec3f(0, 0, 0),ofVec3f(-180, -180, -180),ofVec3f(180, 180, 180)};
 
     ofParameterGroup params {"sketch",
@@ -104,6 +108,8 @@ public:
     
     VoroNode * shardNode;
 
+    float randomIter = 0.0;
+    
     void drawModel();
     
 private:
