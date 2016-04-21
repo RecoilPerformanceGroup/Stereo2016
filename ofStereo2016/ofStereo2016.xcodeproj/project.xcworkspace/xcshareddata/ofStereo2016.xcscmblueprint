@@ -6,6 +6,7 @@
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
     "9233F0F4A2BE011BD468E5177A5AD6623263B23D" : 0,
     "FB950DA91696DB40601A43AFF1A56B2E39217374" : 0,
+    "65FAA983A662D43645B6C2BEE45CDCC6359DE6D9" : 0,
     "3FD0A6B0728805B39B1EC65C31D9BA97C2D2ABC7" : 0,
     "86145F1292B789AB93966AE12565F1D778504ABC" : 0,
     "C75356AAE162B156DEBAB12E906B72422A9A501B" : 0,
@@ -19,6 +20,7 @@
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
     "9233F0F4A2BE011BD468E5177A5AD6623263B23D" : "..\/addons\/ofxDatGui",
     "FB950DA91696DB40601A43AFF1A56B2E39217374" : "..\/addons\/ofxLibwebsockets",
+    "65FAA983A662D43645B6C2BEE45CDCC6359DE6D9" : "..\/addons\/ofxMSAInterpolator",
     "3FD0A6B0728805B39B1EC65C31D9BA97C2D2ABC7" : "..\/addons\/ofxBiquadFilter",
     "86145F1292B789AB93966AE12565F1D778504ABC" : "..\/addons\/ofxEasing",
     "C75356AAE162B156DEBAB12E906B72422A9A501B" : "..\/addons\/ofxVoro",
@@ -51,6 +53,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/jefftimesten\/ofxJSON.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "5DB7C332A3A89035E93556A2A38BF414005BA671"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/memo\/ofxMSAInterpolator.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "65FAA983A662D43645B6C2BEE45CDCC6359DE6D9"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/arturoc\/ofxEasing.git",
