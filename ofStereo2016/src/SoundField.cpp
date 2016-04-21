@@ -27,6 +27,8 @@ void SoundField::setup() {
     
 
     
+    
+    
 }
 
 void SoundField::draw() {
@@ -113,6 +115,7 @@ void SoundField::update() {
                 nI = 0;
             }
             
+            //cluster.renderPosOffset = ofVec3f(0,0,0);
             
             if(c->transitionRef == nullptr && fadeInFromNodes[nI]) {
                 c->positionOverideTarget = c->getPosition();
@@ -125,11 +128,15 @@ void SoundField::update() {
         if(fadeIn < 1) {
             for( auto c : cluster.getChildren() ) {
                 
-                if(c->transitionRef != nullptr) {
+                // TODO: theese null nullptr checks doesn't work
+                // fidn a way to invalidate transitionRef and check for it
+                if(c->transitionRef != nullptr && c->transitionRef && c->transitionRef->getParent()) {
                     //ofMatrix4x4 m = c->transitionRef->getGlobalTransformMatrix();
                     //m.translate(c->transitionRef->renderPosOffset);
                     
-                    ofVec3f from = ofVec3f(c->transitionRef->getPosition() + c->transitionRef->renderPosOffset) * c->transitionRef->getGlobalTransformMatrix();
+                    ofVec3f from = ofVec3f(c->transitionRef->getPosition() + ofVec3f(c->transitionRef->renderPosOffset * c->transitionRef->getLocalTransformMatrix().getInverse() ) ) * c->transitionRef->getGlobalTransformMatrix();
+                    
+                    
                     
                     //ofVec3f toDiff = c->positionOverideTarget - c->getGlobalPosition();
                     
@@ -202,6 +209,7 @@ void SoundField::reconstructCluster(){
     ofSeedRandom();
     cluster.setupFromBoundingBox(200,200,200,clusterNumCells, true, true, true);
     cluster.setGlobalPosition(clusterOrigin);
+    cluster.setParent(world->origin);
 }
 
 void SoundField::drawModel() {

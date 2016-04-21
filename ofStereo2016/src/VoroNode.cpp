@@ -404,6 +404,8 @@ void VoroNode::customDraw() {
         
         ofTranslate(renderPosOffset);
         
+        
+        if(bRenderScaleSet) ofScale(renderScale);
         if(bTintSet) ofSetColor(tint);
 
         mesh.drawFaces();

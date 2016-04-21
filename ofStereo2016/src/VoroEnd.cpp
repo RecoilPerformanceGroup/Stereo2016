@@ -16,6 +16,9 @@ void VoroEnd::setup() {
     wallSeed.addListener(this, &VoroEnd::reconstructWall<int>);
     wallNumCells.addListener(this, &VoroEnd::reconstructWall<int>);
     
+    wallCenter.setParent(world->origin);
+    floorCenter.setParent(world->origin);
+    
     reconstruct();
 }
 
@@ -69,6 +72,7 @@ void VoroEnd::update() {
     
     m.translate(wallOrigin.get() - ofVec3f(0, wall.boundingBox.getHeight()/2, 0));
     m.translate(0, -fallWall.get()*_s.y, 0);
+    
     wall.setTransformMatrix(m);
     
     // TODO: - optimisation for apply noise
@@ -78,9 +82,8 @@ void VoroEnd::update() {
         time += speed/100.0;
         for( auto c : node.getChildren()) {
             
-            
-            c->setScale(scaleCells.get());
-            
+            c->renderScale = scaleCells.get();
+            c->bRenderScaleSet = true;
             
             float n = ofSignedNoise((c->getPosition().x + (time)));
             
@@ -174,10 +177,10 @@ void VoroEnd::reconstructOcean(){
     ofVec3f _s = getWorldSize();
     
     ofSeedRandom(oceanSeed.get());
-    ocean.setupFromBoundingBox(_s.x*1.1, 10, _s.z/*-200*/, oceanNumCells, false,false,false);
+    ocean.setupFromBoundingBox(_s.x*1, 10, _s.z/*-200*/, oceanNumCells, false,false,false);
     ocean.setParent(floorCenter);
     
-    oceanHorizon.setupFromBoundingBox(_s.x*4, 10, _s.z*4, oceanNumCells*1.5, true,true,true);
+    oceanHorizon.setupFromBoundingBox(_s.x*3, 10, _s.z*3, oceanNumCells*1.2, true,true,true);
     oceanHorizon.setParent(floorCenter);
 }
 
