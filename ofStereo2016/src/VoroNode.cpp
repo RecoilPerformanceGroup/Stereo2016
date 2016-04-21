@@ -410,7 +410,6 @@ void VoroNode::customDraw() {
         
         ofPopMatrix();
         ofPopStyle();
-        
     }
 }
 

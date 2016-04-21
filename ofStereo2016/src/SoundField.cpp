@@ -108,7 +108,7 @@ void SoundField::update() {
         
         if(nI < fadeInFromNodes.size()) {
             if(c->transitionRef == nullptr) {
-                c->positionOverideTarget = c->getGlobalPosition();
+                c->positionOverideTarget = c->getPosition();
 
                 c->transitionRef = fadeInFromNodes[nI];
                 nI++;
@@ -119,6 +119,7 @@ void SoundField::update() {
     
     
     
+    if(fadeIn < 1) {
     for( auto c : cluster.getChildren() ) {
         
         if(c->transitionRef != nullptr) {
@@ -127,10 +128,14 @@ void SoundField::update() {
             
             ofVec3f from = ofVec3f(c->transitionRef->getPosition() + c->transitionRef->renderPosOffset) * c->transitionRef->getGlobalTransformMatrix();
             
-            ofVec3f interp = from.getInterpolated(c->positionOverideTarget, fadeIn);
-            c->setGlobalPosition(interp );
+            //ofVec3f toDiff = c->positionOverideTarget - c->getGlobalPosition();
+            
+            ofVec3f interp = from.getInterpolated(c->positionOverideTarget * cluster.getGlobalTransformMatrix() , fadeIn);
+            
+            c->setGlobalPosition(interp);
         }
         
+    }
     }
 
     
