@@ -27,6 +27,7 @@ void SketchScene::setup(){
     
     spline3DCubic.setInterpolation(msa::kInterpolationCubic);
     spline3DLinear.setInterpolation(msa::kInterpolationLinear);
+    spline3DCubic.setUseLength(true);
 
     colors = new ofFloatColor[1];
     
@@ -70,16 +71,6 @@ void SketchScene::update(){
         lineClear = false;
     }
     
-    if (lineLoad) {
-        //TODO: load line
-        lineLoad = false;
-    }
-
-    if (lineSave) {
-        //TODO: save line
-        lineSave = false;
-    }
-    
     if (shardThrow) {
         int i = 0;
         for (auto vn : shards.getChildren()){
@@ -114,11 +105,11 @@ void SketchScene::update(){
         
         for(float t=lineStart; t < lineEnd.get(); t += spacing){
             ofVec3f vSample(spline3DCubic.sampleAt(t));
-            ofVec3f vWorld(vSample*getWorldSize());
+            ofVec3f vWorld(world->zInCam(vSample*getWorldSize()));
             verticesCubic.push_back(vWorld+ofVec3f(ofSignedNoise((vSample.x+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude, ofSignedNoise((vSample.y+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude, 0.0));
         }
         
-        shardNode->setGlobalPosition(spline3DCubic.sampleAt(shardPos)*getWorldSize());
+        shardNode->setGlobalPosition(world->zInCam(spline3DCubic.sampleAt(shardPos)*getWorldSize()));
         
     }
     
@@ -140,6 +131,13 @@ void SketchScene::draw(){
     
     ofSetColor(255,255);
     drawLine();
+    if(lineShowDots){
+        for(int i = 0; i < spline3DCubic.size(); i++){
+            ofVec3f pos(world->zInCam(spline3DCubic.at(i)*getWorldSize()));
+            ofSetColor(255,255,0,200);
+            ofDrawSphere(pos, 10);
+        }
+    }
 
 }
 
@@ -191,6 +189,14 @@ void SketchScene::drawModel(){
     ofDisableDepthTest();
     ofSetColor(255,255,0, 200);
     ofDrawSphere(lineNextPos.get()*getWorldSize(), 10);
+    for(int i = 0; i < spline3DCubic.size(); i++){
+        ofVec3f pos(world->zInCam(spline3DCubic.at(i)*getWorldSize()));
+        ofSetColor(255,255,0,200);
+        ofDrawSphere(pos, 20);
+        ofSetColor(0, 255, 0,200);
+        ofDrawBitmapString(ofToString(i+1), pos.x, pos.y, pos.z);
+    }
+    
 }
 
 string SketchScene::vertexShader = R"(

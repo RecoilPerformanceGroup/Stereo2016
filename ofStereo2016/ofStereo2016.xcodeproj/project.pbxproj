@@ -212,12 +212,6 @@
 		7AE153C61CC7886C00D025F2 /* MSACoreGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MSACoreGL.cpp; sourceTree = "<group>"; };
 		7AE153C71CC7886C00D025F2 /* MSACoreGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSACoreGL.h; sourceTree = "<group>"; };
 		7AE153C81CC7886C00D025F2 /* MSACoreMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSACoreMath.h; sourceTree = "<group>"; };
-		7AE153DF1CC7886C00D025F2 /* MSAInterpolationTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSAInterpolationTypes.h; sourceTree = "<group>"; };
-		7AE153E01CC7886C00D025F2 /* MSAInterpolator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSAInterpolator.h; sourceTree = "<group>"; };
-		7AE153E11CC7886C00D025F2 /* MSAInterpolator1D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSAInterpolator1D.h; sourceTree = "<group>"; };
-		7AE153E21CC7886C00D025F2 /* MSAInterpolator2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSAInterpolator2D.h; sourceTree = "<group>"; };
-		7AE153E31CC7886C00D025F2 /* MSAInterpolator3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSAInterpolator3D.h; sourceTree = "<group>"; };
-		7AE153E41CC7886C00D025F2 /* MSAInterpolatorT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSAInterpolatorT.h; sourceTree = "<group>"; };
 		7AE53F381CBBDAE900270AEE /* src_colors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = src_colors.cpp; sourceTree = "<group>"; };
 		7AE53F391CBBDAE900270AEE /* svgtiny.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = svgtiny.cpp; sourceTree = "<group>"; };
 		7AE53F3A1CBBDAE900270AEE /* svgtiny.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svgtiny.h; sourceTree = "<group>"; };
@@ -263,6 +257,12 @@
 		B46143551CBBB1B000A1F988 /* OpeningScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OpeningScene.hpp; sourceTree = "<group>"; };
 		B46E7B331CBCFA5C00C41635 /* TextScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextScene.cpp; sourceTree = "<group>"; };
 		B46E7B341CBCFA5C00C41635 /* TextScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TextScene.hpp; sourceTree = "<group>"; };
+		B481D7981CC7BDD8004F67BF /* MSAInterpolationTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSAInterpolationTypes.h; sourceTree = "<group>"; };
+		B481D7991CC7BDD8004F67BF /* MSAInterpolator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSAInterpolator.h; sourceTree = "<group>"; };
+		B481D79A1CC7BDD8004F67BF /* MSAInterpolator1D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSAInterpolator1D.h; sourceTree = "<group>"; };
+		B481D79B1CC7BDD8004F67BF /* MSAInterpolator2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSAInterpolator2D.h; sourceTree = "<group>"; };
+		B481D79C1CC7BDD8004F67BF /* MSAInterpolator3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSAInterpolator3D.h; sourceTree = "<group>"; };
+		B481D79D1CC7BDD8004F67BF /* MSAInterpolatorT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSAInterpolatorT.h; sourceTree = "<group>"; };
 		B498F0559F473CF855EF6062 /* ofxDatGuiTheme.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxDatGuiTheme.h; path = ../../../addons/ofxDatGui/src/themes/ofxDatGuiTheme.h; sourceTree = SOURCE_ROOT; };
 		B87C60311EC1FE841C1ECD89 /* ofxLabel.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxLabel.h; path = ../../../addons/ofxGui/src/ofxLabel.h; sourceTree = SOURCE_ROOT; };
 		BA9FA17BACE0BC9114A35A23 /* Util.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = Util.h; path = ../../../addons/ofxLibwebsockets/libs/ofxLibwebsockets/include/ofxLibwebsockets/Util.h; sourceTree = SOURCE_ROOT; };
@@ -651,28 +651,6 @@
 			path = src;
 			sourceTree = "<group>";
 		};
-		7AE153C91CC7886C00D025F2 /* ofxMSAInterpolator */ = {
-			isa = PBXGroup;
-			children = (
-				7AE153DE1CC7886C00D025F2 /* src */,
-			);
-			name = ofxMSAInterpolator;
-			path = ../../../addons/ofxMSAInterpolator;
-			sourceTree = "<group>";
-		};
-		7AE153DE1CC7886C00D025F2 /* src */ = {
-			isa = PBXGroup;
-			children = (
-				7AE153DF1CC7886C00D025F2 /* MSAInterpolationTypes.h */,
-				7AE153E01CC7886C00D025F2 /* MSAInterpolator.h */,
-				7AE153E11CC7886C00D025F2 /* MSAInterpolator1D.h */,
-				7AE153E21CC7886C00D025F2 /* MSAInterpolator2D.h */,
-				7AE153E31CC7886C00D025F2 /* MSAInterpolator3D.h */,
-				7AE153E41CC7886C00D025F2 /* MSAInterpolatorT.h */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
 		7AE53F341CBBDAE900270AEE /* ofxSvg */ = {
 			isa = PBXGroup;
 			children = (
@@ -828,11 +806,33 @@
 			name = ofxLibwebsockets;
 			sourceTree = "<group>";
 		};
+		B481D78B1CC7BDD8004F67BF /* ofxMSAInterpolator */ = {
+			isa = PBXGroup;
+			children = (
+				B481D7971CC7BDD8004F67BF /* src */,
+			);
+			name = ofxMSAInterpolator;
+			path = ../../../addons/ofxMSAInterpolator;
+			sourceTree = "<group>";
+		};
+		B481D7971CC7BDD8004F67BF /* src */ = {
+			isa = PBXGroup;
+			children = (
+				B481D7981CC7BDD8004F67BF /* MSAInterpolationTypes.h */,
+				B481D7991CC7BDD8004F67BF /* MSAInterpolator.h */,
+				B481D79A1CC7BDD8004F67BF /* MSAInterpolator1D.h */,
+				B481D79B1CC7BDD8004F67BF /* MSAInterpolator2D.h */,
+				B481D79C1CC7BDD8004F67BF /* MSAInterpolator3D.h */,
+				B481D79D1CC7BDD8004F67BF /* MSAInterpolatorT.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				B481D78B1CC7BDD8004F67BF /* ofxMSAInterpolator */,
 				7AE153BD1CC7886C00D025F2 /* ofxMSACore */,
-				7AE153C91CC7886C00D025F2 /* ofxMSAInterpolator */,
 				7AE53F341CBBDAE900270AEE /* ofxSvg */,
 				D8DD1043C333F6F63C8685E6 /* ofxDatGui */,
 				0D0595A62FF5ED8D37029107 /* ofxEasing */,
