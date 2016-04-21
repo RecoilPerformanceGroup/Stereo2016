@@ -62,7 +62,14 @@ void SketchScene::update(){
         lineAddPos = false;
     }
     
+    if (lineAddRandomPos) {
+        randomIter += 100.0;
+        spline3DCubic.push_back(rotationCenter.get() + ofVec3f(ofSignedNoise(0.3+randomIter)*0.4, ofSignedNoise(2.723+randomIter)*0.2, ofSignedNoise(4.7732+randomIter)*0.4));
+        lineAddRandomPos = false;
+    }
+    
     if (lineClear) {
+        randomIter = 0.0;
         spline3DCubic.clear();
         spline3DCubic.setInterpolation(msa::kInterpolationCubic);
         spline3DLinear.clear();
@@ -105,7 +112,8 @@ void SketchScene::update(){
         
         for(float t=lineStart; t < lineEnd.get(); t += spacing){
             ofVec3f vSample(spline3DCubic.sampleAt(t));
-            ofVec3f vWorld(world->zInCam(vSample*getWorldSize()));
+            ofVec3f vWorld(vSample*getWorldSize());
+            if(lineZinCam) vWorld = world->zInCam(vWorld);
             verticesCubic.push_back(vWorld+ofVec3f(ofSignedNoise((vSample.x+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude, ofSignedNoise((vSample.y+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude, 0.0));
         }
         

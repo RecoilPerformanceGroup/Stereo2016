@@ -1,5 +1,5 @@
 <TextScene>
-	<enabled>1</enabled>
+	<enabled>0</enabled>
 	<add_to_qlab>0</add_to_qlab>
 	<text>
 		<position>0, 300, 700</position>
@@ -8,4 +8,5 @@
 put on your glasses now</string>
 		<color>1, 1, 1, 0</color>
 	</text>
+<TextScene/>
 </TextScene>

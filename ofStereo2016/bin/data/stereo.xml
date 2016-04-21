@@ -76,7 +76,7 @@
 			</wall>
 		</roomScene>
 		<Lights>
-			<enabled>0</enabled>
+			<enabled>1</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<directionalLight1>
 				<diffuseColor>1, 1, 1, 255</diffuseColor>
@@ -146,7 +146,7 @@
 			</Plateau>
 		</PlateauScene>
 		<openingScene>
-			<enabled>1</enabled>
+			<enabled>0</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<lines>
 				<speed>0</speed>
@@ -195,24 +195,27 @@
 		<use3dInput>1</use3dInput>
 		<fadeDepth>0</fadeDepth>
 		<rotationEuler>0, 0, 0</rotationEuler>
-			<rotationCenter>0, 0, 0</rotationCenter>
+			<rotationCenter>0, 0.5, 0.5</rotationCenter>
 			<line>
 				<start>0</start>
-				<end>1</end>
+				<end>0</end>
 				<resolution>411</resolution>
 				<width>15.8163</width>
-				<depthFade>510.204</depthFade>
+				<depthFade>-2000</depthFade>
 				<noiseAmplitude>0</noiseAmplitude>
 				<noisePhase>0</noisePhase>
 				<use3dInput>0</use3dInput>
-				<nextPos>0.313203, 0.708871, 0.229904</nextPos>
+				<nextPos>0, 0.5, 1.1</nextPos>
 				<lineAddPos>0</lineAddPos>
 				<clear>0</clear>
 				<load>0</load>
 				<save>0</save>
+			<lineAddRandomPos>0</lineAddRandomPos>
+				<showDots>1</showDots>
+			<lineZinCam>1</lineZinCam>
 			</line>
 			<shard>
-				<size>20</size>
+				<size>28</size>
 				<color>1, 1, 1, 1</color>
 				<material>
 					<noise>
@@ -229,10 +232,13 @@
 					</noise>
 				</material>
 			<position>0</position>
+			<shardThrowFromPos>0, 0, 0</shardThrowFromPos>
+				<shardThrowVelocity>0, 0, 0</shardThrowVelocity>
+				<throw>0</throw>
 			</shard>
 		</sketch>
 		<TextScene>
-			<enabled>1</enabled>
+			<enabled>0</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<text>
 				<position>0, 300, 700</position>
@@ -277,11 +283,16 @@ put on your glasses now</string>
 				<noise_amount>193.878</noise_amount>
 			<ocean_origin>0, 0, 0</ocean_origin>
 			<floorFadeOut>0</floorFadeOut>
+			<fadeOutEdge>0</fadeOutEdge>
+				<fall>0</fall>
 			</ocean>
 		<stillAtEdge>0</stillAtEdge>
 			<stillAtEdgeDist>0</stillAtEdgeDist>
 		<color>1, 1, 1, 1</color>
 		<horizonOrigin>0, 0, 0</horizonOrigin>
+		<dpPersist>0</dpPersist>
+			<dpPersistRadius>0</dpPersistRadius>
+			<minDarkFade>200</minDarkFade>
 		</VoroEnd>
 	<Crystal>
 			<enabled>0</enabled>
@@ -371,7 +382,7 @@ put on your glasses now</string>
 			</cluster>
 		</PushDown>
 		<boxsplit>
-			<enabled>1</enabled>
+			<enabled>0</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<floorOn>0</floorOn>
 			<wallOn>0</wallOn>
@@ -431,6 +442,7 @@ put on your glasses now</string>
 					</noise>
 				</material>
 			</cluster>
+		<fadeIn>0</fadeIn>
 		</SoundField>
 	</scenes>
 	<world>

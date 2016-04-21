@@ -37,4 +37,5 @@
 		</material>
 	</cluster>
 <SoundField/>
+<fadeIn>0</fadeIn>
 </SoundField>

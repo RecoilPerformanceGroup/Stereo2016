@@ -14,24 +14,27 @@
 <use3dInput>1</use3dInput>
 <fadeDepth>0</fadeDepth>
 <rotationEuler>0, 0, 0</rotationEuler>
-	<rotationCenter>0, 0, 0</rotationCenter>
+	<rotationCenter>0, 0.5, 0.5</rotationCenter>
 	<line>
 		<start>0</start>
-		<end>1</end>
+		<end>0</end>
 		<resolution>411</resolution>
 		<width>15.8163</width>
-		<depthFade>510.204</depthFade>
+		<depthFade>-2000</depthFade>
 		<noiseAmplitude>0</noiseAmplitude>
 		<noisePhase>0</noisePhase>
 		<use3dInput>0</use3dInput>
-		<nextPos>0.313203, 0.708871, 0.229904</nextPos>
+		<nextPos>0, 0.5, 1.1</nextPos>
 		<lineAddPos>0</lineAddPos>
 		<clear>0</clear>
 		<load>0</load>
 		<save>0</save>
+	<lineAddRandomPos>0</lineAddRandomPos>
+		<showDots>1</showDots>
+	<lineZinCam>1</lineZinCam>
 	</line>
 	<shard>
-		<size>20</size>
+		<size>28</size>
 		<color>1, 1, 1, 1</color>
 		<material>
 			<noise>
@@ -48,5 +51,8 @@
 			</noise>
 		</material>
 	<position>0</position>
+	<shardThrowFromPos>0, 0, 0</shardThrowFromPos>
+		<shardThrowVelocity>0, 0, 0</shardThrowVelocity>
+		<throw>0</throw>
 	</shard>
 </sketch>
