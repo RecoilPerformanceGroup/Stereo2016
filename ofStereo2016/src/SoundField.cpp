@@ -101,42 +101,46 @@ void SoundField::update() {
     // then scale down and fade out
     
     
-    fadeInFromNodes = voroEnd->wall.getChildren();
+    //if(voroEnd->enabled.get()) {
     
-    int nI = 0;
-    for( auto c : cluster.getChildren() ) {
+        fadeInFromNodes = voroEnd->wall.getChildren();
         
-        if(nI < fadeInFromNodes.size()) {
-            if(c->transitionRef == nullptr) {
+        int nI = 0;
+        for( auto c : cluster.getChildren() ) {
+            
+            if(nI < fadeInFromNodes.size()) {
+            } else {
+                nI = 0;
+            }
+            
+            
+            if(c->transitionRef == nullptr && fadeInFromNodes[nI]) {
                 c->positionOverideTarget = c->getPosition();
-
                 c->transitionRef = fadeInFromNodes[nI];
                 nI++;
             }
+            
         }
         
-    }
-    
-    
-    
-    if(fadeIn < 1) {
-    for( auto c : cluster.getChildren() ) {
-        
-        if(c->transitionRef != nullptr) {
-            //ofMatrix4x4 m = c->transitionRef->getGlobalTransformMatrix();
-            //m.translate(c->transitionRef->renderPosOffset);
-            
-            ofVec3f from = ofVec3f(c->transitionRef->getPosition() + c->transitionRef->renderPosOffset) * c->transitionRef->getGlobalTransformMatrix();
-            
-            //ofVec3f toDiff = c->positionOverideTarget - c->getGlobalPosition();
-            
-            ofVec3f interp = from.getInterpolated(c->positionOverideTarget * cluster.getGlobalTransformMatrix() , fadeIn);
-            
-            c->setGlobalPosition(interp);
+        if(fadeIn < 1) {
+            for( auto c : cluster.getChildren() ) {
+                
+                if(c->transitionRef != nullptr) {
+                    //ofMatrix4x4 m = c->transitionRef->getGlobalTransformMatrix();
+                    //m.translate(c->transitionRef->renderPosOffset);
+                    
+                    ofVec3f from = ofVec3f(c->transitionRef->getPosition() + c->transitionRef->renderPosOffset) * c->transitionRef->getGlobalTransformMatrix();
+                    
+                    //ofVec3f toDiff = c->positionOverideTarget - c->getGlobalPosition();
+                    
+                    ofVec3f interp = from.getInterpolated(c->positionOverideTarget * cluster.getGlobalTransformMatrix() , fadeIn);
+                    
+                    c->setGlobalPosition(interp);
+                }
+                
+            }
         }
-        
-    }
-    }
+    //}
 
     
    // for( auto c : voroEnd->wall.getChildren() ) {
