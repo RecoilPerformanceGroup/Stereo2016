@@ -381,6 +381,7 @@ namespace ofxStereoscopy {
         shared_ptr<Plane> getPlane(std::string name);
         
         void drawModel(bool showCameraFrustrums = true, bool rightEye = false, bool showOrigin = true, bool showPlaneOutlines = true);
+        
         void drawPlaneFBO(shared_ptr<Plane> p);
         
         void renderProjectorCalibrations();
@@ -1173,6 +1174,7 @@ namespace ofxStereoscopy {
         }
         
         ofParameter<bool> enabled {true};
+        
         ofParameter<ofVec3f> physical_pos_cm {"position", ofVec3f(0,0,0), ofVec3f(-WORLD_DIMENSION_MAX,-WORLD_DIMENSION_MAX,-WORLD_DIMENSION_MAX), ofVec3f(WORLD_DIMENSION_MAX,WORLD_DIMENSION_MAX,WORLD_DIMENSION_MAX)};
         ofParameter<ofVec2f> physical_size_cm {"size", ofVec2f(100,100), ofVec2f(0,0), ofVec2f(WORLD_DIMENSION_MAX*2,WORLD_DIMENSION_MAX*2)};
         
@@ -1202,8 +1204,11 @@ namespace ofxStereoscopy {
     public:
         
         ofParameter<bool> enabled {"enabled", true};
+        ofParameter<bool> enabledDraw {"draw", true};
+        ofParameter<bool> enabledDrawModel {"draw model", true};
+        
         ofParameter<bool> qlab {"add to qlab", false};
-        ofParameterGroup params {"untitled", enabled, qlab};
+        ofParameterGroup params {"untitled", enabled, enabledDraw, enabledDrawModel, qlab};
         
         // add dynamic draw order
         
@@ -1222,7 +1227,14 @@ namespace ofxStereoscopy {
         
         virtual void reconstruct() {};
         
+        void drawSceneModel() {
+            if(enableDrawModel.get() && enabled.get()) {
+                drawModel();
+            }
+        };
+        
         virtual void drawModel() {};
+        
         virtual void exit(){};
         //    virtual void receiveOsc(ofxOscMessage * m, string rest) {};
         
@@ -1280,7 +1292,7 @@ namespace ofxStereoscopy {
         
         void updateScene() {
             
-            if(enabled && isSetup) {
+            if(enabled.get() && isSetup) {
                 
                 if(bReconstruct) {
                     reconstruct();
@@ -1294,7 +1306,7 @@ namespace ofxStereoscopy {
         
         void drawScene() {
             
-            if(enabled && isSetup) {
+            if(enabled.get() && isSetup && enabledDraw.get()) {
                 ofPushMatrix();ofPushView();ofPushStyle();
                 draw();
                 ofPopStyle();ofPopView();ofPopMatrix();

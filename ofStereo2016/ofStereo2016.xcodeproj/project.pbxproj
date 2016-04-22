@@ -466,8 +466,6 @@
 				C0A404396303126E09765AEA /* RoomScene.hpp */,
 				47EA2D084814BBA91864391A /* SketchScene.cpp */,
 				BEA5BC9A80BD22ED0F263E62 /* SketchScene.hpp */,
-				04461EFF1CB67C63004C391A /* VoroScenes.cpp */,
-				04461F001CB67C63004C391A /* VoroScenes.hpp */,
 				04461F021CB7EEC8004C391A /* VoroEnd.cpp */,
 				04461F031CB7EEC8004C391A /* VoroEnd.hpp */,
 				B46143541CBBB1B000A1F988 /* OpeningScene.cpp */,
@@ -476,12 +474,8 @@
 				B46E7B341CBCFA5C00C41635 /* TextScene.hpp */,
 				B4376C781CBF8C7800401CE9 /* GameScene.cpp */,
 				B4376C791CBF8C7800401CE9 /* GameScene.hpp */,
-				04289F6B1CBD2D7100E05DCA /* PushDown.cpp */,
-				04289F6C1CBD2D7100E05DCA /* PushDown.hpp */,
 				04FDF5521CBF942700DB2461 /* BoxSplit.cpp */,
 				04FDF5531CBF942700DB2461 /* BoxSplit.hpp */,
-				0437FCC31CBFC74C00DB02C2 /* PerspectiveChange.cpp */,
-				0437FCC41CBFC74C00DB02C2 /* PerspectiveChange.hpp */,
 				7A2D09E61CC55C6A00003DBD /* SoundField.cpp */,
 				7A2D09E71CC55C6A00003DBD /* SoundField.hpp */,
 			);
@@ -618,6 +612,12 @@
 		7A2D09E51CC4CA2800003DBD /* Unused */ = {
 			isa = PBXGroup;
 			children = (
+				0437FCC31CBFC74C00DB02C2 /* PerspectiveChange.cpp */,
+				0437FCC41CBFC74C00DB02C2 /* PerspectiveChange.hpp */,
+				04289F6B1CBD2D7100E05DCA /* PushDown.cpp */,
+				04289F6C1CBD2D7100E05DCA /* PushDown.hpp */,
+				04461EFF1CB67C63004C391A /* VoroScenes.cpp */,
+				04461F001CB67C63004C391A /* VoroScenes.hpp */,
 				650F041FD82233563F7888D5 /* PlateauScene.cpp */,
 				8BABD03A9C68A724E897C751 /* PlateauScene.hpp */,
 				25A1BC9D9497B6F1ADBF53B9 /* PlaneCutScene.cpp */,

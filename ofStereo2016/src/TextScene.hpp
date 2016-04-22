@@ -29,6 +29,8 @@ public:
     
     ofParameterGroup params {"TextScene",
         enabled,
+        enabledDraw,
+        enabledDrawModel,
         qlab,
         textParams
     };

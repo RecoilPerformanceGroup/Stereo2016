@@ -34,6 +34,8 @@ public:
     
     ofParameterGroup params {"PerspectiveChange",
         enabled,
+        enabledDraw,
+        enabledDrawModel,
         qlab,
         cylpos,
         frameInterval,

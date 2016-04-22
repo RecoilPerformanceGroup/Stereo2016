@@ -75,6 +75,8 @@ public:
 
     ofParameterGroup params {"sketch",
         enabled,
+        enabledDraw,
+        enabledDrawModel,
         qlab,
         rotationEuler,
         rotationCenter,

@@ -90,13 +90,13 @@ void VoroEnd::update() {
             float edgeStill = 1;
             
             if(openWall.get() > 45) {
-            float edgeAt = 0;
-            float fullValueAtDistInCM = stillAtEdgeDist.get();
-            edgeStill =  ofClamp(abs(c->getGlobalPosition().z - edgeAt) / fullValueAtDistInCM, 0, 1);
-            
-            if(edgeStill < 1) {
-                edgeStill *= (1 - stillAtEdge.get()) ;
-            }
+                float edgeAt = 0;
+                float fullValueAtDistInCM = stillAtEdgeDist.get();
+                edgeStill =  ofClamp(abs(c->getGlobalPosition().z - edgeAt) / fullValueAtDistInCM, 0, 1);
+                
+                if(edgeStill < 1) {
+                    edgeStill *= (1 - stillAtEdge.get()) ;
+                }
             }
             
             // dp still

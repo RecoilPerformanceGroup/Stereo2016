@@ -36,6 +36,8 @@ public:
     
     ofParameterGroup params {"VoroScenes",
         enabled,
+        enabledDraw,
+        enabledDrawModel,
         qlab,
         animations
     };

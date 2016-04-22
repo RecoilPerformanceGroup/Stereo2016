@@ -65,6 +65,8 @@ public:
     
     ofParameterGroup params {"Crystal",
         enabled,
+        enabledDraw,
+        enabledDrawModel,
         qlab
     };
     

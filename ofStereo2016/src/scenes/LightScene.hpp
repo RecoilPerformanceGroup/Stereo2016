@@ -83,6 +83,8 @@ public:
     
     ofParameterGroup params {"Lights",
         enabled,
+        enabledDraw,
+        enabledDrawModel,
         qlab,
         directionalLight1Params,
         directionalLight2Params,

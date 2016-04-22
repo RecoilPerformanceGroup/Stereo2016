@@ -24,6 +24,8 @@ public:
     
     ofParameterGroup params {"game",
         enabled,
+        enabledDraw,
+        enabledDrawModel,
         qlab,
         lineWidth,
         length,

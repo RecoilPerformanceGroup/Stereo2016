@@ -132,6 +132,7 @@ void SketchScene::update(){
     }
     
     shardMat.setDiffuseColor(shardColor.get());
+    shardMat.updateParameters();
     
 }
 

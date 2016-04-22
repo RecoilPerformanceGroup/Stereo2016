@@ -24,13 +24,9 @@ void OpeningScene::draw(){
     
     ofPushStyle();
     ofDisableDepthTest();
-    
     drawTitles(world->isDrawingLeft());
-    
     ofPopStyle();
-    
 }
-
 
 void OpeningScene::drawTitles(bool leftEye){
     

@@ -9,16 +9,16 @@
 	</directionalLight>
 	<spotLight>
 		<diffuseColor>0, 0, 0, 1</diffuseColor>
-		<ambientColor>0, 0, 0, 255</ambientColor>
-		<specularColor>0, 0, 0, 255</specularColor>
+		<ambientColor>0, 0, 0, 1</ambientColor>
+		<specularColor>0, 0, 0, 1</specularColor>
 		<position>-1661.81, 733.026, 1149.52</position>
 		<lookAt>4.16309, 4.16309, 4.16309</lookAt>
 		<spotConcentration>0</spotConcentration>
 	</spotLight>
 	<areaLight>
-		<diffuseColor>0, 0, 0, 255</diffuseColor>
-		<ambientColor>0, 0, 0, 255</ambientColor>
-		<specularColor>0, 0, 0, 255</specularColor>
+		<diffuseColor>0, 0, 0, 1</diffuseColor>
+		<ambientColor>0, 0, 0, 1</ambientColor>
+		<specularColor>0, 0, 0, 1</specularColor>
 		<position>-3223.66, -2807.17, 420.656</position>
 		<lookAt>4.16309, 4.16309, 524.779</lookAt>
 		<width>6887.76</width>
@@ -27,17 +27,17 @@
 <Lights/>
 <add_to_qlab>0</add_to_qlab>
 <directionalLight1>
-		<diffuseColor>1, 1, 1, 255</diffuseColor>
-		<ambientColor>0, 0, 0, 255</ambientColor>
-		<specularColor>0, 0, 0, 255</specularColor>
-		<position>108.286, 420.656, 733.026</position>
-		<lookAt>4.16309, 4.16309, 733.026</lookAt>
+		<diffuseColor>1, 1, 1, 1</diffuseColor>
+		<ambientColor>0, 0, 0, 1</ambientColor>
+		<specularColor>0, 0, 0, 1</specularColor>
+		<position>628.903, 420.656, 733.026</position>
+		<lookAt>4.16309, 4.16309, 628.903</lookAt>
 	</directionalLight1>
 	<directionalLight2>
-		<diffuseColor>0.406497, 0.406497, 0.396085, 1</diffuseColor>
+		<diffuseColor>1, 1, 1, 1</diffuseColor>
 		<ambientColor>0, 0, 0, 1</ambientColor>
 		<specularColor>1, 1, 1, 1</specularColor>
-		<position>-1037.07, 524.779, 1670.14</position>
-		<lookAt>0, 0, 0</lookAt>
+		<position>-932.947, 420.656, 0</position>
+		<lookAt>0, 0, -1141.19</lookAt>
 	</directionalLight2>
 </Lights>

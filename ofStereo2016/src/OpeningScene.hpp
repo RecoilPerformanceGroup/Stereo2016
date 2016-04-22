@@ -43,6 +43,8 @@ public:
     
     ofParameterGroup params {"openingScene",
         enabled,
+        enabledDraw,
+        enabledDrawModel,
         qlab,
         paramsLeftTitle,
         paramsRightTitle

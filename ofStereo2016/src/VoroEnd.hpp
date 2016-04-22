@@ -101,6 +101,8 @@ public:
     
     ofParameterGroup params {"VoroEnd",
         enabled,
+        enabledDraw,
+        enabledDrawModel,
         qlab,
         stillAtEdge,
         stillAtEdgeDist,

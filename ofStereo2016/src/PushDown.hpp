@@ -67,6 +67,8 @@ public:
     
     ofParameterGroup params {"PushDown",
         enabled,
+        enabledDraw,
+        enabledDrawModel,
         qlab
     };
     

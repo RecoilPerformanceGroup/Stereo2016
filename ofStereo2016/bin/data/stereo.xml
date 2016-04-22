@@ -1,6 +1,6 @@
 <stereo>
 	<stageSize>800, 422.378, 800</stageSize>
-	<Projector_Calibration>0</Projector_Calibration>
+	<Projector_Calibration>1</Projector_Calibration>
 	<Camera_Calibration>0</Camera_Calibration>
 	<Background_Color>0, 0, 0, 1</Background_Color>
 	<Second_Screen_Model>0</Second_Screen_Model>
@@ -79,31 +79,31 @@
 			<enabled>1</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<directionalLight1>
-				<diffuseColor>1, 1, 1, 255</diffuseColor>
-				<ambientColor>0, 0, 0, 255</ambientColor>
-				<specularColor>0, 0, 0, 255</specularColor>
-				<position>108.286, 420.656, 733.026</position>
-				<lookAt>4.16309, 4.16309, 733.026</lookAt>
+				<diffuseColor>1, 1, 1, 1</diffuseColor>
+				<ambientColor>0, 0, 0, 1</ambientColor>
+				<specularColor>0, 0, 0, 1</specularColor>
+				<position>628.903, 420.656, 733.026</position>
+				<lookAt>4.16309, 4.16309, 628.903</lookAt>
 			</directionalLight1>
 			<directionalLight2>
-				<diffuseColor>0.406497, 0.406497, 0.396085, 1</diffuseColor>
+				<diffuseColor>1, 1, 1, 1</diffuseColor>
 				<ambientColor>0, 0, 0, 1</ambientColor>
 				<specularColor>1, 1, 1, 1</specularColor>
-				<position>-1037.07, 524.779, 1670.14</position>
-				<lookAt>0, 0, 0</lookAt>
+				<position>-932.947, 420.656, 0</position>
+				<lookAt>0, 0, -1141.19</lookAt>
 			</directionalLight2>
 			<spotLight>
 				<diffuseColor>0, 0, 0, 1</diffuseColor>
-				<ambientColor>0, 0, 0, 255</ambientColor>
-				<specularColor>0, 0, 0, 255</specularColor>
+				<ambientColor>0, 0, 0, 1</ambientColor>
+				<specularColor>0, 0, 0, 1</specularColor>
 				<position>-1661.81, 733.026, 1149.52</position>
 				<lookAt>4.16309, 4.16309, 4.16309</lookAt>
 				<spotConcentration>0</spotConcentration>
 			</spotLight>
 			<areaLight>
-				<diffuseColor>0, 0, 0, 255</diffuseColor>
-				<ambientColor>0, 0, 0, 255</ambientColor>
-				<specularColor>0, 0, 0, 255</specularColor>
+				<diffuseColor>0, 0, 0, 1</diffuseColor>
+				<ambientColor>0, 0, 0, 1</ambientColor>
+				<specularColor>0, 0, 0, 1</specularColor>
 				<position>-3223.66, -2807.17, 420.656</position>
 				<lookAt>4.16309, 4.16309, 524.779</lookAt>
 				<width>6887.76</width>
@@ -181,7 +181,7 @@
 			</rightTitle>
 		</openingScene>
 		<sketch>
-			<enabled>1</enabled>
+			<enabled>0</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<lineWidth>8.16326, 34.6939</lineWidth>
 			<speed>1.1</speed>
@@ -194,35 +194,35 @@
 			<reset>0</reset>
 		<use3dInput>1</use3dInput>
 		<fadeDepth>0</fadeDepth>
-		<rotationEuler>0, 0, 0</rotationEuler>
-			<rotationCenter>0, 0.5, 0.5</rotationCenter>
+		<rotationEuler>0, -16.5306, 0</rotationEuler>
+			<rotationCenter>0, 0.6, 0.7</rotationCenter>
 			<line>
-				<start>0</start>
-				<end>0</end>
-				<resolution>411</resolution>
+				<start>0.280612</start>
+				<end>0.561224</end>
+				<resolution>2094</resolution>
 				<width>15.8163</width>
-				<depthFade>-2000</depthFade>
+				<depthFade>459.184</depthFade>
 				<noiseAmplitude>0</noiseAmplitude>
-				<noisePhase>0</noisePhase>
+				<noisePhase>44.3878</noisePhase>
 				<use3dInput>0</use3dInput>
-				<nextPos>0, 0.5, 1.1</nextPos>
+				<nextPos>0.0216572, 0.625572, 0.521449</nextPos>
 				<lineAddPos>0</lineAddPos>
 				<clear>0</clear>
 				<load>0</load>
 				<save>0</save>
 			<lineAddRandomPos>0</lineAddRandomPos>
-				<showDots>1</showDots>
-			<lineZinCam>1</lineZinCam>
+				<showDots>0</showDots>
+			<lineZinCam>0</lineZinCam>
 			</line>
 			<shard>
-				<size>28</size>
+				<size>36.7347</size>
 				<color>1, 1, 1, 1</color>
 				<material>
 					<noise>
 						<displacement>
-							<velocity>0, 0, 0</velocity>
+							<velocity>4, 4, 4</velocity>
 							<scale>1, 1, 1</scale>
-							<amount>0, 0, 0</amount>
+							<amount>0.2, 0.2, 0.2</amount>
 						</displacement>
 						<texture>
 							<velocity>0, 0, 0</velocity>
@@ -231,21 +231,21 @@
 						</texture>
 					</noise>
 				</material>
-			<position>0</position>
-			<shardThrowFromPos>0, 0, 0</shardThrowFromPos>
-				<shardThrowVelocity>0, 0, 0</shardThrowVelocity>
+			<position>0.510204</position>
+			<shardThrowFromPos>-0.478135, 0.458975, 0.771345</shardThrowFromPos>
+				<shardThrowVelocity>437.734, 0, -447.314</shardThrowVelocity>
 				<throw>0</throw>
 			</shard>
 		</sketch>
 		<TextScene>
-			<enabled>0</enabled>
+			<enabled>1</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<text>
 				<position>0, 300, 700</position>
 				<size>12</size>
 				<string>please
 put on your glasses now</string>
-				<color>1, 1, 1, 0</color>
+				<color>1, 1, 1, 1</color>
 			</text>
 		</TextScene>
 		<VoroEnd>
@@ -266,33 +266,34 @@ put on your glasses now</string>
 				</noise>
 			</material>
 			<wall>
-				<cells>38</cells>
-				<seed>15</seed>
+				<cells>48</cells>
+				<seed>16</seed>
 				<origin>0, 0, 0</origin>
 				<wall_rotation>131.345, 0, 0</wall_rotation>
-				<noise_speed>0</noise_speed>
-				<noise_amount>0</noise_amount>
-				<open>0</open>
-			<fall>0</fall>
+				<noise_speed>0.1</noise_speed>
+				<noise_amount>15.3061</noise_amount>
+				<open>90</open>
+			<fall>1</fall>
 			</wall>
 			<ocean>
-				<cells>29</cells>
-				<seed>69</seed>
-				<origin>0.417603, -9.99481, 0.417603</origin>
-				<noise_speed>1</noise_speed>
-				<noise_amount>193.878</noise_amount>
+				<cells>48</cells>
+				<seed>1</seed>
+				<origin>0, 0, 0</origin>
+				<noise_speed>0.1</noise_speed>
+				<noise_amount>25</noise_amount>
 			<ocean_origin>0, 0, 0</ocean_origin>
 			<floorFadeOut>0</floorFadeOut>
-			<fadeOutEdge>0</fadeOutEdge>
+			<fadeOutEdge>0.280612</fadeOutEdge>
 				<fall>0</fall>
 			</ocean>
-		<stillAtEdge>0</stillAtEdge>
-			<stillAtEdgeDist>0</stillAtEdgeDist>
+		<stillAtEdge>0.045</stillAtEdge>
+			<stillAtEdgeDist>210</stillAtEdgeDist>
 		<color>1, 1, 1, 1</color>
-		<horizonOrigin>0, 0, 0</horizonOrigin>
+		<horizonOrigin>0, 0, 255</horizonOrigin>
 		<dpPersist>0</dpPersist>
 			<dpPersistRadius>0</dpPersistRadius>
-			<minDarkFade>200</minDarkFade>
+			<minDarkFade>155</minDarkFade>
+		<scaleCells>1, 1, 1</scaleCells>
 		</VoroEnd>
 	<Crystal>
 			<enabled>0</enabled>
@@ -420,10 +421,10 @@ put on your glasses now</string>
 				<globalForce>12.2449</globalForce>
 			</soundWaves>
 			<cluster>
-				<cells>244</cells>
+				<cells>91</cells>
 				<origin>0, 0, 0</origin>
-				<scale>10</scale>
-				<scaleCells>0.142714</scaleCells>
+				<scale>3.21429</scale>
+				<scaleCells>0</scaleCells>
 				<rotationAxis>0, 0, 0</rotationAxis>
 				<rotationSpeed>0</rotationSpeed>
 				<color>1, 1, 1, 1</color>
@@ -447,7 +448,7 @@ put on your glasses now</string>
 	</scenes>
 	<world>
 		<camera>
-			<position>0, 250, 1100</position>
+			<position>0, 250, 1426.57</position>
 			<eyeSeparation>6.5</eyeSeparation>
 			<focusDistance>200</focusDistance>
 			<nearClip>20</nearClip>
@@ -492,8 +493,8 @@ put on your glasses now</string>
 				<Output_Points>
 					<Top_Left>0.253187, 0.434015, 0</Top_Left>
 					<Top_Right>0.728554, 0.428335, 0</Top_Right>
-					<Bottom_Right>1.03559, 0.884112, 0</Bottom_Right>
-					<Bottom_Left>0.0153305, 0.879219, 0</Bottom_Left>
+					<Bottom_Right>1.03559, 0.882112, 0</Bottom_Right>
+					<Bottom_Left>0.0158305, 0.879219, 0</Bottom_Left>
 				</Output_Points>
 			</Right_Quad>
 		</FLOOR>

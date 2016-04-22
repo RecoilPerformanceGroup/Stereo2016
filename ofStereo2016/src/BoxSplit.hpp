@@ -60,6 +60,8 @@ public:
     
     ofParameterGroup params {"boxsplit",
         enabled,
+        enabledDraw,
+        enabledDrawModel,
         qlab,
         floorOn,
         wallOn

@@ -43,7 +43,9 @@ public:
     
     ofParameterGroup params {"roomScene",
         enabled,
-        qlab,
+        enabledDraw,
+        enabledDrawModel,
+        qlab
         dancerParams
     };
     

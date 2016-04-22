@@ -77,6 +77,8 @@ public:
     
     ofParameterGroup params {"SoundField",
         enabled,
+        enabledDraw,
+        enabledDrawModel,
         qlab,
         fadeIn,
         soundWaveParams
