@@ -45,7 +45,7 @@ public:
         enabled,
         enabledDraw,
         enabledDrawModel,
-        qlab
+        qlab,
         dancerParams
     };
     

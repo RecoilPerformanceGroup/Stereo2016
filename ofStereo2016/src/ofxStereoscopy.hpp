@@ -1228,7 +1228,7 @@ namespace ofxStereoscopy {
         virtual void reconstruct() {};
         
         void drawSceneModel() {
-            if(enableDrawModel.get() && enabled.get()) {
+            if(enabledDrawModel.get() && enabled.get()) {
                 drawModel();
             }
         };
