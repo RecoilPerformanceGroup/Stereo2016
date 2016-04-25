@@ -427,7 +427,7 @@ void VoroNode::draw(OrganicMaterial * m, bool changeMat) {
     }
     
     for(auto c : getChildren()) {
-        c->draw(m);
+        c->draw(m, changeMat);
     }
 };
 
