@@ -10,6 +10,7 @@
 
 void VoroEnd::setup() {
 
+    
     oceanSeed.addListener(this, &VoroEnd::reconstructOcean<int>);
     oceanNumCells.addListener(this, &VoroEnd::reconstructOcean<int>);
 
@@ -169,7 +170,10 @@ void VoroEnd::reconstructWall(){
     ofVec3f _s = getWorldSize();
     
     ofSeedRandom(wallSeed.get());
+    
     wall.setupFromBoundingBox(_s.x*1, _s.y*1.0, 10, wallNumCells, false,false,false);
+    flagResetTransitionReferences = true;
+    
     wall.setParent(wallCenter);
 }
 
