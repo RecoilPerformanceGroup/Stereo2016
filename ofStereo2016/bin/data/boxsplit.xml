@@ -14,4 +14,6 @@
 <boxsplit/>
 	<floorOn>0</floorOn>
 	<wallOn>0</wallOn>
+<draw>1</draw>
+	<draw_model>1</draw_model>
 </boxsplit>

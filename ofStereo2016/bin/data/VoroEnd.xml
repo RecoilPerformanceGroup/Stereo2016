@@ -45,4 +45,6 @@
 	<dpPersistRadius>0</dpPersistRadius>
 	<minDarkFade>155</minDarkFade>
 <scaleCells>1, 1, 1</scaleCells>
+<draw>1</draw>
+	<draw_model>1</draw_model>
 </VoroEnd>

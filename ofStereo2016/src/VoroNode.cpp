@@ -404,7 +404,6 @@ void VoroNode::customDraw() {
         
         ofTranslate(renderPosOffset);
         
-        
         if(bRenderScaleSet) ofScale(renderScale);
         if(bTintSet) ofSetColor(tint);
 
@@ -415,26 +414,30 @@ void VoroNode::customDraw() {
     }
 }
 
-void VoroNode::draw(OrganicMaterial * m) {
+void VoroNode::draw(OrganicMaterial * m, bool changeMat) {
     if(m != nullptr){
         m->setWorldMatrix(getGlobalTransformMatrix());
         
         //m->setAmbientColor(tint);
         
-        if(bTintSet) m->setDiffuseColor(tint);
         
-        /*for( auto & c : mesh.getColors()) {
+        if(changeMat) {
+            if(bTintSet) m->setDiffuseColor(tint);
+        
+            /*for( auto & c : mesh.getColors()) {
             c = tint;
-        }*/
+             }*/
         
-        
-        m->begin();
+            m->begin();
+        }
     }
     
     ofNode::draw();
     
     if(m != nullptr){
-        m->end();
+        if(changeMat) {
+            m->end();
+        }
     }
     
     for(auto c : getChildren()) {

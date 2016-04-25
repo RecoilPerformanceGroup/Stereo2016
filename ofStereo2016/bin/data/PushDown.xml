@@ -28,4 +28,6 @@
 		</material>
 	</cluster>
 <PushDown/>
+<draw>1</draw>
+	<draw_model>1</draw_model>
 </PushDown>

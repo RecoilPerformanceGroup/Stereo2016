@@ -114,7 +114,7 @@ public:
     
     void customDraw();
     
-    void draw(OrganicMaterial * m = nullptr);
+    void draw(OrganicMaterial * m = nullptr, bool changeMat = true);
     
     VoroNode & detachNodes(set<VoroNode *> nodes);
     

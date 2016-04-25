@@ -1,6 +1,6 @@
 <stereo>
 	<stageSize>800, 422.378, 800</stageSize>
-	<Projector_Calibration>1</Projector_Calibration>
+	<Projector_Calibration>0</Projector_Calibration>
 	<Camera_Calibration>0</Camera_Calibration>
 	<Background_Color>0, 0, 0, 1</Background_Color>
 	<Second_Screen_Model>0</Second_Screen_Model>
@@ -74,6 +74,8 @@
 					</noise>
 				</material>
 			</wall>
+		<draw>1</draw>
+			<draw_model>1</draw_model>
 		</roomScene>
 		<Lights>
 			<enabled>1</enabled>
@@ -109,6 +111,8 @@
 				<width>6887.76</width>
 				<height>6785.71</height>
 			</areaLight>
+		<draw>1</draw>
+			<draw_model>1</draw_model>
 		</Lights>
 		<PlateauScene>
 			<enabled>0</enabled>
@@ -179,6 +183,8 @@
 				<height>12</height>
 				<color>1, 0, 0, 0</color>
 			</rightTitle>
+		<draw>1</draw>
+			<draw_model>1</draw_model>
 		</openingScene>
 		<sketch>
 			<enabled>0</enabled>
@@ -236,9 +242,11 @@
 				<shardThrowVelocity>437.734, 0, -447.314</shardThrowVelocity>
 				<throw>0</throw>
 			</shard>
+		<draw>1</draw>
+			<draw_model>1</draw_model>
 		</sketch>
 		<TextScene>
-			<enabled>1</enabled>
+			<enabled>0</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<text>
 				<position>0, 300, 700</position>
@@ -247,6 +255,8 @@
 put on your glasses now</string>
 				<color>1, 1, 1, 1</color>
 			</text>
+		<draw>1</draw>
+			<draw_model>1</draw_model>
 		</TextScene>
 		<VoroEnd>
 			<enabled>0</enabled>
@@ -294,6 +304,8 @@ put on your glasses now</string>
 			<dpPersistRadius>0</dpPersistRadius>
 			<minDarkFade>155</minDarkFade>
 		<scaleCells>1, 1, 1</scaleCells>
+		<draw>1</draw>
+			<draw_model>1</draw_model>
 		</VoroEnd>
 	<Crystal>
 			<enabled>0</enabled>
@@ -343,6 +355,8 @@ put on your glasses now</string>
 					</noise>
 				</material>
 			</crystal>
+		<draw>1</draw>
+			<draw_model>1</draw_model>
 		</Crystal>
 	<game>
 			<enabled>0</enabled>
@@ -351,6 +365,8 @@ put on your glasses now</string>
 			<length>1</length>
 		<lineOffset>0, 20.4081, 10.2041</lineOffset>
 		<distance>100</distance>
+		<draw>1</draw>
+			<draw_model>1</draw_model>
 		</game>
 	<PushDown>
 			<enabled>0</enabled>
@@ -381,6 +397,8 @@ put on your glasses now</string>
 					</noise>
 				</material>
 			</cluster>
+		<draw>1</draw>
+			<draw_model>1</draw_model>
 		</PushDown>
 		<boxsplit>
 			<enabled>0</enabled>
@@ -397,6 +415,8 @@ put on your glasses now</string>
 			<dotColor>1, 1, 1, 1</dotColor>
 				<downAnimation>0</downAnimation>
 			</box>
+		<draw>1</draw>
+			<draw_model>1</draw_model>
 		</boxsplit>
 	<PerspectiveChange>
 			<enabled>0</enabled>
@@ -404,6 +424,8 @@ put on your glasses now</string>
 			<pos>0, 0, 0</pos>
 			<perspective_seed>0</perspective_seed>
 		<frameInterval>1</frameInterval>
+		<draw>1</draw>
+			<draw_model>1</draw_model>
 		</PerspectiveChange>
 	<SoundField>
 			<enabled>0</enabled>
@@ -444,6 +466,8 @@ put on your glasses now</string>
 				</material>
 			</cluster>
 		<fadeIn>0</fadeIn>
+		<draw>1</draw>
+			<draw_model>1</draw_model>
 		</SoundField>
 	</scenes>
 	<world>

@@ -38,4 +38,6 @@
 	</cluster>
 <SoundField/>
 <fadeIn>0</fadeIn>
+<draw>1</draw>
+	<draw_model>1</draw_model>
 </SoundField>

@@ -5,4 +5,6 @@
 	<frameInterval>1</frameInterval>
 	<perspective_seed>0</perspective_seed>
 <PerspectiveChange/>
+<draw>1</draw>
+	<draw_model>1</draw_model>
 </PerspectiveChange>

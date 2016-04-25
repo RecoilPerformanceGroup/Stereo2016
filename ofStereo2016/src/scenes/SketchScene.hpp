@@ -34,6 +34,7 @@ public:
     ofParameter<bool> lineClear {"clear", false};
     ofParameter<bool> lineZinCam {"lineZinCam", true};
     ofParameter<bool> lineShowDots {"showDots", true};
+    ofParameter<bool> lineNormalizeToThisPos {"lineNormalizeToThisPos", false};
     
     ofxBiquadFilter3f posFilter;
 
@@ -111,6 +112,7 @@ public:
     VoroNode * shardNode;
 
     float randomIter = 0.0;
+    int normalizeToPos = 0;
     
     void drawModel();
     

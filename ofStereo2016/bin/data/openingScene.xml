@@ -46,4 +46,6 @@
 		<height>12</height>
 		<color>1, 0, 0, 0</color>
 	</rightTitle>
+<draw>1</draw>
+	<draw_model>1</draw_model>
 </openingScene>

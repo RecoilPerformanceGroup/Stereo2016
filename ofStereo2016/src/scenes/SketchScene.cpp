@@ -23,10 +23,8 @@ void SketchScene::setup(){
     wideLines.linkProgram();
 
     spline3DCubic.verbose = true;
-    spline3DLinear.verbose = true;
     
     spline3DCubic.setInterpolation(msa::kInterpolationCubic);
-    spline3DLinear.setInterpolation(msa::kInterpolationLinear);
     spline3DCubic.setUseLength(true);
 
     colors = new ofFloatColor[1];
@@ -58,12 +56,11 @@ void SketchScene::update(){
     
     if (lineAddPos) {
         spline3DCubic.push_back(lineNextPos);
-        spline3DLinear.push_back(lineNextPos);
         lineAddPos = false;
     }
     
     if (lineAddRandomPos) {
-        randomIter += 100.0;
+        randomIter += 30.0;
         spline3DCubic.push_back(rotationCenter.get() + ofVec3f(ofSignedNoise(0.3+randomIter)*0.4, ofSignedNoise(2.723+randomIter)*0.2, ofSignedNoise(4.7732+randomIter)*0.4));
         lineAddRandomPos = false;
     }
@@ -72,8 +69,6 @@ void SketchScene::update(){
         randomIter = 0.0;
         spline3DCubic.clear();
         spline3DCubic.setInterpolation(msa::kInterpolationCubic);
-        spline3DLinear.clear();
-        spline3DLinear.setInterpolation(msa::kInterpolationLinear);
         colors = new ofFloatColor[1];
         lineClear = false;
     }
@@ -102,22 +97,31 @@ void SketchScene::update(){
         }
     }
 
-    
-    
+    ofMatrix4x4 m;
+    m.translate(-rotationCenter.get()*getWorldSize());
+    m.rotate(rotationEuler->x, 1, 0, 0);
+    m.rotate(rotationEuler->y, 0, 1, 0);
+    m.rotate(rotationEuler->z, 0, 0, 1);
+    m.translate(rotationCenter.get()*getWorldSize());
+
     verticesCubic.clear();
     
     if(spline3DCubic.size() > 2){
         
         float spacing = abs(lineStart-lineEnd)*1.0/lineResolution;
-        
+        spacing = ofClamp(spacing, 0.0001, 100000.0);
         for(float t=lineStart; t < lineEnd.get(); t += spacing){
             ofVec3f vSample(spline3DCubic.sampleAt(t));
             ofVec3f vWorld(vSample*getWorldSize());
             if(lineZinCam) vWorld = world->zInCam(vWorld);
-            verticesCubic.push_back(vWorld+ofVec3f(ofSignedNoise((vSample.x+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude, ofSignedNoise((vSample.y+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude, 0.0));
+            verticesCubic.push_back((vWorld+ofVec3f(ofSignedNoise((vSample.x+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude, ofSignedNoise((vSample.y+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude, 0.0))*m);
         }
+
+        ofVec3f shardWorldPosition = spline3DCubic.sampleAt(shardPos)*getWorldSize();
+        if(lineZinCam) shardWorldPosition = world->zInCam(shardWorldPosition);
+
         
-        shardNode->setGlobalPosition(world->zInCam(spline3DCubic.sampleAt(shardPos)*getWorldSize()));
+        shardNode->setGlobalPosition(shardWorldPosition*m);
         
     }
     
@@ -147,32 +151,10 @@ void SketchScene::draw(){
             ofDrawSphere(pos, 10);
         }
     }
-
+    
 }
 
 void SketchScene::drawLine() {
-    
-    ofVec3f rotationCenterWorld = rotationCenter.get()*getWorldSize();
-    ofPushMatrix();
-    
-    ofTranslate(rotationCenterWorld.x, rotationCenterWorld.y, rotationCenterWorld.z);
-    ofRotateX(rotationEuler->x);
-    ofRotateY(rotationEuler->y);
-    ofRotate(rotationEuler->z);
-    ofTranslate(-rotationCenterWorld.x, -rotationCenterWorld.y, -rotationCenterWorld.z);
-    
-/*    ofSetColor(255, 255, 0, 127);
-    drawInterpolatorRaw(spline3DCubic);
-    ofSetColor(255, 255, 0, 255);
-    drawInterpolatorSmooth(spline3DCubic, lineResolution);
-
-    cout << spline3DCubic.size() << endl;
-    
-    ofSetColor(0, 255, 255, 127);
-    drawInterpolatorRaw(spline3DLinear);
-    ofSetColor(0, 255, 255, 255);
-    drawInterpolatorSmooth(spline3DLinear, lineResolution);
-*/
     
     wideLines.begin();
     wideLines.setUniform2f("_line_width", lineWidth,lineWidth*1.5);
@@ -183,8 +165,6 @@ void SketchScene::drawLine() {
     vbo.draw(GL_LINE_STRIP, 0, verticesCubic.size());
     
     wideLines.end();
-    
-    ofPopMatrix();
     
     shardMat.begin();
     shards.draw();
@@ -203,8 +183,23 @@ void SketchScene::drawModel(){
         ofSetColor(255,255,0,200);
         ofDrawSphere(pos, 20);
         ofSetColor(0, 255, 0,200);
-        ofDrawBitmapString(ofToString(i+1), pos.x, pos.y, pos.z);
+        ofDrawBitmapString(ofToString(i), pos.x, pos.y, pos.z);
     }
+    /* an incomplete attempt at getting absolute positions relative to segments instead of positions normalised along the length of the spline.
+    if(spline3DCubic.size() > 2){
+        float absPosClamped = ofClamp(shardPosAbs, 0, spline3DCubic.size()-1);
+        if(absPosClamped < spline3DCubic.size() ){
+        float distanceAtAbsPos = spline3DCubic.getLength(floor(absPosClamped));
+        float distanceAtNextAbsPos = spline3DCubic.getLength(floor(absPosClamped)
+                                                         +1);
+    
+        float tAbs = ofMap(fmodf(shardPosAbs, 1.0), 0.0, 1.0, distanceAtAbsPos, distanceAtNextAbsPos) / spline3DCubic.getLength();
+    
+    ofVec3f absPos(spline3DCubic.sampleAt(tAbs) * getWorldSize());
+    ofSetColor(255, 0, 255,200);
+    ofDrawSphere(absPos, 5);
+    }
+     */
     
 }
 

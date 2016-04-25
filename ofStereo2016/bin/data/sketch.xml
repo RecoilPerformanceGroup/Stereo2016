@@ -55,4 +55,6 @@
 		<shardThrowVelocity>437.734, 0, -447.314</shardThrowVelocity>
 		<throw>0</throw>
 	</shard>
+<draw>1</draw>
+	<draw_model>1</draw_model>
 </sketch>

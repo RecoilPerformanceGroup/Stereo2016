@@ -40,4 +40,6 @@
 		<position>-932.947, 420.656, 0</position>
 		<lookAt>0, 0, -1141.19</lookAt>
 	</directionalLight2>
+<draw>1</draw>
+	<draw_model>1</draw_model>
 </Lights>

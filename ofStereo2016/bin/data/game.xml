@@ -6,4 +6,6 @@
 	<distance>100</distance>
 	<lineOffset>0, 20.4081, 10.2041</lineOffset>
 <game/>
+<draw>1</draw>
+	<draw_model>1</draw_model>
 </game>

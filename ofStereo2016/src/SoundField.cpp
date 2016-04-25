@@ -34,8 +34,9 @@ void SoundField::setup() {
 void SoundField::draw() {
     ofEnableAlphaBlending();
     ofSetColor(255);
+    
     matCluster.begin();
-    cluster.draw(&matCluster);
+    cluster.draw(&matCluster, false);
     matCluster.end();
 }
 
@@ -127,7 +128,6 @@ void SoundField::update() {
         }
         
         if(fadeIn < 1) {
-            
             
             dispatch_apply( cluster.getChildren().size(), dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^(size_t childNumber){
                 
