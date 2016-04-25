@@ -54,7 +54,6 @@ public:
     ofVboMesh bakedMesh;
     int nCells;
     
-    
     // useful data structure for transitions
     ofVec3f positionOverideTarget;
     float positionOverideAmount = 0;
@@ -99,7 +98,7 @@ public:
     void clearChildren();
     
     vector<VoroNode *> getChildren();
-    
+        
     set<VoroNode *> getChildrenInSphere(ofPoint point, float radius, bool recursive = false);
 
     vector<VoroNode *> getNearestChildren(ofPoint point, int maxNum=1, bool recursive = false);
@@ -116,8 +115,6 @@ public:
     
     void draw(OrganicMaterial * m = nullptr);
     
-    VoroNode & detachNodes(set<VoroNode *> nodes);
-    
     ofVboMesh & getBakedMesh();
     
     template<typename meshType>
@@ -130,6 +127,5 @@ public:
         
         return _m;
     }
-    
     
 };

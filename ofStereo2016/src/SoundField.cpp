@@ -102,10 +102,14 @@ void SoundField::update() {
     // gradually interpolate to this overide position
     // then scale down and fade out
     
+    if(voroEnd->flagResetTransitionReferences) {
+        resetTransitionReferences();
+        voroEnd->flagResetTransitionReferences = false;
+    }
+    
     
     //if(voroEnd->enabled.get()) {
 
-    
         fadeInFromNodes = voroEnd->wall.getChildren();
         
         int nI = 0;
@@ -118,7 +122,8 @@ void SoundField::update() {
             
             //cluster.renderPosOffset = ofVec3f(0,0,0);
             
-            if(c->transitionRef == nullptr && fadeInFromNodes[nI]) {
+            if(c->transitionRef == nullptr && nI < fadeInFromNodes.size()) {
+                
                 c->positionOverideTarget = c->getPosition();
                 c->transitionRef = fadeInFromNodes[nI];
                 nI++;

@@ -243,18 +243,6 @@ vector<VoroNode *> VoroNode::getChildren() {
 };
 
 
-VoroNode & VoroNode::detachNodes(set<VoroNode *> nodes) {
-    
-    VoroNode * newNode = new VoroNode();
-    newNode->setParent(*this);
-    
-    for(auto n : nodes) {
-        n->setParent(*newNode);
-    }
-    
-    return *newNode;
-}
-
 ofVboMesh & VoroNode::getBakedMesh() {
     
     bakedMesh = mesh;
@@ -345,9 +333,7 @@ void VoroNode::split(int _nCells, bool overFlowX, bool overFlowY, bool overFlowZ
         voro::wall_plane * planeWall = new voro::wall_plane(-fNormal.x, -fNormal.y, -fNormal.z, distance);
         wallsToDeleteAfterGettingCells.push_back(planeWall);
         con.add_wall(planeWall);
-        
     }
-    
     
     for(int i = 0; i < nCells;i++){
         ofPoint newCell = ofPoint(ofRandom(minBounds.x,maxBounds.x),
@@ -450,7 +436,7 @@ VoroNode::~VoroNode() {
     
     clearChildren();
     counter--;
-    
+
 };
 
 

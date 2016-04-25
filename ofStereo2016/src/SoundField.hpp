@@ -123,8 +123,6 @@ public:
         
         // on scene enable
         
-       
-        
         /*for(auto c : voroEnd->wall.getChildren()) {
             // + c->renderPosOffset) * c->getGlobalTransformMatrix()
             c->move(c->renderPosOffset);
@@ -146,6 +144,14 @@ public:
     
     
     shared_ptr<VoroEnd> voroEnd;
+    
+    void resetTransitionReferences () {
+        
+        for( auto c : cluster.getChildren() ) {
+            c->transitionRef = nullptr;
+        }
+        
+    }
 };
 
 

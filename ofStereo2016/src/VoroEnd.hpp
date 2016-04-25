@@ -190,6 +190,10 @@ public:
     bool bOceanReconstruct = false;
     bool bWallReconstruct = false;
     
+    
+    bool flagResetTransitionReferences = false;
     //void applyNoise(VoroNode & node, );
+    
+
 };
 
