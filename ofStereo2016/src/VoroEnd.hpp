@@ -35,12 +35,16 @@ public:
     
     ofParameter<float> fadeOutEdge {"fadeOutEdge", 0, 0, 1};
     
-    
     ofParameter<float> oceanFall {"fall", 0, 0, -1000};
     
     ofParameter<ofVec3f> oceanOrigin {"origin", ofVec3f(0,0,0),
         ofVec3f(-1000,-1000,-1000),
         ofVec3f(1000,1000,1000)};
+    
+    ofParameter<ofVec3f> wallSize {"size", ofVec3f(1,1,1),
+        ofVec3f(0,0,0),
+        ofVec3f(4,4,4)};
+    
     
     ofParameter<float> wallNoiseDisplaceSpeed {"noise speed", 0, 0, 1};
     ofParameter<float> wallNoiseDisplaceAmount {"noise amount", 0, 0, 1000};
@@ -85,7 +89,8 @@ public:
         wallNoiseDisplaceSpeed,
         wallNoiseDisplaceAmount,
         openWall,
-        fallWall
+        fallWall,
+        wallSize
     };
     
     ofParameterGroup oceanParams {"ocean",
@@ -106,7 +111,7 @@ public:
         qlab,
         stillAtEdge,
         stillAtEdgeDist,
-        horizonOrigin,
+        //horizonOrigin,
         dpPersist,
         dpPersistRadius,
         minDarkFade,
@@ -161,12 +166,14 @@ public:
     template<typename type>
     void reconstructWall(type & t) {
         
-        if (t != wall.nCells) bWallReconstruct = true;
+        /*if (t != wall.nCells) */
+        bWallReconstruct = true;
     }
     
     template<typename type>
     void reconstructOcean(type & t) {
-        if (t != ocean.nCells) bOceanReconstruct = true;
+        /*if (t != ocean.nCells) */
+        bOceanReconstruct = true;
     }
     
     void reconstructWall();
@@ -174,12 +181,10 @@ public:
     
     ofBoxPrimitive box;
     
-    VoroNode oceanHorizon;
+    //VoroNode oceanHorizon;
     VoroNode ocean;
     VoroNode wall;
     
-    //ofMesh intersect;
-    //ofMesh outMesh;
     ofVec3f clusterRotation;
     
     OrganicMaterial mat;
@@ -190,10 +195,7 @@ public:
     bool bOceanReconstruct = false;
     bool bWallReconstruct = false;
     
-    
     bool flagResetTransitionReferences = false;
-    //void applyNoise(VoroNode & node, );
     
-
 };
 

@@ -17,6 +17,8 @@ void VoroEnd::setup() {
     wallSeed.addListener(this, &VoroEnd::reconstructWall<int>);
     wallNumCells.addListener(this, &VoroEnd::reconstructWall<int>);
     
+    wallSize.addListener(this, &VoroEnd::reconstructWall<ofVec3f>);
+    
     wallCenter.setParent(world->origin);
     floorCenter.setParent(world->origin);
     
@@ -32,11 +34,11 @@ void VoroEnd::draw() {
     
     wall.draw(&mat);
     ocean.draw(&mat);
-    oceanHorizon.draw(&mat);
+    //oceanHorizon.draw(&mat);
     
-    /*ofSetColor(0, fadeOutFloor*255.0);
+    ofSetColor(0, fadeOutFloor*255.0);
     ofTranslate(0, 0, getWorldSize().z/2);
-    ofDrawBox(getWorldSize().x, 10, getWorldSize().z);*/
+    ofDrawBox(getWorldSize().x, 1, getWorldSize().z);
 }
 
 void VoroEnd::update() {
@@ -59,9 +61,9 @@ void VoroEnd::update() {
     
     ocean.setPosition(oceanOrigin.get() - ofVec3f( 0, 0, ocean.boundingBox.getDepth() /2));
     
-    oceanHorizon.setOrientation(ofVec3f(-90+openWall.get(),0,0));
+    //oceanHorizon.setOrientation(ofVec3f(-90+openWall.get(),0,0));
     
-    oceanHorizon.setPosition(horizonOrigin.get() - ofVec3f( 0, 0, oceanHorizon.boundingBox.getDepth()/2 + wall.boundingBox.getHeight()*3));
+    //oceanHorizon.setPosition(horizonOrigin.get() - ofVec3f( 0, 0, oceanHorizon.boundingBox.getDepth()/2 + wall.boundingBox.getHeight()*3));
     
     ofMatrix4x4 m;
     m.makeIdentityMatrix();
@@ -125,7 +127,7 @@ void VoroEnd::update() {
     
     applyNoise(wall, wallNoiseTime, wallNoiseDisplaceSpeed, ofVec3f(0, 0, wallNoiseDisplaceAmount));
     
-    applyNoise(oceanHorizon, oceanNoiseTime, oceanNoiseDisplaceSpeed, ofVec3f(0, oceanNoiseDisplaceAmount, 0));
+    //applyNoise(oceanHorizon, oceanNoiseTime, oceanNoiseDisplaceSpeed, ofVec3f(0, oceanNoiseDisplaceAmount, 0));
     
     for( auto c : ocean.getChildren()) {
         
@@ -171,7 +173,7 @@ void VoroEnd::reconstructWall(){
     
     ofSeedRandom(wallSeed.get());
     
-    wall.setupFromBoundingBox(_s.x*1, _s.y*1.0, 10, wallNumCells, false,false,false);
+    wall.setupFromBoundingBox(_s.x*wallSize.get().x, _s.y*wallSize.get().y, 10*wallSize.get().z, wallNumCells, false,false,false);
     flagResetTransitionReferences = true;
     
     wall.setParent(wallCenter);
@@ -184,8 +186,8 @@ void VoroEnd::reconstructOcean(){
     ocean.setupFromBoundingBox(_s.x*1, 10, _s.z/*-200*/, oceanNumCells, false,false,false);
     ocean.setParent(floorCenter);
     
-    oceanHorizon.setupFromBoundingBox(_s.x*3, 10, _s.z*3, oceanNumCells*1.2, true,true,true);
-    oceanHorizon.setParent(floorCenter);
+    //oceanHorizon.setupFromBoundingBox(_s.x*3, 10, _s.z*3, oceanNumCells*1.2, true,true,true);
+    //oceanHorizon.setParent(floorCenter);
 }
 
 void VoroEnd::drawModel() {
@@ -195,7 +197,7 @@ void VoroEnd::drawModel() {
     
     ocean.draw();
     wall.draw();
-    oceanHorizon.draw();
+    //oceanHorizon.draw();
     
 }
 
