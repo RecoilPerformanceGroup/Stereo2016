@@ -389,7 +389,7 @@ void ofApp::update(){
         oscReceiver.getNextMessage(msg);
         
         receiveOscParameter(msg, &globalParams);
-        receiveOscParameter(msg, &sceneParams);
+        //receiveOscParameter(msg, &sceneParams);
         
         // custom osc hooks here
     }
