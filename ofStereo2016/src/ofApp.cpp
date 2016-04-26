@@ -682,6 +682,10 @@ void ofApp::setupGui(shared_ptr<ofAppBaseWindow> gW,shared_ptr<ofAppBaseWindow> 
     gui->addToggle(show_model_on_second_screen);
     
     gui->addToggle(swap_left_right);
+
+    gui->addBreak();
+  
+    gui->addToggle(drawSceneGuis);
     
     gui->addBreak();
 
@@ -778,14 +782,12 @@ void ofApp::drawGui(ofEventArgs &args) {
 
     gui->draw();
     
-    for( auto s : scenes) {
-        //s->drawGui();
-    }
-    
-    for( auto p : scenePanels) {
-        ofPushMatrix();ofPushStyle();ofPushView();
-        p->draw();
-        ofPopMatrix();ofPopStyle();ofPopView();
+    if(drawSceneGuis){
+        for( auto p : scenePanels) {
+            ofPushMatrix();ofPushStyle();ofPushView();
+            p->draw();
+            ofPopMatrix();ofPopStyle();ofPopView();
+        }
     }
 }
 

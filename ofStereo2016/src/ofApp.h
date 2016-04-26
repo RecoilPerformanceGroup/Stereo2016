@@ -75,6 +75,7 @@ public:
     ofParameter<bool> show_model_on_second_screen{"Second Screen Model", false, false, true};
     
     ofParameter<bool> swap_left_right{"swapLeftRight", false};
+    ofParameter<bool> drawSceneGuis{"drawSceneGuis", true};
     
     ofParameter<ofVec3f> input3D {"input3d", ofVec3f{0,0,0}, ofVec3f{-1,-1,-1}, ofVec3f{1,1,1} };
     
@@ -88,7 +89,8 @@ public:
         calibrate_camera,
         background_color,
         show_model_on_second_screen,
-        input3D
+        input3D,
+        drawSceneGuis
     };
     
     vector<ofxPanel *> scenePanels;
