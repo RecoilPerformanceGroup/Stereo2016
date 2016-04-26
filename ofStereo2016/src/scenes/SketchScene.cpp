@@ -11,6 +11,8 @@
 
 void SketchScene::setup(){
 
+    lineAddPos.addListener(this, &SketchScene::onAddPos);
+    lineAddRandomPos.addListener(this, &SketchScene::onAddRandomPos);
     
     wideLines.setupShaderFromSource(GL_VERTEX_SHADER,vertexShader);
     wideLines.setupShaderFromSource(GL_GEOMETRY_SHADER,geometryShader);
@@ -31,13 +33,13 @@ void SketchScene::setup(){
     
     posFilter.setFc(0.05);
     
-    ofSeedRandom(23.03);
-    shards.setupFromBoundingBox(1.0, 1.0, 1.0, 5, true, true, true);
+    ofSeedRandom(0.03);
+    shards.setupFromBoundingBox(1.7, 1.7, 1.7, 20, true, true, true);
     shards.setParent(world->origin);
     
     int i = 0;
     for (auto vn : shards.getChildren()){
-        if(i == 0)
+        if(i == 1)
             shardNode = vn;
         else
             vn->bDraw = false;
@@ -54,17 +56,6 @@ void SketchScene::update(){
         lineNextPos.set(inputPos);
     }
     
-    if (lineAddPos) {
-        spline3DCubic.push_back(lineNextPos);
-        lineAddPos = false;
-    }
-    
-    if (lineAddRandomPos) {
-        randomIter += 30.0;
-        spline3DCubic.push_back(rotationCenter.get() + ofVec3f(ofSignedNoise(0.3+randomIter)*0.4, ofSignedNoise(2.723+randomIter)*0.2, ofSignedNoise(4.7732+randomIter)*0.4));
-        lineAddRandomPos = false;
-    }
-    
     if (lineClear) {
         randomIter = 0.0;
         spline3DCubic.clear();
@@ -72,13 +63,27 @@ void SketchScene::update(){
         colors = new ofFloatColor[1];
         lineClear = false;
     }
-    
+
+    ofVec3f vectorToAdd;
+    while(vToAdd.tryReceive(vectorToAdd)){
+        spline3DCubic.push_back(vectorToAdd);
+    }
+
     if (shardThrow) {
         int i = 0;
         for (auto vn : shards.getChildren()){
             if(!vn->bDraw && vn != shardNode){
-                vn->setGlobalPosition(shardThrowFrom.get()*getWorldSize());
-                vn->velocity = shardThrowVelocity;
+                ofVec3f vFrom(
+                    ofSign(ofRandom(-1,1))*(0.6),
+                              ofRandom(0,0.5),
+                              ofRandom(-2, 0.7)
+                );
+                ofVec3f vVelocity(ofRandom(200, 700)*-ofSign(vFrom.x),
+                                  ofRandom(-10, 300)+(vFrom.z<0?20:0),
+                                  ofRandom(200,700)*-ofSign(vFrom.z)
+                                  );
+                vn->setGlobalPosition(world->zInCam(vFrom*getWorldSize()));
+                vn->velocity = vVelocity;
                 vn->bDraw = true;
                 shardThrow = false;
                 break;
@@ -88,7 +93,8 @@ void SketchScene::update(){
     }
     
     for (auto vn : shards.getChildren()){
-        vn->setScale(2*shardSize);
+        vn->setScale(1.5*shardSize);
+        vn->rotate(ofGetLastFrameTime()*10.0, ofVec3f(-0.5,0.7,0.3));
         if(vn->bDraw && vn != shardNode){
             vn->setGlobalPosition(vn->getGlobalPosition()+vn->velocity*ofGetLastFrameTime());
             if(vn->getGlobalPosition().length() > 3000){
@@ -114,7 +120,7 @@ void SketchScene::update(){
             ofVec3f vSample(spline3DCubic.sampleAt(t));
             ofVec3f vWorld(vSample*getWorldSize());
             if(lineZinCam) vWorld = world->zInCam(vWorld);
-            verticesCubic.push_back((vWorld+ofVec3f(ofSignedNoise((vSample.x+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude, ofSignedNoise((vSample.y+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude, 0.0))*m);
+            verticesCubic.push_back((vWorld+ofVec3f(ofSignedNoise((vSample.x+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude, ofSignedNoise((vSample.y+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude, ofSignedNoise((vSample.z+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude))*m);
         }
 
         ofVec3f shardWorldPosition = spline3DCubic.sampleAt(shardPos)*getWorldSize();
@@ -201,6 +207,23 @@ void SketchScene::drawModel(){
     }
      */
     
+}
+
+void SketchScene::onAddPos(bool & add){
+    if(add){
+        lineAddPos.set(false);
+        cout << "added " << lineNextPos << endl;
+        vToAdd.send(lineNextPos.get());
+    }
+}
+
+void SketchScene::onAddRandomPos(bool & add){
+    if(add){
+        lineAddRandomPos = false;
+        randomIter += 30.0;
+        ofVec3f v((rotationCenter.get() + ofVec3f(ofSignedNoise(0.3+randomIter)*0.4, ofSignedNoise(2.723+randomIter)*0.2, ofSignedNoise(4.7732+randomIter)*0.4)));
+        vToAdd.send(v);
+    }
 }
 
 string SketchScene::vertexShader = R"(

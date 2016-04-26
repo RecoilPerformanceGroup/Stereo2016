@@ -114,6 +114,10 @@ public:
     float randomIter = 0.0;
     int normalizeToPos = 0;
     
+    void onAddPos(bool& add);
+    void onAddRandomPos(bool& add);
+    ofThreadChannel<ofVec3f> vToAdd;
+
     void drawModel();
     
 private:
