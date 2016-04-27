@@ -10,6 +10,7 @@
 
 #include "ofMain.h"
 #include "ofxStereoscopy.hpp"
+#include "ofxSvg.h"
 
 class TextScene : public ofxStereoscopy::Scene {
     
@@ -27,12 +28,25 @@ public:
         textColor
     };
     
+    ofParameter<float> logoWidth {"width", 0.0, 0.0, 1000};
+    ofParameter<ofVec3f> logoPosition {"position", ofVec3f(0, 250, 400),ofVec3f(-2000,-2000,-2000),ofVec3f(2000,2000,2000)};
+    ofParameter<ofFloatColor> logoColor {"color", ofFloatColor(1.0,1.0,1.0,1.0),ofFloatColor(0.0,0.0,0.0,0.0),ofFloatColor(1.0,1.0,1.0,1.0)};
+    ofParameter<bool> logoDraw {"draw", false};
+    
+    ofParameterGroup logoParams {"logo",
+        logoWidth,
+        logoPosition,
+        logoColor,
+        logoDraw
+    };
+
     ofParameterGroup params {"TextScene",
         enabled,
         enabledDraw,
         enabledDrawModel,
         qlab,
-        textParams
+        textParams,
+        logoParams
     };
     
     TextScene() {
@@ -41,11 +55,14 @@ public:
     
     ofTrueTypeFont font;
     
+    ofxSVG logo;
+    
     void draw();
     void update();
     void setup();
     void onStageSize(ofVec3f& vec);
     void drawText();
     void drawModel();
+    void drawLogo();
     
 };
