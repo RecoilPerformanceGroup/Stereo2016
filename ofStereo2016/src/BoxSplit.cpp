@@ -58,7 +58,10 @@ void BoxSplit::draw() {
         ofSetColor(dotColor.get());
         ofDrawEllipse(boxLeftWall.getGlobalPosition().x, boxLeftWall.getHeight()*0.5, 15, 15);
         
+        ofSetColor(255,255,255,127);
         
+        ofDrawBox(boxLeftWall.getGlobalPosition().x, 0, 20, 2, 0.01, 4);
+
         
     } else {
         
@@ -91,6 +94,10 @@ void BoxSplit::draw() {
         ofSetColor(dotColor.get());
         ofDrawEllipse(boxRightWall.getGlobalPosition().x, boxRightWall.getHeight()*0.5, 15, 15);
 
+        
+        ofSetColor(255,255,255,127);
+        
+        ofDrawBox(boxRightWall.getGlobalPosition().x, 0, 20, 2, 0.01, 4);
     }
     
     ofPopStyle();
@@ -108,19 +115,19 @@ void BoxSplit::reconstruct(){
     floorCenter.setPosition(0, -boxw/2, _s.z/2);
     
     boxLeftFloor.setParent(floorCenter);
-    boxLeftFloor.set(_s.x*0.5, boxw, _s.z, 4,2,4);
+    boxLeftFloor.set(boxwidth, boxw, _s.z, 4,2,4);
     
     boxRightFloor.setParent(floorCenter);
-    boxRightFloor.set(_s.x*0.5, boxw, _s.z, 4,2,4);
+    boxRightFloor.set(boxwidth, boxw, _s.z, 4,2,4);
     
     
     wallCenter.setPosition(0, _s.y/2, -boxw/2);
     
     boxLeftWall.setParent(wallCenter);
-    boxLeftWall.set(_s.x*0.5, _s.y, boxw, 4,2,4);
+    boxLeftWall.set(boxwidth, _s.y, boxw, 4,2,4);
     
     boxRightWall.setParent(wallCenter);
-    boxRightWall.set(_s.x*0.5, _s.y, boxw, 4,2,4);
+    boxRightWall.set(boxwidth, _s.y, boxw, 4,2,4);
 
 }
 
@@ -132,11 +139,11 @@ void BoxSplit::update() {
     
     float currentLength = collectiveLength*downAnimation;
     
-    boxLeftWall.setScale(boxwidth, ofMap(currentLength, 0, boxLeftWall.getHeight(), 0, 1, true), 1);
-    boxLeftFloor.setScale(boxwidth, 1, ofMap(currentLength, boxRightWall.getHeight(), collectiveLength, 0, 1, true));
+    boxLeftWall.setScale(1, ofMap(currentLength, 0, boxLeftWall.getHeight(), 0, 1, true), 1);
+    boxLeftFloor.setScale(1, 1, ofMap(currentLength, boxRightWall.getHeight(), collectiveLength, 0, 1, true));
 
-    boxRightWall.setScale(boxwidth, ofMap(currentLength, 0, boxLeftWall.getHeight(), 0, 1, true), 1);
-    boxRightFloor.setScale(boxwidth, 1, ofMap(currentLength, boxRightWall.getHeight(), collectiveLength, 0, 1, true));
+    boxRightWall.setScale(1, ofMap(currentLength, 0, boxLeftWall.getHeight(), 0, 1, true), 1);
+    boxRightFloor.setScale(1, 1, ofMap(currentLength, boxRightWall.getHeight(), collectiveLength, 0, 1, true));
  
     floorCenter.setPosition(0,  floorCenter.getPosition().y, boxLeftFloor.getDepth()*0.5*boxLeftFloor.getScale().z);
 
