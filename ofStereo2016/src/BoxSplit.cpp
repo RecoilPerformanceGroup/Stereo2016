@@ -60,7 +60,7 @@ void BoxSplit::draw() {
         
         ofSetColor(255,255,255,127);
         
-        ofDrawBox(boxLeftWall.getGlobalPosition().x, 0, 20, 3, 0.01, 5);
+        ofDrawBox(boxLeftWall.getGlobalPosition().x, 0, 20, 2, 0.01, 10);
 
         
     } else {
@@ -97,7 +97,7 @@ void BoxSplit::draw() {
         
         ofSetColor(255,255,255,127);
         
-        ofDrawBox(boxRightWall.getGlobalPosition().x, 0, 20, 3, 0.01, 5);
+        ofDrawBox(boxRightWall.getGlobalPosition().x, 0, 20, 2, 0.01, 10);
     }
     
     ofPopStyle();
