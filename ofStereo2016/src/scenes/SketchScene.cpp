@@ -69,23 +69,23 @@ void SketchScene::update(){
         spline3DCubic.push_back(vectorToAdd);
     }
 
-    if (shardThrow) {
+    if (shardThrow && lastShardThrow + shardThrowInterval < ofGetElapsedTimef()) {
+        lastShardThrow = ofGetElapsedTimef();
         int i = 0;
         for (auto vn : shards.getChildren()){
             if(!vn->bDraw && vn != shardNode){
                 ofVec3f vFrom(
                     ofSign(ofRandom(-1,1))*(0.6),
                               ofRandom(0,0.5),
-                              ofRandom(-2, 0.7)
+                              ofRandom(-1, 1.0)
                 );
                 ofVec3f vVelocity(ofRandom(100, 600)*-ofSign(vFrom.x),
-                                  ofRandom(-10, 20)+(vFrom.z<0.0?75:-20),
+                                  ofRandom(-10, 20)+(vFrom.z<0.0?33:0),
                                   ofRandom(100,400)*-ofSign(vFrom.z)
                                   );
                 vn->setGlobalPosition(world->zInCam(vFrom*getWorldSize()));
                 vn->velocity = vVelocity;
                 vn->bDraw = true;
-                shardThrow = false;
                 break;
             }
             i++;
@@ -97,7 +97,7 @@ void SketchScene::update(){
         vn->rotate(ofGetLastFrameTime()*10.0, ofVec3f(-0.5,0.7,0.3));
         if(vn->bDraw && vn != shardNode){
             vn->setGlobalPosition(vn->getGlobalPosition()+vn->velocity*ofGetLastFrameTime());
-            if(vn->getGlobalPosition().length() > 3000){
+            if(vn->getGlobalPosition().length() > 3000 || vn->getGlobalPosition().z > world->physical_camera_pos_cm->z){
                 vn->bDraw = false;
             }
         }

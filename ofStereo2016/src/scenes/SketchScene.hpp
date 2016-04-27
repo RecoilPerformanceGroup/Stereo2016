@@ -20,21 +20,21 @@ class SketchScene : public ofxStereoscopy::Scene {
 
 public:
 
-    ofParameter<float> lineStart {"start", 0.0, 0.0, 1.0};
-    ofParameter<float> lineEnd {"end", 1.0, 0.0, 1.0};
-    ofParameter<int> lineResolution {"resolution", 500, 3, 10000};
-    ofParameter<float> lineWidth {"width", 25, 0, 100};
-    ofParameter<float> lineDepthFade {"depthFade", 0, -1000, 1000};
-    ofParameter<float> lineNoiseAmplitude {"noiseAmplitude", 0.00, 0.0, 100};
-    ofParameter<float> lineNoisePhase {"noisePhase", 0.00, 0.0, 100.0};
-    ofParameter<bool> lineUse3dInput {"use3dInput", true};
-    ofParameter<ofVec3f> lineNextPos {"nextPos", ofVec3f(0, 0, 0),ofVec3f(-2, -2, -2),ofVec3f(2,2,2)};
-    ofParameter<bool> lineAddPos {"lineAddPos", false};
-    ofParameter<bool> lineAddRandomPos {"lineAddRandomPos", false};
-    ofParameter<bool> lineClear {"clear", false};
-    ofParameter<bool> lineZinCam {"lineZinCam", true};
-    ofParameter<bool> lineShowDots {"showDots", true};
-    ofParameter<bool> lineNormalizeToThisPos {"lineNormalizeToThisPos", false};
+    ofParameter<float>  lineStart {"start", 0.0, 0.0, 1.0};
+    ofParameter<float>  lineEnd {"end", 1.0, 0.0, 1.0};
+    ofParameter<int>    lineResolution {"resolution", 500, 3, 10000};
+    ofParameter<float>  lineWidth {"width", 25, 0, 100};
+    ofParameter<float>  lineDepthFade {"depthFade", 0, -1000, 1000};
+    ofParameter<float>  lineNoiseAmplitude {"noiseAmplitude", 0.00, 0.0, 100};
+    ofParameter<float>  lineNoisePhase {"noisePhase", 0.00, 0.0, 100.0};
+    ofParameter<bool>   lineUse3dInput {"use3dInput", true};
+    ofParameter<ofVec3f>lineNextPos {"nextPos", ofVec3f(0, 0, 0),ofVec3f(-2, -2, -2),ofVec3f(2,2,2)};
+    ofParameter<bool>   lineAddPos {"lineAddPos", false};
+    ofParameter<bool>   lineAddRandomPos {"lineAddRandomPos", false};
+    ofParameter<bool>   lineClear {"clear", false};
+    ofParameter<bool>   lineZinCam {"lineZinCam", true};
+    ofParameter<bool>   lineShowDots {"showDots", true};
+    ofParameter<bool>   lineNormalizeToThisPos {"lineNormalizeToThisPos", false};
     
     ofxBiquadFilter3f posFilter;
 
@@ -58,16 +58,14 @@ public:
     ofParameter<float> shardSize {"size", 20, 0.0, 800};
     ofParameter<float> shardPos {"position", 0, 0.0, 1.0};
     ofParameter<ofFloatColor> shardColor {"color", ofFloatColor(1,1,1,1), ofFloatColor(0,0,0,0), ofFloatColor(1,1,1,1)};
-    ofParameter<ofVec3f> shardThrowFrom {"shardThrowFromPos", ofVec3f(0, 0, 0),ofVec3f(-2, -2, -2),ofVec3f(2,2,2)};
-    ofParameter<ofVec3f> shardThrowVelocity {"shardThrowVelocity", ofVec3f(0, 0, 0),ofVec3f(-1000, -1000, -1000),ofVec3f(1000, 1000, 1000)};
+    ofParameter<float> shardThrowInterval {"shardThrowInterval", 0, 0, 2};
     ofParameter<bool> shardThrow {"throw", false};
 
     ofParameterGroup shardParams { "shard",
         shardPos,
         shardSize,
         shardColor,
-        shardThrowFrom,
-        shardThrowVelocity,
+        shardThrowInterval,
         shardThrow
     };
 
@@ -110,6 +108,8 @@ public:
     int nextTrhow = 0;
     
     VoroNode * shardNode;
+
+    float lastShardThrow = 0.0;
 
     float randomIter = 0.0;
     int normalizeToPos = 0;
