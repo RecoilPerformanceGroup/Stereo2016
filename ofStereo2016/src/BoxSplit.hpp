@@ -30,7 +30,7 @@ public:
     
     
     ofParameter<float> split {"split", 0, 0, 400};
-    ofParameter<float> boxwidth {"width", 0, 0, 2};
+    ofParameter<float> boxwidth {"width", 0, 0, 1000};
     ofParameter<float> downAnimation {"downAnimation", 0, 0, 1};
     
     ofParameter<bool> floorOn {"floorOn", true};
