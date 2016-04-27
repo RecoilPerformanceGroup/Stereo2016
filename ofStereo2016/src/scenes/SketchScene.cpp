@@ -79,8 +79,8 @@ void SketchScene::update(){
                               ofRandom(-2, 0.7)
                 );
                 ofVec3f vVelocity(ofRandom(100, 600)*-ofSign(vFrom.x),
-                                  ofRandom(-10, 80)+(vFrom.z<0.0?75:-20),
-                                  ofRandom(200,700)*-ofSign(vFrom.z)
+                                  ofRandom(-10, 20)+(vFrom.z<0.0?75:-20),
+                                  ofRandom(100,400)*-ofSign(vFrom.z)
                                   );
                 vn->setGlobalPosition(world->zInCam(vFrom*getWorldSize()));
                 vn->velocity = vVelocity;

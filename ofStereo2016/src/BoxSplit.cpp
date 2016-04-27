@@ -60,7 +60,7 @@ void BoxSplit::draw() {
         
         ofSetColor(255,255,255,127);
         
-        ofDrawBox(boxLeftWall.getGlobalPosition().x, 0, 20, 2, 0.01, 4);
+        ofDrawBox(boxLeftWall.getGlobalPosition().x, 0, 20, 3, 0.01, 5);
 
         
     } else {
@@ -97,7 +97,7 @@ void BoxSplit::draw() {
         
         ofSetColor(255,255,255,127);
         
-        ofDrawBox(boxRightWall.getGlobalPosition().x, 0, 20, 2, 0.01, 4);
+        ofDrawBox(boxRightWall.getGlobalPosition().x, 0, 20, 3, 0.01, 5);
     }
     
     ofPopStyle();
@@ -135,15 +135,11 @@ void BoxSplit::update() {
     
     reconstruct();
     
-    float collectiveLength = boxRightWall.getHeight() + boxRightFloor.getDepth();
-    
-    float currentLength = collectiveLength*downAnimation;
-    
-    boxLeftWall.setScale(1, ofMap(currentLength, 0, boxLeftWall.getHeight(), 0, 1, true), 1);
-    boxLeftFloor.setScale(1, 1, ofMap(currentLength, boxRightWall.getHeight(), collectiveLength, 0, 1, true));
+    boxLeftWall.setScale(1, ofMap(downAnimation, 0, 0.5, 0, 1, true), 1);
+    boxLeftFloor.setScale(1, 1, ofMap(downAnimation, 0.5, 1.0, 0, 1, true));
 
-    boxRightWall.setScale(1, ofMap(currentLength, 0, boxLeftWall.getHeight(), 0, 1, true), 1);
-    boxRightFloor.setScale(1, 1, ofMap(currentLength, boxRightWall.getHeight(), collectiveLength, 0, 1, true));
+    boxRightWall.setScale(1, ofMap(downAnimation, 0, 0.5, 0, 1, true), 1);
+    boxRightFloor.setScale(1, 1, ofMap(downAnimation, 0.5, 1.0, 0, 1, true));
  
     floorCenter.setPosition(0,  floorCenter.getPosition().y, boxLeftFloor.getDepth()*0.5*boxLeftFloor.getScale().z);
 
