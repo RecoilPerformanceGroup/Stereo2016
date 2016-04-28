@@ -34,12 +34,12 @@ void SketchScene::setup(){
     posFilter.setFc(0.05);
     
     ofSeedRandom(0.03);
-    shards.setupFromBoundingBox(1.7, 1.7, 1.7, 20, true, true, true);
+    shards.setupFromBoundingBox(2.9, 2.9, 2.9, 50, true, true, true);
     shards.setParent(world->origin);
     
     int i = 0;
     for (auto vn : shards.getChildren()){
-        if(i == 1)
+        if(i == 2)
             shardNode = vn;
         else
             vn->bDraw = false;
@@ -77,11 +77,11 @@ void SketchScene::update(){
                 ofVec3f vFrom(
                     ofSign(ofRandom(-1,1))*(0.6),
                               ofRandom(0,0.5),
-                              ofRandom(-1, 1.0)
+                              ofRandom(-0.65, 0.45)+.55
                 );
-                ofVec3f vVelocity(ofRandom(100, 600)*-ofSign(vFrom.x),
+                ofVec3f vVelocity(ofRandom(300, 500)*-ofSign(vFrom.x)*ofMap(vFrom.z, 0, 1.0, 1.0, 0.5, true),
                                   ofRandom(-10, 20)+(vFrom.z<0.0?33:0),
-                                  ofRandom(100,400)*-ofSign(vFrom.z)
+                                  (ofRandom(100,300)*-ofSign(vFrom.z))+100
                                   );
                 vn->setGlobalPosition(world->zInCam(vFrom*getWorldSize()));
                 vn->velocity = vVelocity;
@@ -97,7 +97,7 @@ void SketchScene::update(){
         vn->rotate(ofGetLastFrameTime()*10.0, ofVec3f(-0.5,0.7,0.3));
         if(vn->bDraw && vn != shardNode){
             vn->setGlobalPosition(vn->getGlobalPosition()+vn->velocity*ofGetLastFrameTime());
-            if(vn->getGlobalPosition().length() > 3000 || vn->getGlobalPosition().z > world->physical_camera_pos_cm->z){
+            if(vn->getGlobalPosition().length() > 2000 || vn->getGlobalPosition().z > world->physical_camera_pos_cm->z){
                 vn->bDraw = false;
             }
         }
