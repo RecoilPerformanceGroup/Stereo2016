@@ -158,6 +158,14 @@ void SoundField::update() {
             });
         }
     
+    int i = 0;
+    for(auto vn : cluster.getChildren()){
+        cluster.getChildren()[i]->setGlobalPosition(
+        
+                                                    cluster.getChildren()[i]->getGlobalPosition().getInterpolated(clusterOrigin.get()+(originalPositions[i]*clusterScale.get()), clusterBackToHomeForce)
+        );
+        i++;
+    }
     //}
 
     
@@ -196,7 +204,7 @@ void SoundField::applyWaves(VoroNode & vn, bool recursive){
                     distToPlane = ofClamp(distToPlane, -maxDist, maxDist);
                     distToPlane = (maxDist - fabs(distToPlane)) * ofSign(distToPlane);
                     distToPlane = smootherstep(ofMap(distToPlane, -maxDist, maxDist, -1, 1, true), 0.0, 1.0);
-                    ofVec3f offsetVec(sw->velocity.getNormalized() * sw->force*soundWaveGlobalForce*distToPlane);
+                    ofVec3f offsetVec(sw->velocity.getNormalized() * sw->force *soundWaveGlobalForce * distToPlane);
                     n->setGlobalPosition(n->getGlobalPosition()+offsetVec);
                 } else if (sw->type == 1) {
                     float distToOrigin(sw->origin.distance(n->getGlobalPosition()));
@@ -221,10 +229,14 @@ void SoundField::reconstructCluster(){
     cluster.setupFromBoundingBox(200,200,200,clusterNumCells, true, true, true);
     cluster.setGlobalPosition(clusterOrigin);
     cluster.setParent(world->origin);
+    originalPositions.clear();
+    for(auto vn : cluster.getChildren()){
+        originalPositions.push_back(vn->getGlobalPosition());
+    }
 }
 
 void SoundField::drawModel() {
-    ofSetColor(255,15);
+    ofSetColor(255,35);
     cluster.draw();
     for(auto sw : soundWaves){
         if(sw.type == 0){
