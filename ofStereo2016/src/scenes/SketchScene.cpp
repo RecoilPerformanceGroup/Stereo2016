@@ -12,6 +12,7 @@
 void SketchScene::setup(){
 
     lineAddPos.addListener(this, &SketchScene::onAddPos);
+    straightLineAddPos.addListener(this, &SketchScene::onStraightAddPos);
     lineAddRandomPos.addListener(this, &SketchScene::onAddRandomPos);
     
     wideLines.setupShaderFromSource(GL_VERTEX_SHADER,vertexShader);
@@ -24,12 +25,13 @@ void SketchScene::setup(){
     wideLines.bindDefaults();
     wideLines.linkProgram();
 
-    spline3DCubic.verbose = true;
-    
+    spline3DCubic.verbose = false;
     spline3DCubic.setInterpolation(msa::kInterpolationCubic);
     spline3DCubic.setUseLength(true);
 
-    colors = new ofFloatColor[1];
+    spline3DLinear.verbose = true;
+    spline3DLinear.setInterpolation(msa::kInterpolationLinear);
+    spline3DLinear.setUseLength(true);
     
     posFilter.setFc(0.05);
     
@@ -60,13 +62,23 @@ void SketchScene::update(){
         randomIter = 0.0;
         spline3DCubic.clear();
         spline3DCubic.setInterpolation(msa::kInterpolationCubic);
-        colors = new ofFloatColor[1];
         lineClear = false;
     }
-
+    
+    if (straightLineClear) {
+        spline3DLinear.clear();
+        spline3DLinear.setInterpolation(msa::kInterpolationCubic);
+        straightLineClear = false;
+    }
+    
     ofVec3f vectorToAdd;
     while(vToAdd.tryReceive(vectorToAdd)){
         spline3DCubic.push_back(vectorToAdd);
+    }
+
+    ofVec3f straightVectorToAdd;
+    while(vToAddStraight.tryReceive(straightVectorToAdd)){
+        spline3DLinear.push_back(straightVectorToAdd);
     }
 
     if (shardThrow && lastShardThrow + shardThrowInterval < ofGetElapsedTimef()) {
@@ -111,9 +123,7 @@ void SketchScene::update(){
     m.translate(rotationCenter.get()*getWorldSize());
 
     verticesCubic.clear();
-    
     if(spline3DCubic.size() > 2){
-        
         float spacing = abs(lineStart-lineEnd)*1.0/lineResolution;
         spacing = ofClamp(spacing, 0.0001, 100000.0);
         for(float t=lineStart; t < lineEnd.get(); t += spacing){
@@ -125,21 +135,39 @@ void SketchScene::update(){
 
         ofVec3f shardWorldPosition = spline3DCubic.sampleAt(shardPos)*getWorldSize();
         if(lineZinCam) shardWorldPosition = world->zInCam(shardWorldPosition);
-
-        
         shardNode->setGlobalPosition(shardWorldPosition*m);
-        
     }
     
     vbo.setVertexData(verticesCubic.data(), verticesCubic.size(), GL_DYNAMIC_DRAW);
     
-    delete colors;
-    colors = new ofFloatColor[verticesCubic.size()];
+    colorsCubic.clear();
     
     for(int i = 0; i < verticesCubic.size(); i++){
         float brightness = ofMap(verticesCubic[i].z, lineDepthFade, getWorldSize().z, 0.0, 1.0);
-        colors[i].setHsb(1.0, 0.0, brightness);
+        colorsCubic.push_back(ofFloatColor::fromHsb(1.0, 0.0, brightness));
     }
+    vbo.setColorData(colorsCubic.data(), colorsCubic.size(), GL_DYNAMIC_DRAW);
+
+    verticesLinear.clear();
+    if(spline3DLinear.size() > 2){
+        float spacing = abs(straightLineStart-straightLineEnd)*1.0/straightLineResolution;
+        spacing = ofClamp(spacing, 0.0001, 100000.0);
+        for(float t=straightLineStart; t < straightLineEnd.get(); t += spacing){
+            ofVec3f vSample(spline3DLinear.sampleAt(t));
+            ofVec3f vWorld(vSample*getWorldSize());
+            verticesLinear.push_back((vWorld+ofVec3f(ofSignedNoise((vSample.x+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude, ofSignedNoise((vSample.y+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude, ofSignedNoise((vSample.z+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude))*m);
+        }
+        
+    }
+    
+    vboStraight.setVertexData(verticesLinear.data(), verticesLinear.size(), GL_DYNAMIC_DRAW);
+    
+    colorsLinear.clear();
+    for(int i = 0; i < verticesLinear.size(); i++){
+        colorsLinear.push_back(ofFloatColor::fromHsb(1.0, 0.0, 1.0));
+    }
+    vboStraight.setColorData(colorsLinear.data(), colorsLinear.size(), GL_DYNAMIC_DRAW);
+
     
     shardMat.setDiffuseColor(shardColor.get());
     shardMat.updateParameters();
@@ -152,9 +180,17 @@ void SketchScene::draw(){
     drawLine();
     if(lineShowDots){
         for(int i = 0; i < spline3DCubic.size(); i++){
-            ofVec3f pos(world->zInCam(spline3DCubic.at(i)*getWorldSize()));
+            ofVec3f pos(spline3DCubic.at(i)*getWorldSize());
+            if(lineZinCam) pos = world->zInCam(pos);
             ofSetColor(255,255,0,200);
-            ofDrawSphere(pos, 10);
+            ofDrawSphere(pos, 5);
+        }
+    }
+    if(straightLineShowDots){
+        for(int i = 0; i < spline3DLinear.size(); i++){
+            ofVec3f pos(spline3DLinear.at(i)*getWorldSize());
+            ofSetColor(0,255,255,200);
+            ofDrawSphere(pos, 5);
         }
     }
     
@@ -167,11 +203,19 @@ void SketchScene::drawLine() {
     wideLines.setUniform4f("_line_color", 1.0, 1.0, 0.0, 1.0);
     wideLines.setUniform4f("_viewport", ofGetCurrentViewport().x,ofGetCurrentViewport().y, ofGetViewportWidth(), ofGetViewportHeight());
 
-    vbo.setColorData(colors, verticesCubic.size(), GL_DYNAMIC_DRAW);
     vbo.draw(GL_LINE_STRIP, 0, verticesCubic.size());
     
     wideLines.end();
+
+    wideLines.begin();
+    wideLines.setUniform2f("_line_width", lineWidth,lineWidth*1.5);
+    wideLines.setUniform4f("_line_color", 1.0, 1.0, 0.0, 1.0);
+    wideLines.setUniform4f("_viewport", ofGetCurrentViewport().x,ofGetCurrentViewport().y, ofGetViewportWidth(), ofGetViewportHeight());
     
+    vboStraight.draw(GL_LINE_STRIP, 0, verticesLinear.size());
+    
+    wideLines.end();
+
     shardMat.begin();
     shards.draw();
     shardMat.end();
@@ -185,35 +229,33 @@ void SketchScene::drawModel(){
     ofSetColor(255,255,0, 200);
     ofDrawSphere(lineNextPos.get()*getWorldSize(), 10);
     for(int i = 0; i < spline3DCubic.size(); i++){
-        ofVec3f pos(world->zInCam(spline3DCubic.at(i)*getWorldSize()));
+        ofVec3f pos(spline3DCubic.at(i)*getWorldSize());
+        if(lineZinCam) pos = world->zInCam(pos);
         ofSetColor(255,255,0,200);
-        ofDrawSphere(pos, 20);
-        ofSetColor(0, 255, 0,200);
+        ofDrawSphere(pos, 10);
+        ofSetColor(255, 255, 0,120);
         ofDrawBitmapString(ofToString(i), pos.x, pos.y, pos.z);
     }
-    /* an incomplete attempt at getting absolute positions relative to segments instead of positions normalised along the length of the spline.
-    if(spline3DCubic.size() > 2){
-        float absPosClamped = ofClamp(shardPosAbs, 0, spline3DCubic.size()-1);
-        if(absPosClamped < spline3DCubic.size() ){
-        float distanceAtAbsPos = spline3DCubic.getLength(floor(absPosClamped));
-        float distanceAtNextAbsPos = spline3DCubic.getLength(floor(absPosClamped)
-                                                         +1);
-    
-        float tAbs = ofMap(fmodf(shardPosAbs, 1.0), 0.0, 1.0, distanceAtAbsPos, distanceAtNextAbsPos) / spline3DCubic.getLength();
-    
-    ofVec3f absPos(spline3DCubic.sampleAt(tAbs) * getWorldSize());
-    ofSetColor(255, 0, 255,200);
-    ofDrawSphere(absPos, 5);
+    for(int i = 0; i < spline3DLinear.size(); i++){
+        ofVec3f pos(spline3DLinear.at(i)*getWorldSize());
+        ofSetColor(0,255,255,200);
+        ofDrawSphere(pos, 10);
+        ofSetColor(0, 255, 255,120);
+        ofDrawBitmapString(ofToString(i), pos.x, pos.y, pos.z);
     }
-     */
-    
 }
 
 void SketchScene::onAddPos(bool & add){
     if(add){
         lineAddPos.set(false);
-        cout << "added " << lineNextPos << endl;
         vToAdd.send(lineNextPos.get());
+    }
+}
+
+void SketchScene::onStraightAddPos(bool & add){
+    if(add){
+        straightLineAddPos.set(false);
+        vToAddStraight.send(straightLineNextPos.get());
     }
 }
 

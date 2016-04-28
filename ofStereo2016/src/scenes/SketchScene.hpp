@@ -34,7 +34,6 @@ public:
     ofParameter<bool>   lineClear {"clear", false};
     ofParameter<bool>   lineZinCam {"lineZinCam", true};
     ofParameter<bool>   lineShowDots {"showDots", true};
-    ofParameter<bool>   lineNormalizeToThisPos {"lineNormalizeToThisPos", false};
     
     ofxBiquadFilter3f posFilter;
 
@@ -54,7 +53,26 @@ public:
         lineClear,
         lineShowDots
     };
+    
+    ofParameter<float>  straightLineStart {"start", 0.0, 0.0, 1.0};
+    ofParameter<float>  straightLineEnd {"end", 1.0, 0.0, 1.0};
+    ofParameter<int>    straightLineResolution {"resolution", 500, 3, 10000};
+    ofParameter<ofVec3f>straightLineNextPos {"nextPos", ofVec3f(0, 0, 0),ofVec3f(-2, -2, -2),ofVec3f(2,2,2)};
+    ofParameter<bool>   straightLineAddPos {"lineAddPos", false};
+    ofParameter<bool>   straightLineClear {"clear", false};
+    ofParameter<bool>   straightLineShowDots {"showDots", true};
 
+    
+    ofParameterGroup straightLineParams { "straightLine",
+        straightLineStart,
+        straightLineEnd,
+        straightLineResolution,
+        straightLineNextPos,
+        straightLineAddPos,
+        straightLineClear,
+        straightLineShowDots
+    };
+    
     ofParameter<float> shardSize {"size", 20, 0.0, 800};
     ofParameter<float> shardPos {"position", 0, 0.0, 1.0};
     ofParameter<ofFloatColor> shardColor {"color", ofFloatColor(1,1,1,1), ofFloatColor(0,0,0,0), ofFloatColor(1,1,1,1)};
@@ -79,7 +97,8 @@ public:
         qlab,
         rotationEuler,
         rotationCenter,
-        lineParams
+        lineParams,
+        straightLineParams
     };
     
     SketchScene() {
@@ -90,11 +109,14 @@ public:
 
     msa::Interpolator3D	spline3DCubic;
     vector<ofVec3f> verticesCubic;
+    vector<ofFloatColor> colorsCubic;
     msa::Interpolator3D	spline3DLinear;
     vector<ofVec3f> verticesLinear;
+    vector<ofFloatColor> colorsLinear;
     
     ofVbo vbo;
-    ofFloatColor * colors;
+    ofVbo vboStraight;
+    
     void draw();
     void update();
     void setup();
@@ -115,8 +137,11 @@ public:
     int normalizeToPos = 0;
     
     void onAddPos(bool& add);
+    void onStraightAddPos(bool& add);
     void onAddRandomPos(bool& add);
+    
     ofThreadChannel<ofVec3f> vToAdd;
+    ofThreadChannel<ofVec3f> vToAddStraight;
 
     void drawModel();
     
