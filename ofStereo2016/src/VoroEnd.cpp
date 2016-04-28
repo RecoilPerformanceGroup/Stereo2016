@@ -36,9 +36,11 @@ void VoroEnd::draw() {
     ocean.draw(&mat);
     //oceanHorizon.draw(&mat);
     
-    ofSetColor(0, fadeOutFloor*255.0);
-    ofTranslate(0, 0, getWorldSize().z/2);
-    ofDrawBox(getWorldSize().x, 1, getWorldSize().z);
+    if(fadeOutFloor>0) {
+        ofSetColor(0, fadeOutFloor*255.0);
+        ofTranslate(0, 0, getWorldSize().z/2);
+        ofDrawBox(getWorldSize().x, 1, getWorldSize().z);
+    }
 }
 
 void VoroEnd::update() {
