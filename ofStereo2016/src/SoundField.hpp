@@ -34,7 +34,7 @@ public:
     
     ofParameter<float> clusterScale {"scale", 0, 0, 10};
     ofParameter<float> clusterScaleCells {"scaleCells", 0,0,0.999};
-    
+    ofParameter<float> clusterBackToHomeForce {"clusterBackToHomeForce", 0, 0, 1.0};
     ofParameterGroup clusterParams {"cluster",
         clusterNumCells,
         clusterOrigin,
@@ -42,6 +42,7 @@ public:
         clusterScaleCells,
         clusterRotationAxis,
         clusterRotationSpeed,
+        clusterBackToHomeForce,
         clusterColor
     };
     
@@ -152,6 +153,8 @@ public:
         }
         
     }
+    
+    vector<ofVec3f> originalPositions;
 };
 
 
