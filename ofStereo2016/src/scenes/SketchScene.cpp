@@ -233,14 +233,14 @@ void SketchScene::drawModel(){
         if(lineZinCam) pos = world->zInCam(pos);
         ofSetColor(255,255,0,200);
         ofDrawSphere(pos, 10);
-        ofSetColor(255, 255, 0,120);
+        ofSetColor(120, 120, 0,255);
         ofDrawBitmapString(ofToString(i), pos.x, pos.y, pos.z);
     }
     for(int i = 0; i < spline3DLinear.size(); i++){
         ofVec3f pos(spline3DLinear.at(i)*getWorldSize());
         ofSetColor(0,255,255,200);
         ofDrawSphere(pos, 10);
-        ofSetColor(0, 255, 255,120);
+        ofSetColor(0, 120, 120,255);
         ofDrawBitmapString(ofToString(i), pos.x, pos.y, pos.z);
     }
 }
