@@ -145,6 +145,9 @@ void VoroEnd::update() {
         
         c->renderPosOffset.y += (oceanFall*pers);
         
+        
+        c->setTint(c->tint * ofMap(oceanFall.get()*pers, 0, -400, 1, 0, true));
+        
         c->setTint(c->tint * 1-fadeOutFloor);
         
         /*if(c->getGlobalPosition()) {
