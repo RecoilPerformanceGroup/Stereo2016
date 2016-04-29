@@ -264,7 +264,7 @@ void SketchScene::onAddRandomPos(bool & add){
         ofVec3f v((rotationCenter.get() + ofVec3f(ofSignedNoise(0.3+randomIter)*0.4, ofSignedNoise(2.723+randomIter)*0.2, ofSignedNoise(4.7732+randomIter)*0.4)));
         ofVec3f vWorld(v*getWorldSize());
         if(lineZinCam) vWorld = world->zInCam(vWorld);
-        vToAdd.send(v);
+        vToAdd.send(vWorld);
     }
 }
 
