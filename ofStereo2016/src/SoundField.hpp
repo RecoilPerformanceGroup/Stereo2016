@@ -63,6 +63,8 @@ public:
     
     ofParameter<float> fadeIn {"fadeIn", 0, 0, 1};
 
+    ofParameter<bool> transitionOn {"transitionOn", false};
+    
     
     ofParameterGroup soundWaveParams {"soundWaves",
         soundWaveOriginNormalised,
@@ -81,6 +83,7 @@ public:
         enabledDraw,
         enabledDrawModel,
         qlab,
+        transitionOn,
         fadeIn,
         soundWaveParams
     };

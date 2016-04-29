@@ -4,7 +4,6 @@
 //
 //  Created by Johan Bichel Lindegaard on 3/3/16.
 //
-//
 
 #include "SoundField.hpp"
 #include <dispatch/dispatch.h>
@@ -120,8 +119,8 @@ void SoundField::update() {
     }
     
     
-    //if(voroEnd->enabled.get()) {
-
+    if(voroEnd->enabled.get() && transitionOn.get()) {
+        
         fadeInFromNodes = voroEnd->wall.getChildren();
         
         int nI = 0;
@@ -149,14 +148,7 @@ void SoundField::update() {
                 
                 VoroNode * c = cluster.getChildren()[childNumber];
                 
-                
-                //for( auto c : cluster.getChildren() ) {
-                
-                // TODO: theese null nullptr checks doesn't work
-                // fidn a way to invalidate transitionRef and check for it
                 if(c->transitionRef != nullptr && c->transitionRef && c->transitionRef->getParent()) {
-                    //ofMatrix4x4 m = c->transitionRef->getGlobalTransformMatrix();
-                    //m.translate(c->transitionRef->renderPosOffset);
                     
                     ofVec3f from = ofVec3f(c->transitionRef->getPosition() + ofVec3f(c->transitionRef->renderPosOffset * c->transitionRef->getLocalTransformMatrix().getInverse() ) ) * c->transitionRef->getGlobalTransformMatrix();
                     
@@ -165,33 +157,20 @@ void SoundField::update() {
                     c->setGlobalPosition(interp);
                 }
                 
-                //}
             });
         }
-    
-    int i = 0;
-    for(auto vn : cluster.getChildren()){
-        cluster.getChildren()[i]->setGlobalPosition(
-                                                    cluster.getChildren()[i]->getGlobalPosition().getInterpolated(originalPositions[i], clusterBackToHomeForce)
-        );
-        i++;
     }
-    //}
-
     
-   // for( auto c : voroEnd->wall.getChildren() ) {
-   //     c->setGlobalPosition(c->positionOverideOrigin.getInterpolated(c->positionOverideTarget, fadeIn) );
-   //     c->renderPosOffset *= 1-fadeIn;
+    if(clusterBackToHomeForce.get() > 0) {
+        int i = 0;
+        for(auto vn : cluster.getChildren()){
+            cluster.getChildren()[i]->setGlobalPosition(
+                                                        cluster.getChildren()[i]->getGlobalPosition().getInterpolated(originalPositions[i], clusterBackToHomeForce)
+                                                        );
+            i++;
+        }
+    }
 
-        //c->setScale(1-fadeIn);
-    //}
-    
-    /*for( auto c : voroEnd->oceanHorizon.getChildren() ) {
-        c->setGlobalPosition(c->positionOverideOrigin.getInterpolated(c->positionOverideTarget, fadeIn) );
-        c->renderPosOffset *= 1-fadeIn;
-
-        //c->setScale(1-fadeIn);
-    }*/
 
 }
 
