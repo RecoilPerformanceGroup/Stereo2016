@@ -131,7 +131,7 @@ void SketchScene::update(){
             verticesCubic.push_back((vSample+ofVec3f(ofSignedNoise((vSample.x+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude, ofSignedNoise((vSample.y+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude, ofSignedNoise((vSample.z+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude))*m);
         }
 
-        ofVec3f shardWorldPosition = spline3DCubic.sampleAt(shardPos)
+        ofVec3f shardWorldPosition = spline3DCubic.sampleAt(shardPos);
         shardNode->setGlobalPosition(shardWorldPosition*m);
     }
     
