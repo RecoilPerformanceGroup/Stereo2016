@@ -56,7 +56,7 @@ void BoxSplit::draw() {
         ofEnableBlendMode(OF_BLENDMODE_ALPHA);
 
         ofSetColor(dotColor.get());
-        ofDrawEllipse(boxLeftWall.getGlobalPosition().x, boxLeftWall.getHeight()*0.5, 15, 15);
+        ofDrawEllipse(boxLeftWall.getGlobalPosition().x, boxLeftWall.getHeight()*0.7, 15, 15);
         
         ofSetColor(255,255,255,127);
         
@@ -92,7 +92,7 @@ void BoxSplit::draw() {
         ofEnableBlendMode(OF_BLENDMODE_ALPHA);
 
         ofSetColor(dotColor.get());
-        ofDrawEllipse(boxRightWall.getGlobalPosition().x, boxRightWall.getHeight()*0.5, 15, 15);
+        ofDrawEllipse(boxRightWall.getGlobalPosition().x, boxRightWall.getHeight()*0.7, 15, 15);
 
         
         ofSetColor(255,255,255,127);

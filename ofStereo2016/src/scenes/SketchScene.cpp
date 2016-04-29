@@ -67,7 +67,7 @@ void SketchScene::update(){
     
     if (straightLineClear) {
         spline3DLinear.clear();
-        spline3DLinear.setInterpolation(msa::kInterpolationCubic);
+        spline3DLinear.setInterpolation(msa::kInterpolationLinear);
         straightLineClear = false;
     }
     
@@ -128,7 +128,8 @@ void SketchScene::update(){
         spacing = ofClamp(spacing, 0.0001, 100000.0);
         for(float t=lineStart; t < lineEnd.get(); t += spacing){
             ofVec3f vSample(spline3DCubic.sampleAt(t));
-            verticesCubic.push_back((vSample+ofVec3f(ofSignedNoise((vSample.x+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude, ofSignedNoise((vSample.y+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude, ofSignedNoise((vSample.z+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude))*m);
+            ofVec3f vNoise(vSample/getWorldSize());
+            verticesCubic.push_back((vSample+ofVec3f(ofSignedNoise((vNoise.x+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude, ofSignedNoise((vNoise.y+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude, ofSignedNoise((vNoise.z+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude))*m);
         }
 
         ofVec3f shardWorldPosition = spline3DCubic.sampleAt(shardPos);
@@ -151,7 +152,8 @@ void SketchScene::update(){
         spacing = ofClamp(spacing, 0.0001, 100000.0);
         for(float t=straightLineStart; t < straightLineEnd.get(); t += spacing){
             ofVec3f vSample(spline3DLinear.sampleAt(t));
-            verticesLinear.push_back((vSample+ofVec3f(ofSignedNoise((vSample.x+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude, ofSignedNoise((vSample.y+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude, ofSignedNoise((vSample.z+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude))*m);
+            ofVec3f vNoise(vSample/getWorldSize());
+            verticesLinear.push_back((vSample+ofVec3f(ofSignedNoise((vNoise.x+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude, ofSignedNoise((vNoise.y+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude, ofSignedNoise((vNoise.z+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude))*m);
         }
         
     }
