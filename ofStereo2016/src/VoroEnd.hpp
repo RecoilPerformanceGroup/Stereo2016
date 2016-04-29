@@ -81,7 +81,6 @@ public:
         ofVec3f(0,0,0),
         ofVec3f(2,2,2)};
     
-    
     ofParameterGroup wallParams {"wall",
         wallNumCells,
         wallSeed,

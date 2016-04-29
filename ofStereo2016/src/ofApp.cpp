@@ -14,8 +14,7 @@ ofxJSONElement paramUpdate;
 //--------------------------------------------------------------
 void ofApp::setup(){
     
-    ofSetLogLevel(OF_LOG_NOTICE);
-
+    ofSetLogLevel(OF_LOG_ERROR);
     ofSetSmoothLighting(true);
 
     oscSender.setup("localhost", 53000);

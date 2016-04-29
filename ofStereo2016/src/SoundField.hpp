@@ -146,7 +146,6 @@ public:
     
     void applyWaves(VoroNode & vn, bool recursive = false);
     
-    
     shared_ptr<VoroEnd> voroEnd;
     
     void resetTransitionReferences () {
