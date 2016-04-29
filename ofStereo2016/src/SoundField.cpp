@@ -20,14 +20,10 @@ float smootherstep(float x, float edge0, float edge1 )
 
 void SoundField::setup() {
     clusterNumCells.addListener(this, &SoundField::reconstructCluster<int>);
-    reconstructCluster();
     
     voroEnd = std::static_pointer_cast<VoroEnd>(getScene("VoroEnd"));
 
-    
-
-    
-    
+    doReconstruct = true;
     
 }
 
@@ -66,6 +62,21 @@ void SoundField::update() {
                                                              clusterRotationSpeed.get(),
                                                              clusterRotationAxis.get().z
                                                              *clusterRotationSpeed.get());
+
+    if(doReconstruct){
+        doReconstruct = false;
+        ofSeedRandom();
+        cluster.setupFromBoundingBox(200,170,200,clusterNumCells, true, true, true);
+        cluster.setGlobalPosition(clusterOrigin);
+        cluster.setParent(world->origin);
+        originalPositions.clear();
+        cluster.setOrientation(clusterRotation);
+        cluster.setGlobalPosition(clusterOrigin);
+        cluster.setScale(clusterScale.get());
+        for(auto vn : cluster.getChildren()){
+            originalPositions.push_back(vn->getGlobalPosition());
+        }
+    }
     
     cluster.setOrientation(clusterRotation);
     cluster.setGlobalPosition(clusterOrigin);
@@ -161,8 +172,7 @@ void SoundField::update() {
     int i = 0;
     for(auto vn : cluster.getChildren()){
         cluster.getChildren()[i]->setGlobalPosition(
-        
-                                                    cluster.getChildren()[i]->getGlobalPosition().getInterpolated(clusterOrigin.get()+(originalPositions[i]*clusterScale.get()), clusterBackToHomeForce)
+                                                    cluster.getChildren()[i]->getGlobalPosition().getInterpolated(originalPositions[i], clusterBackToHomeForce)
         );
         i++;
     }
@@ -225,14 +235,7 @@ void SoundField::applyWaves(VoroNode & vn, bool recursive){
 }
 
 void SoundField::reconstructCluster(){
-    ofSeedRandom();
-    cluster.setupFromBoundingBox(200,200,200,clusterNumCells, true, true, true);
-    cluster.setGlobalPosition(clusterOrigin);
-    cluster.setParent(world->origin);
-    originalPositions.clear();
-    for(auto vn : cluster.getChildren()){
-        originalPositions.push_back(vn->getGlobalPosition());
-    }
+    doReconstruct = true;
 }
 
 void SoundField::drawModel() {

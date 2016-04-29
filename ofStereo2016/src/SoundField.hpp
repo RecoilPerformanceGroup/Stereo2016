@@ -154,6 +154,8 @@ public:
         
     }
     
+    bool doReconstruct = false;
+    
     vector<ofVec3f> originalPositions;
 };
 
