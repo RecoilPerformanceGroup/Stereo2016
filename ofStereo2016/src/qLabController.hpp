@@ -19,6 +19,8 @@ public:
     ofxOscSender oscSender;
     ofxJSONElement json;
     
+    float TIMEOUT = 4;
+    
     qLabController(){};
 
     void setup(string sendAddress = "localhost", int sendPort = 53000, int receivePort = 53001){
@@ -45,7 +47,8 @@ public:
         mNewOsc.addStringArg("osc");
         oscSender.sendMessage(mNewOsc, false);
         
-        while(!oscReceiver.hasWaitingMessages());
+        float start = ofGetElapsedTimef();
+        while(!oscReceiver.hasWaitingMessages() && (ofGetElapsedTimef()-start < TIMEOUT));
         
         while(oscReceiver.hasWaitingMessages()) {
             
@@ -100,7 +103,9 @@ public:
         mNewDummy.addStringArg("memo");
         oscSender.sendMessage(mNewDummy, false);
         
-        while(!oscReceiver.hasWaitingMessages());
+        
+        float start = ofGetElapsedTimef();
+        while(!oscReceiver.hasWaitingMessages() && (ofGetElapsedTimef()-start < TIMEOUT));
         
         while(oscReceiver.hasWaitingMessages()) {
             
@@ -148,7 +153,8 @@ public:
         mNewGroup.addStringArg("group");
         oscSender.sendMessage(mNewGroup, false);
 
-        while(!oscReceiver.hasWaitingMessages());
+        start = ofGetElapsedTimef();
+        while(!oscReceiver.hasWaitingMessages() && (ofGetElapsedTimef()-start < TIMEOUT));
         
         while(oscReceiver.hasWaitingMessages()) {
             
