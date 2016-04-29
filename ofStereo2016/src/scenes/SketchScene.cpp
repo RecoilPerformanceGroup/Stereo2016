@@ -128,13 +128,10 @@ void SketchScene::update(){
         spacing = ofClamp(spacing, 0.0001, 100000.0);
         for(float t=lineStart; t < lineEnd.get(); t += spacing){
             ofVec3f vSample(spline3DCubic.sampleAt(t));
-            ofVec3f vWorld(vSample*getWorldSize());
-            if(lineZinCam) vWorld = world->zInCam(vWorld);
-            verticesCubic.push_back((vWorld+ofVec3f(ofSignedNoise((vSample.x+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude, ofSignedNoise((vSample.y+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude, ofSignedNoise((vSample.z+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude))*m);
+            verticesCubic.push_back((vSample+ofVec3f(ofSignedNoise((vSample.x+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude, ofSignedNoise((vSample.y+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude, ofSignedNoise((vSample.z+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude))*m);
         }
 
-        ofVec3f shardWorldPosition = spline3DCubic.sampleAt(shardPos)*getWorldSize();
-        if(lineZinCam) shardWorldPosition = world->zInCam(shardWorldPosition);
+        ofVec3f shardWorldPosition = spline3DCubic.sampleAt(shardPos)
         shardNode->setGlobalPosition(shardWorldPosition*m);
     }
     
@@ -154,8 +151,7 @@ void SketchScene::update(){
         spacing = ofClamp(spacing, 0.0001, 100000.0);
         for(float t=straightLineStart; t < straightLineEnd.get(); t += spacing){
             ofVec3f vSample(spline3DLinear.sampleAt(t));
-            ofVec3f vWorld(vSample*getWorldSize());
-            verticesLinear.push_back((vWorld+ofVec3f(ofSignedNoise((vSample.x+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude, ofSignedNoise((vSample.y+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude, ofSignedNoise((vSample.z+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude))*m);
+            verticesLinear.push_back((vSample+ofVec3f(ofSignedNoise((vSample.x+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude, ofSignedNoise((vSample.y+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude, ofSignedNoise((vSample.z+ofGetElapsedTimef())*lineNoisePhase)*lineNoiseAmplitude))*m);
         }
         
     }
@@ -180,15 +176,14 @@ void SketchScene::draw(){
     drawLine();
     if(lineShowDots){
         for(int i = 0; i < spline3DCubic.size(); i++){
-            ofVec3f pos(spline3DCubic.at(i)*getWorldSize());
-            if(lineZinCam) pos = world->zInCam(pos);
+            ofVec3f pos(spline3DCubic.at(i));
             ofSetColor(255,255,0,200);
             ofDrawSphere(pos, 5);
         }
     }
     if(straightLineShowDots){
         for(int i = 0; i < spline3DLinear.size(); i++){
-            ofVec3f pos(spline3DLinear.at(i)*getWorldSize());
+            ofVec3f pos(spline3DLinear.at(i));
             ofSetColor(0,255,255,200);
             ofDrawSphere(pos, 5);
         }
@@ -229,15 +224,14 @@ void SketchScene::drawModel(){
     ofSetColor(255,255,0, 200);
     ofDrawSphere(lineNextPos.get()*getWorldSize(), 10);
     for(int i = 0; i < spline3DCubic.size(); i++){
-        ofVec3f pos(spline3DCubic.at(i)*getWorldSize());
-        if(lineZinCam) pos = world->zInCam(pos);
+        ofVec3f pos(spline3DCubic.at(i));
         ofSetColor(255,255,0,200);
         ofDrawSphere(pos, 10);
         ofSetColor(120, 120, 0,255);
         ofDrawBitmapString(ofToString(i), pos.x, pos.y, pos.z);
     }
     for(int i = 0; i < spline3DLinear.size(); i++){
-        ofVec3f pos(spline3DLinear.at(i)*getWorldSize());
+        ofVec3f pos(spline3DLinear.at(i));
         ofSetColor(0,255,255,200);
         ofDrawSphere(pos, 10);
         ofSetColor(0, 120, 120,255);
@@ -248,14 +242,18 @@ void SketchScene::drawModel(){
 void SketchScene::onAddPos(bool & add){
     if(add){
         lineAddPos.set(false);
-        vToAdd.send(lineNextPos.get());
+        ofVec3f vWorld(lineNextPos.get()*getWorldSize());
+        if(lineZinCam) vWorld = world->zInCam(vWorld);
+        vToAdd.send(vWorld);
     }
 }
 
 void SketchScene::onStraightAddPos(bool & add){
     if(add){
         straightLineAddPos.set(false);
-        vToAddStraight.send(straightLineNextPos.get());
+        ofVec3f vWorld(straightLineNextPos.get()*getWorldSize());
+        if(lineZinCam) vWorld = world->zInCam(vWorld);
+        vToAddStraight.send(vWorld);
     }
 }
 
@@ -264,6 +262,8 @@ void SketchScene::onAddRandomPos(bool & add){
         lineAddRandomPos = false;
         randomIter += 30.0;
         ofVec3f v((rotationCenter.get() + ofVec3f(ofSignedNoise(0.3+randomIter)*0.4, ofSignedNoise(2.723+randomIter)*0.2, ofSignedNoise(4.7732+randomIter)*0.4)));
+        ofVec3f vWorld(v*getWorldSize());
+        if(lineZinCam) vWorld = world->zInCam(vWorld);
         vToAdd.send(v);
     }
 }
