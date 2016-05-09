@@ -425,6 +425,13 @@ void ofApp::draw(){
     
     ofEnableDepthTest();
     
+    if(save_hires){
+        imageSaverRealPixelsCm = world.pixels_cm;
+        world.pixels_cm.set(5.0);
+        flagStageResized = true;
+        updateStage();
+    }
+
     world.swap.set(swap_left_right);
     
     if(calibrate_projector){
@@ -450,6 +457,15 @@ void ofApp::draw(){
                 s->drawScene();
             }
             
+            if(save_hires && world.pixels_cm > imageSaverRealPixelsCm){
+                imageSaver.setUseTexture(false); // add ofImage imageSaver to class header
+                imageSaver.allocate(p.second->fboLeft.getWidth(), p.second->fboLeft.getHeight(), OF_IMAGE_COLOR_ALPHA);
+                
+                glReadBuffer(GL_COLOR_ATTACHMENT0_EXT);
+                glReadPixels(0, 0, p.second->fboLeft.getWidth(), p.second->fboLeft.getHeight(), p.second->fboLeft.getTexture().getTextureData().glInternalFormat, GL_UNSIGNED_BYTE, imageSaver.getPixels());
+                imageSaver.saveImage(ofToString(ofGetYear()) + ofToString(ofGetMonth()) + ofToString(ofGetDay()) + " stereo " + p.first + " left " + ofToString(ofGetUnixTime()) + ".png");
+            }
+
             p.second->endLeft();
             
             p.second->beginRight();
@@ -459,13 +475,31 @@ void ofApp::draw(){
                 s->drawScene();
             }
             
+            if(save_hires && world.pixels_cm > imageSaverRealPixelsCm){
+                imageSaver.setUseTexture(false); // add ofImage imageSaver to class header
+                imageSaver.allocate(p.second->fboLeft.getWidth(), p.second->fboLeft.getHeight(), OF_IMAGE_COLOR_ALPHA);
+                
+                glReadBuffer(GL_COLOR_ATTACHMENT0_EXT);
+                glReadPixels(0, 0, p.second->fboLeft.getWidth(), p.second->fboLeft.getHeight(), p.second->fboLeft.getTexture().getTextureData().glInternalFormat, GL_UNSIGNED_BYTE, imageSaver.getPixels());
+                imageSaver.saveImage(ofToString(ofGetYear()) + ofToString(ofGetMonth()) + ofToString(ofGetDay()) + " stereo " + p.first + " right " + ofToString(ofGetUnixTime()) + ".png");
+            }
+
             p.second->endRight();
+            
         }
         
         ofDisableLighting();
     }
     
+
+    if(save_hires && world.pixels_cm > imageSaverRealPixelsCm){
+        save_hires = false;
+        world.pixels_cm.set(imageSaverRealPixelsCm);
+        flagStageResized = true;
+        updateStage();
+    }
     
+
     ofDisableDepthTest();
     
     ofPushMatrix();
@@ -685,6 +719,7 @@ void ofApp::setupGui(shared_ptr<ofAppBaseWindow> gW,shared_ptr<ofAppBaseWindow> 
     gui->addBreak();
   
     gui->addToggle(drawSceneGuis);
+    gui->addToggle(save_hires);
     
     gui->addBreak();
 
