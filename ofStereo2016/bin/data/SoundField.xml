@@ -14,11 +14,11 @@
 		<globalForce>12.2449</globalForce>
 	</soundWaves>
 	<cluster>
-		<cells>91</cells>
-		<origin>0, 0, 0</origin>
-		<scale>3.21429</scale>
+		<cells>400</cells>
+		<origin>10.83, 229.489, 302.375</origin>
+		<scale>3.97959</scale>
 		<scaleCells>0</scaleCells>
-		<rotationAxis>0, 0, 0</rotationAxis>
+		<rotationAxis>1, 0, 0</rotationAxis>
 		<rotationSpeed>0</rotationSpeed>
 		<color>1, 1, 1, 1</color>
 		<material>
@@ -35,9 +35,11 @@
 				</texture>
 			</noise>
 		</material>
+	<clusterBackToHomeForce>0</clusterBackToHomeForce>
 	</cluster>
 <SoundField/>
 <fadeIn>0</fadeIn>
-<draw>1</draw>
-	<draw_model>1</draw_model>
+<draw>0</draw>
+	<draw_model>0</draw_model>
+<transitionOn>0</transitionOn>
 </SoundField>

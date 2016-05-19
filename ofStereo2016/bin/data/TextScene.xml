@@ -3,12 +3,17 @@
 	<add_to_qlab>0</add_to_qlab>
 	<text>
 		<position>0, 300, 700</position>
-		<size>12</size>
-		<string>please
-put on your glasses now</string>
-		<color>1, 1, 1, 1</color>
+		<size>14</size>
+		<string> </string>
+		<color>1, 1, 1, 0</color>
 	</text>
 <TextScene/>
 <draw>1</draw>
-	<draw_model>1</draw_model>
+	<draw_model>0</draw_model>
+<logo>
+		<width>300</width>
+		<position>0, 300, 100</position>
+		<color>0, 0, 0, 1</color>
+		<draw>1</draw>
+	</logo>
 </TextScene>

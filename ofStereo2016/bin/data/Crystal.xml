@@ -43,7 +43,7 @@
 <add_to_qlab>0</add_to_qlab>
 <cluster>
 		<cells>65</cells>
-		<origin>200, -3000, -20.4081</origin>
+		<origin>200, 0.416626, -20.4081</origin>
 		<scale>10</scale>
 		<scaleCells>0.372077</scaleCells>
 		<rotationAxis>0.229488, -0.145356, 0.198251</rotationAxis>
@@ -75,16 +75,16 @@
 	<crystal>
 		<seed>127</seed>
 		<size>800</size>
-		<origin>0, 125.365, 427.323</origin>
+		<origin>0, 125.364, 458.559</origin>
 		<rotationAxis>0, 0, 0</rotationAxis>
 		<rotationSpeed>0</rotationSpeed>
-		<color>0.2, 0.2, 0.2, 1</color>
+		<color>0, 0, 0, 1</color>
 		<material>
 			<noise>
 				<displacement>
-					<velocity>0.1, 0.1, 0.1</velocity>
-					<scale>43.0585, 43.0585, 31.9956</scale>
-					<amount>0, 0, 289.805</amount>
+					<velocity>0, 0, 0</velocity>
+					<scale>1, 1, 1</scale>
+					<amount>0, 0, 0</amount>
 				</displacement>
 				<light>
 					<velocity>0, 0, 0</velocity>
@@ -101,5 +101,5 @@
 		</material>
 	</crystal>
 <draw>1</draw>
-	<draw_model>1</draw_model>
+	<draw_model>0</draw_model>
 </Crystal>
