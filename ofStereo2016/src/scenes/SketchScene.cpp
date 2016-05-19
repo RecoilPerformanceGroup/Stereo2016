@@ -195,8 +195,10 @@ void SketchScene::draw(){
 
 void SketchScene::drawLine() {
     
+    float lineWidthNormalised = lineWidth * world->pixels_cm / 0.86;
+    
     wideLines.begin();
-    wideLines.setUniform2f("_line_width", lineWidth,lineWidth*1.5);
+    wideLines.setUniform2f("_line_width", lineWidthNormalised,lineWidthNormalised*1.5);
     wideLines.setUniform4f("_line_color", 1.0, 1.0, 0.0, 1.0);
     wideLines.setUniform4f("_viewport", ofGetCurrentViewport().x,ofGetCurrentViewport().y, ofGetViewportWidth(), ofGetViewportHeight());
 
@@ -205,7 +207,7 @@ void SketchScene::drawLine() {
     wideLines.end();
 
     wideLines.begin();
-    wideLines.setUniform2f("_line_width", lineWidth,lineWidth*1.5);
+    wideLines.setUniform2f("_line_width", lineWidthNormalised,lineWidthNormalised*1.5);
     wideLines.setUniform4f("_line_color", 1.0, 1.0, 0.0, 1.0);
     wideLines.setUniform4f("_viewport", ofGetCurrentViewport().x,ofGetCurrentViewport().y, ofGetViewportWidth(), ofGetViewportHeight());
     

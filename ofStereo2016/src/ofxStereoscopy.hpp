@@ -312,7 +312,7 @@ namespace ofxStereoscopy {
         ofParameter<ofVec3f> physical_camera_pos_cm {"position", ofVec3f(0,250,1200), ofVec3f(-1000,0,0), ofVec3f(1000,1000,2000)};
         ofParameter<float> physical_focus_distance_cm {"focusDistance", 200, 0, WORLD_DIMENSION_MAX};
         ofParameter<float> physical_camera_near_clip {"nearClip", 20, 0, WORLD_DIMENSION_MAX};
-        ofParameter<float> pixels_cm {"pixelsCm", 2, 0, 3};
+        ofParameter<float> pixels_cm {"pixelsCm", 2, 0, 5};
         ofParameter<ofVec3f> audienceFrontLeft { "audienceFrontLeft", ofVec3f(-300.0, 125.0, 1000), ofVec3f(-1000,0,500), ofVec3f(1000,0, 3000) };
         ofParameter<ofVec3f> audienceBackRight { "audienceBackRight", ofVec3f(300.0, 125.0+(5*40), 1000+(100*5)), ofVec3f(-1000,0,500), ofVec3f(1000,0, 3000) };
         ofPlanePrimitive audiencePlane;
@@ -489,7 +489,7 @@ namespace ofxStereoscopy {
             fboSettings.height = floor(world->pixels_cm * height);
             //fboSettings.internalformat = GL_RGBA32F_ARB;
             fboSettings.internalformat = GL_RGBA;
-            
+                        
             fboLeft.allocate(fboSettings);
             fboRight.allocate(fboSettings);
             
