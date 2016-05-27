@@ -62,6 +62,13 @@ public:
     bool bOffsetPositionOveride = false;
     VoroNode * transitionRef = nullptr;
     
+    ofVec3f renderRotation;
+    bool bRenderRotationSet = false;
+    void setRenderRotation(ofVec3f rot) {
+        renderRotation = rot;
+        bRenderRotationSet = true;
+    }
+    
     
     ofVec3f renderPosOffset;
     ofVec3f renderScale;

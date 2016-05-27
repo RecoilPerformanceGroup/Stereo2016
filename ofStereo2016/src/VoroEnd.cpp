@@ -80,17 +80,29 @@ void VoroEnd::update() {
     
     wall.setTransformMatrix(m);
     
+    
+    rotationNoiseTime += rotationNoiseDisplaceSpeed/100.0;
+    
+    
     // TODO: - optimisation for apply noise
     // dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-    auto applyNoise = [this](VoroNode & node, float & time, float speed, ofVec3f amount) {
+    auto applyNoise = [this](VoroNode & node, float & time, float speed, ofVec3f amount, bool persist = true) {
         
         time += speed/100.0;
+        
+        
         for( auto c : node.getChildren()) {
             
             c->renderScale = scaleCells.get();
             c->bRenderScaleSet = true;
             
             float n = ofSignedNoise((c->getPosition().x + (time)));
+            
+            float nrx = ofSignedNoise((c->getPosition().x + (rotationNoiseTime))) * rotationNoiseDisplaceAmount;
+            
+            float nry = ofSignedNoise((c->getPosition().y + (rotationNoiseTime))) * rotationNoiseDisplaceAmount;
+            
+            c->setRenderRotation(ofVec3f(nrx, nry, 0));
             
             float edgeStill = 1;
             
@@ -106,14 +118,20 @@ void VoroEnd::update() {
             
             // dp still
             float dist = dp().distance(c->getGlobalPosition());
+            
             float pers = 1;
+            
+            if(persist) {
+            
             
             if(dist < dpPersistRadius) {
                 pers = 1-dpPersist;
             } else {
                 pers = ofMap(dist, dpPersistRadius, dpPersistRadius+150, 1-dpPersist, 1, true);
             }
+            }
             
+                
             ofVec3f nP(n, n, n);
             nP *= amount * edgeStill * pers;
             
@@ -127,7 +145,7 @@ void VoroEnd::update() {
     
     applyNoise(ocean, oceanNoiseTime, oceanNoiseDisplaceSpeed, ofVec3f(0, oceanNoiseDisplaceAmount, 0));
     
-    applyNoise(wall, wallNoiseTime, wallNoiseDisplaceSpeed, ofVec3f(0, 0, wallNoiseDisplaceAmount));
+    applyNoise(wall, wallNoiseTime, wallNoiseDisplaceSpeed, ofVec3f(0, 0, wallNoiseDisplaceAmount), false);
     
     //applyNoise(oceanHorizon, oceanNoiseTime, oceanNoiseDisplaceSpeed, ofVec3f(0, oceanNoiseDisplaceAmount, 0));
     
@@ -145,7 +163,6 @@ void VoroEnd::update() {
         
         c->renderPosOffset.y += (oceanFall*pers);
         
-        
         c->setTint(c->tint * ofMap(oceanFall.get()*pers, 0, -400, 1, 0, true));
         
         c->setTint(c->tint * 1-fadeOutFloor);
@@ -157,6 +174,12 @@ void VoroEnd::update() {
         edgeStill =  ofClamp(abs(c->getGlobalPosition().z - edgeAt) / fullValueAtDistInCM, 0, 1);*/
         
     }
+    
+    
+    
+    
+    
+    
     
     /*for( auto c : oceanHorizon.getChildren()) {
         
