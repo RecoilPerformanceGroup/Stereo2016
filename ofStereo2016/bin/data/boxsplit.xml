@@ -2,18 +2,18 @@
 	<enabled>0</enabled>
 	<add_to_qlab>0</add_to_qlab>
 	<box>
-		<split>0</split>
-		<width>0.142857</width>
-		<left_left_eye>1, 1, 1, 1</left_left_eye>
+		<split>150</split>
+		<width>0.6</width>
+		<left_left_eye>0, 1, 1, 0</left_left_eye>
 		<left_right_eye>1, 1, 1, 0</left_right_eye>
 		<right_left_eye>1, 1, 1, 0</right_left_eye>
-		<right_right_eye>1, 1, 1, 1</right_right_eye>
-	<dotColor>1, 1, 1, 1</dotColor>
-		<downAnimation>0</downAnimation>
+		<right_right_eye>1, 1, 0, 0</right_right_eye>
+	<dotColor>1, 1, 1, 0</dotColor>
+		<downAnimation>1</downAnimation>
 	</box>
 <boxsplit/>
-	<floorOn>0</floorOn>
+	<floorOn>1</floorOn>
 	<wallOn>0</wallOn>
 <draw>1</draw>
-	<draw_model>1</draw_model>
+	<draw_model>0</draw_model>
 </boxsplit>

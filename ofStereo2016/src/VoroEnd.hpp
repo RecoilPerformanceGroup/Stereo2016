@@ -22,11 +22,18 @@ public:
     ofParameter<float> oceanNoiseDisplaceSpeed {"noise speed", 0, 0, 1};
     ofParameter<float> oceanNoiseDisplaceAmount {"noise amount", 0, 0, 1000};
     
+    
+    ofParameter<float> rotationNoiseDisplaceSpeed {"rotationNoiseSpeed", 0, 0, 1};
+    ofParameter<float> rotationNoiseDisplaceAmount {"rotationNoiseAmount", 0, 0, 1000};
+    
+    
     // used when next scene takes over
-    ofParameter<bool> applyNoise {"applyNoise", 1, 0, 2};
+    ofParameter<bool> applyNoise {"applyNoise", true};
     
     float oceanNoiseTime = 0;
     float wallNoiseTime = 0;
+    
+    float rotationNoiseTime;
     
     ofParameter<int> oceanNumCells {"cells", 2, 0, 200};
     ofParameter<int> oceanSeed {"seed", 2, 0, 200};
@@ -116,7 +123,9 @@ public:
         minDarkFade,
         //sceneDisplaceMod,
         scaleCells,
-        matcolor
+        matcolor,
+        rotationNoiseDisplaceSpeed,
+        rotationNoiseDisplaceAmount
     };
     
     VoroEnd() {

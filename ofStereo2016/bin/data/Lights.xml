@@ -1,5 +1,5 @@
 <Lights>
-	<enabled>1</enabled>
+	<enabled>0</enabled>
 	<directionalLight>
 		<diffuseColor>79, 79, 79, 255</diffuseColor>
 		<ambientColor>0, 0, 0, 255</ambientColor>
@@ -30,8 +30,8 @@
 		<diffuseColor>1, 1, 1, 1</diffuseColor>
 		<ambientColor>0, 0, 0, 1</ambientColor>
 		<specularColor>0, 0, 0, 1</specularColor>
-		<position>628.903, 420.656, 733.026</position>
-		<lookAt>4.16309, 4.16309, 628.903</lookAt>
+		<position>108.286, 1253.64, 420</position>
+		<lookAt>4, 212, -360</lookAt>
 	</directionalLight1>
 	<directionalLight2>
 		<diffuseColor>1, 1, 1, 1</diffuseColor>
@@ -41,5 +41,5 @@
 		<lookAt>0, 0, -1141.19</lookAt>
 	</directionalLight2>
 <draw>1</draw>
-	<draw_model>1</draw_model>
+	<draw_model>0</draw_model>
 </Lights>

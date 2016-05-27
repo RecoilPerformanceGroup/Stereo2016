@@ -13,18 +13,18 @@
 <lineWidth>8.16326, 34.6939</lineWidth>
 <use3dInput>1</use3dInput>
 <fadeDepth>0</fadeDepth>
-<rotationEuler>0, -16.5306, 0</rotationEuler>
-	<rotationCenter>0, 0.6, 0.7</rotationCenter>
+<rotationEuler>0, 0, 0</rotationEuler>
+	<rotationCenter>0, 0.6, 0.55</rotationCenter>
 	<line>
-		<start>0.280612</start>
-		<end>0.561224</end>
-		<resolution>2094</resolution>
+		<start>1</start>
+		<end>1</end>
+		<resolution>2500</resolution>
 		<width>15.8163</width>
-		<depthFade>459.184</depthFade>
+		<depthFade>-600</depthFade>
 		<noiseAmplitude>0</noiseAmplitude>
-		<noisePhase>44.3878</noisePhase>
+		<noisePhase>8</noisePhase>
 		<use3dInput>0</use3dInput>
-		<nextPos>0.0216572, 0.625572, 0.521449</nextPos>
+		<nextPos>-0.494, 0, 0</nextPos>
 		<lineAddPos>0</lineAddPos>
 		<clear>0</clear>
 		<load>0</load>
@@ -34,14 +34,14 @@
 	<lineZinCam>0</lineZinCam>
 	</line>
 	<shard>
-		<size>36.7347</size>
+		<size>0</size>
 		<color>1, 1, 1, 1</color>
 		<material>
 			<noise>
 				<displacement>
 					<velocity>4, 4, 4</velocity>
 					<scale>1, 1, 1</scale>
-					<amount>0.2, 0.2, 0.2</amount>
+					<amount>0, 0, 0</amount>
 				</displacement>
 				<texture>
 					<velocity>0, 0, 0</velocity>
@@ -50,11 +50,21 @@
 				</texture>
 			</noise>
 		</material>
-	<position>0.510204</position>
+	<position>1</position>
 	<shardThrowFromPos>-0.478135, 0.458975, 0.771345</shardThrowFromPos>
 		<shardThrowVelocity>437.734, 0, -447.314</shardThrowVelocity>
 		<throw>0</throw>
+	<shardThrowInterval>0.887755</shardThrowInterval>
 	</shard>
 <draw>1</draw>
-	<draw_model>1</draw_model>
+	<draw_model>0</draw_model>
+<straightLine>
+		<start>1</start>
+		<end>1</end>
+		<resolution>2094</resolution>
+		<nextPos>0, 0.7, 0</nextPos>
+		<lineAddPos>0</lineAddPos>
+		<clear>0</clear>
+		<showDots>0</showDots>
+	</straightLine>
 </sketch>

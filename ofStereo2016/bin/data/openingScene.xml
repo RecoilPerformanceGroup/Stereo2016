@@ -37,14 +37,14 @@
 <leftTitle>
 		<string>left</string>
 		<position>-160, 250, 701</position>
-		<height>12</height>
+		<height>24</height>
 		<color>0, 1, 1, 0</color>
 	</leftTitle>
 	<rightTitle>
 		<string>right</string>
 		<position>160, 250, 701</position>
-		<height>12</height>
-		<color>1, 0, 0, 0</color>
+		<height>24</height>
+		<color>1, 1, 0, 0</color>
 	</rightTitle>
 <draw>1</draw>
 	<draw_model>1</draw_model>

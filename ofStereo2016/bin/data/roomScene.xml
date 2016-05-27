@@ -2,8 +2,8 @@
 	<enabled>0</enabled>
 	<add_to_qlab>0</add_to_qlab>
 	<dancers>
-		<one>-0.103707, 0, 0</one>
-		<two>-0.0620577, 0, 0</two>
+		<one>-0.00999606, 0, 0</one>
+		<two>0.0316533, 0, 0</two>
 	</dancers>
 	<floor>
 		<color>0, 0, 0, 0</color>
@@ -43,5 +43,5 @@
 	</wall>
 <roomScene/>
 <draw>1</draw>
-	<draw_model>1</draw_model>
+	<draw_model>0</draw_model>
 </roomScene>
