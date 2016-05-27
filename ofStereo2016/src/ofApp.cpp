@@ -704,9 +704,9 @@ void ofApp::setupGui(shared_ptr<ofAppBaseWindow> gW,shared_ptr<ofAppBaseWindow> 
     gui->addToggle(calibrate_camera);
     guiBindings.push_back(make_shared<SlidersVec3f>(world.physical_camera_pos_cm, gui));
     gui->addSlider(world.physical_eye_seperation_cm);
-    guiBindings.push_back(make_shared<SlidersVec3f>(world.audienceFrontLeft, gui));
+/*    guiBindings.push_back(make_shared<SlidersVec3f>(world.audienceFrontLeft, gui));
     guiBindings.push_back(make_shared<SlidersVec3f>(world.audienceBackRight, gui));
-    gui->addBreak();
+*/    gui->addBreak();
 
     // Projectors
     
