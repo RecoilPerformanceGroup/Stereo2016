@@ -66,7 +66,7 @@ void ofApp::setup(){
     for (auto p : world.planes) {
         indirectParams.push_back(vector<string> { p.first, "size"});
     }
-    
+    /*
     world.calibrator.linkPointParameters(
                                          &world.getPlane("FLOOR")->quadLeft.outputPointTopLeft,
                                          &world.getPlane("WALL")->quadLeft.outputPointBottomLeft
@@ -84,7 +84,7 @@ void ofApp::setup(){
                                          &world.getPlane("WALL")->quadRight.outputPointBottomRight
                                          );
     
-
+*/
     stage_size_cm.addListener(this, &ofApp::stageResized);
     
     loadAllParameters();
