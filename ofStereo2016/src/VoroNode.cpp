@@ -37,6 +37,7 @@ VoroNode::VoroNode(ofVboMesh _mesh) {
     level = 0;
     clearParent();
     calculateBoundingBox();
+    mesh.getVbo();
 };
 
 VoroNode::VoroNode(ofVboMesh _mesh, VoroNode& vnParent) {
@@ -57,6 +58,7 @@ VoroNode::VoroNode(ofVboMesh _mesh, VoroNode& vnParent) {
     }
     
     mesh.setupIndicesAuto();
+    mesh.getVbo();
     
     calculateBoundingBox();
     
