@@ -98,11 +98,7 @@ void VoroEnd::update() {
             
             float n = ofSignedNoise((c->getPosition().x + (time)));
             
-            float nrx = ofSignedNoise((c->getPosition().x + (rotationNoiseTime))) * rotationNoiseDisplaceAmount;
-            
-            float nry = ofSignedNoise((c->getPosition().y + (rotationNoiseTime))) * rotationNoiseDisplaceAmount;
-            
-            c->setRenderRotation(ofVec3f(nrx, nry, 0));
+
             
             float edgeStill = 1;
             
@@ -130,6 +126,21 @@ void VoroEnd::update() {
                 pers = ofMap(dist, dpPersistRadius, dpPersistRadius+150, 1-dpPersist, 1, true);
             }
             }
+            
+            
+            float nrx = ofSignedNoise((c->getPosition().x + (rotationNoiseTime))) * rotationNoiseDisplaceAmount;
+            
+            float nry = ofSignedNoise((c->getPosition().y + (rotationNoiseTime))) * rotationNoiseDisplaceAmount;
+            
+            float nrz = ofSignedNoise((c->getPosition().z + (rotationNoiseTime))) * rotationNoiseDisplaceAmount;
+            
+            // less for for non openWall.get() maybe
+            
+            
+            float ooR = ofMap(openWall.get(), 0, 35, 0, 1, true);
+            if(persist) ooR = 1;
+            c->setRenderRotation(ofVec3f(nrx*pers*ooR, nry*pers*ooR, nrz*pers*ooR));
+            
             
                 
             ofVec3f nP(n, n, n);
@@ -162,6 +173,7 @@ void VoroEnd::update() {
         }
         
         c->renderPosOffset.y += (oceanFall*pers);
+        
         
         c->setTint(c->tint * ofMap(oceanFall.get()*pers, 0, -400, 1, 0, true));
         

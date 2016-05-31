@@ -26,7 +26,6 @@ public:
     ofParameter<float> rotationNoiseDisplaceSpeed {"rotationNoiseSpeed", 0, 0, 1};
     ofParameter<float> rotationNoiseDisplaceAmount {"rotationNoiseAmount", 0, 0, 1000};
     
-    
     // used when next scene takes over
     ofParameter<bool> applyNoise {"applyNoise", true};
     
@@ -37,11 +36,8 @@ public:
     
     ofParameter<int> oceanNumCells {"cells", 2, 0, 200};
     ofParameter<int> oceanSeed {"seed", 2, 0, 200};
-    
     ofParameter<float> minDarkFade {"minDarkFade", 200, 0, 1000};
-    
     ofParameter<float> fadeOutEdge {"fadeOutEdge", 0, 0, 1};
-    
     ofParameter<float> oceanFall {"fall", 0, 0, -1000};
     
     ofParameter<ofVec3f> oceanOrigin {"origin", ofVec3f(0,0,0),
