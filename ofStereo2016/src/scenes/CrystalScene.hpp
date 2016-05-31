@@ -33,6 +33,7 @@ public:
 
     ofParameter<float> clusterScale {"scale", 0, 0, 10};
     ofParameter<float> clusterScaleCells {"scaleCells", 0,0,0.999};
+    ofParameter<float> clusterAvoid {"avoid", 0.0, 0.0, 1.0};
     
     ofParameterGroup clusterParams {"cluster",
         clusterNumCells,
@@ -41,6 +42,7 @@ public:
         clusterScaleCells,
         clusterRotationAxis,
         clusterRotationSpeed,
+        clusterAvoid,
         clusterColor
     };
 

@@ -76,6 +76,7 @@ void CrystalScene::update() {
         float angleTowardsCamNormalised = (180.0-c->getGlobalPosition().angle(camPos))/180.0;
         c->setTint(clusterColor->getLerped(ofFloatColor::black, angleTowardsCamNormalised));
 
+        if(clusterAvoid > 0.0){
         // avoid crystal
         
         float minDistanceToCrystal = 100+(crystalSize.get() - (c->boundingBox.getSize().length()*c->getScale().x));
@@ -92,10 +93,12 @@ void CrystalScene::update() {
             c->positionOverideAmount = 0.0;
         } else {
             float dist = (c->positionOverideOrigin*c->getParent()->getGlobalTransformMatrix()).distance(crystalBoulder->getGlobalPosition());
-            c->positionOverideAmount = ofMap(dist, minDistanceToCrystal*(distMultiplier*0.85), 0, 0.0, 1.0);
+            c->positionOverideAmount = clusterAvoid*ofMap(dist, minDistanceToCrystal*(distMultiplier*0.85), 0, 0.0, 1.0);
             c->setPosition(c->positionOverideOrigin.getInterpolated(c->positionOverideTarget, ofxeasing::map_clamp(c->positionOverideAmount, 0.0, 1.0, 0.0, 1.0, & ofxeasing::quad::easeInOut)));
         }
 
+        }
+        
         for(auto cc : c->getChildren()) {
             
             cc->setScale(clusterScaleCells);
