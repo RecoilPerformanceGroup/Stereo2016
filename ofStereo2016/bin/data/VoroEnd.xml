@@ -48,4 +48,6 @@
 <scaleCells>1, 1, 1</scaleCells>
 <draw>0</draw>
 	<draw_model>0</draw_model>
+<rotationNoiseSpeed>0</rotationNoiseSpeed>
+	<rotationNoiseAmount>0</rotationNoiseAmount>
 </VoroEnd>

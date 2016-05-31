@@ -78,7 +78,7 @@
 			<draw_model>0</draw_model>
 		</roomScene>
 		<Lights>
-			<enabled>0</enabled>
+			<enabled>1</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<directionalLight1>
 				<diffuseColor>1, 1, 1, 1</diffuseColor>
@@ -322,18 +322,20 @@
 		<scaleCells>1, 1, 1</scaleCells>
 		<draw>0</draw>
 			<draw_model>0</draw_model>
+		<rotationNoiseSpeed>0</rotationNoiseSpeed>
+			<rotationNoiseAmount>0</rotationNoiseAmount>
 		</VoroEnd>
 	<Crystal>
-			<enabled>0</enabled>
+			<enabled>1</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<cluster>
 				<cells>65</cells>
-				<origin>200, 0.416626, -20.4081</origin>
+				<origin>1000, -9.99603, -20.4081</origin>
 				<scale>10</scale>
 				<scaleCells>0.372077</scaleCells>
-				<rotationAxis>0.229488, -0.145356, 0.198251</rotationAxis>
-				<rotationSpeed>-0.5</rotationSpeed>
-				<color>0.18, 0.18, 0.18, 1</color>
+				<rotationAxis>0.229488, -0.145356, 0.333611</rotationAxis>
+				<rotationSpeed>-1</rotationSpeed>
+				<color>1, 0.18, 0.18, 1</color>
 				<material>
 					<noise>
 						<displacement>
@@ -351,11 +353,11 @@
 			</cluster>
 			<crystal>
 				<seed>127</seed>
-				<size>800</size>
-				<origin>0, 125.364, 458.559</origin>
+				<size>301.02</size>
+				<origin>0, 10.8286, 73.3026</origin>
 				<rotationAxis>0, 0, 0</rotationAxis>
 				<rotationSpeed>0</rotationSpeed>
-				<color>0, 0, 0, 1</color>
+				<color>0, 0, 1, 1</color>
 				<material>
 					<noise>
 						<displacement>
@@ -372,7 +374,7 @@
 				</material>
 			</crystal>
 		<draw>1</draw>
-			<draw_model>0</draw_model>
+			<draw_model>1</draw_model>
 		</Crystal>
 	<game>
 			<enabled>0</enabled>
@@ -490,7 +492,7 @@
 	</scenes>
 	<world>
 		<camera>
-			<position>-244.755, 83.9161, 1160.84</position>
+			<position>0, 250, 1160.84</position>
 			<eyeSeparation>0</eyeSeparation>
 			<focusDistance>200</focusDistance>
 			<nearClip>20</nearClip>
@@ -543,5 +545,5 @@
 	</world>
 <stereo/>
 <input3d>0, 0, 0</input3d>
-<drawSceneGuis>0</drawSceneGuis>
+<drawSceneGuis>1</drawSceneGuis>
 </stereo>

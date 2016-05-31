@@ -7,7 +7,7 @@
 //
 
 #include "CrystalScene.hpp"
-
+#include "ofxEasing.h"
 
 void CrystalScene::setup() {
     
@@ -60,19 +60,48 @@ void CrystalScene::update() {
     cluster.setOrientation(clusterRotation);
     
     cluster.setGlobalPosition(clusterOrigin);
-    //
-    //cluster.rotateAround(<#float degrees#>, <#const ofVec3f &axis#>, <#const ofVec3f &point#>)
     
     cluster.setScale(clusterScale.get());
     
+    ofVec3f camPos = world->physical_camera_pos_cm;
+
+    int i = 0;
+    
     for(auto c : cluster.getChildren()) {
-        
+
         c->setScale(clusterScaleCells);
+
+        // tint black when in front of camera
         
+        float angleTowardsCamNormalised = (180.0-c->getGlobalPosition().angle(camPos))/180.0;
+        c->setTint(clusterColor->getLerped(ofFloatColor::black, angleTowardsCamNormalised));
+
+        // avoid crystal
+        
+        float minDistanceToCrystal = 100+(crystalSize.get() - (c->boundingBox.getSize().length()*c->getScale().x));
+        float minDistanceToCrystalSquared = minDistanceToCrystal * minDistanceToCrystal;
+        
+        float distToCrystalSquared = c->getGlobalPosition().squareDistance(crystalBoulder->getGlobalPosition());
+        
+        float distMultiplier = 4.0;
+        
+        if(!c->bOffsetPositionOveride){
+            c->positionOverideOrigin = c->getPosition();
+            c->positionOverideTarget = c->positionOverideOrigin.getScaled(minDistanceToCrystal*0.5);
+            c->bOffsetPositionOveride = true;
+            c->positionOverideAmount = 0.0;
+        } else {
+            float dist = (c->positionOverideOrigin*c->getParent()->getGlobalTransformMatrix()).distance(crystalBoulder->getGlobalPosition());
+            c->positionOverideAmount = ofMap(dist, minDistanceToCrystal*(distMultiplier*0.85), 0, 0.0, 1.0);
+            c->setPosition(c->positionOverideOrigin.getInterpolated(c->positionOverideTarget, ofxeasing::map_clamp(c->positionOverideAmount, 0.0, 1.0, 0.0, 1.0, & ofxeasing::quad::easeInOut)));
+        }
+
         for(auto cc : c->getChildren()) {
             
             cc->setScale(clusterScaleCells);
         }
+        
+        i++;
     }
     
     
@@ -122,20 +151,16 @@ void CrystalScene::reconstructCrystal(){
     //TODO: Fix inconsistent random
     ofSeedRandom(crystalSeed);
     crystal.setupFromBoundingBox(crystalSize*3, crystalSize*3, crystalSize*3, 15, true, true, true);
-    
-/*    for (auto c : crystal.getChildren()) {
-        crystalBoulder = c;
-        break;
-    }*/
     crystalBoulder = &crystal;
     crystalBoulder->setGlobalPosition(crystalOrigin);
 }
 
 void CrystalScene::drawModel() {
+    ofEnableDepthTest();
     ofSetColor(255,75);
     crystalBoulder->draw();
     cluster.draw();
-    
+    ofDisableDepthTest();
 }
 
 

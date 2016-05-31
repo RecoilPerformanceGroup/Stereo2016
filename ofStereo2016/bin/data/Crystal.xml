@@ -1,5 +1,5 @@
 <Crystal>
-	<enabled>0</enabled>
+	<enabled>1</enabled>
 	<rebuild>0</rebuild>
 	<origin>0, -900, 0</origin>
 	<Cells>63</Cells>
@@ -43,12 +43,12 @@
 <add_to_qlab>0</add_to_qlab>
 <cluster>
 		<cells>65</cells>
-		<origin>200, 0.416626, -20.4081</origin>
+		<origin>1000, -9.99603, -20.4081</origin>
 		<scale>10</scale>
 		<scaleCells>0.372077</scaleCells>
-		<rotationAxis>0.229488, -0.145356, 0.198251</rotationAxis>
-		<rotationSpeed>-0.5</rotationSpeed>
-		<color>0.18, 0.18, 0.18, 1</color>
+		<rotationAxis>0.229488, -0.145356, 0.333611</rotationAxis>
+		<rotationSpeed>-1</rotationSpeed>
+		<color>1, 0.18, 0.18, 1</color>
 		<material>
 			<noise>
 				<displacement>
@@ -74,11 +74,11 @@
 	</cluster>
 	<crystal>
 		<seed>127</seed>
-		<size>800</size>
-		<origin>0, 125.364, 458.559</origin>
+		<size>301.02</size>
+		<origin>0, 10.8286, 73.3026</origin>
 		<rotationAxis>0, 0, 0</rotationAxis>
 		<rotationSpeed>0</rotationSpeed>
-		<color>0, 0, 0, 1</color>
+		<color>0, 0, 1, 1</color>
 		<material>
 			<noise>
 				<displacement>
@@ -101,5 +101,5 @@
 		</material>
 	</crystal>
 <draw>1</draw>
-	<draw_model>0</draw_model>
+	<draw_model>1</draw_model>
 </Crystal>
