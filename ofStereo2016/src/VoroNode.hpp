@@ -69,7 +69,6 @@ public:
         bRenderRotationSet = true;
     }
     
-    
     ofVec3f renderPosOffset;
     ofVec3f renderScale;
     bool bRenderScaleSet = false;
@@ -86,6 +85,8 @@ public:
     //int seed;
     
     std::set<VoroNode*> voroChildren;
+    vector<VoroNode *> voroChildrenVector;
+    bool bVoroChildrenChangedUpdateVector;
     
     void getCellsFromContainerParallel(voro::container &_con, float _wallsThikness, vector<ofVboMesh>& cells, bool bWireframe);
     

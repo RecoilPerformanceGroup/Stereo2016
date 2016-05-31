@@ -227,19 +227,31 @@ void VoroNode::clearParent(bool bMaintainGlobalTransform){
 
 void VoroNode::removeChild(VoroNode & vnChild){
     voroChildren.erase(&vnChild);
+    bVoroChildrenChangedUpdateVector = true;
 }
 
 void VoroNode::addChild(VoroNode & vnChild){
     voroChildren.insert(&vnChild);
+    bVoroChildrenChangedUpdateVector = true;
+
 }
 
 void VoroNode::clearChildren(){
     for_each(voroChildren.begin(), voroChildren.end(), del_fun<VoroNode>());
     voroChildren.clear();
+    bVoroChildrenChangedUpdateVector = true;
+
 }
 
 vector<VoroNode *> VoroNode::getChildren() {
-    return vector<VoroNode *> (voroChildren.begin(), voroChildren.end());
+    
+    if(bVoroChildrenChangedUpdateVector) {
+        voroChildrenVector = vector<VoroNode *> (voroChildren.begin(), voroChildren.end());
+        bVoroChildrenChangedUpdateVector = false;
+    }
+    
+    
+    return voroChildrenVector;
 };
 
 
