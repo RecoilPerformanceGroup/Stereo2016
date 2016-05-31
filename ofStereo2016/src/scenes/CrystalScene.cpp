@@ -74,8 +74,12 @@ void CrystalScene::update() {
         // tint black when in front of camera
         
         float angleTowardsCamNormalised = (180.0-c->getGlobalPosition().angle(camPos))/180.0;
+        //angleTowardsCamNormalised = 1.0 - powf(1.0-angleTowardsCamNormalised, 2);
+        
         c->setTint(clusterColor->getLerped(ofFloatColor::black, angleTowardsCamNormalised));
-
+        
+        
+        
         if(clusterAvoid > 0.0){
         // avoid crystal
         
@@ -110,6 +114,7 @@ void CrystalScene::update() {
     
     matCrystal.setDiffuseColor(crystalColor.get());
     matCluster.setDiffuseColor(clusterColor.get());
+    matCluster.setAmbientColor(ofFloatColor(0,0,0,0));
     matCrystal.setAmbientColor(ofFloatColor(0,0,0,0));
     
     

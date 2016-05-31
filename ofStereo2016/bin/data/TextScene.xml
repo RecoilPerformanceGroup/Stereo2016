@@ -1,5 +1,5 @@
 <TextScene>
-	<enabled>0</enabled>
+	<enabled>1</enabled>
 	<add_to_qlab>0</add_to_qlab>
 	<text>
 		<position>0, 300, 700</position>
@@ -9,11 +9,11 @@
 	</text>
 <TextScene/>
 <draw>1</draw>
-	<draw_model>0</draw_model>
+	<draw_model>1</draw_model>
 <logo>
-		<width>300</width>
-		<position>0, 300, 100</position>
-		<color>0, 0, 0, 1</color>
+		<width>418.367</width>
+		<position>0, 300, 563.098</position>
+		<color>1, 1, 1, 1</color>
 		<draw>1</draw>
 	</logo>
 </TextScene>

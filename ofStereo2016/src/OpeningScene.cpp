@@ -31,9 +31,10 @@ void OpeningScene::draw(){
 void OpeningScene::drawTitles(bool leftEye){
     
     if(leftEye) {
+        {
         ofPushStyle();
         ofPushMatrix();
-        ofSetColor(leftTitleColor.get());
+        ofSetColor(leftTitleColorLeft.get());
         float scale = leftTitleHeight/font.getSize();
         ofRectangle bb = font.getStringBoundingBox(leftTitleString, 0,0);
         ofTranslate(world->zInCam(leftPosition.get()));
@@ -42,10 +43,10 @@ void OpeningScene::drawTitles(bool leftEye){
         font.drawStringAsShapes(leftTitleString, 0, 0);
         ofPopMatrix();
         ofPopStyle();
-    } else {
+        }{
         ofPushStyle();
         ofPushMatrix();
-        ofSetColor(rightTitleColor.get());
+        ofSetColor(rightTitleColorLeft.get());
         float scale = rightTitleHeight/font.getSize();
         ofRectangle bb = font.getStringBoundingBox(rightTitleString, 0,0);
         ofTranslate(world->zInCam(rightPosition.get()));
@@ -54,6 +55,33 @@ void OpeningScene::drawTitles(bool leftEye){
         font.drawStringAsShapes(rightTitleString, 0, 0);
         ofPopMatrix();
         ofPopStyle();
+        }
+    } else {
+        {
+        ofPushStyle();
+        ofPushMatrix();
+        ofSetColor(leftTitleColorRight.get());
+        float scale = leftTitleHeight/font.getSize();
+        ofRectangle bb = font.getStringBoundingBox(leftTitleString, 0,0);
+        ofTranslate(world->zInCam(leftPosition.get()));
+        ofScale(scale, scale);
+        ofTranslate(-bb.width/2.0, -font.getSize()/2.0);
+        font.drawStringAsShapes(leftTitleString, 0, 0);
+        ofPopMatrix();
+        ofPopStyle();
+        }{
+        ofPushStyle();
+        ofPushMatrix();
+        ofSetColor(rightTitleColorRight.get());
+        float scale = rightTitleHeight/font.getSize();
+        ofRectangle bb = font.getStringBoundingBox(rightTitleString, 0,0);
+        ofTranslate(world->zInCam(rightPosition.get()));
+        ofScale(scale, scale);
+        ofTranslate(-bb.width/2.0, -font.getSize()/2.0);
+        font.drawStringAsShapes(rightTitleString, 0, 0);
+        ofPopMatrix();
+        ofPopStyle();
+        }
     }
     
 }

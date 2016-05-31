@@ -36,16 +36,20 @@
 	</title>
 <leftTitle>
 		<string>left</string>
-		<position>-160, 250, 701</position>
-		<height>24</height>
-		<color>0, 1, 1, 0</color>
+		<position>214, 300, 0</position>
+		<height>66.3265</height>
+		<color>1, 1, 1, 1</color>
+	<colorLeft>1, 1, 1, 0</colorLeft>
+		<colorRight>1, 1, 1, 0</colorRight>
 	</leftTitle>
 	<rightTitle>
 		<string>right</string>
-		<position>160, 250, 701</position>
-		<height>24</height>
-		<color>1, 1, 0, 0</color>
+		<position>185, 300, 0</position>
+		<height>66.3265</height>
+		<color>1, 1, 1, 1</color>
+	<colorLeft>1, 1, 1, 0</colorLeft>
+		<colorRight>1, 1, 1, 0</colorRight>
 	</rightTitle>
 <draw>1</draw>
-	<draw_model>1</draw_model>
+	<draw_model>0</draw_model>
 </openingScene>

@@ -1,8 +1,8 @@
 <stereo>
-	<stageSize>800, 422.378, 800</stageSize>
+	<stageSize>800, 500, 800</stageSize>
 	<Projector_Calibration>0</Projector_Calibration>
 	<Camera_Calibration>0</Camera_Calibration>
-	<Background_Color>0, 0, 0, 0</Background_Color>
+	<Background_Color>0, 0, 0, 1</Background_Color>
 	<Second_Screen_Model>0</Second_Screen_Model>
 	<scenes>
 		<VoroScenes>
@@ -84,8 +84,8 @@
 				<diffuseColor>1, 1, 1, 1</diffuseColor>
 				<ambientColor>0, 0, 0, 1</ambientColor>
 				<specularColor>0, 0, 0, 1</specularColor>
-				<position>108.286, 1253.64, 420</position>
-				<lookAt>4, 212, -360</lookAt>
+				<position>108.286, 420.656, 733.026</position>
+				<lookAt>4.16309, 4.16309, 733.026</lookAt>
 			</directionalLight1>
 			<directionalLight2>
 				<diffuseColor>1, 1, 1, 1</diffuseColor>
@@ -95,7 +95,7 @@
 				<lookAt>0, 0, -1141.19</lookAt>
 			</directionalLight2>
 			<spotLight>
-				<diffuseColor>0, 0, 0, 1</diffuseColor>
+				<diffuseColor>1, 1, 1, 1</diffuseColor>
 				<ambientColor>0, 0, 0, 1</ambientColor>
 				<specularColor>0, 0, 0, 1</specularColor>
 				<position>-1661.81, 733.026, 1149.52</position>
@@ -173,18 +173,22 @@
 			</title>
 		<leftTitle>
 				<string>left</string>
-				<position>-160, 250, 701</position>
-				<height>24</height>
-				<color>0, 1, 1, 0</color>
+				<position>214, 300, 0</position>
+				<height>66.3265</height>
+				<color>1, 1, 1, 1</color>
+			<colorLeft>1, 1, 1, 0</colorLeft>
+				<colorRight>1, 1, 1, 0</colorRight>
 			</leftTitle>
 			<rightTitle>
 				<string>right</string>
-				<position>160, 250, 701</position>
-				<height>24</height>
-				<color>1, 1, 0, 0</color>
+				<position>185, 300, 0</position>
+				<height>66.3265</height>
+				<color>1, 1, 1, 1</color>
+			<colorLeft>1, 1, 1, 0</colorLeft>
+				<colorRight>1, 1, 1, 0</colorRight>
 			</rightTitle>
 		<draw>1</draw>
-			<draw_model>1</draw_model>
+			<draw_model>0</draw_model>
 		</openingScene>
 		<sketch>
 			<enabled>0</enabled>
@@ -256,7 +260,7 @@
 			</straightLine>
 		</sketch>
 		<TextScene>
-			<enabled>0</enabled>
+			<enabled>1</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<text>
 				<position>0, 300, 700</position>
@@ -265,11 +269,11 @@
 				<color>1, 1, 1, 0</color>
 			</text>
 		<draw>1</draw>
-			<draw_model>0</draw_model>
+			<draw_model>1</draw_model>
 		<logo>
-				<width>300</width>
-				<position>0, 300, 100</position>
-				<color>0, 0, 0, 1</color>
+				<width>418.367</width>
+				<position>0, 300, 563.098</position>
+				<color>1, 1, 1, 1</color>
 				<draw>1</draw>
 			</logo>
 		</TextScene>
@@ -326,16 +330,16 @@
 			<rotationNoiseAmount>0</rotationNoiseAmount>
 		</VoroEnd>
 	<Crystal>
-			<enabled>1</enabled>
+			<enabled>0</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<cluster>
 				<cells>65</cells>
-				<origin>1000, -9.99603, -20.4081</origin>
+				<origin>200, -3000, -20.4081</origin>
 				<scale>10</scale>
 				<scaleCells>0.372077</scaleCells>
-				<rotationAxis>0.229488, -0.145356, 0.333611</rotationAxis>
-				<rotationSpeed>-1</rotationSpeed>
-				<color>1, 0.18, 0.18, 1</color>
+				<rotationAxis>0.229488, -0.145356, 0.198251</rotationAxis>
+				<rotationSpeed>-0.5</rotationSpeed>
+				<color>0.18, 0.18, 0.18, 1</color>
 				<material>
 					<noise>
 						<displacement>
@@ -350,20 +354,21 @@
 						</texture>
 					</noise>
 				</material>
+			<avoid>1</avoid>
 			</cluster>
 			<crystal>
 				<seed>127</seed>
-				<size>301.02</size>
-				<origin>0, 10.8286, 73.3026</origin>
+				<size>800</size>
+				<origin>0, 125.365, 427.323</origin>
 				<rotationAxis>0, 0, 0</rotationAxis>
 				<rotationSpeed>0</rotationSpeed>
-				<color>0, 0, 1, 1</color>
+				<color>0, 0, 0, 1</color>
 				<material>
 					<noise>
 						<displacement>
-							<velocity>0, 0, 0</velocity>
-							<scale>1, 1, 1</scale>
-							<amount>0, 0, 0</amount>
+							<velocity>0.8, 0.8, 0.8</velocity>
+							<scale>75, 75, 75</scale>
+							<amount>0.007, 0.007, 0.007</amount>
 						</displacement>
 						<texture>
 							<velocity>0, 0, 0</velocity>
@@ -374,7 +379,7 @@
 				</material>
 			</crystal>
 		<draw>1</draw>
-			<draw_model>1</draw_model>
+			<draw_model>0</draw_model>
 		</Crystal>
 	<game>
 			<enabled>0</enabled>
@@ -422,16 +427,16 @@
 			<enabled>0</enabled>
 			<add_to_qlab>0</add_to_qlab>
 			<floorOn>1</floorOn>
-			<wallOn>0</wallOn>
+			<wallOn>1</wallOn>
 			<box>
-				<split>150</split>
-				<width>0.6</width>
-				<left_left_eye>0, 1, 1, 0</left_left_eye>
+				<split>-33</split>
+				<width>75</width>
+				<left_left_eye>1, 1, 1, 1</left_left_eye>
 				<left_right_eye>1, 1, 1, 0</left_right_eye>
 				<right_left_eye>1, 1, 1, 0</right_left_eye>
-				<right_right_eye>1, 1, 0, 0</right_right_eye>
-			<dotColor>1, 1, 1, 0</dotColor>
-				<downAnimation>1</downAnimation>
+				<right_right_eye>1, 1, 1, 1</right_right_eye>
+			<dotColor>0, 0, 0, 1</dotColor>
+				<downAnimation>0.575</downAnimation>
 			</box>
 		<draw>1</draw>
 			<draw_model>0</draw_model>
@@ -492,18 +497,18 @@
 	</scenes>
 	<world>
 		<camera>
-			<position>0, 250, 1160.84</position>
-			<eyeSeparation>0</eyeSeparation>
+			<position>0, 250, 1100</position>
+			<eyeSeparation>6.5</eyeSeparation>
 			<focusDistance>200</focusDistance>
 			<nearClip>20</nearClip>
 		<audienceFrontLeft>-300, 125, 1000</audienceFrontLeft>
 			<audienceBackRight>300, 325, 1500</audienceBackRight>
 		</camera>
-		<pixelsCm>0.8601</pixelsCm>
+		<pixelsCm>2</pixelsCm>
 		<WALL>
 			<UnknownName>1</UnknownName>
 			<position>0, 0, 0</position>
-			<size>800, 422.378</size>
+			<size>800, 500</size>
 			<Left_Quad>
 				<Output_Points>
 					<Top_Left>0.265149, 0.0889857, 0</Top_Left>
@@ -545,5 +550,5 @@
 	</world>
 <stereo/>
 <input3d>0, 0, 0</input3d>
-<drawSceneGuis>1</drawSceneGuis>
+<drawSceneGuis>0</drawSceneGuis>
 </stereo>
